@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>KSP — Industrial Designer</title>
+  <meta name="description" content="Industrial designer at IIT Roorkee's Department of Design. Product UI, mobility systems, brand and applied research — designed and built end to end." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <canvas class="dot-field" id="dotField" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="#top" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#top">Home</a>
+        <a href="#work">Digital Design</a>
+        <a href="#about">Industrial Design</a>
+        <a class="nav-pill ring-pill" href="#contact">Photography</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" id="top">
+    <div class="wrap hero-inner">
+      <div class="hero-band grain">
+        <figure class="hero-panel hero-panel--portrait">
+          <img src="assets/night.jpg" alt="Lying back on a motorcycle under the Milky Way" fetchpriority="high" />
+        </figure>
+        <figure class="hero-panel hero-panel--wide">
+          <img src="assets/hero.jpg" alt="KSP on a motorcycle at dusk" fetchpriority="high" />
+        </figure>
+
+        <h1 class="display hero-title">
+          <span class="sr-only">Creative design generalist</span>
+
+          <span class="hero-word" aria-hidden="true">
+            <!-- Invisible longest word ("Creative") reserves the slot so
+                 "Design Generalist" stays put as the words cycle. -->
+            <span class="hero-word-sizer">Creative</span>
+            <span class="hero-word-list" id="heroWords">
+            <span class="hero-word-item is-active">Creative</span>
+            <span class="hero-word-item">Curious</span>
+            <span class="hero-word-item">Crafty</span>
+            </span>
+          </span>
+
+          <span class="hero-title-static" aria-hidden="true">Design Generalist</span>
+        </h1>
+      </div>
+
+      <div class="hero-bottom">
+        <a class="scroll-cue" href="#about" aria-label="Scroll to the next section">
+          <span class="scroll-arrow" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MARQUEE ===================== -->
+  <div class="marquee-band">
+    <p class="eyebrow marquee-label">What I work on</p>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="marquee-item">Product UI<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Mobility Systems<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Brand &amp; Web<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Applied Research<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Design Systems<span class="sep">&#10022;</span></span>
+      </div>
+      <div class="marquee-track">
+        <span class="marquee-item">Product UI<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Mobility Systems<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Brand &amp; Web<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Applied Research<span class="sep">&#10022;</span></span>
+        <span class="marquee-item">Design Systems<span class="sep">&#10022;</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="ghost" aria-hidden="true">About me</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-portrait reveal">
+          <img src="assets/portrait.jpg" alt="KSP standing in the brick arches at IIT Roorkee" loading="lazy" />
+          <span class="badge portrait-tag">Roorkee, India</span>
+        </div>
+
+        <div class="about-body reveal" data-delay="1">
+          <h2 class="about-statement">
+            Design generalist with roots in industrial design.
+          </h2>
+          <p>
+            Applying hands-on prototyping and research-driven methods across
+            systems, mobility, and UI/UX.
+          </p>
+          <p>
+            Passionate about blending craft with function &mdash; and capturing
+            narratives through photography.
+          </p>
+          <div class="about-actions">
+            <a class="btn btn-primary" href="#work">
+              <span class="dot" aria-hidden="true">
+                <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              More about me
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <dl class="stats">
+        <div class="reveal">
+          <dd class="stat-value"><span data-count="4">0</span><span class="plus">+</span></dd>
+          <dt class="stat-label">Years designing</dt>
+        </div>
+        <div class="reveal" data-delay="1">
+          <dd class="stat-value"><span data-count="12">0</span><span class="plus">+</span></dd>
+          <dt class="stat-label">Projects shipped</dt>
+        </div>
+        <div class="reveal" data-delay="2">
+          <dd class="stat-value"><span data-count="6">0</span><span class="plus">+</span></dd>
+          <dt class="stat-label">Disciplines worked across</dt>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ===================== WORK ===================== -->
+  <section class="section section-light" id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="ghost" aria-hidden="true">Recent work</p>
+        <p class="eyebrow">Selected projects</p>
+        <h2 class="display section-title">Briefs I chose to answer.</h2>
+        <p class="section-intro">
+          Four case studies across an app, a mobility service, a storefront and an
+          institutional site &mdash; each designed and built end to end.
+        </p>
+      </div>
+
+      <div class="work-grid">
+        <a class="project is-wide reveal" href="#">
+          <div class="project-media">
+            <span class="placeholder" aria-hidden="true">Pathang</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <h3 class="project-title">Pathang Mobility</h3>
+              <p class="project-meta">Booking app &middot; Next.js &middot; M.Des thesis</p>
+            </div>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="tags">
+            <span class="tag">Product UI</span>
+            <span class="tag">Service design</span>
+            <span class="tag">Prototype</span>
+          </div>
+        </a>
+
+        <a class="project reveal" data-delay="1" href="#">
+          <div class="project-media">
+            <span class="placeholder" aria-hidden="true">H2o</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <h3 class="project-title">H2o Connect</h3>
+              <p class="project-meta">App concept &middot; Water management</p>
+            </div>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="tags">
+            <span class="tag">Product UI</span>
+            <span class="tag">IoT</span>
+          </div>
+        </a>
+
+        <a class="project reveal" data-delay="2" href="#">
+          <div class="project-media">
+            <span class="placeholder" aria-hidden="true">Devan&rsquo;s</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <h3 class="project-title">Devan&rsquo;s</h3>
+              <p class="project-meta">Brand &amp; web redesign &middot; Est. 1962</p>
+            </div>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="tags">
+            <span class="tag">Branding</span>
+            <span class="tag">E-commerce</span>
+          </div>
+        </a>
+
+        <a class="project is-wide reveal" data-delay="3" href="#">
+          <div class="project-media">
+            <span class="placeholder" aria-hidden="true">Amrut</span>
+          </div>
+          <div class="project-body">
+            <div>
+              <h3 class="project-title">AMRUT CUPCB</h3>
+              <p class="project-meta">Institutional site concept &middot; React</p>
+            </div>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+          <div class="tags">
+            <span class="tag">Information architecture</span>
+            <span class="tag">Web</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="work-footer reveal">
+        <a class="btn btn-dark" href="#">
+          <span class="dot" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          View all projects
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CAPABILITIES ===================== -->
+  <section class="section" id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="ghost" aria-hidden="true">What I do</p>
+        <p class="eyebrow">Capabilities</p>
+        <h2 class="display section-title">How I can help.</h2>
+      </div>
+
+      <div class="cap-list" id="capList">
+        <div class="cap" data-open="true">
+          <button class="cap-trigger" aria-expanded="true">
+            <span class="cap-index">01</span>
+            <span class="cap-name">Product &amp; UI Design</span>
+            <span class="cap-toggle" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M6 1.5V10.5M1.5 6H10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="cap-panel"><div><p>
+            Interfaces with real states, thresholds and edge cases &mdash; from first flow
+            to a working front-end build. Dashboards, booking flows, connected-device apps.
+          </p></div></div>
+        </div>
+
+        <div class="cap">
+          <button class="cap-trigger" aria-expanded="false">
+            <span class="cap-index">02</span>
+            <span class="cap-name">Applied Research</span>
+            <span class="cap-toggle" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M6 1.5V10.5M1.5 6H10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="cap-panel"><div><p>
+            Field studies, contextual interviews and synthesis that actually reach the
+            design &mdash; not a deck that gets filed away. Most of my projects start here.
+          </p></div></div>
+        </div>
+
+        <div class="cap">
+          <button class="cap-trigger" aria-expanded="false">
+            <span class="cap-index">03</span>
+            <span class="cap-name">Brand &amp; Identity</span>
+            <span class="cap-toggle" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M6 1.5V10.5M1.5 6H10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="cap-panel"><div><p>
+            Visual systems that hold up past the logo &mdash; type, colour, motion and the
+            rules that keep it consistent as it scales across surfaces.
+          </p></div></div>
+        </div>
+
+        <div class="cap">
+          <button class="cap-trigger" aria-expanded="false">
+            <span class="cap-index">04</span>
+            <span class="cap-name">Design &amp; Build</span>
+            <span class="cap-toggle" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M6 1.5V10.5M1.5 6H10.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </button>
+          <div class="cap-panel"><div><p>
+            I ship the thing. Responsive front-ends in plain HTML/CSS/JS, React or Next.js,
+            so the design survives the handoff intact.
+          </p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PROCESS ===================== -->
+  <section class="section section-light" id="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="ghost" aria-hidden="true">My process</p>
+        <p class="eyebrow">How it runs</p>
+        <h2 class="display section-title">Four steps, no mystery.</h2>
+      </div>
+
+      <div class="process-grid">
+        <article class="step reveal">
+          <p class="step-index">01</p>
+          <h3 class="step-name">Discover</h3>
+          <p class="step-copy">Understand the people, the constraints and what success actually looks like before anything gets drawn.</p>
+        </article>
+        <article class="step reveal" data-delay="1">
+          <p class="step-index">02</p>
+          <h3 class="step-name">Frame</h3>
+          <p class="step-copy">Turn the research into a sharp brief &mdash; the problem worth solving, and the edges around it.</p>
+        </article>
+        <article class="step reveal" data-delay="2">
+          <p class="step-index">03</p>
+          <h3 class="step-name">Design</h3>
+          <p class="step-copy">Flows, states and visual system. Reviewed against the brief, not against taste alone.</p>
+        </article>
+        <article class="step reveal" data-delay="3">
+          <p class="step-index">04</p>
+          <h3 class="step-name">Build</h3>
+          <p class="step-copy">Developed into something responsive and real, then tested, handed over and documented.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTACT ===================== -->
+  <section class="section contact grain" id="contact">
+    <div class="wrap">
+      <p class="eyebrow reveal">Contact</p>
+      <h2 class="display contact-title reveal" data-delay="1">
+        Let&rsquo;s build<br /><span class="accent">something</span>
+      </h2>
+      <p class="contact-lede reveal" data-delay="2">
+        Based in Roorkee, Uttarakhand. Open to design roles, collaborations, or a longer
+        conversation about any of the work above.
+      </p>
+      <div class="contact-actions reveal" data-delay="3">
+        <a class="btn btn-primary" href="mailto:kspmobi@gmail.com">
+          <span class="dot" aria-hidden="true">
+            <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          kspmobi@gmail.com
+        </a>
+        <a class="btn btn-outline" href="#work">See the work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> KSP. Concept work shown here is unofficial and not endorsed by the organisations referenced.</p>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <a href="mailto:kspmobi@gmail.com">Email</a>
+        <a href="#" rel="noopener">LinkedIn</a>
+        <a href="#" rel="noopener">Behance</a>
+      </nav>
+    </div>
+  </footer>
+
+  <!-- Floating contact button: a circle on the right edge that opens
+       into a labelled pill on hover or keyboard focus. -->
+  <a class="btn edge-cta" href="mailto:kspmobi@gmail.com">
+    <span class="dot" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="edge-cta-label">Get in touch</span>
+  </a>
+
+  <script src="script.js"></script>
+</body>
+</html>

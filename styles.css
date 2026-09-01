@@ -1,0 +1,1394 @@
+/* ============================================================
+   Sthitapragna Kollepara — Portfolio
+   Type:  Bricolage Grotesque (display) / Lato (body & UI)
+   ============================================================ */
+
+/* ---------- Tokens ---------- */
+
+:root {
+  /* Brand palette ------------------------------------------------
+     Orange #E85002 · Primary #000000 · White #F9F9F9
+     Light Gray #A7A7A7 · Gray #646464 · Dark Gray #333333
+     Gradient #000000 -> #C10801 -> #F16001 -> #D9C3AB
+     --------------------------------------------------------------- */
+
+  --primary:    #000000;
+  --orange:     #e85002;
+  --white:      #f9f9f9;
+  --gray-light: #a7a7a7;
+  --gray:       #646464;
+  --gray-dark:  #333333;
+
+  --grad-1: #000000;
+  --grad-2: #c10801;
+  --grad-3: #f16001;
+  --grad-4: #d9c3ab;
+
+  /* Sampled off the supplied orange texture: a tight range that lifts in the
+     middle and deepens slightly at the edges. No dark tail, so the rotating
+     word stays legible across the whole drift (3.2:1 at its deepest). */
+  --ember-gradient: linear-gradient(
+    180deg,
+    #d14a11 0%,
+    #e2551a 20%,
+    #ef6a22 45%,
+    #e85a1c 70%,
+    #d14a11 100%
+  );
+
+  --brand-gradient: linear-gradient(
+    100deg,
+    var(--grad-1) 0%,
+    var(--grad-2) 32%,
+    var(--grad-3) 64%,
+    var(--grad-4) 100%
+  );
+
+  /* Roles */
+  --bg:          var(--primary);
+  --bg-deep:     var(--primary);
+  --bg-card:     var(--gray-dark);
+  --bg-light:    var(--white);
+  --bg-light-2:  rgba(167, 167, 167, 0.16);
+
+  --ink:         var(--white);
+  --ink-dim:     var(--gray-light);
+  --ink-faint:   rgba(167, 167, 167, 0.75);
+  --ink-dark:    var(--primary);
+  --ink-dark-dim: var(--gray);
+
+  --accent:      var(--orange);
+  --accent-deep: var(--grad-2);
+  --accent-soft: rgba(232, 80, 2, 0.14);
+
+  --hairline:      rgba(249, 249, 249, 0.14);
+  --hairline-dark: rgba(0, 0, 0, 0.14);
+
+  --font-display: "Bricolage Grotesque", "Arial Black", "Helvetica Neue", sans-serif;
+  --font-body:    "Lato", system-ui, "Segoe UI", Arial, sans-serif;
+  /* Numerals and indices: the display face carried at a light weight. */
+  --font-accent:  var(--font-display);
+  --font-wordmark: var(--font-display);
+
+  --wrap:    82rem;
+  --gutter:  clamp(1.25rem, 4vw, 3.5rem);
+  --section: clamp(5rem, 11vw, 10rem);
+
+  /* Photo band split, shared by the band and the headline that overlays it. */
+  --band-split: 0.51fr 1fr;
+  --band-gap: 0.5rem;
+
+  --r-sm:  8px;
+  --r-md:  12px;
+  --r-lg:  30px;
+  --r-pill: 100px;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ---------- Reset ---------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+html { background: var(--bg); }
+
+body {
+  margin: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4 { margin: 0; }
+p  { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ---------- Interactive dot field ---------- */
+
+/* Behind every section, above the page colour. The light sections are opaque,
+   so the field reads through the dark ones only. */
+.dot-field {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ---------- Primitives ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.section-light .eyebrow { color: var(--gray); }
+
+.accent { color: var(--accent); }
+
+/* Oversized ghost heading behind each section */
+.ghost {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  font-size: clamp(3.25rem, 11vw, 9rem);
+  color: rgba(249, 249, 249, 0.08);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+  margin: 0 0 -0.28em;
+}
+
+.section-light .ghost { color: rgba(0, 0, 0, 0.08); }
+
+/* Film grain */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  position: relative;
+  z-index: 0;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  padding: 0.5rem 1.35rem 0.5rem 0.5rem;
+  border-radius: var(--r-pill);
+  border: 0;
+  cursor: pointer;
+  transition: color 0.3s var(--ease), box-shadow 0.3s var(--ease),
+              transform 0.3s var(--ease);
+}
+
+/* Brand gradient sweeps in from the right on hover. Lives on a layer
+   behind the label so the text and dot stay legible throughout. */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--brand-gradient);
+  /* Oversized and offset so the sweep lands on the gradient's red-to-orange
+     core. The #D9C3AB tail is left off the button: white label text needs
+     4.5:1 and only clears it against the darker half of the ramp. */
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease), background-position 0.65s var(--ease);
+}
+
+.btn:hover::before,
+.btn:focus-visible::before {
+  opacity: 1;
+  background-position: 42% 50%;
+}
+
+.btn .dot {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  transition: background-color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+
+.btn:hover { transform: translateY(-2px); }
+.btn:hover .dot { transform: rotate(45deg); }
+
+/* Every variant resolves to white-on-gradient while hovered. */
+.btn:hover,
+.btn:focus-visible { color: var(--white); }
+.btn:hover .dot { background: rgba(0, 0, 0, 0.3); color: var(--white); }
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--ink-dark);
+}
+.btn-primary .dot { background: var(--accent); color: var(--white); }
+
+.btn-dark {
+  background: var(--ink-dark);
+  color: var(--ink);
+}
+.btn-dark .dot { background: var(--accent); color: var(--white); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--hairline);
+  padding: 0.5rem 1.35rem;
+}
+.btn-outline:hover,
+.btn-outline:focus-visible { box-shadow: none; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  transition: background-color 0.4s var(--ease), backdrop-filter 0.4s var(--ease),
+              border-color 0.4s var(--ease);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.is-stuck {
+  background: rgba(0, 0, 0, 0.76);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--hairline);
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  height: 4.5rem;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.wordmark-name {
+  /* Bricolage is variable (200-800), so weight here is a real axis to dial. */
+  font-family: var(--font-wordmark);
+  font-weight: 500;
+  font-size: 1.15rem;
+  text-transform: none;
+  letter-spacing: 0.005em;
+  white-space: nowrap;
+}
+
+/* Hollow pill ringed in the brand gradient. A gradient cannot be a
+   border-color, so the ring is a gradient fill masked down to a 2px band
+   (whole box minus content box). Shared by the KSP badge and the
+   Photography nav item. */
+.ring-pill {
+  position: relative;
+  border-radius: var(--r-pill);
+  background: transparent;
+}
+
+.ring-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* Ring thickness. */
+  padding: 1.5px;
+  background: var(--brand-gradient);
+  /* Oversized so there is gradient to travel through: the mask stays put
+     while the fill drifts beneath it. The animation alternates rather than
+     wrapping, so the loop never jumps. */
+  background-size: 260% 100%;
+  background-position: 0% 50%;
+  animation: ringDrift 4s ease-in-out infinite alternate;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+@keyframes ringDrift {
+  from { background-position: 0% 50%; }
+  to   { background-position: 100% 50%; }
+}
+
+.wordmark .glyph {
+  display: grid;
+  place-items: center;
+  height: 2rem;
+  padding-inline: 0.8rem;
+  color: var(--white);
+  font-family: var(--font-wordmark);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.nav-links a {
+  color: var(--ink-dim);
+  position: relative;
+  transition: color 0.25s var(--ease);
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -4px;
+  width: 100%; height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.35s var(--ease);
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+.nav-pill {
+  display: inline-flex;
+  align-items: center;
+  /* Padding, not a fixed height: the mobile menu renders this at a larger
+     size and the ring has to grow with the label. */
+  padding: 0.42rem 0.95rem;
+  color: var(--ink);
+}
+.nav-pill::after { content: none; }
+.nav-pill:hover { color: var(--accent); }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 0.5rem;
+  cursor: pointer;
+  color: var(--ink);
+}
+.nav-toggle span {
+  display: block;
+  width: 22px; height: 2px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform 0.3s var(--ease), opacity 0.2s linear;
+}
+.nav-toggle span + span { margin-top: 5px; }
+.nav.is-open .nav-toggle span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav.is-open .nav-toggle span:nth-child(2) { opacity: 0; }
+.nav.is-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+
+/* ---------- Floating contact button ---------- */
+
+/* Sits above every section, light or dark, so it carries its own accent
+   fill rather than the white of .btn-primary, which would vanish on the
+   light sections. Inherits the gradient hover from .btn. */
+.edge-cta {
+  position: fixed;
+  right: clamp(0.9rem, 2vw, 1.75rem);
+  /* Sits below the vertical midpoint rather than dead centre. */
+  top: 64%;
+  transform: translateY(-50%);
+  z-index: 90;
+  padding: 0.5rem;
+  /* .btn sets a flex gap; it would hold the collapsed pill open, so spacing
+     comes from the label's own margin once it expands. */
+  gap: 0;
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+  transition: color 0.3s var(--ease), padding 0.45s var(--ease),
+              transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.edge-cta .dot { background: rgba(0, 0, 0, 0.28); color: var(--white); }
+
+.edge-cta:hover,
+.edge-cta:focus-visible {
+  padding-right: 1.35rem;
+  transform: translateY(-50%) scale(1.02);
+}
+
+.edge-cta:hover .dot { transform: rotate(45deg); }
+
+/* Collapsed to nothing, opened by max-width: width cannot transition to
+   auto, and the 0fr/1fr grid trick stalls mid-interpolation here. */
+.edge-cta-label {
+  max-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: max-width 0.45s var(--ease), opacity 0.3s var(--ease),
+              margin-left 0.45s var(--ease);
+}
+
+.edge-cta:hover .edge-cta-label,
+.edge-cta:focus-visible .edge-cta-label {
+  max-width: 12rem;
+  opacity: 1;
+  margin-left: 0.7rem;
+}
+
+/* Touch devices never fire hover, which would leave an unlabelled circle.
+   Show the label outright there instead. */
+@media (hover: none) {
+  .edge-cta { padding-right: 1.35rem; }
+
+  .edge-cta-label {
+    max-width: 12rem;
+    opacity: 1;
+    margin-left: 0.7rem;
+  }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+
+.hero {
+  position: relative;
+  /* Transparent so the dot field shows through; <html> supplies the black. */
+  background: transparent;
+  padding-top: clamp(6.5rem, 13vh, 9.5rem);
+  padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
+  overflow: hidden;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1rem 0.45rem 0.5rem;
+  border-radius: var(--r-pill);
+  background: rgba(249, 249, 249, 0.1);
+  border: 1px solid var(--hairline);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgba(249, 249, 249, 0.86);
+  white-space: nowrap;
+}
+
+/* --- Split image band with the headline laid across both panels --- */
+
+.hero-band {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--band-split);
+  gap: var(--band-gap);
+  /* No min-height: with aspect-ratio a definite height would drive the
+     width instead, overflowing the container on narrow screens. */
+  aspect-ratio: 16 / 5.4;
+  isolation: isolate;
+  container-type: inline-size;
+}
+
+.hero-panel {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--bg-deep);
+}
+
+.hero-panel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.02);
+  transition: transform 1.2s var(--ease);
+}
+
+.hero-band:hover .hero-panel img { transform: scale(1.05); }
+
+.hero-panel--portrait img {
+  /* Left unsaturated: the night sky is already near-monochrome and its cool
+     cast is what plays against the warm photo on the right. */
+  object-position: 50% 92%;
+}
+
+.hero-panel--wide img {
+  object-position: 56% 50%;
+}
+
+/* Keeps the white headline legible over the brightest part of each photo */
+.hero-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.14), rgba(0, 0, 0, 0.44));
+}
+
+.hero-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Sits slightly above the band's centre line. */
+  top: 45%;
+  transform: translateY(-50%);
+  z-index: 4;
+  margin: 0;
+  display: grid;
+  grid-template-columns: var(--band-split);
+  gap: var(--band-gap);
+  align-items: baseline;
+  white-space: nowrap;
+  font-family: var(--font-wordmark);
+  font-weight: 700;
+  /* Sized against the band, not the viewport, so the line fills it at any
+     width. Budgeted for the longest word plus the static half.
+     vw value is the pre-container-query fallback. */
+  font-size: clamp(1.6rem, 5.59vw, 5.03rem);
+  font-size: 6.71cqw;
+  letter-spacing: -0.01em;
+  line-height: 0.9;
+  color: var(--ink);
+  text-shadow: 0 2px 34px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+}
+
+/* --- Rotating word ------------------------------------------------ */
+
+.hero-word {
+  position: relative;
+  display: inline-block;
+  justify-self: center;
+  color: var(--accent);
+  /* Clips the roll into a slot. line-height opens the box enough that
+     descenders survive, since .hero-title runs a 0.9 line-height. */
+  overflow: hidden;
+  line-height: 1.14;
+}
+
+/* Reserves the width of the longest word; never painted. */
+.hero-word-sizer {
+  visibility: hidden;
+}
+
+.hero-word-list {
+  position: absolute;
+  inset: 0;
+}
+
+/* Waits below the window. The horizontal centring rides on `translate` so
+   `transform` is free to carry the roll by itself. */
+.hero-word-item {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  translate: -50% 0;
+  transform: translateY(110%);
+  /* cubic-bezier approximation of GSAP power4.out (1 - (1-t)^4). */
+  transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  will-change: transform;
+}
+
+/* Snapping a spent word back below must not animate, or it rolls back down
+   through the window in full view. */
+.hero-word-item.no-anim { transition: none; }
+
+.hero-word-item.is-active { transform: translateY(0); }
+
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hero-word-item {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='e'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .34 .34 .34 0 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23e)' opacity='0.38'/%3E%3C/svg%3E"), var(--ember-gradient);
+    background-size: 180px 180px, 100% 260%;
+    background-position: 0 0, 50% 0%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: emberDrift 5s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes emberDrift {
+  from { background-position: 0 0, 50% 0%; }
+  to   { background-position: 0 0, 50% 100%; }
+}
+
+/* Exits upward, so the incoming word appears to push it out. */
+.hero-word-item.is-leaving { transform: translateY(-110%); }
+
+.hero-title-static {
+  /* Centred in its column rather than flush left, which nudges it right by
+     half the slack. Self-balancing, so it cannot overflow the photo if the
+     face or size changes later. */
+  justify-self: center;
+}
+
+/* Grunge fill: tiled greyscale turbulence sitting over a flat white, both
+   clipped to the glyphs. Guarded because a transparent fill without
+   background-clip support would leave the words invisible. */
+@supports (-webkit-background-clip: text) or (background-clip: text) {
+  .hero-title-static {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23g)' opacity='0.55'/%3E%3C/svg%3E"),
+      linear-gradient(var(--white), var(--white));
+    background-size: 220px 220px, 100% 100%;
+    background-repeat: repeat, no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.hero-bottom {
+  display: grid;
+  justify-items: center;
+  margin-top: clamp(2rem, 5vw, 3.5rem);
+}
+
+/* Big textured scroll arrow: the sand gradient plus a noise tile, both
+   clipped to an arrow silhouette by a mask. Breathing sits on the link so it
+   does not fight the gradient drift running on the arrow itself. */
+.scroll-cue {
+  display: grid;
+  place-items: center;
+  animation: cueBreathe 3s ease-in-out infinite;
+}
+
+.scroll-arrow {
+  display: block;
+  width: clamp(2.6rem, 4.4vw, 3.9rem);
+  aspect-ratio: 64 / 40;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='e'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .34 .34 .34 0 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23e)' opacity='0.38'/%3E%3C/svg%3E"), var(--ember-gradient);
+  background-size: 180px 180px, 100% 260%;
+  background-position: 0 0, 50% 0%;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 40'%3E%3Cpath d='M6 7 L32 31 L58 7' fill='none' stroke='%23000' stroke-width='13' stroke-linejoin='miter' stroke-linecap='butt'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 40'%3E%3Cpath d='M6 7 L32 31 L58 7' fill='none' stroke='%23000' stroke-width='13' stroke-linejoin='miter' stroke-linecap='butt'/%3E%3C/svg%3E") no-repeat center / contain;
+  animation: emberDrift 5s ease-in-out infinite alternate;
+}
+
+.scroll-cue:hover .scroll-arrow { filter: brightness(1.12); }
+
+@keyframes cueBreathe {
+  0%, 100% { transform: translateY(0); opacity: 0.82; }
+  50%      { transform: translateY(9px); opacity: 1; }
+}
+
+
+/* ============================================================
+   MARQUEE
+   ============================================================ */
+
+.marquee-band {
+  /* Transparent so the dot field shows through; <html> supplies the black. */
+  background: transparent;
+  border-block: 1px solid var(--hairline);
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+  overflow: hidden;
+}
+
+.marquee-label {
+  text-align: center;
+  margin-bottom: 1.25rem;
+}
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  padding-right: clamp(2rem, 5vw, 4.5rem);
+  flex: 0 0 auto;
+  animation: scrollX 34s linear infinite;
+}
+
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+@keyframes scrollX {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+.marquee-item {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  font-size: clamp(1.1rem, 2.2vw, 1.75rem);
+  color: var(--gray-light);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  transition: color 0.3s var(--ease);
+}
+.marquee-item:hover { color: var(--ink); }
+.marquee-item .sep { color: var(--accent); font-size: 0.7em; }
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+
+.section {
+  position: relative;
+  padding-block: var(--section);
+  overflow: hidden;
+}
+
+.section-light {
+  background: var(--bg-light);
+  color: var(--ink-dark);
+}
+
+.section-head {
+  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.section-title {
+  font-size: clamp(2rem, 5vw, 3.75rem);
+  margin-top: 0.75rem;
+  max-width: 20ch;
+}
+
+.section-intro {
+  font-size: clamp(0.95rem, 1.2vw, 1.0625rem);
+  line-height: 1.65;
+  color: var(--ink-dim);
+  max-width: 46ch;
+  margin-top: 1.25rem;
+}
+
+.section-light .section-intro { color: var(--ink-dark-dim); }
+
+/* ============================================================
+   ABOUT
+   ============================================================ */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+
+.about-portrait {
+  position: relative;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--hairline);
+}
+
+.about-portrait img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: 50% 34%;
+  filter: grayscale(1) contrast(1.06);
+  transition: transform 0.9s var(--ease), filter 0.6s var(--ease);
+}
+
+.about-portrait:hover img {
+  transform: scale(1.04);
+  filter: grayscale(0.35) contrast(1.02);
+}
+
+.about-portrait .portrait-tag {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 3;
+}
+
+.about-statement {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  font-size: clamp(1.05rem, 1.7vw, 1.5rem);
+  margin-bottom: 1.35rem;
+}
+
+.about-body p {
+  color: var(--ink-dim);
+  line-height: 1.7;
+  max-width: 54ch;
+}
+.about-body p + p { margin-top: 1.1rem; }
+
+.about-actions { margin-top: 2.25rem; }
+
+/* Stats */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 2rem);
+  margin-top: clamp(3rem, 7vw, 5.5rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--hairline);
+}
+
+.stat-value {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+}
+
+.stat-value .plus {
+  font-family: var(--font-accent);
+  font-weight: 300;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+
+.stat-label {
+  margin-top: 0.85rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* ============================================================
+   WORK
+   ============================================================ */
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.project {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: var(--bg-light-2);
+  border: 1px solid var(--hairline-dark);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+
+.project:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
+}
+
+.project.is-wide { grid-column: span 2; }
+
+.project-media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: var(--bg-card);
+}
+
+.project.is-wide .project-media { aspect-ratio: 21 / 9; }
+
+.project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+}
+.project:hover .project-media img { transform: scale(1.05); }
+
+/* Placeholder shown until a real cover image is dropped in */
+.project-media .placeholder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(120% 90% at 30% 10%, rgba(232, 80, 2, 0.32), transparent 60%),
+    linear-gradient(140deg, var(--gray-dark), var(--primary));
+  color: rgba(249, 249, 249, 0.24);
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+.project-body {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.project-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: var(--ink-dark);
+}
+
+.project-meta {
+  margin-top: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--ink-dark-dim);
+  letter-spacing: -0.01em;
+}
+
+.project-arrow {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--ink-dark);
+  color: var(--white);
+  transition: background-color 0.35s var(--ease), transform 0.45s var(--ease);
+}
+.project:hover .project-arrow {
+  background: var(--brand-gradient);
+  transform: rotate(45deg);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0 clamp(1.25rem, 2.5vw, 1.75rem) clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.tag {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--r-pill);
+  background: rgba(0, 0, 0, 0.07);
+  color: var(--ink-dark-dim);
+}
+
+.work-footer {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+}
+
+/* ============================================================
+   CAPABILITIES  (accordion list)
+   ============================================================ */
+
+.cap-list { border-top: 1px solid var(--hairline); }
+
+.cap {
+  border-bottom: 1px solid var(--hairline);
+}
+
+.cap-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding-block: clamp(1.25rem, 2.6vw, 2rem);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+.cap-index {
+  font-family: var(--font-accent);
+  font-weight: 300;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  flex: 0 0 auto;
+  width: 2.5rem;
+}
+
+.cap-name {
+  flex: 1 1 auto;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  font-size: clamp(1.35rem, 3.6vw, 2.75rem);
+  color: var(--ink-dim);
+  transition: color 0.35s var(--ease), transform 0.45s var(--ease);
+}
+
+.cap[data-open="true"] .cap-name,
+.cap-trigger:hover .cap-name {
+  color: var(--ink);
+  transform: translateX(0.5rem);
+}
+.cap[data-open="true"] .cap-name { color: var(--accent); }
+
+.cap-toggle {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  color: var(--ink-dim);
+  transition: transform 0.4s var(--ease), background-color 0.35s var(--ease),
+              color 0.35s var(--ease), border-color 0.35s var(--ease);
+}
+.cap[data-open="true"] .cap-toggle {
+  transform: rotate(45deg);
+  background: var(--brand-gradient);
+  border-color: transparent;
+  color: var(--white);
+}
+
+.cap-panel {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.45s var(--ease);
+}
+
+.cap-panel p {
+  padding: 0 0 clamp(1.25rem, 2.6vw, 2rem) 4rem;
+  max-width: 60ch;
+  color: var(--ink-dim);
+  line-height: 1.7;
+}
+
+/* ============================================================
+   PROCESS
+   ============================================================ */
+
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+}
+
+.step {
+  padding: clamp(1.5rem, 3vw, 2.25rem);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--hairline-dark);
+  background: rgba(249, 249, 249, 0.6);
+  transition: background-color 0.4s var(--ease), transform 0.4s var(--ease),
+              border-color 0.4s var(--ease);
+}
+
+.step:hover {
+  transform: translateY(-5px);
+  background: var(--ink-dark);
+  border-color: var(--ink-dark);
+}
+
+.step-index {
+  font-family: var(--font-accent);
+  font-weight: 300;
+  font-size: 0.875rem;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+.step-name {
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  font-size: clamp(1.25rem, 2.4vw, 1.85rem);
+  color: var(--ink-dark);
+  transition: color 0.4s var(--ease);
+}
+
+.step-copy {
+  margin-top: 0.85rem;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ink-dark-dim);
+  transition: color 0.4s var(--ease);
+}
+
+.step:hover .step-name { color: var(--white); }
+.step:hover .step-copy { color: rgba(249, 249, 249, 0.7); }
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+
+.contact {
+  position: relative;
+  /* Transparent so the dot field shows through; <html> supplies the black. */
+  background: transparent;
+  isolation: isolate;
+  text-align: center;
+}
+
+.contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(70% 60% at 50% 108%, rgba(232, 80, 2, 0.34), transparent 68%);
+}
+
+.contact-title {
+  font-size: clamp(2.5rem, 9vw, 7.5rem);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  margin-block: 1.25rem 1.75rem;
+}
+
+.contact-lede {
+  color: var(--ink-dim);
+  max-width: 44ch;
+  margin-inline: auto;
+  line-height: 1.65;
+  margin-bottom: 2.5rem;
+}
+
+.contact-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.footer {
+  /* Transparent so the dot field shows through; <html> supplies the black. */
+  background: transparent;
+  border-top: 1px solid var(--hairline);
+  padding-block: 2.25rem;
+}
+
+.footer-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-copy {
+  font-size: 0.8125rem;
+  color: var(--ink-faint);
+  letter-spacing: -0.01em;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.8125rem;
+  color: var(--ink-dim);
+}
+.footer-links a { transition: color 0.25s var(--ease); }
+.footer-links a:hover { color: var(--accent); }
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+.reveal[data-delay="1"] { transition-delay: 0.08s; }
+.reveal[data-delay="2"] { transition-delay: 0.16s; }
+.reveal[data-delay="3"] { transition-delay: 0.24s; }
+.reveal[data-delay="4"] { transition-delay: 0.32s; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step-name { margin-top: 2.5rem; }
+}
+
+@media (max-width: 860px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .about-portrait { max-width: 26rem; }
+  .work-grid { grid-template-columns: 1fr; }
+  .project.is-wide { grid-column: span 1; }
+  .project.is-wide .project-media { aspect-ratio: 16 / 10; }
+  .hero-band {
+    grid-template-columns: 1fr;
+    aspect-ratio: 16 / 10;
+  }
+  .hero-panel--portrait { display: none; }
+  .hero-title {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 0.04em;
+    /* Stacked here, so the size is set by the longer half
+       ("Design Generalist") fitting the band's full width. */
+    font-size: clamp(1.5rem, 8vw, 3.25rem);
+    font-size: 9cqw;
+    padding-inline: 0.75rem;
+  }
+  .hero-bottom { margin-top: 1.75rem; }
+}
+
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+
+  /* Out of the vertical middle on phones, where it would sit over content. */
+  .edge-cta {
+    top: auto;
+    bottom: clamp(1rem, 4vw, 1.75rem);
+    transform: none;
+  }
+  .edge-cta:hover,
+  .edge-cta:focus-visible { transform: scale(1.02); }
+
+  .wordmark-name { font-size: 0.85rem; }
+  .wordmark .glyph { height: 1.75rem; padding-inline: 0.7rem; font-size: 0.8125rem; }
+
+  .nav-toggle { display: block; }
+
+  .nav.is-open {
+    background: rgba(0, 0, 0, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .nav.is-open .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    position: absolute;
+    top: 4.5rem;
+    left: 0;
+    right: 0;
+    padding: 1.5rem var(--gutter) 2.25rem;
+    border-top: 1px solid var(--hairline);
+    font-size: 1.25rem;
+    /* This panel sits below the nav's own box, so it cannot inherit that
+       background — it needs its own or the links sit on the hero photo. */
+    background: rgba(0, 0, 0, 0.96);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .hero-band { aspect-ratio: 1 / 1; }
+  .badge { white-space: normal; }
+  .stats { grid-template-columns: 1fr; gap: 1.75rem; }
+  .stats > * { padding-bottom: 1.5rem; border-bottom: 1px solid var(--hairline); }
+  .stats > *:last-child { border-bottom: 0; padding-bottom: 0; }
+  .process-grid { grid-template-columns: 1fr; }
+  .step-name { margin-top: 2rem; }
+  .cap-panel p { padding-left: 0; }
+  .footer-row { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal { opacity: 1; transform: none; }
+  .marquee-track { animation: none; }
+  .hero-panel img,
+  .hero-band:hover .hero-panel img { transform: scale(1.02); }
+
+}
