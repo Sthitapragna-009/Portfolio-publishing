@@ -217,24 +217,33 @@
     }
   });
 
-  /* ---------- Interactive dot field ---------- */
+  /* ---------- Ambient dot field ---------- */
   const field = document.getElementById("dotField");
 
   if (field && field.getContext) {
     const ctx = field.getContext("2d");
 
-    const SPACING = 34;      // grid pitch in CSS px
-    const BASE_R = 1.1;      // resting dot radius
-    const BASE_A = 0.15;     // resting opacity
-    const REACH = 155;       // cursor influence radius
-    const MAX_SCALE = 2.6;   // radius multiplier at the cursor
-    const PUSH = 11;         // how far dots shove outward
+    const SPACING = 22;   // grid pitch in CSS px
+    const BANDS = 10;     // quantisation steps, see the batching note below
+    const A_MIN = 0.045;  // dimmest dot
+    const A_MAX = 0.30;   // brightest dot
+    const R_MIN = 0.85;
+    const R_MAX = 1.55;
 
-    let dots = [];
+    let xs = [];
+    let ys = [];
     let w = 0;
     let h = 0;
     let frame = null;
-    const pointer = { x: -9999, y: -9999, active: false };
+    let started = 0;
+    let elapsed = 0; // wave time banked while paused, so it resumes in place
+
+    // Dots are drawn thousands at a time, so rather than setting fillStyle per
+    // dot the wave value is quantised into a few bands. Radius and alpha both
+    // derive from that one value, so a band fixes both and every dot in it can
+    // go into a single path with one fill.
+    const buckets = [];
+    for (let b = 0; b < BANDS; b += 1) buckets.push([]);
 
     const build = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -246,7 +255,8 @@
       field.height = Math.round(h * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      dots = [];
+      xs = [];
+      ys = [];
       const cols = Math.ceil(w / SPACING) + 1;
       const rows = Math.ceil(h / SPACING) + 1;
       const offX = (w - (cols - 1) * SPACING) / 2;
@@ -254,99 +264,95 @@
 
       for (let r = 0; r < rows; r += 1) {
         for (let c = 0; c < cols; c += 1) {
-          dots.push({ x: offX + c * SPACING, y: offY + r * SPACING, s: 0 });
+          xs.push(offX + c * SPACING);
+          ys.push(offY + r * SPACING);
         }
       }
     };
 
-    const paint = () => {
+    const draw = (t) => {
       ctx.clearRect(0, 0, w, h);
-      let settling = false;
 
-      for (let i = 0; i < dots.length; i += 1) {
-        const d = dots[i];
-        let target = 0;
-        let dx = 0;
-        let dy = 0;
-        let dist = 0;
+      for (let b = 0; b < BANDS; b += 1) buckets[b].length = 0;
 
-        if (pointer.active) {
-          dx = d.x - pointer.x;
-          dy = d.y - pointer.y;
-          dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < REACH) target = 1 - dist / REACH;
-        }
+      for (let i = 0; i < xs.length; i += 1) {
+        const x = xs[i];
+        const y = ys[i];
 
-        d.s += (target - d.s) * 0.14;
-        if (Math.abs(target - d.s) > 0.002) settling = true;
+        // Three slow, non-harmonic waves so the field never visibly repeats.
+        const wave =
+          Math.sin(x * 0.011 + t * 0.55) +
+          Math.sin(y * 0.014 - t * 0.4) +
+          Math.sin((x + y) * 0.007 + t * 0.28);
 
-        const e = d.s * d.s; // square the falloff so the halo stays tight
-        let px = d.x;
-        let py = d.y;
+        let band = Math.round(((wave / 3) * 0.5 + 0.5) * (BANDS - 1));
+        if (band < 0) band = 0;
+        else if (band > BANDS - 1) band = BANDS - 1;
 
-        if (e > 0.001 && dist > 0) {
-          px += (dx / dist) * e * PUSH;
-          py += (dy / dist) * e * PUSH;
-        }
+        buckets[band].push(i);
+      }
 
-        // Grey at rest, brand orange under the cursor.
-        const cr = Math.round(150 + e * 82);
-        const cg = Math.round(150 - e * 65);
-        const cb = Math.round(150 - e * 130);
+      for (let b = 0; b < BANDS; b += 1) {
+        const list = buckets[b];
+        if (!list.length) continue;
 
-        ctx.fillStyle = "rgba(" + cr + "," + cg + "," + cb + "," + (BASE_A + e * 0.7) + ")";
+        const k = b / (BANDS - 1);
+        ctx.fillStyle = "rgba(255,255,255," + (A_MIN + k * (A_MAX - A_MIN)).toFixed(3) + ")";
+        const radius = R_MIN + k * (R_MAX - R_MIN);
+
         ctx.beginPath();
-        ctx.arc(px, py, BASE_R * (1 + e * (MAX_SCALE - 1)), 0, Math.PI * 2);
+        for (let j = 0; j < list.length; j += 1) {
+          const i = list[j];
+          ctx.moveTo(xs[i] + radius, ys[i]);
+          ctx.arc(xs[i], ys[i], radius, 0, Math.PI * 2);
+        }
         ctx.fill();
       }
 
-      frame = settling ? requestAnimationFrame(paint) : null;
     };
 
-    const nudge = () => {
-      if (!frame) frame = requestAnimationFrame(paint);
+    const loop = (now) => {
+      draw((now - started) / 1000);
+      frame = requestAnimationFrame(loop);
+    };
+
+    const run = () => {
+      if (frame || reduced) return;
+      started = performance.now() - elapsed * 1000;
+      frame = requestAnimationFrame(loop);
+    };
+
+    const halt = () => {
+      if (!frame) return;
+      elapsed = (performance.now() - started) / 1000;
+      cancelAnimationFrame(frame);
+      frame = null;
     };
 
     build();
-    paint();
+    // Render once up front so the field is present on the first paint rather
+    // than a frame later, and so it still shows if rAF never runs.
+    draw(0);
+    run();
 
-    if (!reduced) {
-      window.addEventListener("pointermove", (event) => {
-        // Coarse pointers fire this on tap only, which would strand the halo.
-        if (event.pointerType === "touch") return;
-        pointer.x = event.clientX;
-        pointer.y = event.clientY;
-        pointer.active = true;
-        nudge();
-      }, { passive: true });
-
-      window.addEventListener("pointerleave", () => {
-        pointer.active = false;
-        nudge();
-      }, { passive: true });
-
-      document.addEventListener("visibilitychange", () => {
-        if (document.hidden) {
-          pointer.active = false;
-          nudge();
-        }
-      });
-    }
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) halt();
+      else run();
+    });
 
     let resizeTimer;
     const rebuild = () => {
       clearTimeout(resizeTimer);
       resizeTimer = setTimeout(() => {
         build();
-        paint();
+        draw(frame ? (performance.now() - started) / 1000 : elapsed);
       }, 120);
     };
 
     window.addEventListener("resize", rebuild);
 
     // A plain resize listener misses the case where the canvas has no size on
-    // first layout (hidden tab, deferred paint) and never fires afterwards, so
-    // the grid would stay empty. Observing the box itself catches that.
+    // first layout and never fires afterwards, leaving the grid empty.
     if ("ResizeObserver" in window) {
       new ResizeObserver(rebuild).observe(field);
     }

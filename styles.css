@@ -1304,11 +1304,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   .work-grid { grid-template-columns: 1fr; }
   .project.is-wide { grid-column: span 1; }
   .project.is-wide .project-media { aspect-ratio: 16 / 10; }
+  /* Both photos stay side by side on phones, cropped tighter rather than one
+     dropping out. The split evens up because the columns get narrow, and the
+     band goes taller so neither panel becomes a sliver. */
   .hero-band {
-    grid-template-columns: 1fr;
-    aspect-ratio: 16 / 10;
+    grid-template-columns: 0.82fr 1fr;
+    aspect-ratio: 4 / 3;
   }
-  .hero-panel--portrait { display: none; }
+
+  /* Narrow windows crop hard from the sides, so re-centre on the subjects. */
+  .hero-panel--wide img { object-position: 46% 50%; }
+  .hero-panel--portrait img { object-position: 50% 88%; }
   .hero-title {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -1364,7 +1370,7 @@ ul { margin: 0; padding: 0; list-style: none; }
     -webkit-backdrop-filter: blur(14px);
   }
 
-  .hero-band { aspect-ratio: 1 / 1; }
+  .hero-band { aspect-ratio: 5 / 4; }
   .badge { white-space: normal; }
   .stats { grid-template-columns: 1fr; gap: 1.75rem; }
   .stats > * { padding-bottom: 1.5rem; border-bottom: 1px solid var(--hairline); }
