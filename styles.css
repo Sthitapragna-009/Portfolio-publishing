@@ -110,6 +110,28 @@ body {
 }
 
 img { display: block; max-width: 100%; height: auto; }
+/* Paper-plane cursor: two facets in white and grey split by a crease, with a
+   dark outline. The outline is what keeps it readable on the light sections
+   and an inner shadow along the inside edge. Nose on the hotspot (2 2)
+   so the pointer reads from the tip. Safari ignores SVG cursors entirely,
+   hence the keyword fallback on every rule. */
+body {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='pl' x1='0.1' y1='0' x2='0.8' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23dedede'/%3E%3C/linearGradient%3E%3ClinearGradient id='pd' x1='0' y1='0' x2='0.6' y2='1'%3E%3Cstop offset='0' stop-color='%23b0b0b0'/%3E%3Cstop offset='1' stop-color='%237d7d7d'/%3E%3C/linearGradient%3E%3Cfilter id='pi' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeOffset dx='0.3' dy='0.7' in='SourceAlpha' result='o'/%3E%3CfeGaussianBlur in='o' stdDeviation='0.8' result='b'/%3E%3CfeComposite operator='out' in='SourceAlpha' in2='b' result='inv'/%3E%3CfeFlood flood-color='%23000000' flood-opacity='0.35' result='c'/%3E%3CfeComposite operator='in' in='c' in2='inv' result='sh'/%3E%3CfeComposite operator='over' in='sh' in2='SourceGraphic'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23pi)'%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='url(%23pl)'/%3E%3Cpath d='M3 3.6 L13.8 16.9 L7.2 26 Z' fill='url(%23pd)'/%3E%3C/g%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='none' stroke='%231c1c1c' stroke-width='1.15' stroke-linejoin='round'/%3E%3Cpath d='M3 3.6 L13.8 16.9' stroke='%231c1c1c' stroke-width='0.95' stroke-linecap='round'/%3E%3C/svg%3E") 4 4, auto;
+}
+
+/* Same plane over clickable things; the pointer keyword stays as the
+   fallback for browsers that ignore SVG cursors. */
+a,
+button,
+summary,
+[role="button"],
+label,
+input,
+textarea,
+select {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='pl' x1='0.1' y1='0' x2='0.8' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23dedede'/%3E%3C/linearGradient%3E%3ClinearGradient id='pd' x1='0' y1='0' x2='0.6' y2='1'%3E%3Cstop offset='0' stop-color='%23b0b0b0'/%3E%3Cstop offset='1' stop-color='%237d7d7d'/%3E%3C/linearGradient%3E%3Cfilter id='pi' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeOffset dx='0.3' dy='0.7' in='SourceAlpha' result='o'/%3E%3CfeGaussianBlur in='o' stdDeviation='0.8' result='b'/%3E%3CfeComposite operator='out' in='SourceAlpha' in2='b' result='inv'/%3E%3CfeFlood flood-color='%23000000' flood-opacity='0.35' result='c'/%3E%3CfeComposite operator='in' in='c' in2='inv' result='sh'/%3E%3CfeComposite operator='over' in='sh' in2='SourceGraphic'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23pi)'%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='url(%23pl)'/%3E%3Cpath d='M3 3.6 L13.8 16.9 L7.2 26 Z' fill='url(%23pd)'/%3E%3C/g%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='none' stroke='%231c1c1c' stroke-width='1.15' stroke-linejoin='round'/%3E%3Cpath d='M3 3.6 L13.8 16.9' stroke='%231c1c1c' stroke-width='0.95' stroke-linecap='round'/%3E%3C/svg%3E") 4 4, pointer;
+}
+
 a { color: inherit; text-decoration: none; }
 h1, h2, h3, h4 { margin: 0; }
 p  { margin: 0; }
@@ -210,7 +232,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 0.5rem 1.35rem 0.5rem 0.5rem;
   border-radius: var(--r-pill);
   border: 0;
-  cursor: pointer;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='pl' x1='0.1' y1='0' x2='0.8' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23dedede'/%3E%3C/linearGradient%3E%3ClinearGradient id='pd' x1='0' y1='0' x2='0.6' y2='1'%3E%3Cstop offset='0' stop-color='%23b0b0b0'/%3E%3Cstop offset='1' stop-color='%237d7d7d'/%3E%3C/linearGradient%3E%3Cfilter id='pi' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeOffset dx='0.3' dy='0.7' in='SourceAlpha' result='o'/%3E%3CfeGaussianBlur in='o' stdDeviation='0.8' result='b'/%3E%3CfeComposite operator='out' in='SourceAlpha' in2='b' result='inv'/%3E%3CfeFlood flood-color='%23000000' flood-opacity='0.35' result='c'/%3E%3CfeComposite operator='in' in='c' in2='inv' result='sh'/%3E%3CfeComposite operator='over' in='sh' in2='SourceGraphic'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23pi)'%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='url(%23pl)'/%3E%3Cpath d='M3 3.6 L13.8 16.9 L7.2 26 Z' fill='url(%23pd)'/%3E%3C/g%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='none' stroke='%231c1c1c' stroke-width='1.15' stroke-linejoin='round'/%3E%3Cpath d='M3 3.6 L13.8 16.9' stroke='%231c1c1c' stroke-width='0.95' stroke-linecap='round'/%3E%3C/svg%3E") 4 4, pointer;
   transition: color 0.3s var(--ease), box-shadow 0.3s var(--ease),
               transform 0.3s var(--ease);
 }
@@ -376,7 +398,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -384,39 +406,44 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .nav-links a {
   color: var(--ink-dim);
-  position: relative;
   transition: color 0.25s var(--ease);
 }
-.nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0; bottom: -4px;
-  width: 100%; height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform 0.35s var(--ease);
-}
 .nav-links a:hover { color: var(--ink); }
-.nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
 
 .nav-pill {
   display: inline-flex;
   align-items: center;
+  /* .ring-pill supplies this for the Photography item; the quiet variant
+     below has no ring, so the radius has to live here. */
+  border-radius: var(--r-pill);
   /* Padding, not a fixed height: the mobile menu renders this at a larger
      size and the ring has to grow with the label. */
   padding: 0.42rem 0.95rem;
   color: var(--ink);
 }
-.nav-pill::after { content: none; }
 .nav-pill:hover { color: var(--accent); }
+
+/* Same pill as Photography without the gradient ring: a plain hairline that
+   picks up the accent on hover. Inset shadow rather than a border, so the
+   outline costs no layout width. */
+.nav-pill--quiet {
+  /* --hairline (14%) is too faint to read as a button beside the gradient
+     ring, so this outline is its own slightly stronger value. */
+  box-shadow: inset 0 0 0 1px rgba(249, 249, 249, 0.3);
+  transition: box-shadow 0.3s var(--ease), color 0.25s var(--ease);
+}
+
+.nav-pill--quiet:hover,
+.nav-pill--quiet:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
 
 .nav-toggle {
   display: none;
   background: none;
   border: 0;
   padding: 0.5rem;
-  cursor: pointer;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='pl' x1='0.1' y1='0' x2='0.8' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23dedede'/%3E%3C/linearGradient%3E%3ClinearGradient id='pd' x1='0' y1='0' x2='0.6' y2='1'%3E%3Cstop offset='0' stop-color='%23b0b0b0'/%3E%3Cstop offset='1' stop-color='%237d7d7d'/%3E%3C/linearGradient%3E%3Cfilter id='pi' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeOffset dx='0.3' dy='0.7' in='SourceAlpha' result='o'/%3E%3CfeGaussianBlur in='o' stdDeviation='0.8' result='b'/%3E%3CfeComposite operator='out' in='SourceAlpha' in2='b' result='inv'/%3E%3CfeFlood flood-color='%23000000' flood-opacity='0.35' result='c'/%3E%3CfeComposite operator='in' in='c' in2='inv' result='sh'/%3E%3CfeComposite operator='over' in='sh' in2='SourceGraphic'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23pi)'%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='url(%23pl)'/%3E%3Cpath d='M3 3.6 L13.8 16.9 L7.2 26 Z' fill='url(%23pd)'/%3E%3C/g%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='none' stroke='%231c1c1c' stroke-width='1.15' stroke-linejoin='round'/%3E%3Cpath d='M3 3.6 L13.8 16.9' stroke='%231c1c1c' stroke-width='0.95' stroke-linecap='round'/%3E%3C/svg%3E") 4 4, pointer;
   color: var(--ink);
 }
 .nav-toggle span {
@@ -1083,7 +1110,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding-block: clamp(1.25rem, 2.6vw, 2rem);
   background: none;
   border: 0;
-  cursor: pointer;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='pl' x1='0.1' y1='0' x2='0.8' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23dedede'/%3E%3C/linearGradient%3E%3ClinearGradient id='pd' x1='0' y1='0' x2='0.6' y2='1'%3E%3Cstop offset='0' stop-color='%23b0b0b0'/%3E%3Cstop offset='1' stop-color='%237d7d7d'/%3E%3C/linearGradient%3E%3Cfilter id='pi' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeOffset dx='0.3' dy='0.7' in='SourceAlpha' result='o'/%3E%3CfeGaussianBlur in='o' stdDeviation='0.8' result='b'/%3E%3CfeComposite operator='out' in='SourceAlpha' in2='b' result='inv'/%3E%3CfeFlood flood-color='%23000000' flood-opacity='0.35' result='c'/%3E%3CfeComposite operator='in' in='c' in2='inv' result='sh'/%3E%3CfeComposite operator='over' in='sh' in2='SourceGraphic'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23pi)'%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='url(%23pl)'/%3E%3Cpath d='M3 3.6 L13.8 16.9 L7.2 26 Z' fill='url(%23pd)'/%3E%3C/g%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='none' stroke='%231c1c1c' stroke-width='1.15' stroke-linejoin='round'/%3E%3Cpath d='M3 3.6 L13.8 16.9' stroke='%231c1c1c' stroke-width='0.95' stroke-linecap='round'/%3E%3C/svg%3E") 4 4, pointer;
   text-align: left;
   color: inherit;
   font: inherit;
