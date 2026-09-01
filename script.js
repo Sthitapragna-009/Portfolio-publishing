@@ -217,6 +217,72 @@
     }
   });
 
+  /* ---------- Hero photo carousel (small screens only) ---------- */
+  const heroBand = document.querySelector(".hero-band");
+
+  if (heroBand) {
+    const panels = [...heroBand.querySelectorAll(".hero-panel")];
+    const small = window.matchMedia("(max-width: 860px)");
+    const HOLD = 5000; // dwell before the next photo breathes in
+
+    let shown = 0;
+    let cycle = null;
+
+    const reveal = (i) => {
+      panels.forEach((panel, n) => panel.classList.toggle("is-showing", n === i));
+    };
+
+    const advancePhoto = () => {
+      shown = (shown + 1) % panels.length;
+      reveal(shown);
+    };
+
+    const beginCycle = () => {
+      clearInterval(cycle);
+      cycle = null;
+      // Reduced motion still gets a photo, just no cycling between them.
+      if (!reduced && panels.length > 1) cycle = setInterval(advancePhoto, HOLD);
+    };
+
+    const enterCarousel = () => {
+      heroBand.classList.add("is-carousel");
+      shown = 0;
+      reveal(0);
+      beginCycle();
+    };
+
+    const exitCarousel = () => {
+      clearInterval(cycle);
+      cycle = null;
+      heroBand.classList.remove("is-carousel");
+      // Both panels sit side by side again, so no one photo is "showing".
+      panels.forEach((panel) => panel.classList.remove("is-showing"));
+    };
+
+    const syncCarousel = () => {
+      if (small.matches) {
+        if (!heroBand.classList.contains("is-carousel")) enterCarousel();
+      } else if (heroBand.classList.contains("is-carousel")) {
+        exitCarousel();
+      }
+    };
+
+    syncCarousel();
+
+    if (small.addEventListener) small.addEventListener("change", syncCarousel);
+    else small.addListener(syncCarousel); // Safari < 14
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        clearInterval(cycle);
+        cycle = null;
+      } else if (heroBand.classList.contains("is-carousel")) {
+        beginCycle();
+      }
+    });
+  }
+
+
   /* ---------- Ambient dot field ---------- */
   const field = document.getElementById("dotField");
 

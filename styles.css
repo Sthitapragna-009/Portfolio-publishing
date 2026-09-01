@@ -1315,6 +1315,30 @@ ul { margin: 0; padding: 0; list-style: none; }
   /* Narrow windows crop hard from the sides, so re-centre on the subjects. */
   .hero-panel--wide img { object-position: 46% 50%; }
   .hero-panel--portrait img { object-position: 50% 88%; }
+
+  /* Carousel. Gated on a class the script adds, so if JS never runs the
+     side-by-side layout above stands rather than leaving both photos at
+     opacity 0. Both panels share one grid cell and cross-fade. */
+  .hero-band.is-carousel {
+    grid-template-columns: 1fr;
+    aspect-ratio: 4 / 5;
+  }
+
+  .hero-band.is-carousel .hero-panel {
+    grid-area: 1 / 1;
+    opacity: 0;
+    transform: scale(1.05);
+    transition: opacity 1.2s var(--ease), transform 1.2s var(--ease);
+  }
+
+  .hero-band.is-carousel .hero-panel.is-showing {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* One photo fills the width now, so widen the crops back out. */
+  .hero-band.is-carousel .hero-panel--wide img { object-position: 54% 50%; }
+  .hero-band.is-carousel .hero-panel--portrait img { object-position: 50% 80%; }
   .hero-title {
     grid-template-columns: 1fr;
     justify-items: center;
