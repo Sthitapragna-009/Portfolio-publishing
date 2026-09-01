@@ -80,7 +80,7 @@
 
   --r-sm:  8px;
   --r-md:  12px;
-  --r-lg:  30px;
+  --r-lg:  16px;
   --r-pill: 100px;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -650,6 +650,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .hero-word-item.is-active { transform: translateY(0); }
 
+/* No shadow on the word. The headline's own 0 2px 34px would be cut square
+   by the clip above and read as a box; a tight shadow avoids that but sits
+   close enough under the glyph edges to darken and mute the gradient fill.
+   The gradient carries enough contrast on its own. */
+.hero-word-item { text-shadow: none; }
+
 @supports (-webkit-background-clip: text) or (background-clip: text) {
   .hero-word-item {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='e'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .34 .34 .34 0 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23e)' opacity='0.38'/%3E%3C/svg%3E"), var(--ember-gradient);
@@ -855,13 +861,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  object-position: 50% 34%;
+  /* object-position only pans the crop; the scale is what actually enlarges
+     me in frame. Together they drop most of the arch headspace above. */
+  object-position: 50% 88%;
+  transform: scale(1.52);
+  transform-origin: 50% 46%;
   filter: grayscale(1) contrast(1.06);
   transition: transform 0.9s var(--ease), filter 0.6s var(--ease);
 }
 
 .about-portrait:hover img {
-  transform: scale(1.04);
+  transform: scale(1.58);
   filter: grayscale(0.35) contrast(1.02);
 }
 
@@ -1339,6 +1349,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   /* One photo fills the width now, so widen the crops back out. */
   .hero-band.is-carousel .hero-panel--wide img { object-position: 54% 50%; }
   .hero-band.is-carousel .hero-panel--portrait img { object-position: 50% 80%; }
+  /* The rotating word carries the hero on a phone, so give it more size
+     than the static half rather than matching it. */
+  .hero-word { font-size: 1.3em; }
+
   .hero-title {
     grid-template-columns: 1fr;
     justify-items: center;
