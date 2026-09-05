@@ -1137,46 +1137,76 @@ ul { margin: 0; padding: 0; list-style: none; }
               backdrop-filter 0.5s var(--ease);
 }
 
-.project-foot::before {
-  content: "";
+/* The panel. Holds the base gradient (which stays put) and clips the two
+   drifting bloom layers inside it. */
+.foot-glass {
   position: absolute;
   inset: 0;
   z-index: -1;
+  overflow: hidden;
   opacity: 0;
   transition: opacity 0.5s var(--ease);
+  pointer-events: none;
 }
 
-.project[data-accent] .project-foot::before {
-  background-image:
-    radial-gradient(115% 85% at 6% 122%, var(--glass-near), transparent 60%),
-    radial-gradient(85% 78% at 104% 84%, var(--glass-far), transparent 58%),
-    radial-gradient(150% 130% at 52% 140%, var(--glass-mid), transparent 68%),
-    linear-gradient(180deg, var(--glass-deep) 0%, rgba(10, 30, 110, 0.86) 52%,
-                            rgba(23, 72, 220, 0.9) 100%);
-  /* Each blob gets a tile larger than the panel so it has room to drift; the
-     flat base layer stays at 100% and is pinned in the keyframes. */
-  background-size: 150% 220%, 160% 200%, 180% 240%, 100% 100%;
-  background-repeat: no-repeat;
-  background-position: 0% 100%, 100% 60%, 50% 100%, 0 0;
+.project[data-accent] .foot-glass {
+  background: linear-gradient(180deg, var(--glass-deep) 0%,
+                              rgba(10, 30, 110, 0.86) 52%,
+                              rgba(23, 72, 220, 0.9) 100%);
   box-shadow: inset 0 1px 0 rgba(249, 249, 249, 0.22);
 }
 
-/* Slow, uneven drift so the blooms cross each other rather than sliding as a
-   block. Runs only while hovered — idle cards shouldn't be repainting. */
-@keyframes cardWaves {
-  0%   { background-position:  0% 100%, 100% 60%, 50% 100%, 0 0; }
-  50%  { background-position: 18%  88%,  82% 74%, 36%  92%, 0 0; }
-  100% { background-position:  6%  96%,  94% 50%, 62% 106%, 0 0; }
+/* Two bloom layers, each oversized so it can travel well beyond the panel
+   without its edge ever showing. Transform-driven, so the browser composites
+   the motion instead of repainting the gradient every frame. */
+.project[data-accent] .foot-glass::before,
+.project[data-accent] .foot-glass::after {
+  content: "";
+  position: absolute;
+  inset: -35%;
+  animation-duration: 14s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  animation-play-state: paused;
+  will-change: transform;
+}
+
+.project[data-accent] .foot-glass::before {
+  background:
+    radial-gradient(60% 70% at 30% 88%, var(--glass-near), transparent 62%),
+    radial-gradient(50% 60% at 86% 28%, var(--glass-far), transparent 60%);
+  animation-name: bloomDriftA;
+}
+
+.project[data-accent] .foot-glass::after {
+  background:
+    radial-gradient(58% 66% at 72% 100%, var(--glass-mid), transparent 64%),
+    radial-gradient(46% 56% at 14% 38%, rgba(96, 152, 255, 0.55), transparent 60%);
+  animation-name: bloomDriftB;
+  animation-duration: 19s;
+}
+
+/* Different durations and opposing paths, so the two sets slide across each
+   other and the light reads as waves rather than one block sliding. */
+@keyframes bloomDriftA {
+  from { transform: translate3d(-9%, 7%, 0) scale(1); }
+  to   { transform: translate3d(11%, -9%, 0) scale(1.2); }
+}
+@keyframes bloomDriftB {
+  from { transform: translate3d(8%, -6%, 0) scale(1.14); }
+  to   { transform: translate3d(-10%, 8%, 0) scale(1); }
 }
 
 .project[data-accent]:hover .project-foot {
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   backdrop-filter: blur(18px) saturate(150%);
 }
-.project[data-accent]:hover .project-foot::before {
-  opacity: 1;
-  animation: cardWaves 22s ease-in-out infinite alternate;
-}
+.project[data-accent]:hover .foot-glass { opacity: 1; }
+/* Paused until hovered, so idle cards composite nothing — and the motion
+   resumes where it left off instead of snapping back to the start. */
+.project[data-accent]:hover .foot-glass::before,
+.project[data-accent]:hover .foot-glass::after { animation-play-state: running; }
 
 /* Description and tags are grey by default; on the panel they go white.
    The title already resolves to white, so it needs nothing. */
