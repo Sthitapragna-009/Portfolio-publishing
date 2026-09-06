@@ -298,6 +298,16 @@
 
     let xs = [];
     let ys = [];
+    // Column / row index per dot, so the wave can be read from tables.
+    let ci = [];
+    let ri = [];
+    let cols = 0;
+    let rows = 0;
+    let colT = null;
+    let rowT = null;
+    let diagT = null;
+    let offX = 0;
+    let offY = 0;
     let w = 0;
     let h = 0;
     let frame = null;
@@ -323,33 +333,54 @@
 
       xs = [];
       ys = [];
-      const cols = Math.ceil(w / SPACING) + 1;
-      const rows = Math.ceil(h / SPACING) + 1;
-      const offX = (w - (cols - 1) * SPACING) / 2;
-      const offY = (h - (rows - 1) * SPACING) / 2;
+      ci = [];
+      ri = [];
+      cols = Math.ceil(w / SPACING) + 1;
+      rows = Math.ceil(h / SPACING) + 1;
+      offX = (w - (cols - 1) * SPACING) / 2;
+      offY = (h - (rows - 1) * SPACING) / 2;
 
       for (let r = 0; r < rows; r += 1) {
         for (let c = 0; c < cols; c += 1) {
           xs.push(offX + c * SPACING);
           ys.push(offY + r * SPACING);
+          ci.push(c);
+          ri.push(r);
         }
       }
+
+      // The three waves are functions of x, of y, and of (x + y). On a regular
+      // grid each of those takes only a handful of distinct values, so they can
+      // be tabulated once per frame instead of evaluated per dot.
+      colT = new Float64Array(cols);
+      rowT = new Float64Array(rows);
+      diagT = new Float64Array(cols + rows);
     };
 
     const draw = (t) => {
+      if (!colT) return;
+
       ctx.clearRect(0, 0, w, h);
 
       for (let b = 0; b < BANDS; b += 1) buckets[b].length = 0;
 
-      for (let i = 0; i < xs.length; i += 1) {
-        const x = xs[i];
-        const y = ys[i];
+      // Three slow, non-harmonic waves so the field never visibly repeats.
+      // Tabulated per column / row / diagonal — a few hundred sin() calls a
+      // frame instead of three per dot.
+      for (let c = 0; c < cols; c += 1) {
+        colT[c] = Math.sin((offX + c * SPACING) * 0.011 + t * 0.55);
+      }
+      for (let r = 0; r < rows; r += 1) {
+        rowT[r] = Math.sin((offY + r * SPACING) * 0.014 - t * 0.4);
+      }
+      for (let d = 0, n = cols + rows; d < n; d += 1) {
+        diagT[d] = Math.sin((offX + offY + d * SPACING) * 0.007 + t * 0.28);
+      }
 
-        // Three slow, non-harmonic waves so the field never visibly repeats.
-        const wave =
-          Math.sin(x * 0.011 + t * 0.55) +
-          Math.sin(y * 0.014 - t * 0.4) +
-          Math.sin((x + y) * 0.007 + t * 0.28);
+      for (let i = 0; i < xs.length; i += 1) {
+        const c = ci[i];
+        const r = ri[i];
+        const wave = colT[c] + rowT[r] + diagT[c + r];
 
         let band = Math.round(((wave / 3) * 0.5 + 0.5) * (BANDS - 1));
         if (band < 0) band = 0;

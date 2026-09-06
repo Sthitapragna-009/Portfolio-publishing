@@ -71,6 +71,7 @@
   --font-wordmark: var(--font-display);
 
   --wrap:    96rem;
+  --r-hero:  8px;   /* hero panels: squarer than the cards */
   --gutter:  clamp(1.25rem, 4vw, 3.5rem);
   --section: clamp(5rem, 11vw, 10rem);
 
@@ -575,8 +576,23 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: relative;
   margin: 0;
   overflow: hidden;
-  border-radius: var(--r-lg);
+  border-radius: var(--r-hero);
   background: var(--bg-deep);
+}
+
+/* Grain, per panel. This previously sat on .hero-band as a .grain overlay,
+   which painted one square rectangle across both photos AND the gap between
+   them — a hard-cornered box over the rounded panels. Clipped by the panel's
+   own overflow now, so it follows the corners and skips the gap. */
+.hero-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
 }
 
 .hero-panel img {
@@ -585,6 +601,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   object-fit: cover;
   transform: scale(1.02);
   transition: transform 1.2s var(--ease);
+  will-change: transform;
 }
 
 .hero-band:hover .hero-panel img { transform: scale(1.05); }
@@ -806,6 +823,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding-right: clamp(2rem, 5vw, 4.5rem);
   flex: 0 0 auto;
   animation: scrollX 34s linear infinite;
+  will-change: transform;
 }
 
 .marquee:hover .marquee-track { animation-play-state: paused; }
@@ -993,12 +1011,11 @@ ul { margin: 0; padding: 0; list-style: none; }
   overflow: hidden;
   background: var(--bg-light-2);
   border: 1px solid var(--hairline-dark);
-  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  transition: transform 0.5s var(--ease);
 }
 
 .project:hover {
   transform: translateY(-6px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.18);
 }
 
 .project.is-wide { grid-column: span 2; }
@@ -1018,6 +1035,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   height: 100%;
   object-fit: cover;
   transition: transform 0.9s var(--ease);
+  will-change: transform;
 }
 .project:hover .project-media img { transform: scale(1.05); }
 
