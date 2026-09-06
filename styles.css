@@ -70,7 +70,7 @@
   --font-accent:  var(--font-display);
   --font-wordmark: var(--font-display);
 
-  --wrap:    82rem;
+  --wrap:    96rem;
   --gutter:  clamp(1.25rem, 4vw, 3.5rem);
   --section: clamp(5rem, 11vw, 10rem);
 
