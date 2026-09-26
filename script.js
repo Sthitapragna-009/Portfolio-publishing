@@ -108,48 +108,6 @@
     revealables.forEach((el) => revealObserver.observe(el));
   }
 
-  /* ---------- Animated stat counters ---------- */
-  const counters = document.querySelectorAll("[data-count]");
-
-  const runCount = (el) => {
-    const target = Number(el.dataset.count) || 0;
-
-    if (reduced) {
-      el.textContent = String(target);
-      return;
-    }
-
-    const duration = 1400;
-    const start = performance.now();
-
-    const tick = (now) => {
-      const p = Math.min((now - start) / duration, 1);
-      // easeOutExpo
-      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
-      el.textContent = String(Math.round(target * eased));
-      if (p < 1) requestAnimationFrame(tick);
-    };
-
-    requestAnimationFrame(tick);
-  };
-
-  if (!("IntersectionObserver" in window)) {
-    counters.forEach(runCount);
-  } else {
-    const countObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          runCount(entry.target);
-          countObserver.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.6 }
-    );
-
-    counters.forEach((el) => countObserver.observe(el));
-  }
-
   /* ---------- Capabilities accordion ---------- */
   const capList = document.getElementById("capList");
 
