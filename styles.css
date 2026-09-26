@@ -64,6 +64,23 @@
   --hairline:      rgba(249, 249, 249, 0.14);
   --hairline-dark: rgba(0, 0, 0, 0.14);
 
+  /* Roles the light theme has to repoint. --on-ink is whatever reads on top
+     of an --ink fill, so a chip stays legible when ink flips black<->white. */
+  --on-ink:       var(--primary);
+  --surface:      rgba(249, 249, 249, 0.05);
+  --surface-hi:   rgba(249, 249, 249, 0.1);
+  --surface-edge: rgba(249, 249, 249, 0.28);
+  --ghost-ink:    rgba(249, 249, 249, 0.08);
+  --nav-bg:       rgba(0, 0, 0, 0.76);
+  --nav-bg-solid: rgba(0, 0, 0, 0.96);
+  --outline-soft: rgba(249, 249, 249, 0.3);
+  --tile-a:       var(--gray-dark);
+  --tile-b:       var(--primary);
+  --tile-ink:     rgba(249, 249, 249, 0.24);
+  /* Read by the canvas dot field. */
+  --dot-rgb:      255, 255, 255;
+  --dot-strength: 1;
+
   --font-display: "Bricolage Grotesque", "Arial Black", "Helvetica Neue", sans-serif;
   --font-body:    "Lato", system-ui, "Segoe UI", Arial, sans-serif;
   /* Numerals and indices: the display face carried at a light weight. */
@@ -85,6 +102,71 @@
   --r-pill: 100px;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  color-scheme: dark;
+}
+
+/* ---------- Light theme ----------
+   Only the roles move. Every rule downstream already reads through them,
+   including the .section-light remap, so nothing else needs a light variant. */
+
+[data-theme="light"] {
+  --bg:          var(--white);
+  --bg-deep:     var(--white);
+  --bg-card:     #e8e8e8;
+  --bg-light-2:  rgba(0, 0, 0, 0.05);
+
+  --ink:         var(--primary);
+  --ink-dim:     var(--gray);
+  /* Kept a touch lighter than --ink-dim but still over 4.5:1 on the page. */
+  --ink-faint:   #6e6e6e;
+  --ink-dark:    var(--primary);
+  --ink-dark-dim: var(--gray);
+
+  --on-ink:       var(--white);
+  --surface:      rgba(0, 0, 0, 0.045);
+  --surface-hi:   rgba(0, 0, 0, 0.08);
+  --surface-edge: rgba(0, 0, 0, 0.18);
+  --ghost-ink:    rgba(0, 0, 0, 0.07);
+  --nav-bg:       rgba(249, 249, 249, 0.82);
+  --nav-bg-solid: rgba(249, 249, 249, 0.97);
+  --outline-soft: rgba(0, 0, 0, 0.3);
+  --tile-a:       #d9d9d9;
+  --tile-b:       #bcbcbc;
+  --tile-ink:     rgba(0, 0, 0, 0.22);
+
+  --hairline:      rgba(0, 0, 0, 0.12);
+  --hairline-dark: rgba(0, 0, 0, 0.12);
+
+  --dot-rgb:      0, 0, 0;
+  --dot-strength: 0.62;
+
+  color-scheme: light;
+}
+
+/* Theme switch.
+   Everything colour-bearing has to move together — fading the backgrounds
+   while the text snaps is what reads as harsh. A blanket colour transition
+   left on permanently would fight every hover, so it is scoped to a class
+   that only exists for the length of the swap.
+   transform is deliberately not in the list: cards mid-hover should keep
+   their own timing rather than be dragged to 0.5s. */
+html.theme-switching,
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition-property: background-color, background-image, border-color,
+                       color, fill, stroke, box-shadow, outline-color !important;
+  transition-duration: 0.5s !important;
+  transition-timing-function: var(--ease) !important;
+  transition-delay: 0s !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-switching,
+  html.theme-switching *,
+  html.theme-switching *::before,
+  html.theme-switching *::after { transition-duration: 0.001ms !important; }
 }
 
 /* ---------- Reset ---------- */
@@ -195,7 +277,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   letter-spacing: -0.03em;
   line-height: 0.9;
   font-size: clamp(3.25rem, 11vw, 9rem);
-  color: rgba(249, 249, 249, 0.08);
+  color: var(--ghost-ink);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
@@ -315,7 +397,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .nav.is-stuck {
-  background: rgba(0, 0, 0, 0.76);
+  background: var(--nav-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom-color: var(--hairline);
@@ -389,7 +471,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   place-items: center;
   height: 2rem;
   padding-inline: 0.8rem;
-  color: var(--white);
+  color: var(--ink);
   font-family: var(--font-wordmark);
   font-weight: 700;
   font-size: 0.875rem;
@@ -430,7 +512,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .nav-pill--quiet {
   /* --hairline (14%) is too faint to read as a button beside the gradient
      ring, so this outline is its own slightly stronger value. */
-  box-shadow: inset 0 0 0 1px rgba(249, 249, 249, 0.3);
+  box-shadow: inset 0 0 0 1px var(--outline-soft);
   transition: box-shadow 0.3s var(--ease), color 0.25s var(--ease);
 }
 
@@ -510,6 +592,67 @@ ul { margin: 0; padding: 0; list-style: none; }
   opacity: 1;
   margin-left: 0.7rem;
 }
+
+/* --- Day / night switch, docked under the Get in touch button ---------- */
+
+.theme-toggle {
+  position: fixed;
+  right: clamp(0.9rem, 2vw, 1.75rem);
+  /* .edge-cta sits at 64% pulled up by half its height; this clears its
+     bottom edge by ~0.75rem. */
+  top: calc(64% + 1.95rem);
+  z-index: 90;
+  width: 3.375rem;
+  height: 1.875rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  background: var(--brand-gradient);
+  background-size: 220% 100%;
+  background-position: 0% 50%;
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+  transition: background-position 0.6s var(--ease), transform 0.3s var(--ease),
+              box-shadow 0.3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  background-position: 100% 50%;
+  transform: scale(1.04);
+}
+
+.theme-toggle-knob {
+  position: absolute;
+  top: 0.1875rem;
+  left: 0.1875rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--primary);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  transition: transform 0.4s var(--ease);
+}
+
+/* Checked = light theme; the knob travels to the sun side. */
+.theme-toggle[aria-checked="true"] .theme-toggle-knob {
+  transform: translateX(1.5rem);
+}
+
+.theme-toggle-knob svg {
+  grid-area: 1 / 1;
+  transition: opacity 0.3s var(--ease), transform 0.4s var(--ease);
+}
+
+.theme-toggle .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+.theme-toggle .icon-moon { opacity: 1; transform: none; }
+
+.theme-toggle[aria-checked="true"] .icon-sun { opacity: 1; transform: none; }
+.theme-toggle[aria-checked="true"] .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
 
 /* Touch devices never fire hover, which would leave an unlabelled circle.
    Show the label outright there instead. */
@@ -822,7 +965,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   text-transform: uppercase;
   letter-spacing: -0.03em;
   font-size: clamp(1.1rem, 2.2vw, 1.75rem);
-  color: var(--gray-light);
+  color: var(--ink-dim);
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
@@ -853,7 +996,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   --ink-dark: var(--ink);
   --ink-dark-dim: var(--ink-dim);
   --hairline-dark: var(--hairline);
-  --bg-light-2: rgba(249, 249, 249, 0.05);
+  --bg-light-2: var(--surface);
 }
 
 .section-head {
@@ -985,8 +1128,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   place-items: center;
   background:
     radial-gradient(120% 90% at 30% 10%, rgba(232, 80, 2, 0.32), transparent 60%),
-    linear-gradient(140deg, var(--gray-dark), var(--primary));
-  color: rgba(249, 249, 249, 0.24);
+    linear-gradient(140deg, var(--tile-a), var(--tile-b));
+  color: var(--tile-ink);
   font-family: var(--font-display);
   font-weight: 800;
   text-transform: uppercase;
@@ -1032,8 +1175,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  background: var(--ink-dark);
-  color: var(--white);
+  background: var(--ink);
+  color: var(--on-ink);
   transition: background-color 0.35s var(--ease), transform 0.45s var(--ease);
 }
 .project:hover .project-arrow {
@@ -1276,15 +1419,15 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border-radius: var(--r-lg);
   border: 1px solid var(--hairline-dark);
-  background: rgba(249, 249, 249, 0.05);
+  background: var(--surface);
   transition: background-color 0.4s var(--ease), transform 0.4s var(--ease),
               border-color 0.4s var(--ease);
 }
 
 .step:hover {
   transform: translateY(-5px);
-  background: rgba(249, 249, 249, 0.1);
-  border-color: rgba(249, 249, 249, 0.28);
+  background: var(--surface-hi);
+  border-color: var(--surface-edge);
 }
 
 .step-index {
@@ -1315,8 +1458,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: color 0.4s var(--ease);
 }
 
-.step:hover .step-name { color: var(--white); }
-.step:hover .step-copy { color: rgba(249, 249, 249, 0.7); }
 
 /* ============================================================
    CONTACT
@@ -1490,13 +1631,18 @@ ul { margin: 0; padding: 0; list-style: none; }
   .edge-cta:hover,
   .edge-cta:focus-visible { transform: scale(1.02); }
 
+  .theme-toggle {
+    top: auto;
+    bottom: calc(clamp(1rem, 4vw, 1.75rem) + 3.25rem);
+  }
+
   .wordmark-name { font-size: 0.85rem; }
   .wordmark .glyph { height: 1.75rem; padding-inline: 0.7rem; font-size: 0.8125rem; }
 
   .nav-toggle { display: block; }
 
   .nav.is-open {
-    background: rgba(0, 0, 0, 0.96);
+    background: var(--nav-bg-solid);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
   }
@@ -1515,7 +1661,7 @@ ul { margin: 0; padding: 0; list-style: none; }
     font-size: 1.25rem;
     /* This panel sits below the nav's own box, so it cannot inherit that
        background — it needs its own or the links sit on the hero photo. */
-    background: rgba(0, 0, 0, 0.96);
+    background: var(--nav-bg-solid);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
   }
@@ -1553,13 +1699,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .section-light .btn-dark {
   background: var(--ink);
-  color: var(--primary);
+  color: var(--on-ink);
 }
 
-.section-light .project-arrow {
-  background: var(--ink);
-  color: var(--primary);
-}
 .section-light .project:hover .project-arrow {
   color: var(--white);
 }

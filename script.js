@@ -11,6 +11,62 @@
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  /* ---------- Theme ---------- */
+  const themeToggle = document.getElementById("themeToggle");
+  const root = document.documentElement;
+
+  let switchTimer = null;
+  const SWITCH_MS = 500;
+
+  const applyTheme = (name, animate) => {
+    const eased = Boolean(animate) && !reduced;
+
+    if (eased) {
+      root.classList.add("theme-switching");
+      clearTimeout(switchTimer);
+      switchTimer = setTimeout(() => {
+        root.classList.remove("theme-switching");
+      }, SWITCH_MS);
+    }
+
+    root.dataset.theme = name;
+    if (themeToggle) {
+      themeToggle.setAttribute("aria-checked", String(name === "light"));
+      // The label names the destination, not the current state.
+      themeToggle.querySelector(".sr-only").textContent =
+        name === "light" ? "Dark theme" : "Light theme";
+    }
+    // Anything painting outside CSS (the canvas) re-reads its colours here.
+    document.dispatchEvent(new CustomEvent("themechange", {
+      detail: { animate: eased, duration: SWITCH_MS }
+    }));
+  };
+
+  // The inline head script already picked the starting theme; sync the button.
+  applyTheme(root.dataset.theme === "light" ? "light" : "dark", false);
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", () => {
+      const next = root.dataset.theme === "light" ? "dark" : "light";
+      applyTheme(next, true);
+      try {
+        localStorage.setItem("theme", next);
+      } catch (e) {
+        /* private mode: the choice just won't survive a reload */
+      }
+    });
+  }
+
+  // Follow the OS only while the visitor hasn't made their own choice.
+  const scheme = window.matchMedia("(prefers-color-scheme: light)");
+  const onSchemeChange = (e) => {
+    let saved = null;
+    try { saved = localStorage.getItem("theme"); } catch (err) { /* ignore */ }
+    if (!saved) applyTheme(e.matches ? "light" : "dark", true);
+  };
+  if (scheme.addEventListener) scheme.addEventListener("change", onSchemeChange);
+  else if (scheme.addListener) scheme.addListener(onSchemeChange);
+
   /* ---------- Sticky nav state ---------- */
   const nav = document.getElementById("nav");
   const setStuck = () => {
@@ -266,6 +322,46 @@
     let diagT = null;
     let offX = 0;
     let offY = 0;
+    let dotR = 255;
+    let dotG = 255;
+    let dotB = 255;
+    let dotScale = 1;
+    // Colour fade state, used when the theme changes under us.
+    let fadeFrom = null;
+    let fadeTo = null;
+    let fadeStart = 0;
+    let fadeMs = 500;
+
+    const targetDotColour = () => {
+      const cs = getComputedStyle(document.documentElement);
+      const parts = (cs.getPropertyValue("--dot-rgb") || "255,255,255")
+        .split(",")
+        .map((n) => parseFloat(n) || 0);
+      return {
+        r: parts[0],
+        g: parts[1],
+        b: parts[2],
+        s: parseFloat(cs.getPropertyValue("--dot-strength")) || 1
+      };
+    };
+
+    const setDotColour = (c) => {
+      dotR = c.r; dotG = c.g; dotB = c.b; dotScale = c.s;
+    };
+
+    const readDotColour = () => setDotColour(targetDotColour());
+
+    // Advanced from draw(), so the fade rides the frames already being drawn.
+    const stepFade = () => {
+      if (!fadeTo) return;
+      const p = Math.min((performance.now() - fadeStart) / fadeMs, 1);
+      const e = p * p * (3 - 2 * p); // smoothstep, to match the CSS easing
+      dotR = fadeFrom.r + (fadeTo.r - fadeFrom.r) * e;
+      dotG = fadeFrom.g + (fadeTo.g - fadeFrom.g) * e;
+      dotB = fadeFrom.b + (fadeTo.b - fadeFrom.b) * e;
+      dotScale = fadeFrom.s + (fadeTo.s - fadeFrom.s) * e;
+      if (p >= 1) { fadeTo = null; fadeFrom = null; }
+    };
     let w = 0;
     let h = 0;
     let frame = null;
@@ -280,6 +376,7 @@
     for (let b = 0; b < BANDS; b += 1) buckets.push([]);
 
     const build = () => {
+      readDotColour();
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       w = field.clientWidth;
       h = field.clientHeight;
@@ -318,6 +415,8 @@
     const draw = (t) => {
       if (!colT) return;
 
+      stepFade();
+
       ctx.clearRect(0, 0, w, h);
 
       for (let b = 0; b < BANDS; b += 1) buckets[b].length = 0;
@@ -352,7 +451,9 @@
         if (!list.length) continue;
 
         const k = b / (BANDS - 1);
-        ctx.fillStyle = "rgba(255,255,255," + (A_MIN + k * (A_MAX - A_MIN)).toFixed(3) + ")";
+        const alpha = (A_MIN + k * (A_MAX - A_MIN)) * dotScale;
+        ctx.fillStyle = "rgba(" + Math.round(dotR) + "," + Math.round(dotG) +
+          "," + Math.round(dotB) + "," + alpha.toFixed(3) + ")";
         const radius = R_MIN + k * (R_MAX - R_MIN);
 
         ctx.beginPath();
@@ -389,6 +490,27 @@
     // than a frame later, and so it still shows if rAF never runs.
     draw(0);
     run();
+
+    // Re-read the palette when the theme flips; redraw immediately so the
+    // field doesn't hold the old colour until the next frame.
+    document.addEventListener("themechange", (event) => {
+      const wantsFade = event.detail && event.detail.animate;
+      const to = targetDotColour();
+
+      // No fade possible without a running loop (reduced motion, hidden tab),
+      // so land on the new colour immediately in that case.
+      if (!wantsFade || reduced || !frame) {
+        setDotColour(to);
+        fadeTo = null;
+        draw(frame ? (performance.now() - started) / 1000 : elapsed);
+        return;
+      }
+
+      fadeFrom = { r: dotR, g: dotG, b: dotB, s: dotScale };
+      fadeTo = to;
+      fadeMs = (event.detail && event.detail.duration) || 500;
+      fadeStart = performance.now();
+    });
 
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) halt();
