@@ -43,7 +43,7 @@
   };
 
   // The inline head script already picked the starting theme; sync the button.
-  applyTheme(root.dataset.theme === "light" ? "light" : "dark", false);
+  applyTheme(root.dataset.theme === "dark" ? "dark" : "light", false);
 
   if (themeToggle) {
     themeToggle.addEventListener("click", () => {
@@ -57,15 +57,6 @@
     });
   }
 
-  // Follow the OS only while the visitor hasn't made their own choice.
-  const scheme = window.matchMedia("(prefers-color-scheme: light)");
-  const onSchemeChange = (e) => {
-    let saved = null;
-    try { saved = localStorage.getItem("theme"); } catch (err) { /* ignore */ }
-    if (!saved) applyTheme(e.matches ? "light" : "dark", true);
-  };
-  if (scheme.addEventListener) scheme.addEventListener("change", onSchemeChange);
-  else if (scheme.addListener) scheme.addListener(onSchemeChange);
 
   /* ---------- Sticky nav state ---------- */
   const nav = document.getElementById("nav");

@@ -16,12 +16,13 @@
     // Inline and blocking on purpose: setting this after first paint shows a
     // flash of the wrong theme.
     (function () {
+      // Light is the front door: a first-time visitor always lands in light
+      // mode, whatever their OS is set to. Only their own past choice overrides.
       try {
         var saved = localStorage.getItem("theme");
-        var wantsLight = window.matchMedia("(prefers-color-scheme: light)").matches;
-        document.documentElement.dataset.theme = saved || (wantsLight ? "light" : "dark");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
       } catch (e) {
-        document.documentElement.dataset.theme = "dark";
+        document.documentElement.dataset.theme = "light";
       }
     })();
   </script>
