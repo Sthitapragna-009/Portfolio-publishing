@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Etikoppaka Chess — Participatory Craft-Product Design | Sthitapragna Kollepara</title>
+  <meta name="description" content="A chess set co-designed with Etikoppaka lacquerware artisans in Andhra Pradesh. Craft documentation, character form abstraction, and a repeatable co-design method for designers working with artisans." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+  <script>
+    // Inline and blocking on purpose: setting this after first paint shows a
+    // flash of the wrong theme.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <canvas class="dot-field" id="dotField" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="../index.html" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a class="nav-pill nav-pill--quiet" href="../index.html#work">Design Projects</a>
+        <a class="nav-pill ring-pill" href="../index.html#contact">Photography</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===================== CASE HEADER ===================== -->
+  <main id="top">
+    <section class="section case-head">
+      <div class="wrap">
+        <a class="case-back" href="../index.html#work">
+          <span aria-hidden="true">&larr;</span> All projects
+        </a>
+
+        <p class="eyebrow reveal">Craft &middot; Product design &middot; 2025</p>
+        <h1 class="display case-title reveal" data-delay="1">Etikoppaka Chess</h1>
+        <p class="case-sub reveal" data-delay="2">Participatory craft-product design</p>
+
+        <p class="case-lede reveal" data-delay="3">
+          A chess set designed and crafted in the style of Etikoppaka through participatory
+          design with artisans of the Etikoppaka toy craft &mdash; a designer&ndash;artisan
+          collaboration built on service design combined with co-design approaches.
+        </p>
+
+        <dl class="case-meta reveal" data-delay="4">
+          <div><dt>Role</dt><dd>Design research, form design, co-design facilitation</dd></div>
+          <div><dt>Craft</dt><dd>Etikoppaka lacquerware &middot; Ankudu wood</dd></div>
+          <div><dt>Place</dt><dd>Etikoppaka, Andhra Pradesh</dd></div>
+          <div><dt>Made with</dt><dd>Artisans of Etikoppaka</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- ===================== OUTCOMES ===================== -->
+    <section class="section section-light case-outcomes">
+      <div class="wrap">
+        <p class="ghost" aria-hidden="true">Outcomes</p>
+        <h2 class="display section-title reveal">What is in it?</h2>
+        <ol class="outcome-list">
+          <li class="reveal"><span class="outcome-n">01</span><p>Craft documentation</p></li>
+          <li class="reveal" data-delay="1"><span class="outcome-n">02</span><p>A chess set co-designed with the artisan</p></li>
+          <li class="reveal" data-delay="2"><span class="outcome-n">03</span><p>A framework for designers to design with artisans</p></li>
+          <li class="reveal" data-delay="3"><span class="outcome-n">04</span><p>Service design potential to enable collaboration between designer and artisan</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===================== THE DECK ===================== -->
+    <section class="section case-plates">
+      <div class="wrap">
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s01.jpg" alt="Title plate: an artisan's hands holding a freshly lacquered red and yellow chess piece" width="1600" height="900" loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="plate-head">
+          <h2 class="display section-title">The craft</h2>
+          <p class="section-intro">
+            Etikoppaka is a village on the banks of the Varaha river in Visakhapatnam district,
+            Andhra Pradesh, with more than 250 artisan families. Its toys are turned from Ankudu
+            wood and coloured with natural dyes &mdash; turmeric, biksa seed, indigo &mdash; sealed
+            under a lacquer polish.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s04.jpg" alt="Etikoppaka Bommalu: traditional wooden toys, a map locating the village in Andhra Pradesh, and the natural materials used — Ankudu wood, turmeric powder, biksa seed, indigo and lacquer" width="1600" height="900" loading="lazy" decoding="async" />
+          <figcaption>Etikoppaka Bommalu &mdash; the craft, the village and its materials.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s05.jpg" alt="Codification table breaking the toys down into form and shape, material, colours, patterns and motifs, functionality, finish, scale and narrative aspects" width="1600" height="1315" loading="lazy" decoding="async" />
+          <figcaption>Analysis and codification of the visual elements of Etikoppaka toys.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s06.jpg" alt="The crafting process: preparing lacquer by heating turmeric and shellac over a coal flame, then turning pieces on a lathe and applying lacquer colour" width="1600" height="1640" loading="lazy" decoding="async" />
+          <figcaption>
+            The crafting process &mdash; preparing the lacquer, then turning the pieces on the
+            lathe and applying colour.
+          </figcaption>
+        </figure>
+
+        <div class="plate-head">
+          <h2 class="display section-title">From toy craft to chess</h2>
+          <p class="section-intro">
+            The codified visual language became the brief: rounded, symmetrical, lathe-turnable
+            forms in natural earthy colours, ornamented with contrasting lines and floral motifs.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s07.jpg" alt="Mind map adapting Etikoppaka toy craft into chess characters, mapping form, colour, lines, material, patterns and abstraction onto the pieces" width="1600" height="1831" loading="lazy" decoding="async" />
+          <figcaption>Adaptation of the craft&rsquo;s visual language into chess characters.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s08.jpg" alt="Concept mood board with the lacquer colour palette, wood grain, traditional Etikoppaka toys, Cheriyal scroll painting and historic chess pieces" width="1600" height="900" loading="lazy" decoding="async" />
+          <figcaption>Concept mood board.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s09.jpg" alt="Character form design sheets abstracting animal and human anatomy into cylindrical lathe-turnable forms for each piece: Gurram the knight, Onte the bishop, Enugu the rook, Bathudu the pawn, Raaju the king and Raani the queen" width="1600" height="5313" loading="lazy" decoding="async" />
+          <figcaption>
+            Character form design. Each piece keeps its Telugu name &mdash; Gurram (knight),
+            Onte (bishop), Enugu (rook), Bathudu (pawn), Raaju (king) and Raani (queen) &mdash;
+            with complex anatomy reduced to forms a lathe can turn.
+          </figcaption>
+        </figure>
+
+        <div class="plate-head">
+          <h2 class="display section-title">Designing with the artisan</h2>
+          <p class="section-intro">
+            Documenting the craft, learning it first-hand to understand its limits, then iterating
+            the design against the artisan&rsquo;s feedback rather than handing over a finished drawing.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s10.jpg" alt="Participatory design with the artisan: documenting the craft, learning to turn wood, sketching iterations from artisan feedback, and the first dimensioned sample set in turned wood" width="1600" height="3008" loading="lazy" decoding="async" />
+          <figcaption>Participatory design, and the first sampling after the artisan&rsquo;s feedback.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s11.jpg" alt="Second iteration and final sampling, with measured wooden prototypes, and colour decisions finalised with the artisans in traditional lacquer hues" width="1600" height="2956" loading="lazy" decoding="async" />
+          <figcaption>
+            Second iteration and final sampling &mdash; and the colour decisions taken with the
+            artisans. A lighter green and a deeper red separate the two sides.
+          </figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s12.jpg" alt="Replicating the characters to complete the set, then painting the motifs by hand — finished red and yellow pieces in rows" width="1600" height="3256" loading="lazy" decoding="async" />
+          <figcaption>Replication to complete the set, then painting the motifs.</figcaption>
+        </figure>
+
+        <figure class="plate plate--full reveal">
+          <img src="../assets/etikoppaka/s13.jpg" alt="The finished Etikoppaka chess set laid out on a hand-painted wooden board, red pieces facing yellow" width="1600" height="940" loading="lazy" decoding="async" />
+          <figcaption>The finished set.</figcaption>
+        </figure>
+
+        <div class="plate-head">
+          <h2 class="display section-title">The method, generalised</h2>
+          <p class="section-intro">
+            The last output is not the chess set but the workflow behind it: a structured co-design
+            process for developing contemporary character-based lacquerware with Etikoppaka
+            techniques, so the collaboration can be repeated by other designers.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s14.jpg" alt="Flowchart of the methodology for designers collaborating with artisans, running from first contact and exchange of sketches through form abstraction, sampling, colour preparation and template finalisation to replication" width="1600" height="1744" loading="lazy" decoding="async" />
+          <figcaption>Methodology for designers to collaborate with artisans.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/etikoppaka/s02.jpg" alt="The designer and an Etikoppaka artisan working side by side on the floor of the workshop" width="1600" height="900" loading="lazy" decoding="async" />
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===================== NEXT ===================== -->
+    <section class="section case-next">
+      <div class="wrap">
+        <p class="eyebrow">Keep going</p>
+        <h2 class="display section-title">See the rest of the work.</h2>
+        <div class="case-next-actions">
+          <a class="btn btn-primary" href="../index.html#work">
+            <span class="dot" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            All projects
+          </a>
+          <a class="btn btn-outline" href="mailto:kspmobi@gmail.com">Get in touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> KSP. Concept work shown here is unofficial and not endorsed by the organisations referenced.</p>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <a href="mailto:kspmobi@gmail.com">Email</a>
+        <a href="#" rel="noopener">LinkedIn</a>
+        <a href="#" rel="noopener">Behance</a>
+      </nav>
+    </div>
+  </footer>
+
+  <a class="btn edge-cta" href="mailto:kspmobi@gmail.com">
+    <span class="dot" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="edge-cta-label">Get in touch</span>
+  </a>
+
+  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
+    <span class="sr-only">Light theme</span>
+    <span class="theme-toggle-knob" aria-hidden="true">
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+      </svg>
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+        <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+      </svg>
+    </span>
+  </button>
+
+  <script src="../script.js"></script>
+</body>
+</html>
