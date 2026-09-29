@@ -674,33 +674,23 @@ ul { margin: 0; padding: 0; list-style: none; }
 .theme-toggle[aria-checked="true"]  .theme-toggle-end--sun  { opacity: 0; }
 .theme-toggle[aria-checked="false"] .theme-toggle-end--moon { opacity: 0; }
 
-/* Set on their side, stacked in the middle of the rail. The knob only ever
-   rests at the two ends, so it never comes to a stop on top of them. */
+/* One label, set on its side down the middle of the rail. The knob only ever
+   rests at the two ends, so it never comes to a stop on top of it. */
 .theme-toggle-words {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.9rem;
+  display: grid;
+  place-items: center;
 }
 
 .theme-toggle-word {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   font-size: 0.6875rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.06em;
   white-space: nowrap;
   /* Near-black on the orange, not white: white on this gradient measures
-     2.9:1, well under the 4.5 these need at 11px. */
-  color: rgba(0, 0, 0, 0.85);
-  /* colour only: transitioning font-weight reflows the glyphs mid-animation. */
-  transition: color 0.35s var(--ease);
-}
-
-.theme-toggle[aria-checked="true"]  .theme-toggle-word--light,
-.theme-toggle[aria-checked="false"] .theme-toggle-word--dark {
+     2.9:1, well under the 4.5 this needs at 11px. */
   color: #000;
-  font-weight: 800;
 }
 
 .theme-toggle-knob {
@@ -718,11 +708,36 @@ ul { margin: 0; padding: 0; list-style: none; }
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
   /* rail 17 - knob 1.375 - inset 0.375 = 15.25rem of travel */
   transition: transform 0.45s var(--ease);
+  /* --seat is where the knob rests; the breath nudges it off that seat towards
+     the end you would swipe to, then settles back. Holding the rest position
+     in a variable keeps the animation and the state change from fighting over
+     the same transform property. */
+  --seat: 0rem;
+  --lean: 0.75rem;
+  transform: translateY(var(--seat));
+  animation: knobBreath 2.6s var(--ease) infinite;
 }
 
-/* Unchecked = dark theme; the knob drops to the moon. */
+/* Unchecked = dark theme; the knob sits at the moon and leans back up. */
 .theme-toggle[aria-checked="false"] .theme-toggle-knob {
-  transform: translateY(15.25rem);
+  --seat: 15.25rem;
+  --lean: -0.75rem;
+}
+
+@keyframes knobBreath {
+  0%, 62%, 100% { transform: translateY(var(--seat)); }
+  31%           { transform: translateY(calc(var(--seat) + var(--lean))); }
+}
+
+/* Hovering is intent enough; stop nudging and let the knob sit still. */
+.theme-toggle:hover .theme-toggle-knob,
+.theme-toggle:focus-visible .theme-toggle-knob {
+  animation-play-state: paused;
+  transform: translateY(var(--seat));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-knob { animation: none; }
 }
 
 .theme-toggle-knob svg {
@@ -746,7 +761,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   }
   .theme-toggle-rail { width: 1.6rem; height: 10rem; }
   .theme-toggle-knob { width: 1.25rem; height: 1.25rem; margin-left: -0.625rem; }
-  .theme-toggle[aria-checked="false"] .theme-toggle-knob { transform: translateY(8.375rem); }
+  .theme-toggle[aria-checked="false"] .theme-toggle-knob { --seat: 8.375rem; --lean: -0.6rem; }
   .theme-toggle-words { display: none; }
 }
 
@@ -1165,6 +1180,18 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink-dim);
   line-height: 1.7;
   max-width: 54ch;
+}
+
+/* The watermark now sits in the text column instead of over the section.
+   It has to out-specify .about-body p, which would otherwise repaint it in
+   body ink, and it drops the negative margin the full-width version uses to
+   tuck the heading under itself. */
+.about-body .ghost--inline {
+  margin: 0 0 0.4rem;
+  max-width: none;
+  line-height: 0.95;
+  font-size: clamp(1.75rem, 3.6vw, 3rem);
+  color: var(--ghost-ink);
 }
 .about-body p + p { margin-top: 1.1rem; }
 
@@ -1979,6 +2006,19 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .plate { margin: 0; }
+
+/* Portrait sources at 1:2.2 are unreadable full width; paired, each one lands
+   at a sensible height. */
+.plate-duo {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  align-items: start;
+}
+
+@media (max-width: 760px) {
+  .plate-duo { grid-template-columns: 1fr; }
+}
 
 .plate img {
   display: block;
