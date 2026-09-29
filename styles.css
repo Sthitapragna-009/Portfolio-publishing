@@ -62,6 +62,12 @@
      clears AA; on light it lands at 3.5:1, so the light theme darkens it. */
   --accent-text: var(--accent);
   --accent-deep: var(--grad-2);
+
+  /* Bauhaus primaries, used for the process step numerals. */
+  --bau-red:    #f0502a;
+  --bau-yellow: #f5c518;
+  --bau-blue:   #4a86d8;
+  --bau-ink:    var(--ink);
   --accent-soft: rgba(232, 80, 2, 0.14);
 
   --hairline:      rgba(249, 249, 249, 0.14);
@@ -93,7 +99,7 @@
   --wrap:    96rem;
   --r-hero:  8px;   /* hero panels: squarer than the cards */
   --gutter:  clamp(1.25rem, 4vw, 3.5rem);
-  --section: clamp(5rem, 11vw, 10rem);
+  --section: clamp(3.25rem, 6.5vw, 6rem);
 
   /* Photo band split, shared by the band and the headline that overlays it. */
   --band-split: 0.51fr 1fr;
@@ -120,11 +126,14 @@
   --bg-light-2:  rgba(0, 0, 0, 0.05);
 
   --ink:         var(--primary);
-  --ink-dim:     var(--gray);
-  /* Kept a touch lighter than --ink-dim but still over 4.5:1 on the page. */
-  --ink-faint:   #6e6e6e;
+  /* Matched to the dark theme's dim ink by CONTRAST, not by lightness. The
+     old #646464 measured 5.1:1 on a card against 8.1:1 for the same role in
+     dark, which is why body copy read washed out in light mode only. */
+  --ink-dim:     #484848;
+  /* Still a step lighter than --ink-dim, for labels and fine print. */
+  --ink-faint:   #5f5f5f;
   --ink-dark:    var(--primary);
-  --ink-dark-dim: var(--gray);
+  --ink-dark-dim: #484848;
 
   --on-ink:       var(--white);
   --surface:      rgba(0, 0, 0, 0.045);
@@ -146,6 +155,11 @@
 
   --dot-rgb:      0, 0, 0;
   --dot-strength: 0.62;
+
+  --bau-red:    #d42e12;
+  --bau-yellow: #9c7400;
+  --bau-blue:   #1552a8;
+  --bau-ink:    var(--ink);
 
   color-scheme: light;
 }
@@ -281,7 +295,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   text-transform: uppercase;
   letter-spacing: -0.03em;
   line-height: 0.9;
-  font-size: clamp(3.25rem, 11vw, 9rem);
+  font-size: clamp(2rem, 5vw, 3.75rem);
   color: var(--ghost-ink);
   pointer-events: none;
   user-select: none;
@@ -600,52 +614,115 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* --- Day / night switch, docked under the Get in touch button ---------- */
 
+/* A vertical rail on the left edge: sun at the top, moon at the bottom, the
+   two labels stacked between them, and the knob riding the whole length. The
+   right edge already carries .edge-cta, so the two never stack. */
 .theme-toggle {
   position: fixed;
-  right: clamp(0.9rem, 2vw, 1.75rem);
-  /* .edge-cta sits at 64% pulled up by half its height; this clears its
-     bottom edge by ~0.75rem. */
-  top: calc(64% + 1.95rem);
+  left: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
   z-index: 90;
-  width: 3.375rem;
-  height: 1.875rem;
   padding: 0;
   border: 0;
-  border-radius: var(--r-pill);
+  background: none;
   cursor: pointer;
-  background: var(--brand-gradient);
-  background-size: 220% 100%;
-  background-position: 0% 50%;
-  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
-  transition: background-position 0.6s var(--ease), transform 0.3s var(--ease),
-              box-shadow 0.3s var(--ease);
   -webkit-tap-highlight-color: transparent;
 }
 
-.theme-toggle:hover,
-.theme-toggle:focus-visible {
-  background-position: 100% 50%;
-  transform: scale(1.04);
+.theme-toggle-rail {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  /* The content column's gutter is only ~41px at 1024, so the rail has to
+     stay inside that or it sits on the headings. */
+  width: 1.75rem;
+  height: 17rem;
+  padding-block: 0.5rem;
+  border-radius: var(--r-pill);
+  background: var(--ember-gradient);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.3s var(--ease), filter 0.3s var(--ease);
+}
+
+.theme-toggle:hover .theme-toggle-rail,
+.theme-toggle:focus-visible .theme-toggle-rail {
+  filter: saturate(1.15) brightness(1.06);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+
+.theme-toggle:focus-visible { outline: none; }
+.theme-toggle:focus-visible .theme-toggle-rail {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* The two fixed ends. Whichever the knob is parked over is hidden, so the
+   icon never shows through the disc. */
+.theme-toggle-end {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1rem;
+  height: 1rem;
+  color: rgba(255, 255, 255, 0.78);
+  transition: opacity 0.35s var(--ease);
+}
+
+.theme-toggle[aria-checked="true"]  .theme-toggle-end--sun  { opacity: 0; }
+.theme-toggle[aria-checked="false"] .theme-toggle-end--moon { opacity: 0; }
+
+/* Set on their side, stacked in the middle of the rail. The knob only ever
+   rests at the two ends, so it never comes to a stop on top of them. */
+.theme-toggle-words {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.theme-toggle-word {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+  /* Near-black on the orange, not white: white on this gradient measures
+     2.9:1, well under the 4.5 these need at 11px. */
+  color: rgba(0, 0, 0, 0.85);
+  /* colour only: transitioning font-weight reflows the glyphs mid-animation. */
+  transition: color 0.35s var(--ease);
+}
+
+.theme-toggle[aria-checked="true"]  .theme-toggle-word--light,
+.theme-toggle[aria-checked="false"] .theme-toggle-word--dark {
+  color: #000;
+  font-weight: 800;
 }
 
 .theme-toggle-knob {
   position: absolute;
+  left: 50%;
   top: 0.1875rem;
-  left: 0.1875rem;
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 1.375rem;
+  height: 1.375rem;
+  margin-left: -0.6875rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: var(--white);
   color: var(--primary);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  transition: transform 0.4s var(--ease);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
+  /* rail 17 - knob 1.375 - inset 0.375 = 15.25rem of travel */
+  transition: transform 0.45s var(--ease);
 }
 
-/* Checked = light theme; the knob travels to the sun side. */
-.theme-toggle[aria-checked="true"] .theme-toggle-knob {
-  transform: translateX(1.5rem);
+/* Unchecked = dark theme; the knob drops to the moon. */
+.theme-toggle[aria-checked="false"] .theme-toggle-knob {
+  transform: translateY(15.25rem);
 }
 
 .theme-toggle-knob svg {
@@ -653,11 +730,25 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: opacity 0.3s var(--ease), transform 0.4s var(--ease);
 }
 
-.theme-toggle .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0.6); }
-.theme-toggle .icon-moon { opacity: 1; transform: none; }
+.theme-toggle .theme-toggle-knob .icon-sun  { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+.theme-toggle .theme-toggle-knob .icon-moon { opacity: 1; transform: none; }
+.theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-sun  { opacity: 1; transform: none; }
+.theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
 
-.theme-toggle[aria-checked="true"] .icon-sun { opacity: 1; transform: none; }
-.theme-toggle[aria-checked="true"] .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+/* Under ~1000px the copy runs to within 20-30px of the edge, so a rail parked
+   at mid-height would sit on it. Drop it to the bottom-left corner, the way
+   the contact button floats on the right, and shed the words with it. */
+@media (max-width: 1000px) {
+  .theme-toggle {
+    top: auto;
+    bottom: 1.1rem;
+    transform: none;
+  }
+  .theme-toggle-rail { width: 1.6rem; height: 10rem; }
+  .theme-toggle-knob { width: 1.25rem; height: 1.25rem; margin-left: -0.625rem; }
+  .theme-toggle[aria-checked="false"] .theme-toggle-knob { transform: translateY(8.375rem); }
+  .theme-toggle-words { display: none; }
+}
 
 /* Touch devices never fire hover, which would leave an unlabelled circle.
    Show the label outright there instead. */
@@ -1005,7 +1096,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .section-head {
-  margin-bottom: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: clamp(1.75rem, 4vw, 3rem);
 }
 
 .section-title {
@@ -1182,7 +1273,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-radius: 50%;
   background: var(--ink);
   color: var(--on-ink);
-  transition: background-color 0.35s var(--ease), transform 0.45s var(--ease);
+  /* The hover fill is a gradient, which is a background-image and cannot be
+     transitioned; colour is listed so at least the glyph eases with it. */
+  transition: background-color 0.35s var(--ease), color 0.35s var(--ease),
+              transform 0.45s var(--ease);
 }
 .project:hover .project-arrow {
   background: var(--brand-gradient);
@@ -1223,20 +1317,14 @@ ul { margin: 0; padding: 0; list-style: none; }
    without one keep the plain transparent hover.                            */
 
 /* Colours sampled from the project's own UI. */
-/* Lacquer palette, sampled from the craft itself. */
-.project[data-accent="etikoppaka"] {
-  --glass-near:  rgba(176, 38, 30, 0.92);   /* deep lacquer red        */
-  --glass-far:   rgba(214, 96, 36, 0.78);   /* warm orange, right edge */
-  --glass-mid:   rgba(120, 26, 20, 0.8);    /* shadowed red            */
-  --glass-deep:  rgba(32, 10, 7, 0.88);     /* near-black, top         */
-  --card-arrow:  #e8b923;                   /* lacquer yellow          */
-}
-
 .project[data-accent="h2o"] {
   --glass-near:  rgba(47, 107, 255, 0.92);   /* bright blue, lower left  */
   --glass-far:   rgba(59, 124, 255, 0.78);   /* softer blue, right edge  */
   --glass-mid:   rgba(18, 56, 170, 0.8);     /* mid blue body            */
   --glass-deep:  rgba(4, 10, 34, 0.88);      /* near-black, top          */
+  --glass-body:  rgba(10, 30, 110, 0.86);    /* panel, middle            */
+  --glass-base:  rgba(23, 72, 220, 0.9);     /* panel, bottom            */
+  --glass-spark: rgba(96, 152, 255, 0.55);   /* highlight in the bloom   */
   --card-arrow:  #c8f848;                    /* lime, from the mockup UI */
 }
 
@@ -1264,8 +1352,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .project[data-accent] .foot-glass {
   background: linear-gradient(180deg, var(--glass-deep) 0%,
-                              rgba(10, 30, 110, 0.86) 52%,
-                              rgba(23, 72, 220, 0.9) 100%);
+                              var(--glass-body) 52%,
+                              var(--glass-base) 100%);
   box-shadow: inset 0 1px 0 rgba(249, 249, 249, 0.22);
 }
 
@@ -1295,7 +1383,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .project[data-accent] .foot-glass::after {
   background:
     radial-gradient(58% 66% at 72% 100%, var(--glass-mid), transparent 64%),
-    radial-gradient(46% 56% at 14% 38%, rgba(96, 152, 255, 0.55), transparent 60%);
+    radial-gradient(46% 56% at 14% 38%, var(--glass-spark), transparent 60%);
   animation-name: bloomDriftB;
   animation-duration: 19s;
 }
@@ -1430,6 +1518,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .step {
+  position: relative;
+  overflow: hidden;
   padding: clamp(1.5rem, 3vw, 2.25rem);
   border-radius: var(--r-lg);
   border: 1px solid var(--hairline-dark);
@@ -1445,15 +1535,24 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 .step-index {
-  font-family: var(--font-accent);
-  font-weight: 300;
-  font-size: 0.875rem;
-  letter-spacing: 0.12em;
-  color: var(--accent-text);
+  position: absolute;
+  top: clamp(0.75rem, 1.6vw, 1.1rem);
+  right: clamp(0.9rem, 1.8vw, 1.4rem);
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  line-height: 0.85;
+  letter-spacing: -0.05em;
+  color: var(--bau-red);
 }
 
+.step:nth-child(2) .step-index { color: var(--bau-yellow); }
+.step:nth-child(3) .step-index { color: var(--bau-blue); }
+.step:nth-child(4) .step-index { color: var(--bau-ink); }
+
 .step-name {
-  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+  margin-top: clamp(3rem, 7vw, 5rem);
   font-family: var(--font-display);
   font-weight: 800;
   text-transform: uppercase;
@@ -1543,11 +1642,30 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .footer-links {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  gap: 0.6rem;
   font-size: 0.8125rem;
   color: var(--ink-dim);
 }
 .footer-links a { transition: color 0.25s var(--ease); }
+
+.footer-links .social {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  color: var(--ink-dim);
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
+              background-color 0.25s var(--ease);
+}
+.footer-links .social:hover,
+.footer-links .social:focus-visible {
+  color: var(--on-ink);
+  background: var(--ink);
+  border-color: var(--ink);
+}
 .footer-links a:hover { color: var(--accent-text); }
 
 /* ============================================================
@@ -1778,6 +1896,12 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding-top: clamp(1.5rem, 3vw, 2.25rem);
   border-top: 1px solid var(--hairline);
 }
+/* On a photo hero the 4-across strip ran out past the scrim and the last
+   items sat on bare photography. Held to the text column it wraps to 2x2 and
+   stays on the protected side. */
+.case-head--media .case-meta,
+.case-head--media .case-brief { max-width: 36rem; }
+
 .case-meta dt {
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1793,6 +1917,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* ---- Outcomes ---- */
+
+/* Without the ghost watermark this band was mostly air: the heading sat a
+   full --section below the plates above it. */
+.case-outcomes { padding-block: calc(var(--section) * 0.55) var(--section); }
 
 .outcome-list {
   list-style: none;
@@ -1928,6 +2056,12 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: static;
   margin-top: 1.25rem;
 }
+.next-project:hover .project-arrow,
+.next-project:focus-visible .project-arrow {
+  background: var(--brand-gradient);
+  color: var(--white);
+  transform: rotate(45deg) scale(1.08);
+}
 
 @media (max-width: 760px) {
   .next-project { grid-template-columns: 1fr; }
@@ -2004,15 +2138,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   border-top: 1px solid var(--hairline);
 }
 
-/* Braun brief: the accent is the orange against the product's black body. */
-.project[data-accent="aeroform"] {
-  --glass-near:  rgba(232, 96, 20, 0.92);
-  --glass-far:   rgba(255, 138, 48, 0.72);
-  --glass-mid:   rgba(120, 48, 10, 0.82);
-  --glass-deep:  rgba(14, 14, 16, 0.9);
-  --card-arrow:  #ff7a18;
-}
-
 
 /* ---- Case heading carousel ----------------------------------------------
    A slow cross-fade behind the title. Pure CSS: each slide runs the same
@@ -2039,6 +2164,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* JPEG at q0.66 flattens the lacquer reds; this puts the bite back without
+     touching the source files. */
+  filter: saturate(1.14) contrast(1.05);
   opacity: 0;
 }
 
@@ -2095,9 +2223,19 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, var(--bg) 0%, color-mix(in srgb, var(--bg) 82%, transparent) 42%,
-                    color-mix(in srgb, var(--bg) 42%, transparent) 100%),
-    linear-gradient(to bottom, var(--bg) 0%, transparent 28%, transparent 72%, var(--bg) 100%);
+    /* Every glyph in the header sits inside the left 48%, so the scrim holds
+       almost solid to 50% and then falls away fast. That protects the text
+       better than an even ramp did while leaving the right half of the
+       photograph nearly unveiled. */
+    /* Stops are max(percentage, length): the heading is sized in rem, so on a
+       narrower viewport it covers a BIGGER share of the width and a purely
+       proportional scrim slides out from under it. The length floor keeps the
+       plateau wider than the text at every width. */
+    linear-gradient(to right, var(--bg) 0%,
+                    color-mix(in srgb, var(--bg) 93%, transparent) max(50%, 38rem),
+                    color-mix(in srgb, var(--bg) 34%, transparent) max(68%, 52rem),
+                    color-mix(in srgb, var(--bg) 8%, transparent) 100%),
+    linear-gradient(to bottom, var(--bg) 0%, transparent 30%, transparent 66%, var(--bg) 100%);
 }
 
 /* color-mix is well supported but not universal; without it the scrim would
