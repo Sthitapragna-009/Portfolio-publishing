@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>AeroForm 009 — Handheld Vacuum Form &amp; CMF Study | Sthitapragna Kollepara</title>
+  <meta name="description" content="AeroForm 009 — a modern handheld vacuum cleaner designed for Braun. Moodboard, form exploration in foam, material selection, CMF, colour options, design for repairability and a 3D-printed model." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+  <script>
+    // Inline and blocking on purpose: setting this after first paint shows a
+    // flash of the wrong theme.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <canvas class="dot-field" id="dotField" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="../index.html" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a class="nav-pill nav-pill--quiet" href="../index.html#work">Design Projects</a>
+        <a class="nav-pill ring-pill" href="../index.html#contact">Photography</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===================== CASE HEADER ===================== -->
+    <section class="section case-head case-head--media">
+      <div class="case-hero-carousel" aria-hidden="true">
+        <img src="../assets/aeroform/hero.jpg" alt="" width="1152" height="928" decoding="async" />
+        <img src="../assets/aeroform/cmf.jpg" alt="" width="1472" height="704" loading="lazy" decoding="async" />
+        <img src="../assets/aeroform/detail-pod.jpg" alt="" width="1152" height="928" loading="lazy" decoding="async" />
+        <img src="../assets/aeroform/sketches.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async" />
+      </div>
+      <div class="wrap">
+        <a class="case-back" href="../index.html#work">
+          <span aria-hidden="true">&larr;</span> All projects
+        </a>
+
+        <p class="eyebrow reveal">Form design &middot; CMF &middot; Product</p>
+        <h1 class="display case-title reveal" data-delay="1">AeroForm 009</h1>
+        <p class="case-sub reveal" data-delay="2">Hand held vacuum cleaner</p>
+
+        <div class="case-brief reveal" data-delay="3">
+          <div class="case-brief-row">
+            <h2 class="case-brief-key">Objective</h2>
+            <div class="case-brief-val">
+              <p>To design a modern hand held vacuum cleaner for Braun.</p>
+            </div>
+          </div>
+
+          <div class="case-brief-row">
+            <h2 class="case-brief-key">The process</h2>
+            <div class="case-brief-val">
+              <ol class="case-steps">
+                <li>Setting the moodboard</li>
+                <li>Form exploration</li>
+                <li>CMF</li>
+                <li>3D printed model</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== THE DECK ===================== -->
+    <section class="section case-plates">
+      <div class="wrap">
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/hero.jpg" alt="AeroForm 009 rendered on a wooden desk in warm lamplight: a white matte body with a black rubberised handle and an orange control dial" width="1152" height="928" loading="lazy" decoding="async" />
+        </figure>
+
+        <!-- ---------- Moodboard ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Setting the moodboard</h2>
+          <p class="section-intro">
+            Braun&rsquo;s own language, gathered first: aerodynamic plus minimalism, less is
+            more, good design equals long lasting. Orange, graphite, bronze and off white came
+            out of it, and carried straight through to the product.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-moodboard.jpg" alt="Moodboard: the Braun wordmark, colour and material chips in orange, graphite, bronze and white, Braun&rsquo;s alarm clock, shaver and IPL device, and the phrases Aero Dynamic plus Minimalism, Less Is More, and Good design equals Long lasting" width="1600" height="927" loading="lazy" decoding="async" />
+        </figure>
+
+        <!-- ---------- Form exploration ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Form exploration</h2>
+          <p class="section-intro">
+            Dozens of handheld silhouettes narrowed to one: a flat, wing like body cantilevered
+            over an open loop handle. Then the internals: an exploded assembly and a set of
+            orthographic views to fix the proportions.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-form-sheet.jpg" alt="Form exploration sheet: rows of handheld vacuum ideation sketches, an exploded assembly drawing of the chosen form, and orthographic views" width="1600" height="900" loading="lazy" decoding="async" />
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/sketches.jpg" alt="Hand-drawn concept sketches of the vacuum on paper, with blue and orange marker accents" width="1600" height="1200" loading="lazy" decoding="async" />
+          <figcaption>Early sketch exploration.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-foam.jpg" alt="Form exploration through foam: a full-size foam model of the vacuum being cut and shaped on a cutting mat, with the Braun wordmark drawn on the body" width="1600" height="929" loading="lazy" decoding="async" />
+          <figcaption>Form exploration through foam, the fastest way to judge mass and grip.</figcaption>
+        </figure>
+
+        <!-- ---------- Materials ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Material selection</h2>
+          <p class="section-intro">
+            Three materials, each chosen for what it has to do: hold the form, show the dirt,
+            and take the hand.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-materials.jpg" alt="Material selection: ABS plastic, frosted polycarbonate and thermoplastic polyurethane shown as three material swatches" width="1600" height="898" loading="lazy" decoding="async" />
+        </figure>
+
+        <ul class="spec-list reveal">
+          <li><span class="spec-key">Body</span><p>ABS plastic with a rubber texture</p></li>
+          <li><span class="spec-key">Grip</span><p>Black textured rubberised grip in TPU</p></li>
+          <li><span class="spec-key">Dial</span><p>Orange pop dial in rubberised ABS with ridges for grip, plus a haptic feedback scroll wheel for suction control</p></li>
+          <li><span class="spec-key">Collector</span><p>Frosted glass finish dust collector in polycarbonate</p></li>
+        </ul>
+
+        <!-- ---------- CMF ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Colour, material, finish</h2>
+          <p class="section-intro">
+            This design aims to create a handheld vacuum cleaner that is both functional and
+            aesthetically pleasing, aligning with Braun&rsquo;s design legacy and the minimalist
+            style. One orange, used only where the hand goes.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-cmf.jpg" alt="CMF board for AeroForm 009 with callouts for the ABS body with rubber texture, the haptic feedback scroll wheel, the orange rubberised pop dial, the black TPU grip and the frosted polycarbonate dust collector" width="1600" height="923" loading="lazy" decoding="async" />
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/cmf.jpg" alt="Five colourways of the AeroForm 009 body — lilac, mint, deep green, dusty pink and blue — each over the same black loop handle" width="1472" height="704" loading="lazy" decoding="async" />
+          <figcaption>Colourway studies across the same form.</figcaption>
+        </figure>
+
+        <div class="plate-head">
+          <h2 class="display section-title">Colour options</h2>
+          <p class="section-intro">Eight finishes on the production form.</p>
+        </div>
+
+        <div class="swatch-carousel reveal" role="group" aria-roledescription="carousel" aria-label="AeroForm 009 colour options">
+          <div class="swatch-viewport">
+          <div class="swatch-track" id="colourTrack" tabindex="0" aria-label="Colour options, scrollable">
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-01-soft-white.jpg" alt="AeroForm 009 in Soft White" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-02-burgundy.jpg" alt="AeroForm 009 in Burgundy" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-03-midnight-blue.jpg" alt="AeroForm 009 in Midnight Blue" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-04-dark-teal.jpg" alt="AeroForm 009 in Dark Teal" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-05-sea-green.jpg" alt="AeroForm 009 in Sea Green" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-06-special-edition.jpg" alt="AeroForm 009 in the yellow Special Edition" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-07-deep-purple.jpg" alt="AeroForm 009 in Deep Purple" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="swatch-slide">
+              <img src="../assets/aeroform/colour-08-matte-orange.jpg" alt="AeroForm 009 in Matte Orange" width="387" height="404" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+            <button class="swatch-nav" type="button" data-dir="-1" aria-label="Previous colours"></button>
+            <button class="swatch-nav" type="button" data-dir="1" aria-label="Next colours"></button>
+          </div>
+          <div class="swatch-controls">
+            <div class="swatch-dots">
+              <button class="swatch-dot" type="button" style="--sw: #f9f9f9" data-index="0" aria-label="Show Soft White"></button>
+              <button class="swatch-dot" type="button" style="--sw: #6e393d" data-index="1" aria-label="Show Burgundy"></button>
+              <button class="swatch-dot" type="button" style="--sw: #2d3d77" data-index="2" aria-label="Show Midnight Blue"></button>
+              <button class="swatch-dot" type="button" style="--sw: #40696e" data-index="3" aria-label="Show Dark Teal"></button>
+              <button class="swatch-dot" type="button" style="--sw: #a3c2b9" data-index="4" aria-label="Show Sea Green"></button>
+              <button class="swatch-dot" type="button" style="--sw: #ffe300" data-index="5" aria-label="Show Special Edition"></button>
+              <button class="swatch-dot" type="button" style="--sw: #4e4060" data-index="6" aria-label="Show Deep Purple"></button>
+              <button class="swatch-dot" type="button" style="--sw: #ff8d31" data-index="7" aria-label="Show Matte Orange"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- Repairability ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Design for repairability</h2>
+          <p class="section-intro">
+            Easy durable fits, repair over replace, and a DIY repair guide. The control pod
+            lifts out on a ribbon connector rather than being bonded in.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-repairability.jpg" alt="A gloved hand lifting the Custom mode control pod out of the white body, exposing the ribbon connector and wiring beneath" width="1600" height="883" loading="lazy" decoding="async" />
+        </figure>
+
+        <!-- ---------- Model ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">3D printed model</h2>
+          <p class="section-intro">
+            Printed, finished and painted in two parts: a white body and a black handle, with
+            the screen and the orange dial mocked up to check them at size and in the hand.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-printed-model.jpg" alt="The 3D-printed AeroForm 009 model in white and black with an orange dial, shown being assembled, held, and finished on the workbench" width="1600" height="914" loading="lazy" decoding="async" />
+        </figure>
+
+        <!-- ---------- UI ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Intuitive UI and modes</h2>
+          <p class="section-intro">
+            Suction is a scroll wheel, not a row of buttons. Three states, each with its own
+            force setting and colour: Custom on set force, Boost on full force, eco on low force.
+          </p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-ui-modes.jpg" alt="The three interface modes shown as pills: Custom with set force outlined orange, Boost with full force outlined red, and eco with low force outlined green" width="1600" height="476" loading="lazy" decoding="async" />
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-charging.jpg" alt="Details of the illuminated display glowing orange and the USB Type-C fast charging port in the base of the handle, with a cable plugged in" width="1600" height="371" loading="lazy" decoding="async" />
+          <figcaption>Illuminated display, and Type C fast charging in the heel of the handle.</figcaption>
+        </figure>
+
+        <figure class="plate reveal">
+          <img src="../assets/aeroform/p4-prototype.jpg" alt="The finished form photographed on a wooden surface, captioned Working Prototype in Progress" width="1600" height="833" loading="lazy" decoding="async" />
+          <figcaption>Working prototype in progress.</figcaption>
+        </figure>
+
+      </div>
+    </section>
+
+    <!-- ===================== NEXT ===================== -->
+    <section class="section case-next">
+      <div class="wrap">
+        <p class="eyebrow">Next project</p>
+
+        <a class="next-project" href="etikoppaka-chess.html">
+          <div class="next-project-media">
+            <img src="../assets/etikoppaka/cover.jpg" alt="The finished Etikoppaka chess set on a hand-painted wooden board, red pieces facing yellow" width="1600" height="1000" loading="lazy" decoding="async" />
+          </div>
+          <div class="next-project-body">
+            <h2 class="display next-project-title">Etikoppaka Chess</h2>
+            <p class="next-project-desc">
+              A chess set co-designed with lacquerware artisans in Andhra Pradesh. Craft
+              documentation, character form abstraction and a repeatable co-design method.
+            </p>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+
+        <div class="case-next-actions">
+          <a class="btn btn-primary" href="../index.html#work">
+            <span class="dot" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            All projects
+          </a>
+          <a class="btn btn-outline" href="mailto:kspmobi@gmail.com">Get in touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> KSP. Concept work shown here is unofficial and not endorsed by the organisations referenced.</p>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <a href="mailto:kspmobi@gmail.com">Email</a>
+        <a href="#" rel="noopener">LinkedIn</a>
+        <a href="#" rel="noopener">Behance</a>
+      </nav>
+    </div>
+  </footer>
+
+  <a class="btn edge-cta" href="mailto:kspmobi@gmail.com">
+    <span class="dot" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="edge-cta-label">Get in touch</span>
+  </a>
+
+  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
+    <span class="sr-only">Light theme</span>
+    <span class="theme-toggle-knob" aria-hidden="true">
+      <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+        <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+      </svg>
+      <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+           stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+        <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+      </svg>
+    </span>
+  </button>
+
+  <script src="../script.js"></script>
+</body>
+</html>

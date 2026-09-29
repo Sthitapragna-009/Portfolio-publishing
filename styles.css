@@ -258,11 +258,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .eyebrow {
   font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--ink-dim);
 }
 
 
@@ -364,13 +363,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .btn-primary {
   background: var(--ink);
-  color: var(--ink-dark);
+  color: var(--on-ink);
 }
 .btn-primary .dot { background: var(--accent); color: var(--white); }
 
 .btn-dark {
   background: var(--ink-dark);
-  color: var(--ink);
+  color: var(--white);
 }
 .btn-dark .dot { background: var(--accent); color: var(--white); }
 
@@ -1804,9 +1803,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 .outcome-n {
   display: block;
   font-family: var(--font-accent);
-  font-weight: 300;
+  font-weight: 400;
   font-size: 0.875rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
   color: var(--accent);
 }
 .outcome-list p {
@@ -1824,8 +1823,26 @@ ul { margin: 0; padding: 0; list-style: none; }
   gap: clamp(3rem, 8vw, 6.5rem);
 }
 
-.plate-head { max-width: 52ch; }
-.plate-head .section-title { max-width: none; }
+.plate-head {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 5vw, 4rem);
+  align-items: start;
+}
+.plate-head .section-title {
+  margin-top: 0;
+  max-width: 14ch;
+}
+.plate-head .section-intro {
+  /* Sits against the top of the heading rather than its own default offset. */
+  margin-top: 0.35rem;
+  max-width: 50ch;
+}
+
+@media (max-width: 860px) {
+  .plate-head { grid-template-columns: 1fr; gap: 0.75rem; }
+  .plate-head .section-title { max-width: 18ch; }
+}
 
 .plate { margin: 0; }
 
@@ -1849,6 +1866,67 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* ---- Tail ---- */
 
+.next-project {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  align-items: center;
+  margin-top: clamp(1.25rem, 3vw, 2rem);
+  padding: clamp(0.85rem, 2vw, 1.25rem);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  transition: transform 0.5s var(--ease), border-color 0.35s var(--ease),
+              background-color 0.35s var(--ease);
+}
+.next-project:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  background: var(--surface-hi);
+}
+
+.next-project-media {
+  overflow: hidden;
+  border-radius: var(--r-md);
+  aspect-ratio: 16 / 10;
+  background: var(--bg-card);
+}
+.next-project-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.9s var(--ease);
+  will-change: transform;
+}
+.next-project:hover .next-project-media img { transform: scale(1.05); }
+
+.next-project-title {
+  margin: 0.2rem 0 0.7rem;
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  line-height: 1;
+  max-width: none;
+}
+.next-project-desc {
+  margin: 0;
+  max-width: 44ch;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+/* Inline here rather than pinned to the corner, so it can never land on
+   top of the description. */
+.next-project .project-arrow {
+  position: static;
+  margin-top: 1.25rem;
+}
+
+@media (max-width: 760px) {
+  .next-project { grid-template-columns: 1fr; }
+}
+
 .case-next-actions {
   display: flex;
   flex-wrap: wrap;
@@ -1859,4 +1937,354 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 720px) {
   .plate img { border-radius: var(--r-sm); }
   .case-meta { grid-template-columns: 1fr; }
+}
+
+
+/* ---- Case study: grids and specs ----------------------------------------
+   Several source renders are only 300-500px wide, so they are shown in a
+   grid at their real size rather than stretched across the column. */
+
+.plate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.75rem);
+  align-items: start;
+}
+.plate-grid--two { grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr)); }
+
+.plate-grid figure { margin: 0; }
+
+.plate-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+
+.spec-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+.spec-list li {
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hairline);
+}
+.spec-key {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--accent);
+}
+.spec-list p {
+  margin: 0.7rem 0 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-dim);
+}
+
+.case-note {
+  max-width: 62ch;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--ink-faint);
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--hairline);
+}
+
+/* Braun brief: the accent is the orange against the product's black body. */
+.project[data-accent="aeroform"] {
+  --glass-near:  rgba(232, 96, 20, 0.92);
+  --glass-far:   rgba(255, 138, 48, 0.72);
+  --glass-mid:   rgba(120, 48, 10, 0.82);
+  --glass-deep:  rgba(14, 14, 16, 0.9);
+  --card-arrow:  #ff7a18;
+}
+
+
+/* ---- Case heading carousel ----------------------------------------------
+   A slow cross-fade behind the title. Pure CSS: each slide runs the same
+   keyframe on the same cycle, offset by its own delay, so no JS is needed
+   and nothing can desync. */
+
+.case-head--media { position: relative; isolation: isolate; }
+
+.case-hero-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.case-hero-carousel img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  animation: caseHeroFade 28s linear infinite;
+  will-change: opacity;
+}
+
+.case-hero-carousel img:nth-child(1) { animation-delay: 0s; }
+.case-hero-carousel img:nth-child(2) { animation-delay: 7s; }
+.case-hero-carousel img:nth-child(3) { animation-delay: 14s; }
+.case-hero-carousel img:nth-child(4) { animation-delay: 21s; }
+
+/* Four slides: visible a quarter of the cycle, with a crossfade either side. */
+@keyframes caseHeroFade {
+  0%   { opacity: 0; }
+  3%   { opacity: 1; }
+  22%  { opacity: 1; }
+  25%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* The heading has to stay readable over whatever frame is up, in both themes,
+   so the imagery sits under a scrim keyed to the page background. */
+.case-hero-carousel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, var(--bg) 0%, color-mix(in srgb, var(--bg) 82%, transparent) 42%,
+                    color-mix(in srgb, var(--bg) 42%, transparent) 100%),
+    linear-gradient(to bottom, var(--bg) 0%, transparent 28%, transparent 72%, var(--bg) 100%);
+}
+
+/* color-mix is well supported but not universal; without it the scrim would
+   vanish and the title would sit on bare photography. */
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .case-hero-carousel::after {
+    background: linear-gradient(to right, var(--bg) 0%, var(--bg) 38%, transparent 100%);
+    opacity: 0.94;
+  }
+}
+
+.case-head--media .wrap { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+  /* The global reduce rule collapses animation-duration, which would leave
+     every slide parked at opacity 0. Hold the first frame instead. */
+  .case-hero-carousel img { animation: none !important; opacity: 0; }
+  .case-hero-carousel img:first-child { opacity: 1; }
+}
+
+@media (max-width: 720px) {
+  /* Narrow columns put the title straight over the busiest part of the frame. */
+  .case-hero-carousel::after {
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 88%, transparent) 0%,
+                                color-mix(in srgb, var(--bg) 78%, transparent) 60%, var(--bg) 100%);
+  }
+}
+
+
+/* ---- Colour options carousel --------------------------------------------
+   Native scroll with snap points, so touch and trackpad work without JS and
+   the buttons are an enhancement rather than the only way through. */
+
+.swatch-carousel { position: relative; }
+
+.swatch-viewport { position: relative; }
+
+.swatch-track {
+  display: flex;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding-block: 0.25rem;
+}
+.swatch-track::-webkit-scrollbar { display: none; }
+.swatch-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+/* One colour per view. A multi-card strip looked better but broke the dots:
+   the track hits maximum scroll several slides early, so the final dots were
+   unreachable and could never light up. One slide per view makes the dot
+   index and the scroll position the same number. */
+.swatch-slide {
+  margin: 0;
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  scroll-snap-align: start;
+}
+
+.swatch-slide img {
+  display: block;
+  width: 100%;
+  /* Source cards are 387px wide; capped here so they are never upscaled. */
+  max-width: 24rem;
+  height: auto;
+  border-radius: var(--r-md);
+  /* The cards are white artwork and need their own ground so they do not
+     disappear against the light theme. */
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+
+.swatch-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.35rem;
+}
+
+/* Same chevron as the home-page scroll cue: an ember gradient under a grain
+   texture, clipped to the arrow by a mask. Left and right get their own mask
+   paths rather than a rotation, so the gradient stays vertical in both. */
+.swatch-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  /* Bare chevron, but the button keeps a generous hit area. */
+  width: 3.5rem;
+  height: 4.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+}
+
+.swatch-nav[data-dir="-1"] { left: 0; }
+.swatch-nav[data-dir="1"] { right: 0; }
+
+.swatch-nav::before {
+  content: "";
+  width: clamp(1.5rem, 2.6vw, 2.25rem);
+  aspect-ratio: 40 / 64;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='e'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .34 .34 .34 0 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23e)' opacity='0.38'/%3E%3C/svg%3E"), var(--ember-gradient);
+  background-size: 180px 180px, 100% 260%;
+  background-position: 0 0, 50% 0%;
+  animation: emberDrift 5s ease-in-out infinite alternate;
+}
+
+.swatch-nav[data-dir="-1"]::before {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 64'%3E%3Cpath d='M31 6 L7 32 L31 58' fill='none' stroke='%23000' stroke-width='13' stroke-linejoin='miter' stroke-linecap='butt'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 64'%3E%3Cpath d='M31 6 L7 32 L31 58' fill='none' stroke='%23000' stroke-width='13' stroke-linejoin='miter' stroke-linecap='butt'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+.swatch-nav[data-dir="1"]::before {
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 64'%3E%3Cpath d='M9 6 L33 32 L9 58' fill='none' stroke='%23000' stroke-width='13' stroke-linejoin='miter' stroke-linecap='butt'/%3E%3C/svg%3E") no-repeat center / contain;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 64'%3E%3Cpath d='M9 6 L33 32 L9 58' fill='none' stroke='%23000' stroke-width='13' stroke-linejoin='miter' stroke-linecap='butt'/%3E%3C/svg%3E") no-repeat center / contain;
+}
+
+.swatch-nav:hover::before { filter: brightness(1.12); transform: scale(1.08); }
+.swatch-nav::before { transition: transform 0.3s var(--ease), filter 0.3s var(--ease); }
+.swatch-nav[disabled] { opacity: 0.25; cursor: default; }
+.swatch-nav:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--r-sm); }
+
+.swatch-dots {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-inline: auto;
+}
+
+.swatch-dot {
+  width: 0.9rem;
+  height: 0.9rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--sw, var(--ink-dim));
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+  opacity: 0.4;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.swatch-dot:hover { opacity: 0.8; }
+.swatch-dot.is-active { opacity: 1; transform: scale(1.3); }
+.swatch-dot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+@media (max-width: 720px) {
+  .swatch-dots { gap: 0.45rem; }
+  .swatch-dot { width: 0.8rem; height: 0.8rem; }
+  .swatch-nav { width: 2.5rem; }
+  .swatch-nav[data-dir="-1"] { left: -0.5rem; }
+  .swatch-nav[data-dir="1"] { right: -0.5rem; }
+}
+
+
+/* ---- Case brief: Objective / Process ------------------------------------
+   Keyed off the source deck, where each row is a label against an orange
+   rule with the content to its right. */
+
+/* Side by side, the way the old meta row sat: the two blocks share a rule
+   across the top and stand as columns rather than stacking. */
+.case-brief {
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  padding-top: clamp(1.5rem, 3vw, 2.25rem);
+  border-top: 1px solid var(--hairline);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.case-brief-row { display: block; }
+
+.case-brief-key {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.01em;
+  color: var(--ink-dim);
+}
+
+.case-brief-val {
+  border-left: 2px solid var(--accent);
+  padding-left: clamp(1rem, 2.5vw, 1.6rem);
+}
+
+.case-brief-val p {
+  margin: 0;
+  max-width: 46ch;
+  font-size: clamp(1rem, 1.3vw, 1.1875rem);
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.case-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  display: grid;
+  gap: 0.5rem;
+}
+.case-steps li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 2rem 1fr;
+  align-items: baseline;
+  font-size: clamp(1rem, 1.3vw, 1.1875rem);
+  line-height: 1.5;
+  color: var(--ink);
+}
+.case-steps li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--font-accent);
+  font-weight: 300;
+  font-size: 0.8125rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+@media (max-width: 620px) {
+  .case-brief { gap: 1.5rem; }
 }

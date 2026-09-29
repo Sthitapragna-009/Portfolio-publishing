@@ -288,6 +288,98 @@
   }
 
 
+  /* ---------- Colour options carousel ---------- */
+  // Only present on case-study pages that have one; a no-op everywhere else.
+  const track = document.getElementById("colourTrack");
+
+  if (track) {
+    const slides = Array.from(track.querySelectorAll(".swatch-slide"));
+    const dots = Array.from(document.querySelectorAll(".swatch-dot"));
+    const navs = Array.from(document.querySelectorAll(".swatch-nav"));
+    const AUTO_MS = 4000;
+    let auto = null;
+    let ticking = false;
+
+    // Index of whichever slide currently sits nearest the left edge.
+    const currentIndex = () => {
+      let best = 0;
+      let bestGap = Infinity;
+      slides.forEach((slide, i) => {
+        const gap = Math.abs(slide.offsetLeft - track.scrollLeft);
+        if (gap < bestGap) { bestGap = gap; best = i; }
+      });
+      return best;
+    };
+
+    const goTo = (i) => {
+      const clamped = Math.max(0, Math.min(slides.length - 1, i));
+      track.scrollTo({
+        left: slides[clamped].offsetLeft,
+        behavior: reduced ? "auto" : "smooth"
+      });
+    };
+
+    const sync = () => {
+      const i = currentIndex();
+      dots.forEach((d, n) => d.classList.toggle("is-active", n === i));
+      // Buttons disable at the ends rather than wrapping, so the scroll
+      // position and the controls can never disagree.
+      const atStart = track.scrollLeft <= 2;
+      const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+      navs.forEach((b) => {
+        const dir = Number(b.dataset.dir);
+        b.disabled = dir < 0 ? atStart : atEnd;
+      });
+    };
+
+    const stopAuto = () => { clearInterval(auto); auto = null; };
+    const startAuto = () => {
+      if (reduced || auto || slides.length < 2) return;
+      auto = setInterval(() => {
+        const atEnd = track.scrollLeft >= track.scrollWidth - track.clientWidth - 2;
+        goTo(atEnd ? 0 : currentIndex() + 1);
+      }, AUTO_MS);
+    };
+
+    track.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { sync(); ticking = false; });
+    }, { passive: true });
+
+    navs.forEach((b) => {
+      b.addEventListener("click", () => {
+        stopAuto();
+        goTo(currentIndex() + Number(b.dataset.dir));
+        startAuto();
+      });
+    });
+
+    dots.forEach((d) => {
+      d.addEventListener("click", () => {
+        stopAuto();
+        goTo(Number(d.dataset.index));
+        startAuto();
+      });
+    });
+
+    // Auto-advance is a convenience, never something that fights the reader.
+    const shell = track.closest(".swatch-carousel") || track.parentElement;
+    ["pointerenter", "focusin", "touchstart"].forEach((evt) =>
+      shell.addEventListener(evt, stopAuto, { passive: true })
+    );
+    ["pointerleave", "focusout"].forEach((evt) =>
+      shell.addEventListener(evt, startAuto)
+    );
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) stopAuto(); else startAuto();
+    });
+
+    window.addEventListener("resize", sync);
+    sync();
+    startAuto();
+  }
+
   /* ---------- Ambient dot field ---------- */
   const field = document.getElementById("dotField");
 
