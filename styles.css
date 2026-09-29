@@ -58,6 +58,9 @@
   --ink-dark-dim: var(--gray);
 
   --accent:      var(--orange);
+  /* Small accent text only. On the dark theme the brand orange already
+     clears AA; on light it lands at 3.5:1, so the light theme darkens it. */
+  --accent-text: var(--accent);
   --accent-deep: var(--grad-2);
   --accent-soft: rgba(232, 80, 2, 0.14);
 
@@ -134,6 +137,9 @@
   --tile-a:       #d9d9d9;
   --tile-b:       #bcbcbc;
   --tile-ink:     rgba(0, 0, 0, 0.22);
+
+  /* 4.86:1 on the darkest light-theme surface it is used over. */
+  --accent-text:  #b83e00;
 
   --hairline:      rgba(0, 0, 0, 0.12);
   --hairline-dark: rgba(0, 0, 0, 0.12);
@@ -266,7 +272,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 
 
-.accent { color: var(--accent); }
+.accent { color: var(--accent-text); }
 
 /* Oversized ghost heading behind each section */
 .ghost {
@@ -503,7 +509,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   padding: 0.42rem 0.95rem;
   color: var(--ink);
 }
-.nav-pill:hover { color: var(--accent); }
+.nav-pill:hover { color: var(--accent-text); }
 
 /* Same pill as Photography without the gradient ring: a plain hairline that
    picks up the accent on hover. Inset shadow rather than a border, so the
@@ -972,7 +978,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   transition: color 0.3s var(--ease);
 }
 .marquee-item:hover { color: var(--ink); }
-.marquee-item .sep { color: var(--accent); font-size: 0.7em; }
+.marquee-item .sep { color: var(--accent-text); font-size: 0.7em; }
 
 /* ============================================================
    SECTION SHELL
@@ -1379,7 +1385,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink);
   transform: translateX(0.5rem);
 }
-.cap[data-open="true"] .cap-name { color: var(--accent); }
+.cap[data-open="true"] .cap-name { color: var(--accent-text); }
 
 .cap-toggle {
   flex: 0 0 auto;
@@ -1443,7 +1449,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 300;
   font-size: 0.875rem;
   letter-spacing: 0.12em;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .step-name {
@@ -1542,7 +1548,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink-dim);
 }
 .footer-links a { transition: color 0.25s var(--ease); }
-.footer-links a:hover { color: var(--accent); }
+.footer-links a:hover { color: var(--accent-text); }
 
 /* ============================================================
    REVEAL
@@ -1736,7 +1742,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink-dim);
   transition: color 0.25s var(--ease), gap 0.25s var(--ease);
 }
-.case-back:hover { color: var(--accent); gap: 0.8rem; }
+.case-back:hover { color: var(--accent-text); gap: 0.8rem; }
 
 /* Clears the fixed nav. */
 .case-head { padding-top: calc(4.5rem + clamp(2.5rem, 6vw, 5rem)); }
@@ -1806,7 +1812,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 400;
   font-size: 0.875rem;
   letter-spacing: 0.06em;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .outcome-list p {
   margin: 0.85rem 0 0;
@@ -1980,7 +1986,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.01em;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 .spec-list p {
   margin: 0.7rem 0 0;
@@ -2016,6 +2022,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 .case-head--media { position: relative; isolation: isolate; }
 
 .case-hero-carousel {
+  /* --slides must match the number of <img> children; data-slides picks the
+     matching keyframes. --hold is how long each slide is up. */
+  --slides: 4;
+  --hold: 7s;
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -2030,22 +2040,52 @@ ul { margin: 0; padding: 0; list-style: none; }
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  animation: caseHeroFade 28s linear infinite;
+}
+
+/* The first slide is the permanent base layer: the others wash over it in
+   turn and dissolve back to it. Two layers cross-dissolving can never stay
+   fully opaque -- at the midpoint each is at 0.5 and a quarter of the page
+   background shows through -- so the outgoing frame is never faded against
+   nothing. It either sits under the incoming one, or over this base. */
+.case-hero-carousel img:first-child { opacity: 1; }
+
+.case-hero-carousel img + img {
+  animation: caseHeroFade4 calc(var(--hold) * var(--slides)) linear infinite;
+  animation-delay: calc(var(--hold) * var(--i, 0));
   will-change: opacity;
 }
 
-.case-hero-carousel img:nth-child(1) { animation-delay: 0s; }
-.case-hero-carousel img:nth-child(2) { animation-delay: 7s; }
-.case-hero-carousel img:nth-child(3) { animation-delay: 14s; }
-.case-hero-carousel img:nth-child(4) { animation-delay: 21s; }
+.case-hero-carousel img:nth-child(1) { --i: 0; }
+.case-hero-carousel img:nth-child(2) { --i: 1; }
+.case-hero-carousel img:nth-child(3) { --i: 2; }
+.case-hero-carousel img:nth-child(4) { --i: 3; }
+.case-hero-carousel img:nth-child(5) { --i: 4; }
+.case-hero-carousel img:nth-child(6) { --i: 5; }
+.case-hero-carousel img:nth-child(7) { --i: 6; }
+.case-hero-carousel img:nth-child(8) { --i: 7; }
 
-/* Four slides: visible a quarter of the cycle, with a crossfade either side. */
-@keyframes caseHeroFade {
-  0%   { opacity: 0; }
-  3%   { opacity: 1; }
-  22%  { opacity: 1; }
-  25%  { opacity: 0; }
-  100% { opacity: 0; }
+/* Each slide is lit for one 1/N slice of the cycle, then holds until the next
+   one is FULLY opaque before releasing -- so its fade-out happens underneath
+   cover and costs nothing. The last slide dissolves into the base layer.
+   Only the percentages change with the slide count (slice = 100/N), so a new
+   count needs one more @keyframes block plus a data-slides hook. */
+@keyframes caseHeroFade4 {
+  0%    { opacity: 0; }
+  3%    { opacity: 1; }
+  28%   { opacity: 1; }
+  31%   { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+.case-hero-carousel[data-slides="7"] { --slides: 7; --hold: 4.5s; }
+.case-hero-carousel[data-slides="7"] img + img { animation-name: caseHeroFade7; }
+
+@keyframes caseHeroFade7 {
+  0%      { opacity: 0; }
+  2.5%    { opacity: 1; }
+  16.786% { opacity: 1; }
+  19.286% { opacity: 0; }
+  100%    { opacity: 0; }
 }
 
 /* The heading has to stay readable over whatever frame is up, in both themes,
@@ -2074,8 +2114,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (prefers-reduced-motion: reduce) {
   /* The global reduce rule collapses animation-duration, which would leave
      every slide parked at opacity 0. Hold the first frame instead. */
-  .case-hero-carousel img { animation: none !important; opacity: 0; }
-  .case-hero-carousel img:first-child { opacity: 1; }
+  .case-hero-carousel img + img { animation: none !important; opacity: 0; }
 }
 
 @media (max-width: 720px) {
@@ -2282,7 +2321,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-weight: 300;
   font-size: 0.8125rem;
   letter-spacing: 0.1em;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 @media (max-width: 620px) {
