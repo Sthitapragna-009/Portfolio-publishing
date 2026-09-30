@@ -79,7 +79,7 @@
   --surface:      rgba(249, 249, 249, 0.05);
   --surface-hi:   rgba(249, 249, 249, 0.1);
   --surface-edge: rgba(249, 249, 249, 0.28);
-  --ghost-ink:    rgba(249, 249, 249, 0.08);
+  --ghost-ink:    rgba(249, 249, 249, 0.15);
   --nav-bg:       rgba(0, 0, 0, 0.76);
   --nav-bg-solid: rgba(0, 0, 0, 0.96);
   --outline-soft: rgba(249, 249, 249, 0.3);
@@ -139,7 +139,7 @@
   --surface:      rgba(0, 0, 0, 0.045);
   --surface-hi:   rgba(0, 0, 0, 0.08);
   --surface-edge: rgba(0, 0, 0, 0.18);
-  --ghost-ink:    rgba(0, 0, 0, 0.07);
+  --ghost-ink:    rgba(0, 0, 0, 0.13);
   --nav-bg:       rgba(249, 249, 249, 0.82);
   --nav-bg-solid: rgba(249, 249, 249, 0.97);
   --outline-soft: rgba(0, 0, 0, 0.3);
@@ -300,6 +300,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
+  /* Parked on the right: the heading and eyebrow run from the left, so the
+     watermark no longer sits behind them. */
+  text-align: right;
   margin: 0 0 -0.28em;
 }
 
@@ -1187,6 +1190,7 @@ ul { margin: 0; padding: 0; list-style: none; }
    body ink, and it drops the negative margin the full-width version uses to
    tuck the heading under itself. */
 .about-body .ghost--inline {
+  text-align: left;
   margin: 0 0 0.4rem;
   max-width: none;
   line-height: 0.95;
@@ -1260,6 +1264,13 @@ ul { margin: 0; padding: 0; list-style: none; }
   font-size: clamp(1.5rem, 4vw, 3rem);
 }
 
+/* "In progress" is two words where the others were one, so it needs to come
+   down a size or it runs into the card edges on a narrow column. */
+.project-media .placeholder--pending {
+  font-size: clamp(1.1rem, 2.8vw, 2rem);
+  letter-spacing: -0.02em;
+}
+
 .project-body {
   padding: clamp(1.25rem, 2.5vw, 1.75rem);
 }
@@ -1287,6 +1298,31 @@ ul { margin: 0; padding: 0; list-style: none; }
   line-height: 1.55;
   color: var(--ink-dark-dim);
   letter-spacing: -0.005em;
+}
+
+/* Cards whose case study is not written yet say so, rather than linking to
+   a dead page and leaving the visitor to find out. */
+.project-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.6rem 0 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--ink-dark-dim);
+}
+
+/* Same line, different meaning: an award rather than a promise, so the
+   marker is ink instead of the "still coming" accent. */
+.project-status--credit .status-dot { background: var(--ink-dark); }
+
+.status-dot {
+  flex: none;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--accent);
 }
 
 .project-arrow {
@@ -1943,23 +1979,104 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink);
 }
 
+/* A short bulleted brief, for a case that is a single object rather than a
+   process worth walking through. */
+.case-points {
+  list-style: none;
+  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  padding: 0;
+  max-width: 62ch;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.case-points li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+.case-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
 /* ---- Outcomes ---- */
 
 /* Without the ghost watermark this band was mostly air: the heading sat a
    full --section below the plates above it. */
 .case-outcomes { padding-block: calc(var(--section) * 0.55) var(--section); }
 
+/* Four across: outcomes one and two, then the two registrations, which puts
+   outcomes three and four on the left of a second row. */
 .outcome-list {
   list-style: none;
   margin: clamp(2rem, 5vw, 3rem) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(1.25rem, 3vw, 2rem);
 }
-.outcome-list li {
+
+.outcome,
+.reg-tile {
   padding-top: 1.25rem;
   border-top: 1px solid var(--hairline);
+}
+
+/* A small proof tile that jumps to the full record further down. */
+.reg-tile {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.reg-tile img {
+  display: block;
+  width: 100%;
+  max-width: 8.5rem;
+  height: auto;
+  border-radius: var(--r-sm);
+  box-shadow: 0 0 0 1px var(--hairline), 0 8px 20px rgba(0, 0, 0, 0.16);
+  transition: transform 0.4s var(--ease);
+}
+
+.reg-tile:hover img,
+.reg-tile:focus-visible img { transform: translateY(-3px); }
+
+.reg-tile-no {
+  display: block;
+  margin-top: 0.85rem;
+  font-family: var(--font-accent);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--accent-text);
+}
+
+.reg-tile-name {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* Narrow columns: keep the four outcomes together and let the tiles follow. */
+@media (max-width: 1040px) {
+  .outcome-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reg-tile { order: 1; }
+}
+
+@media (max-width: 560px) {
+  .outcome-list { grid-template-columns: 1fr; }
 }
 .outcome-n {
   display: block;
@@ -1969,7 +2086,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   letter-spacing: 0.06em;
   color: var(--accent-text);
 }
-.outcome-list p {
+.outcome p {
   margin: 0.85rem 0 0;
   font-size: 1rem;
   line-height: 1.55;
@@ -2007,17 +2124,55 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .plate { margin: 0; }
 
-/* Portrait sources at 1:2.2 are unreadable full width; paired, each one lands
-   at a sensible height. */
-.plate-duo {
+/* Registered designs: a short record, not a table nobody reads. */
+.grant-list {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+  margin: 0;
+}
+
+.grant {
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hairline);
+}
+
+.grant dt {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.grant dd {
+  margin: 0.5rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+/* Portrait sources at 1:2.2 are unreadable full width; paired, each one lands
+   at a sensible height.
+
+   Equal columns only work when both photos share an aspect ratio. Pair a tall
+   one with a wide one and the tall column runs long, leaving a hole under the
+   wide one. So each item's width grows in proportion to its own aspect ratio
+   (--ar = w/h, set from the image's real dimensions), which is what makes the
+   two render to a matching height. */
+.plate-duo {
+  display: flex;
   gap: clamp(1rem, 2.5vw, 1.75rem);
-  align-items: start;
+  align-items: flex-start;
+}
+
+.plate-duo > .plate {
+  flex: var(--ar, 1) 1 0;
+  min-width: 0;
 }
 
 @media (max-width: 760px) {
-  .plate-duo { grid-template-columns: 1fr; }
+  .plate-duo { flex-direction: column; }
+  .plate-duo > .plate { flex: 0 1 auto; width: 100%; }
 }
 
 .plate img {
