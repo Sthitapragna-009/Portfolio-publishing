@@ -615,16 +615,15 @@ ul { margin: 0; padding: 0; list-style: none; }
   margin-left: 0.7rem;
 }
 
-/* --- Day / night switch, docked under the Get in touch button ---------- */
+/* --- Day / night switch, parked in the bottom-right corner ------------- */
 
-/* A vertical rail on the left edge: sun at the top, moon at the bottom, the
-   two labels stacked between them, and the knob riding the whole length. The
-   right edge already carries .edge-cta, so the two never stack. */
+/* A horizontal pill: sun at the left, moon at the right, the label between
+   them, and the knob riding the length. It shares the right edge with
+   .edge-cta, which floats higher up, so on wide screens the two never meet. */
 .theme-toggle {
   position: fixed;
-  left: 0.5rem;
-  top: 50%;
-  transform: translateY(-50%);
+  right: clamp(0.9rem, 2vw, 1.75rem);
+  bottom: clamp(1rem, 2.5vw, 1.75rem);
   z-index: 90;
   padding: 0;
   border: 0;
@@ -636,14 +635,14 @@ ul { margin: 0; padding: 0; list-style: none; }
 .theme-toggle-rail {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /* The content column's gutter is only ~41px at 1024, so the rail has to
-     stay inside that or it sits on the headings. */
-  width: 1.75rem;
-  height: 17rem;
-  padding-block: 0.5rem;
+  /* Width is fixed rather than content-sized: the knob's travel is derived
+     from it, and an auto width would desync the two. */
+  width: 13rem;
+  height: 2.25rem;
+  padding-inline: 0.5rem;
   border-radius: var(--r-pill);
   background: var(--ember-gradient);
   box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
@@ -677,16 +676,14 @@ ul { margin: 0; padding: 0; list-style: none; }
 .theme-toggle[aria-checked="true"]  .theme-toggle-end--sun  { opacity: 0; }
 .theme-toggle[aria-checked="false"] .theme-toggle-end--moon { opacity: 0; }
 
-/* One label, set on its side down the middle of the rail. The knob only ever
-   rests at the two ends, so it never comes to a stop on top of it. */
+/* One label, centred between the ends. The knob only ever rests at the two
+   ends, so it never comes to a stop on top of it. */
 .theme-toggle-words {
   display: grid;
   place-items: center;
 }
 
 .theme-toggle-word {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
   font-size: 0.6875rem;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -698,18 +695,17 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .theme-toggle-knob {
   position: absolute;
-  left: 50%;
-  top: 0.1875rem;
-  width: 1.375rem;
-  height: 1.375rem;
-  margin-left: -0.6875rem;
+  left: 0.25rem;
+  top: 0.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
   display: grid;
   place-items: center;
   border-radius: 50%;
   background: var(--white);
   color: var(--primary);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
-  /* rail 17 - knob 1.375 - inset 0.375 = 15.25rem of travel */
+  /* rail 13 - knob 1.75 - inset 0.5 = 10.75rem of travel */
   transition: transform 0.45s var(--ease);
   /* --seat is where the knob rests; the breath nudges it off that seat towards
      the end you would swipe to, then settles back. Holding the rest position
@@ -717,26 +713,26 @@ ul { margin: 0; padding: 0; list-style: none; }
      the same transform property. */
   --seat: 0rem;
   --lean: 0.75rem;
-  transform: translateY(var(--seat));
+  transform: translateX(var(--seat));
   animation: knobBreath 2.6s var(--ease) infinite;
 }
 
-/* Unchecked = dark theme; the knob sits at the moon and leans back up. */
+/* Unchecked = dark theme; the knob sits at the moon and leans back left. */
 .theme-toggle[aria-checked="false"] .theme-toggle-knob {
-  --seat: 15.25rem;
+  --seat: 10.75rem;
   --lean: -0.75rem;
 }
 
 @keyframes knobBreath {
-  0%, 62%, 100% { transform: translateY(var(--seat)); }
-  31%           { transform: translateY(calc(var(--seat) + var(--lean))); }
+  0%, 62%, 100% { transform: translateX(var(--seat)); }
+  31%           { transform: translateX(calc(var(--seat) + var(--lean))); }
 }
 
 /* Hovering is intent enough; stop nudging and let the knob sit still. */
 .theme-toggle:hover .theme-toggle-knob,
 .theme-toggle:focus-visible .theme-toggle-knob {
   animation-play-state: paused;
-  transform: translateY(var(--seat));
+  transform: translateX(var(--seat));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -753,19 +749,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 .theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-sun  { opacity: 1; transform: none; }
 .theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
 
-/* Under ~1000px the copy runs to within 20-30px of the edge, so a rail parked
-   at mid-height would sit on it. Drop it to the bottom-left corner, the way
-   the contact button floats on the right, and shed the words with it. */
-@media (max-width: 1000px) {
-  .theme-toggle {
-    top: auto;
-    bottom: 1.1rem;
-    transform: none;
-  }
-  .theme-toggle-rail { width: 1.6rem; height: 10rem; }
-  .theme-toggle-knob { width: 1.25rem; height: 1.25rem; margin-left: -0.625rem; }
-  .theme-toggle[aria-checked="false"] .theme-toggle-knob { --seat: 8.375rem; --lean: -0.6rem; }
+/* On phones .edge-cta drops into this same corner, so the switch stacks above
+   it and sheds its label to stay out of the way. */
+@media (max-width: 720px) {
+  .theme-toggle-rail { width: 4.5rem; }
   .theme-toggle-words { display: none; }
+  /* rail 4.5 - knob 1.75 - inset 0.5 = 2.25rem */
+  .theme-toggle[aria-checked="false"] .theme-toggle-knob { --seat: 2.25rem; --lean: -0.6rem; }
 }
 
 /* Touch devices never fire hover, which would leave an unlabelled circle.
@@ -1806,7 +1796,7 @@ ul { margin: 0; padding: 0; list-style: none; }
     justify-items: center;
     gap: 0.04em;
     /* Stacked here, so the size is set by the longer half
-       ("Design Generalist") fitting the band's full width. */
+       ("Designer") fitting the band's full width. */
     font-size: clamp(1.5rem, 8vw, 3.25rem);
     font-size: 9cqw;
     padding-inline: 0.75rem;
@@ -1826,9 +1816,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   .edge-cta:hover,
   .edge-cta:focus-visible { transform: scale(1.02); }
 
+  /* Clears .edge-cta, which drops into this corner at the same breakpoint. */
   .theme-toggle {
-    top: auto;
-    bottom: calc(clamp(1rem, 4vw, 1.75rem) + 3.25rem);
+    bottom: calc(clamp(1rem, 4vw, 1.75rem) + 3.5rem);
   }
 
   .wordmark-name { font-size: 0.85rem; }
