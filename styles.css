@@ -2015,14 +2015,27 @@ ul { margin: 0; padding: 0; list-style: none; }
    full --section below the plates above it. */
 .case-outcomes { padding-block: calc(var(--section) * 0.55) var(--section); }
 
-/* Four across: outcomes one and two, then the two registrations, which puts
-   outcomes three and four on the left of a second row. */
+/* Outcomes read as a list, so they stack; the registrations sit beside them
+   as their own block rather than being interleaved into the same row. */
+.outcomes-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+
 .outcome-list {
   list-style: none;
-  margin: clamp(2rem, 5vw, 3rem) 0 0;
+  margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+}
+
+.reg-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.25rem, 3vw, 2rem);
 }
 
@@ -2039,18 +2052,39 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: inherit;
 }
 
+/* The frame carries the radius and shadow so it can clip a blurred image
+   without soft edges leaking past the corners. */
+.reg-tile-thumb {
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  max-width: 8.5rem;
+  border-radius: var(--r-sm);
+  box-shadow: 0 0 0 1px var(--hairline), 0 8px 20px rgba(0, 0, 0, 0.16);
+}
+
 .reg-tile img {
   display: block;
   width: 100%;
-  max-width: 8.5rem;
   height: auto;
-  border-radius: var(--r-sm);
-  box-shadow: 0 0 0 1px var(--hairline), 0 8px 20px rgba(0, 0, 0, 0.16);
   transition: transform 0.4s var(--ease);
 }
 
 .reg-tile:hover img,
 .reg-tile:focus-visible img { transform: translateY(-3px); }
+
+/* Accepted but not published, so the certificate cannot be shown. Blurred,
+   and scaled up a touch so the blur never reaches the frame edge. */
+.reg-tile--pending .reg-tile-thumb { opacity: 0.85; }
+
+.reg-tile--pending img {
+  filter: blur(7px) saturate(0.85);
+  transform: scale(1.14);
+}
+
+.reg-tile--pending:hover img { transform: scale(1.14); }
+
+.reg-tile--pending .reg-tile-no { color: var(--ink-dim); }
 
 .reg-tile-no {
   display: block;
@@ -2069,14 +2103,14 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink);
 }
 
-/* Narrow columns: keep the four outcomes together and let the tiles follow. */
-@media (max-width: 1040px) {
-  .outcome-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .reg-tile { order: 1; }
+/* Narrow: the registrations drop below the outcomes rather than squeezing
+   into half a column. */
+@media (max-width: 900px) {
+  .outcomes-split { grid-template-columns: 1fr; }
 }
 
-@media (max-width: 560px) {
-  .outcome-list { grid-template-columns: 1fr; }
+@media (max-width: 460px) {
+  .reg-grid { grid-template-columns: 1fr; }
 }
 .outcome-n {
   display: block;
@@ -2397,6 +2431,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   3%    { opacity: 1; }
   28%   { opacity: 1; }
   31%   { opacity: 0; }
+  100%  { opacity: 0; }
+}
+
+.case-hero-carousel[data-slides="5"] { --slides: 5; --hold: 5.5s; }
+.case-hero-carousel[data-slides="5"] img + img { animation-name: caseHeroFade5; }
+
+@keyframes caseHeroFade5 {
+  0%    { opacity: 0; }
+  3%    { opacity: 1; }
+  23%   { opacity: 1; }
+  26%   { opacity: 0; }
   100%  { opacity: 0; }
 }
 
