@@ -618,4 +618,251 @@
     }
   }
 
+  /* ---------- Photography reels ---------- */
+
+  /* Every row should travel at the same speed whatever it holds, so the
+     duration comes from the row's real width rather than a fixed number --
+     adding photographs makes a row longer, not faster. The width is only
+     final once the images have their intrinsic size, so this reruns on load
+     and on resize. */
+  const reels = [...document.querySelectorAll("[data-reel]")];
+
+  if (reels.length) {
+    const PX_PER_SECOND = 46;
+
+    const pace = () => {
+      reels.forEach((track) => {
+        const group = track.firstElementChild;
+        if (!group) return;
+        const width = group.getBoundingClientRect().width;
+        if (!width) return;
+        track.style.setProperty("--dur", (width / PX_PER_SECOND).toFixed(2) + "s");
+      });
+    };
+
+    pace();
+    window.addEventListener("load", pace);
+
+    let paceTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(paceTimer);
+      paceTimer = setTimeout(pace, 150);
+    });
+  }
+
+  /* ---------- Photograph lightbox ---------- */
+
+  const lightbox = document.getElementById("lightbox");
+
+  if (lightbox) {
+    const stage = lightbox.querySelector(".lightbox-stage img");
+    const counter = lightbox.querySelector(".lightbox-counter");
+    const caption = lightbox.querySelector(".lightbox-caption");
+    const playBtn = lightbox.querySelector("[data-lightbox-play]");
+    const playLabel = playBtn.querySelector("[data-play-label]");
+    const iconPlay = playBtn.querySelector("[data-icon-play]");
+    const iconPause = playBtn.querySelector("[data-icon-pause]");
+
+    const SLIDE_MS = 3200;
+
+    let items = [];      // { src, alt } for the gallery currently open
+    let index = 0;
+    let timer = null;
+    let lastFocus = null;
+    let idleTimer = null;
+
+    /* The slideshow is a wallpaper show rather than a viewer: it takes the
+       whole screen the way a video player does, and shows nothing but the
+       photograph until the mouse moves. */
+    const goFullscreen = () => {
+      const req = lightbox.requestFullscreen || lightbox.webkitRequestFullscreen;
+      // Rejects when the document is not allowed to go fullscreen (an embed
+      // without the permission, say). The panel already covers the viewport,
+      // so the show still runs -- it just is not true fullscreen.
+      if (req) { try { Promise.resolve(req.call(lightbox)).catch(() => {}); } catch (e) {} }
+    };
+
+    const leaveFullscreen = () => {
+      const el = document.fullscreenElement || document.webkitFullscreenElement;
+      if (!el) return;
+      const exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exit) { try { Promise.resolve(exit.call(document)).catch(() => {}); } catch (e) {} }
+    };
+
+    const showControls = () => {
+      lightbox.classList.add("show-controls");
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(() => lightbox.classList.remove("show-controls"), 2200);
+    };
+
+    /* A reel renders its photographs twice so the loop can be seamless, so the
+       gallery is built from the first group only and a click on a duplicate
+       maps back onto it by position. */
+    const galleryOf = (root) => {
+      const group = root.querySelector(".reel-group") || root;
+      return [...group.querySelectorAll("img")].map((img) => ({
+        src: img.currentSrc || img.src,
+        alt: img.getAttribute("alt") || ""
+      }));
+    };
+
+    const render = () => {
+      const item = items[index];
+      if (!item) return;
+      stage.classList.add("is-swapping");
+      const next = new Image();
+      next.onload = next.onerror = () => {
+        stage.src = item.src;
+        stage.alt = item.alt;
+        stage.classList.remove("is-swapping");
+      };
+      next.src = item.src;
+      counter.textContent = (index + 1) + " / " + items.length;
+      if (caption) caption.textContent = item.alt;
+    };
+
+    const go = (step) => {
+      if (!items.length) return;
+      index = (index + step + items.length) % items.length;
+      render();
+    };
+
+    const setPlaying = (on) => {
+      clearInterval(timer);
+      timer = on ? setInterval(() => go(1), SLIDE_MS) : null;
+      // Starting a show switches the panel into wallpaper mode; pausing keeps
+      // it there so the frame stays full-bleed while you look at it.
+      if (on && !lightbox.classList.contains("is-slideshow")) {
+        lightbox.classList.add("is-slideshow");
+        goFullscreen();
+        showControls();
+      }
+      playBtn.classList.toggle("lightbox-btn--playing", on);
+      playBtn.setAttribute("aria-pressed", String(on));
+      playLabel.textContent = on ? "Pause" : "Slideshow";
+      iconPlay.hidden = on;
+      iconPause.hidden = !on;
+    };
+
+    const open = (list, at, autoplay) => {
+      if (!list.length) return;
+      items = list;
+      index = Math.max(0, Math.min(at, list.length - 1));
+      lastFocus = document.activeElement;
+      lightbox.hidden = false;
+      document.body.classList.add("is-locked");
+      render();
+      // One frame before the class, or the opacity transition has nothing to
+      // move from and the panel snaps in.
+      requestAnimationFrame(() => lightbox.classList.add("is-open"));
+      setPlaying(Boolean(autoplay));
+      lightbox.querySelector(".lightbox-close").focus();
+    };
+
+    const close = () => {
+      setPlaying(false);
+      clearTimeout(idleTimer);
+      leaveFullscreen();
+      lightbox.classList.remove("is-slideshow", "show-controls");
+      lightbox.classList.remove("is-open");
+      document.body.classList.remove("is-locked");
+      const done = () => {
+        lightbox.hidden = true;
+        lightbox.removeEventListener("transitionend", done);
+      };
+      lightbox.addEventListener("transitionend", done);
+      // transitionend never fires when the transition is off (reduced motion).
+      setTimeout(done, 400);
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+
+    /* Click a frame in any reel. */
+    document.querySelectorAll("[data-reel]").forEach((track) => {
+      const list = galleryOf(track);
+      track.addEventListener("click", (event) => {
+        const shot = event.target.closest(".shot");
+        if (!shot || !track.contains(shot)) return;
+        const group = shot.parentElement;
+        const at = [...group.children].indexOf(shot);
+        open(list, at, false);
+      });
+    });
+
+    /* The slideshow button under a reel. */
+    document.querySelectorAll("[data-reel-play]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const reel = btn.closest(".reel");
+        const track = reel && reel.querySelector("[data-reel]");
+        if (track) open(galleryOf(track), 0, true);
+      });
+    });
+
+    /* The collection grid. */
+    const pool = document.querySelector("[data-pool]");
+
+    if (pool) {
+      const list = [...pool.querySelectorAll("img")].map((img) => ({
+        // The grid shows thumbnails; the lightbox should load the full frame.
+        src: img.dataset.full || img.currentSrc || img.src,
+        alt: img.getAttribute("alt") || ""
+      }));
+      pool.addEventListener("click", (event) => {
+        const item = event.target.closest(".pool-item");
+        if (!item) return;
+        open(list, [...pool.children].indexOf(item), false);
+      });
+      const poolPlay = document.querySelector("[data-pool-play]");
+      if (poolPlay) poolPlay.addEventListener("click", () => open(list, 0, true));
+    }
+
+    lightbox.querySelector(".lightbox-close").addEventListener("click", close);
+    /* In the viewer a chevron means "I am steering now", so the show stops.
+       In a wallpaper show it just skips, and the clock restarts so the new
+       frame gets its full time. */
+    const step = (dir) => {
+      if (lightbox.classList.contains("is-slideshow")) {
+        if (timer) { clearInterval(timer); timer = setInterval(() => go(1), SLIDE_MS); }
+        showControls();
+      } else {
+        setPlaying(false);
+      }
+      go(dir);
+    };
+
+    lightbox.querySelector(".lightbox-nav--prev").addEventListener("click", () => step(-1));
+    lightbox.querySelector(".lightbox-nav--next").addEventListener("click", () => step(1));
+
+    /* Controls surface on movement, then fade back out. */
+    lightbox.addEventListener("mousemove", () => {
+      if (lightbox.classList.contains("is-slideshow")) showControls();
+    });
+
+    /* Leaving fullscreen by Escape or F11 should end the show, not strand the
+       panel in wallpaper mode. */
+    ["fullscreenchange", "webkitfullscreenchange"].forEach((evt) => {
+      document.addEventListener(evt, () => {
+        const el = document.fullscreenElement || document.webkitFullscreenElement;
+        if (!el && lightbox.classList.contains("is-slideshow") && !lightbox.hidden) close();
+      });
+    });
+    playBtn.addEventListener("click", () => setPlaying(!timer));
+
+    /* Clicking the backdrop closes; clicking the photograph or the chrome
+       must not. */
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox || event.target.classList.contains("lightbox-stage")) close();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (lightbox.hidden) return;
+      if (event.key === "Escape") { close(); return; }
+      if (event.key === "ArrowLeft") step(-1);
+      if (event.key === "ArrowRight") step(1);
+      if (event.key === " " || event.code === "Space") {
+        event.preventDefault();
+        setPlaying(!timer);
+      }
+    });
+  }
+
 })();

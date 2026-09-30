@@ -2695,3 +2695,492 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 620px) {
   .case-brief { gap: 1.5rem; }
 }
+
+/* ============================================================
+   PHOTOGRAPHY — stacked infinite reels
+   ============================================================ */
+
+/* Nothing but photographs: no dot field, no footer, and the reels run edge to
+   edge, so the page drops the usual .wrap gutter below the nav. */
+.page-gallery .gallery {
+  padding-top: calc(4.5rem + clamp(1rem, 3vw, 2rem));
+  padding-bottom: clamp(3rem, 8vw, 6rem);
+}
+
+/* The title IS the divider: a hairline with the label sitting on it. */
+.reel-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 clamp(1rem, 4vw, 3rem) clamp(0.9rem, 2vw, 1.4rem);
+  padding-top: clamp(1.75rem, 4vw, 3rem);
+  border-top: 1px solid var(--hairline);
+}
+
+/* The first reel sits under the nav, where a rule would read as a stray line. */
+.reel:first-child .reel-head { border-top: 0; padding-top: 0; }
+
+.reel-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.reel-count {
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-faint);
+}
+
+.reel-viewport {
+  overflow: hidden;
+  /* Frames run off both edges rather than stopping at a gutter. */
+  width: 100%;
+}
+
+.reel-track {
+  display: flex;
+  width: max-content;
+  /* --dur is set per reel from its real width, so adding photographs to a row
+     makes it longer, not faster. */
+  animation: reelSlide var(--dur, 60s) linear infinite;
+  will-change: transform;
+}
+
+.reel--rtl .reel-track { animation-direction: reverse; }
+
+.reel-group {
+  display: flex;
+  flex: none;
+}
+
+/* Spacing is margin-right, not a flex gap. A gap would put one extra gap
+   inside the pair of groups, so translating by exactly half the track would
+   land half a gap out and the seam would visibly jump. */
+.shot {
+  flex: none;
+  height: var(--reel-h, clamp(13rem, 44vh, 32rem));
+  margin: 0 var(--shot-gap, clamp(0.5rem, 1.2vw, 1rem)) 0 0;
+}
+
+.shot img {
+  display: block;
+  height: 100%;
+  width: auto;
+  border-radius: var(--r-sm);
+  background: var(--hairline);
+}
+
+@keyframes reelSlide {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Reading a frame is intent enough; hold the row still. */
+.reel-viewport:hover .reel-track,
+.reel-viewport:focus-within .reel-track { animation-play-state: paused; }
+
+/* No animation: the row becomes an ordinary horizontal scroller, and the
+   duplicate group would just be the same photographs twice. */
+@media (prefers-reduced-motion: reduce) {
+  .reel-viewport {
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+  .reel-track { animation: none; width: auto; }
+  .reel-track .reel-group + .reel-group { display: none; }
+  .shot { scroll-snap-align: center; }
+}
+
+/* A row still waiting on its photographs. */
+.reel-pending {
+  margin: 0 clamp(1rem, 4vw, 3rem);
+  padding-bottom: clamp(1rem, 3vw, 2rem);
+  font-size: 0.9375rem;
+  color: var(--ink-faint);
+}
+
+@media (max-width: 720px) {
+  /* Shorter rows on a phone, so more than one frame is on screen at a time. */
+  .reel { --reel-h: clamp(10rem, 30vh, 16rem); }
+}
+
+/* ---- Gallery masthead ---- */
+
+.gallery-head {
+  margin: 0 clamp(1rem, 4vw, 3rem) clamp(1.75rem, 4vw, 3rem);
+}
+
+.gallery-title {
+  margin: 0;
+  font-size: clamp(2rem, 6.5vw, 5rem);
+  line-height: 0.96;
+}
+
+.gallery-lede {
+  margin: clamp(0.75rem, 2vw, 1.1rem) 0 0;
+  max-width: 48ch;
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+
+/* ---- Reel controls ---- */
+
+.shot { cursor: zoom-in; }
+
+.reel-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin: clamp(0.6rem, 1.5vw, 0.9rem) clamp(1rem, 4vw, 3rem) 0;
+}
+
+.reel-play {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.45rem;
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-pill);
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+  cursor: pointer;
+  transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.reel-play-dot {
+  display: grid;
+  place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--white);
+}
+
+.reel-play:hover,
+.reel-play:focus-visible { color: var(--accent-text); border-color: var(--accent); }
+
+/* ---- The collection: one continuous pool of thumbnails ---- */
+
+.pool {
+  margin: 0 clamp(1rem, 4vw, 3rem);
+  /* Columns rather than a row grid: the photographs are all different shapes
+     and this keeps every one uncropped. */
+  column-count: 4;
+  column-gap: clamp(0.5rem, 1.2vw, 1rem);
+}
+
+@media (max-width: 1100px) { .pool { column-count: 3; } }
+@media (max-width: 760px)  { .pool { column-count: 2; } }
+@media (max-width: 420px)  { .pool { column-count: 1; } }
+
+.pool-item {
+  display: block;
+  width: 100%;
+  margin: 0 0 clamp(0.5rem, 1.2vw, 1rem);
+  padding: 0;
+  border: 0;
+  border-radius: var(--r-sm);
+  overflow: hidden;
+  background: none;
+  cursor: zoom-in;
+  /* A column box that breaks across columns would tear a photograph in half. */
+  break-inside: avoid;
+}
+
+.pool-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: var(--hairline);
+  transition: transform 0.5s var(--ease), opacity 0.3s var(--ease);
+}
+
+.pool-item:hover img,
+.pool-item:focus-visible img { transform: scale(1.03); opacity: 0.92; }
+.pool-item:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* ============================================================
+   LIGHTBOX
+   ============================================================ */
+
+.lightbox[hidden] { display: none; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-items: center;
+  /* Near-black in both themes: a photograph is judged against dark, and a
+     light scrim would tint every frame. */
+  background: rgba(8, 8, 8, 0.94);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.28s var(--ease);
+}
+
+.lightbox.is-open { opacity: 1; }
+
+.lightbox-stage {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  min-width: 0;
+  min-height: 0;
+  padding: clamp(0.5rem, 2vw, 1.5rem);
+}
+
+.lightbox-stage img {
+  display: block;
+  max-width: 100%;
+  /* Almost full screen, with the chrome rows left clear. */
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  border-radius: var(--r-sm);
+  box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox-stage img.is-swapping { opacity: 0; }
+.lightbox-stage img { transition: opacity 0.22s var(--ease); }
+
+/* The orange chevrons, one on each side. */
+.lightbox-nav {
+  grid-row: 2;
+  display: grid;
+  place-items: center;
+  width: clamp(2.75rem, 5vw, 3.75rem);
+  height: clamp(2.75rem, 5vw, 3.75rem);
+  margin: 0 clamp(0.4rem, 1.5vw, 1.25rem);
+  border: 0;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--white);
+  cursor: pointer;
+  transition: transform 0.3s var(--ease), filter 0.3s var(--ease);
+}
+
+.lightbox-nav--prev { grid-column: 1; }
+.lightbox-nav--next { grid-column: 3; }
+
+.lightbox-nav:hover,
+.lightbox-nav:focus-visible { filter: brightness(1.1); transform: scale(1.07); }
+.lightbox-nav:active { transform: scale(0.97); }
+
+.lightbox-top {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(0.75rem, 2vw, 1.25rem) clamp(0.75rem, 2.5vw, 1.75rem);
+}
+
+.lightbox-bar {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(0.75rem, 2vw, 1.25rem);
+  padding: clamp(0.5rem, 2vw, 1.25rem);
+}
+
+.lightbox-counter {
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-variant-numeric: tabular-nums;
+  /* Fixed chrome over a fixed near-black scrim, so these are literal rather
+     than themed -- the panel does not change with the page. */
+  color: rgba(249, 249, 249, 0.72);
+}
+
+.lightbox-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(249, 249, 249, 0.28);
+  border-radius: var(--r-pill);
+  background: none;
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+
+.lightbox-btn:hover,
+.lightbox-btn:focus-visible {
+  background: rgba(249, 249, 249, 0.12);
+  border-color: rgba(249, 249, 249, 0.5);
+}
+
+.lightbox-btn--playing { background: var(--accent); border-color: var(--accent); }
+.lightbox-btn--playing:hover { background: var(--accent); filter: brightness(1.08); }
+
+.lightbox-close {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-left: auto;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(249, 249, 249, 0.12);
+  color: #f9f9f9;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), transform 0.3s var(--ease);
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus-visible { background: rgba(249, 249, 249, 0.24); transform: rotate(90deg); }
+
+.lightbox-caption {
+  max-width: 60ch;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: rgba(249, 249, 249, 0.66);
+}
+
+/* The play icon sits optically left inside a circle; nudge it back. */
+.lightbox-btn svg, .reel-play-dot svg { flex: none; }
+
+@media (max-width: 620px) {
+  /* No room for chevrons beside the frame, so the photograph spans the full
+     width and the bottom row becomes prev | controls | next. They have to stay
+     in their own grid columns: dropping them all into one cell stacks them. */
+  .lightbox-stage { grid-column: 1 / -1; }
+  .lightbox-nav {
+    grid-row: 3;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 0.4rem;
+  }
+  .lightbox-bar { grid-column: 2; grid-row: 3; }
+  .lightbox-stage img { max-height: 66vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox, .lightbox-stage img, .pool-item img { transition: none; }
+}
+
+/* Scroll is locked behind the lightbox so the page does not drift underneath. */
+body.is-locked { overflow: hidden; }
+
+/* The collection's play control sits under the heading, not after a reel. */
+.reel-actions--lead {
+  justify-content: flex-start;
+  margin: clamp(1rem, 2.5vw, 1.5rem) 0 0;
+}
+
+/* ---- Slideshow: a wallpaper show, nothing but the photograph ---- */
+
+.lightbox.is-slideshow {
+  background: #000;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  /* Hidden until the mouse moves, like a video player. */
+  cursor: none;
+}
+
+.lightbox.is-slideshow.show-controls { cursor: default; }
+
+/* Everything that is chrome rather than photograph. */
+.lightbox.is-slideshow .lightbox-caption,
+.lightbox.is-slideshow .lightbox-close,
+.lightbox.is-slideshow .lightbox-counter { display: none; }
+
+.lightbox.is-slideshow .lightbox-top { display: none; }
+
+/* The frame takes the whole screen; the controls float over it. */
+.lightbox.is-slideshow .lightbox-stage {
+  position: absolute;
+  inset: 0;
+  padding: 0;
+}
+
+.lightbox.is-slideshow .lightbox-stage img {
+  max-width: 100vw;
+  max-height: 100vh;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.lightbox.is-slideshow .lightbox-nav,
+.lightbox.is-slideshow .lightbox-bar {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease);
+}
+
+.lightbox.is-slideshow.show-controls .lightbox-nav,
+.lightbox.is-slideshow.show-controls .lightbox-bar {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Tiny, so they sit lightly over the picture. */
+.lightbox.is-slideshow .lightbox-nav {
+  top: 50%;
+  width: 2rem;
+  height: 2rem;
+  margin: 0;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.45);
+  color: rgba(249, 249, 249, 0.92);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox.is-slideshow .lightbox-nav svg { width: 13px; height: 13px; }
+.lightbox.is-slideshow .lightbox-nav--prev { left: 0.85rem; }
+.lightbox.is-slideshow .lightbox-nav--next { right: 0.85rem; }
+
+.lightbox.is-slideshow .lightbox-nav:hover,
+.lightbox.is-slideshow .lightbox-nav:focus-visible {
+  background: var(--accent);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.06);
+}
+
+.lightbox.is-slideshow .lightbox-bar {
+  left: 0;
+  right: 0;
+  bottom: clamp(0.85rem, 2.5vh, 1.5rem);
+  padding: 0;
+}
+
+.lightbox.is-slideshow .lightbox-btn {
+  padding: 0.2rem 0.65rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.45);
+  border-color: rgba(249, 249, 249, 0.22);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.lightbox.is-slideshow .lightbox-btn svg { width: 9px; height: 9px; }
+.lightbox.is-slideshow .lightbox-btn--playing { background: rgba(0, 0, 0, 0.45); }
+.lightbox.is-slideshow .lightbox-btn:hover { background: var(--accent); border-color: var(--accent); }

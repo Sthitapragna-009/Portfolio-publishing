@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Photography — Sthitapragna Kollepara</title>
+  <meta name="description" content="Photography by Sthitapragna Kollepara — aviation, automobiles and more, in continuously scrolling reels." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+  <script>
+    // Inline and blocking on purpose: setting this after first paint shows a
+    // flash of the wrong theme.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="page-gallery">
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="index.html" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a class="nav-pill nav-pill--quiet" href="index.html#work">Design Projects</a>
+        <a class="nav-pill ring-pill" href="photography.html" aria-current="page">Photography</a>
+        <a class="nav-pill nav-pill--quiet" href="collection.html">View the entire collection</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top" class="gallery">
+
+    <header class="gallery-head">
+      <h1 class="display gallery-title">Photography by Sthitapragna</h1>
+      <p class="gallery-lede">
+        Click any frame to open it. The chevrons step through the row, or run it
+        as a slideshow.
+      </p>
+    </header>
+
+    <!-- ===================== AVIATION ===================== -->
+    <section class="reel" aria-labelledby="reel-aviation">
+      <div class="reel-head">
+        <h2 class="reel-title" id="reel-aviation">Aviation</h2>
+        <span class="reel-count" aria-hidden="true">7</span>
+      </div>
+
+      <div class="reel-viewport">
+        <!-- Two identical groups: the track slides exactly one group's width,
+             so the second lands where the first began and the loop is seamless.
+             Spacing is margin-right on each frame rather than a flex gap --
+             a gap would leave half a gap unaccounted for at the seam. -->
+        <div class="reel-track" data-reel>
+          <div class="reel-group">
+            <figure class="shot"><img src="assets/photography/av-01.jpg" alt="A sailor in whites standing at the end of a pier, silhouetted against an orange sea and sky" width="1659" height="900" decoding="async" fetchpriority="high" /></figure>
+            <figure class="shot"><img src="assets/photography/av-02.jpg" alt="A naval helicopter hovering with a line down to the water, a tall ship under full sail behind" width="900" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-03.jpg" alt="A paratrooper descending under a tricolour canopy" width="693" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-04.jpg" alt="A fighter jet banking through a hazy orange sky, afterburners lit" width="835" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-05.jpg" alt="A fighter jet seen from below in pale grey sky, twin afterburner trails behind" width="719" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-06.jpg" alt="A fighter jet in silhouette climbing against a dusty pink sky, vapour streaming from the wings" width="793" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-07.jpg" alt="A helicopter and a jet releasing flares over a warship at dusk" width="1549" height="900" decoding="async" /></figure>
+          </div>
+          <div class="reel-group" aria-hidden="true">
+            <figure class="shot"><img src="assets/photography/av-01.jpg" alt="" width="1659" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-02.jpg" alt="" width="900" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-03.jpg" alt="" width="693" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-04.jpg" alt="" width="835" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-05.jpg" alt="" width="719" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-06.jpg" alt="" width="793" height="900" decoding="async" /></figure>
+            <figure class="shot"><img src="assets/photography/av-07.jpg" alt="" width="1549" height="900" decoding="async" /></figure>
+          </div>
+        </div>
+      </div>
+
+      <div class="reel-actions">
+        <button class="reel-play" type="button" data-reel-play>
+          <span class="reel-play-dot" aria-hidden="true">
+            <svg width="9" height="9" viewBox="0 0 12 12" fill="currentColor"><path d="M2.5 1.5v9l8-4.5z"/></svg>
+          </span>
+          Play as slideshow
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================== AUTOMOBILE ===================== -->
+    <section class="reel reel--empty" aria-labelledby="reel-automobile">
+      <div class="reel-head">
+        <h2 class="reel-title" id="reel-automobile">Automobile</h2>
+      </div>
+      <p class="reel-pending">Photographs going up here soon.</p>
+    </section>
+
+  </main>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
+    <div class="lightbox-top">
+      <p class="lightbox-caption"></p>
+      <button class="lightbox-close" type="button" aria-label="Close viewer">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="lightbox-nav lightbox-nav--prev" type="button" aria-label="Previous photograph">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 4.5 7.5 12l7.5 7.5"/>
+      </svg>
+    </button>
+
+    <figure class="lightbox-stage">
+      <img src="" alt="" decoding="async" />
+    </figure>
+
+    <button class="lightbox-nav lightbox-nav--next" type="button" aria-label="Next photograph">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 4.5 16.5 12 9 19.5"/>
+      </svg>
+    </button>
+
+    <div class="lightbox-bar">
+      <span class="lightbox-counter"></span>
+      <button class="lightbox-btn" type="button" data-lightbox-play aria-pressed="false">
+        <svg data-icon-play width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5v9l8-4.5z"/></svg>
+        <svg data-icon-pause width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" hidden><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z"/></svg>
+        <span data-play-label>Slideshow</span>
+      </button>
+    </div>
+  </div>
+
+  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
+    <span class="sr-only">Light theme</span>
+    <span class="theme-toggle-rail" aria-hidden="true">
+      <span class="theme-toggle-end theme-toggle-end--sun">
+        <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+          <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+        </svg>
+      </span>
+      <span class="theme-toggle-words">
+        <span class="theme-toggle-word">Swipe to change mode</span>
+      </span>
+      <span class="theme-toggle-end theme-toggle-end--moon">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="theme-toggle-knob">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+        </svg>
+        <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+          <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+        </svg>
+      </span>
+    </span>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
