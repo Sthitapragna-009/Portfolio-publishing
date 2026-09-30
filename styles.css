@@ -3188,6 +3188,20 @@ body.is-locked { overflow: hidden; }
   animation: none;
   transition: none;
   transform: translateX(var(--drag, 0px));
+  /* Promoted for the duration of the gesture only. */
+  will-change: transform;
+}
+
+/* Letting go used to snap: releasing restarted the breath, and a running
+   animation beats a transition on the same property, so the knob teleported
+   to its seat instead of gliding. Settling keeps the animation off and drives
+   the same --drag variable to the target, so the ease actually runs. The
+   breath is handed back once it lands. */
+.theme-toggle[data-settling="true"] .theme-toggle-knob {
+  animation: none;
+  transition: transform 0.42s var(--ease);
+  transform: translateX(var(--drag, 0px));
+  will-change: transform;
 }
 
 /* The rail is a drag surface, so the browser must not claim the gesture for

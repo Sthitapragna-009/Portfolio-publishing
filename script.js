@@ -86,36 +86,76 @@
 
       const seatNow = () => (root.dataset.theme === "light" ? 0 : measure());
 
+      /* Pointers fire faster than the screen refreshes, so the position is
+         recorded on every event but written once a frame. Writing on each
+         event costs a style recalc per event and makes the drag feel gritty. */
+      let pendingAt = 0;
+      let frame = null;
+
+      const flush = () => {
+        frame = null;
+        knob.style.setProperty("--drag", pendingAt + "px");
+      };
+
       const onMove = (event) => {
         if (!dragging) return;
         const dx = event.clientX - startX;
         moved = Math.max(moved, Math.abs(dx));
-        const at = Math.min(travel, Math.max(0, startSeat + dx));
-        knob.style.setProperty("--drag", at + "px");
+        pendingAt = Math.min(travel, Math.max(0, startSeat + dx));
+        if (frame === null) frame = requestAnimationFrame(flush);
+      };
+
+      let settleTimer = null;
+
+      const endSettle = () => {
+        clearTimeout(settleTimer);
+        themeToggle.removeAttribute("data-settling");
+        knob.style.removeProperty("--drag");
       };
 
       const onUp = (event) => {
         if (!dragging) return;
         dragging = false;
+        if (frame !== null) { cancelAnimationFrame(frame); frame = null; }
         try { rail.releasePointerCapture(event.pointerId); } catch (e) {}
 
         const dx = event.clientX - startX;
         const at = Math.min(travel, Math.max(0, startSeat + dx));
 
-        themeToggle.removeAttribute("data-dragging");
-        knob.style.removeProperty("--drag");
-
         // Past the midpoint picks the far end; short of it, the knob falls
         // back to where it started.
         const wantLight = travel === 0 ? root.dataset.theme !== "light" : at < travel / 2;
         const next = wantLight ? "light" : "dark";
+        const target = wantLight ? 0 : travel;
 
         // Anything more than a few pixels was a drag, not a tap, so the click
         // that follows is suppressed.
         if (moved > 4) themeToggle.dataset.justDragged = "true";
 
+        // Hand over from dragging to settling in one go, starting from exactly
+        // where the finger left off.
+        knob.style.setProperty("--drag", at + "px");
+        themeToggle.dataset.settling = "true";
+        themeToggle.removeAttribute("data-dragging");
+
         if (next !== root.dataset.theme) setTheme(next);
+
+        if (Math.abs(target - at) < 0.5 || reduced) {
+          endSettle();
+        } else {
+          // A frame at the start value first, or the browser coalesces both
+          // writes and there is nothing to interpolate between.
+          requestAnimationFrame(() => {
+            knob.style.setProperty("--drag", target + "px");
+          });
+          clearTimeout(settleTimer);
+          settleTimer = setTimeout(endSettle, 520);
+        }
       };
+
+      knob.addEventListener("transitionend", (event) => {
+        if (event.propertyName === "transform" && themeToggle.dataset.settling === "true") endSettle();
+      });
 
       rail.addEventListener("pointerdown", (event) => {
         // Left button or touch only.
