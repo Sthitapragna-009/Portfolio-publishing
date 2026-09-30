@@ -46,15 +46,94 @@
   applyTheme(root.dataset.theme === "dark" ? "dark" : "light", false);
 
   if (themeToggle) {
-    themeToggle.addEventListener("click", () => {
-      const next = root.dataset.theme === "light" ? "dark" : "light";
-      applyTheme(next, true);
+    const setTheme = (name) => {
+      applyTheme(name, true);
       try {
-        localStorage.setItem("theme", next);
+        localStorage.setItem("theme", name);
       } catch (e) {
         /* private mode: the choice just won't survive a reload */
       }
+    };
+
+    themeToggle.addEventListener("click", () => {
+      // A drag ends in a click; that click must not undo the drag.
+      if (themeToggle.dataset.justDragged === "true") {
+        delete themeToggle.dataset.justDragged;
+        return;
+      }
+      setTheme(root.dataset.theme === "light" ? "dark" : "light");
     });
+
+    /* ---- Drag the knob ---- */
+
+    const rail = themeToggle.querySelector(".theme-toggle-rail");
+    const knob = themeToggle.querySelector(".theme-toggle-knob");
+
+    if (rail && knob && window.PointerEvent) {
+      let startX = 0;
+      let startSeat = 0;
+      let travel = 0;
+      let moved = 0;
+      let dragging = false;
+
+      // The rail is a different length at each breakpoint, so the distance the
+      // knob can cover is measured rather than assumed. offsetLeft is the
+      // knob's inset, and the same gap is left at the far end.
+      const measure = () => Math.max(
+        0,
+        rail.clientWidth - knob.offsetWidth - knob.offsetLeft * 2
+      );
+
+      const seatNow = () => (root.dataset.theme === "light" ? 0 : measure());
+
+      const onMove = (event) => {
+        if (!dragging) return;
+        const dx = event.clientX - startX;
+        moved = Math.max(moved, Math.abs(dx));
+        const at = Math.min(travel, Math.max(0, startSeat + dx));
+        knob.style.setProperty("--drag", at + "px");
+      };
+
+      const onUp = (event) => {
+        if (!dragging) return;
+        dragging = false;
+        try { rail.releasePointerCapture(event.pointerId); } catch (e) {}
+
+        const dx = event.clientX - startX;
+        const at = Math.min(travel, Math.max(0, startSeat + dx));
+
+        themeToggle.removeAttribute("data-dragging");
+        knob.style.removeProperty("--drag");
+
+        // Past the midpoint picks the far end; short of it, the knob falls
+        // back to where it started.
+        const wantLight = travel === 0 ? root.dataset.theme !== "light" : at < travel / 2;
+        const next = wantLight ? "light" : "dark";
+
+        // Anything more than a few pixels was a drag, not a tap, so the click
+        // that follows is suppressed.
+        if (moved > 4) themeToggle.dataset.justDragged = "true";
+
+        if (next !== root.dataset.theme) setTheme(next);
+      };
+
+      rail.addEventListener("pointerdown", (event) => {
+        // Left button or touch only.
+        if (event.button !== undefined && event.button !== 0) return;
+        travel = measure();
+        startX = event.clientX;
+        startSeat = seatNow();
+        moved = 0;
+        dragging = true;
+        themeToggle.dataset.dragging = "true";
+        knob.style.setProperty("--drag", startSeat + "px");
+        try { rail.setPointerCapture(event.pointerId); } catch (e) {}
+      });
+
+      rail.addEventListener("pointermove", onMove);
+      rail.addEventListener("pointerup", onUp);
+      rail.addEventListener("pointercancel", onUp);
+    }
   }
 
 

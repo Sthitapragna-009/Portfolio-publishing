@@ -990,7 +990,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .hero-bottom {
   display: grid;
   justify-items: center;
-  margin-top: clamp(2rem, 5vw, 3.5rem);
+  margin-top: clamp(1.25rem, 3vw, 2.25rem);
 }
 
 /* Big textured scroll arrow: the sand gradient plus a noise tile, both
@@ -1030,13 +1030,10 @@ ul { margin: 0; padding: 0; list-style: none; }
   /* Transparent so the dot field shows through; <html> supplies the black. */
   background: transparent;
   border-block: 1px solid var(--hairline);
-  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+  /* The band is one moving line now that the label is gone, so it only needs
+     enough room to clear the type. */
+  padding-block: clamp(0.85rem, 1.6vw, 1.25rem);
   overflow: hidden;
-}
-
-.marquee-label {
-  text-align: center;
-  margin-bottom: 1.25rem;
 }
 
 .marquee {
@@ -3184,3 +3181,85 @@ body.is-locked { overflow: hidden; }
 .lightbox.is-slideshow .lightbox-btn svg { width: 9px; height: 9px; }
 .lightbox.is-slideshow .lightbox-btn--playing { background: rgba(0, 0, 0, 0.45); }
 .lightbox.is-slideshow .lightbox-btn:hover { background: var(--accent); border-color: var(--accent); }
+
+/* While dragging, the knob follows the pointer: the breath and the settle
+   transition both write to the same transform and would fight it. */
+.theme-toggle[data-dragging="true"] .theme-toggle-knob {
+  animation: none;
+  transition: none;
+  transform: translateX(var(--drag, 0px));
+}
+
+/* The rail is a drag surface, so the browser must not claim the gesture for
+   scrolling, nor start a text selection or an image drag. */
+.theme-toggle-rail {
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.theme-toggle[data-dragging="true"] { cursor: grabbing; }
+.theme-toggle-rail { cursor: grab; }
+
+/* ---- Swipe hint: chevrons drifting behind the label ---- */
+
+/* The chevrons run the inner length of the rail, not just the text box. Fitted
+   to the label they were almost entirely hidden behind the glyphs and only
+   flickered through the gaps between letters; given the full run they read as
+   a direction, and the label sits over the middle of it. */
+.theme-toggle-rail::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  /* Clear of the sun and moon at the ends. */
+  left: 1.6rem;
+  right: 1.6rem;
+  z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='20' viewBox='0 0 34 20'%3E%3Cpath d='M9 4.5 17 10 9 15.5' fill='none' stroke='%23ffffff' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: 0 center;
+  background-size: 34px 20px;
+  opacity: 0.12;
+  /* Drifting exactly one tile per cycle keeps the loop seamless. Both run on
+     the knob's 2.6s so the hint and the knob breathe together. */
+  animation: hintDrift 2.6s linear infinite, hintBreath 2.6s var(--ease) infinite;
+  pointer-events: none;
+}
+
+/* Everything else in the rail has to sit above the hint: a positioned
+   pseudo-element paints over plain in-flow content, so the label and the end
+   icons need their own layer. */
+.theme-toggle-words,
+.theme-toggle-end { position: relative; z-index: 1; }
+.theme-toggle-word { position: relative; z-index: 1; }
+.theme-toggle-knob { z-index: 2; }
+
+/* Unchecked is dark, with the knob parked at the moon end, so the swipe is
+   back towards the sun: mirror the tile and the drift goes with it. */
+.theme-toggle[aria-checked="false"] .theme-toggle-rail::before { transform: scaleX(-1); }
+
+@keyframes hintDrift {
+  from { background-position: 0 center; }
+  to   { background-position: 34px center; }
+}
+
+@keyframes hintBreath {
+  0%, 100% { opacity: 0.10; }
+  31%      { opacity: 0.38; }
+  62%      { opacity: 0.10; }
+}
+
+/* Dragging is the gesture itself; the hint has said its piece. */
+.theme-toggle[data-dragging="true"] .theme-toggle-rail::before,
+.theme-toggle:hover .theme-toggle-rail::before { animation-play-state: paused; }
+
+/* The compact pill has no label and barely any run; the hint would just be
+   noise behind the knob. */
+@media (max-width: 720px) {
+  .theme-toggle-rail::before { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle-rail::before { animation: none; opacity: 0.18; }
+}
