@@ -916,6 +916,21 @@
       });
     });
 
+    /* Case-study carousels. */
+    document.querySelectorAll("[data-shots]").forEach((shots) => {
+      const track = shots.querySelector(".shots-track");
+      if (!track) return;
+      const list = [...track.querySelectorAll("img")].map((img) => ({
+        src: img.currentSrc || img.src,
+        alt: img.getAttribute("alt") || ""
+      }));
+      track.addEventListener("click", (event) => {
+        const card = event.target.closest(".shot-card");
+        if (!card) return;
+        open(list, [...track.children].indexOf(card), false);
+      });
+    });
+
     /* The collection grid. */
     const pool = document.querySelector("[data-pool]");
 
@@ -983,5 +998,51 @@
       }
     });
   }
+
+  /* ---------- Case-study image carousels ---------- */
+
+  document.querySelectorAll("[data-shots]").forEach((shots) => {
+    const track = shots.querySelector(".shots-track");
+    const prev = shots.querySelector(".shots-nav--prev");
+    const next = shots.querySelector(".shots-nav--next");
+    const count = shots.querySelector(".shots-count");
+    if (!track) return;
+
+    const cards = [...track.querySelectorAll(".shot-card")];
+
+    /* Scroll by whatever is actually on screen rather than a fixed step: the
+       cards are different widths, because the photographs are. */
+    const pageWidth = () => Math.max(track.clientWidth * 0.82, 160);
+
+    /* Measured against the track's own left edge. offsetLeft resolves to the
+       nearest positioned ancestor, which is the wrapper rather than the
+       scroller, so it reports the wrong card as soon as the two differ. */
+    const nearest = () => {
+      const left = track.getBoundingClientRect().left;
+      let best = 0, bestD = Infinity;
+      cards.forEach((c, i) => {
+        const d = Math.abs(c.getBoundingClientRect().left - left);
+        if (d < bestD) { bestD = d; best = i; }
+      });
+      return best;
+    };
+
+    const sync = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max - 2;
+      if (count) count.textContent = (nearest() + 1) + " / " + cards.length;
+    };
+
+    if (prev) prev.addEventListener("click", () => track.scrollBy({ left: -pageWidth() }));
+    if (next) next.addEventListener("click", () => track.scrollBy({ left: pageWidth() }));
+
+    let t = null;
+    track.addEventListener("scroll", () => { clearTimeout(t); t = setTimeout(sync, 80); }, { passive: true });
+    window.addEventListener("resize", () => { clearTimeout(t); t = setTimeout(sync, 150); });
+    track.scrollLeft = 0;
+    sync();
+    window.addEventListener("load", sync);
+  });
 
 })();

@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Pathang Mobility — Autonomous Micro-Mobility | Sthitapragna Kollepara</title>
+  <meta name="description" content="Pathang Mobility — a single-occupant autonomous micro-mobility pod and on-demand service for campus commutes, taken from research through fabrication to a working rig." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+  <script>
+    // Inline and blocking on purpose: setting this after first paint shows a
+    // flash of the wrong theme.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <canvas class="dot-field" id="dotField" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="../index.html" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a class="nav-pill nav-pill--quiet" href="../index.html#work">Design Projects</a>
+        <a class="nav-pill ring-pill" href="../photography.html">Photography</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="section case-head case-head--media">
+      <div class="case-hero-carousel" aria-hidden="true">
+        <img src="../assets/pathang/hero-01.jpg" alt="" width="1435" height="644" decoding="async" fetchpriority="high" />
+        <img src="../assets/pathang/hero-02.jpg" alt="" width="1435" height="628" loading="lazy" decoding="async" />
+        <img src="../assets/pathang/hero-03.jpg" alt="" width="1435" height="805" loading="lazy" decoding="async" />
+        <img src="../assets/pathang/hero-04.jpg" alt="" width="1435" height="692" loading="lazy" decoding="async" />
+      </div>
+      <div class="wrap">
+        <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
+        <p class="eyebrow reveal">Mobility &middot; Product &middot; Service design</p>
+        <h1 class="display case-title reveal" data-delay="1">Pathang Mobility</h1>
+        <p class="case-sub reveal" data-delay="2">A single-occupant autonomous pod for campus commutes</p>
+
+        <div class="case-brief reveal" data-delay="3">
+          <div class="case-brief-row">
+            <h2 class="case-brief-key">Objective</h2>
+            <div class="case-brief-val">
+              <p>
+                To design a single-occupant autonomous micro-mobility device, and
+                the on-demand service around it, for the trip a campus actually
+                runs on &mdash; a kilometre or two between a department and a
+                library, in monsoon rain or summer heat.
+              </p>
+            </div>
+          </div>
+          <div class="case-brief-row">
+            <h2 class="case-brief-key">The approach</h2>
+            <div class="case-brief-val">
+              <ol class="case-steps">
+                <li>Frame the gap</li>
+                <li>Research the campus</li>
+                <li>Design, build, break, test</li>
+                <li>Design the service around it</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <dl class="case-meta reveal" data-delay="4">
+          <div><dt>Role</dt><dd>Research, industrial design, fabrication, service and interface design</dd></div>
+          <div><dt>Context</dt><dd>IIT Roorkee campus</dd></div>
+          <div><dt>Status</dt><dd>Vehicle built to a working rig &middot; service designed, not deployed</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section case-plates">
+      <div class="wrap">
+
+
+        <div class="plate-head">
+          <h2 class="display section-title">01  The gap</h2>
+          <div class="section-intro"><p>Shareable mobility in India is built for the city commute. Intra-campus movement gets those same vehicles rebranded rather than vehicles designed for it &mdash; so the trips that make up a campus day are served by scooters with nowhere covered to park, rickshaws that vanish at peak hour, and a long walk when it rains.</p>
+            <p>Benchmarking the usual options made the shape of the gap clear. A scooter has range but no weather protection and nowhere secure to leave it. A hoverboard or skateboard is portable but useless on a wet path with a laptop bag. Nothing on the market is built for a two-kilometre trip taken four times a day, by someone carrying something, on roads that belong to a single institution.</p>
+            <p>That last point is the opening. A campus is a closed, mapped, low-speed environment with one owner &mdash; the conditions under which autonomy is tractable today, and the conditions almost no commercial service is designed around.</p></div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">02  Who it is for</h2>
+          <div class="section-intro"><p>Four personas came out of the questionnaire and the interviews. A professor who drives because parking is a fight. A lecturer who scooters in and arrives soaked through the monsoon. An assistant who books auto-rickshaws by phone and waits past the point of usefulness. An administrator weighing fuel cost against the time a trip takes.</p>
+            <p>Their frustrations rhyme: no covered parking, no reliable charging, nothing weather-protected, and a peak hour where the available options simply stop being available. None of them are asking for a faster vehicle. They are asking for a trip that is predictable.</p>
+            <p>The map of who the service touches runs well past the riders &mdash; security has to admit an autonomous vehicle to a campus, maintenance has to keep it charged, and the transportation department has to own it.</p></div>
+        </div>
+
+        <div class="diagram reveal">
+          <p class="dg-title">Stakeholder map</p>
+          <div class="dg-radial">
+            <svg viewBox="0 0 940 940" role="img" aria-label="Radial stakeholder map: the Pathang service at the centre, surrounded by primary, secondary and tertiary stakeholder rings.">
+      <circle class="dg-ring" cx="470" cy="470" r="150" />
+      <circle class="dg-ring" cx="470" cy="470" r="285" />
+      <circle class="dg-ring" cx="470" cy="470" r="410" />
+      <line class="dg-spoke" x1="470" y1="470" x2="470.0" y2="320.0" />
+      <line class="dg-spoke" x1="470" y1="470" x2="612.7" y2="423.6" />
+      <line class="dg-spoke" x1="470" y1="470" x2="558.2" y2="591.4" />
+      <line class="dg-spoke" x1="470" y1="470" x2="381.8" y2="591.4" />
+      <line class="dg-spoke" x1="470" y1="470" x2="327.3" y2="423.6" />
+      <g class="dg-node p1"><rect x="427.4" y="303.0" width="85.3" height="34" rx="17" /><text x="470.0" y="325.0" text-anchor="middle">Faculty</text></g>
+      <g class="dg-node p1"><rect x="554.2" y="406.6" width="116.9" height="34" rx="17" /><text x="612.7" y="428.6" text-anchor="middle">Admin staff</text></g>
+      <g class="dg-node p1"><rect x="487.9" y="574.4" width="140.6" height="34" rx="17" /><text x="558.2" y="596.4" text-anchor="middle">Transport dept</text></g>
+      <g class="dg-node p1"><rect x="307.6" y="574.4" width="148.5" height="34" rx="17" /><text x="381.8" y="596.4" text-anchor="middle">Fleet operators</text></g>
+      <g class="dg-node p1"><rect x="261.0" y="406.6" width="132.7" height="34" rx="17" /><text x="327.3" y="428.6" text-anchor="middle">Platform devs</text></g>
+      <text class="dg-ringlabel" x="386.1" y="319.6" text-anchor="middle">PRIMARY</text>
+      <g class="dg-node p2"><rect x="563.3" y="222.4" width="148.5" height="34" rx="17" /><text x="637.5" y="244.4" text-anchor="middle">Campus security</text></g>
+      <g class="dg-node p2"><rect x="674.7" y="541.1" width="132.7" height="34" rx="17" /><text x="741.1" y="563.1" text-anchor="middle">IT department</text></g>
+      <g class="dg-node p2"><rect x="411.6" y="738.0" width="116.9" height="34" rx="17" /><text x="470.0" y="760.0" text-anchor="middle">Maintenance</text></g>
+      <g class="dg-node p2"><rect x="144.4" y="541.1" width="109.0" height="34" rx="17" /><text x="198.9" y="563.1" text-anchor="middle">Facilities</text></g>
+      <g class="dg-node p2"><rect x="259.8" y="222.4" width="85.3" height="34" rx="17" /><text x="302.5" y="244.4" text-anchor="middle">Vendors</text></g>
+      <text class="dg-ringlabel" x="331.8" y="194.7" text-anchor="middle">SECONDARY</text>
+      <g class="dg-node p3"><rect x="797.5" y="326.3" width="124.8" height="34" rx="17" /><text x="859.9" y="348.3" text-anchor="middle">Tech vendors</text></g>
+      <g class="dg-node p3"><rect x="624.9" y="784.7" width="172.2" height="34" rx="17" /><text x="711.0" y="806.7" text-anchor="middle">Emergency services</text></g>
+      <g class="dg-node p3"><rect x="166.6" y="784.7" width="124.8" height="34" rx="17" /><text x="229.0" y="806.7" text-anchor="middle">Campus infra</text></g>
+      <g class="dg-node p3"><rect x="5.8" y="326.3" width="148.5" height="34" rx="17" /><text x="80.1" y="348.3" text-anchor="middle">Local transport</text></g>
+      <g class="dg-node p3"><rect x="383.9" y="43.0" width="172.2" height="34" rx="17" /><text x="470.0" y="65.0" text-anchor="middle">Material suppliers</text></g>
+      <text class="dg-ringlabel" x="303.2" y="69.4" text-anchor="middle">TERTIARY</text>
+      <circle class="dg-hub" cx="470" cy="470" r="62" />
+      <text class="dg-hubtext" x="470" y="472" text-anchor="middle">Pathang</text>
+      <text class="dg-hubsub" x="470" y="492" text-anchor="middle">the service</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="diagram reveal">
+          <p class="dg-title">Stakeholder map</p>
+          <div class="dg-tiers">
+            <div class="dg-tier">
+              <h4>Primary stakeholders</h4>
+              <ul><li>Faculty with varied mobility needs</li><li>Administrative staff making frequent intra-campus trips</li><li>Campus transportation department</li><li>Vehicle operators and fleet managers</li><li>Platform developers</li></ul>
+            </div>
+            <div class="dg-tier">
+              <h4>Secondary stakeholders</h4>
+              <ul><li>Campus security &mdash; safety protocols and access</li><li>IT department &mdash; connectivity and data</li><li>Maintenance teams &mdash; upkeep and charging</li><li>Facility management</li><li>Vendors and shop owners</li></ul>
+            </div>
+            <div class="dg-tier">
+              <h4>Tertiary stakeholders</h4>
+              <ul><li>Technology vendors and software developers</li><li>Emergency services</li><li>Campus infrastructure authorities</li><li>Local transport authorities</li><li>Material suppliers</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">03  How it was run</h2>
+          <div class="section-intro"><p>Two tracks ran alongside each other &mdash; one for the vehicle, one for the service it would sit inside. The vehicle track was an agile loop adapted to a one-person project, with benchmarking folded into each pass rather than done once at the start. The service track followed the usual blueprint sequence.</p>
+            <p>They are drawn separately below because they ran at different speeds. The vehicle went all the way to a fabricated rig that could be ridden. The service stopped at a blueprint.</p></div>
+        </div>
+
+        <div class="diagram reveal">
+          <p class="dg-title">Research methodology</p>
+          <div class="dg-tree">
+            <div class="dg-branch">
+              <div class="dg-trunk">Introduction</div>
+              <div class="dg-leaves"><span class="dg-leaf">Aim</span><span class="dg-leaf">Objectives</span><span class="dg-leaf">Scope</span><span class="dg-leaf">Limitations</span></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Secondary research</div>
+              <div class="dg-leaves"><span class="dg-leaf">Literature review</span><span class="dg-leaf">Comparative analysis</span><span class="dg-leaf">Sampling of vehicles</span><span class="dg-leaf">Emerging technology</span><span class="dg-leaf">Product benchmarking</span></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Primary research</div>
+              <div class="dg-leaves"><span class="dg-leaf">Campus mapping</span><span class="dg-leaf">Persona mapping</span><span class="dg-leaf">Stakeholder mapping</span><span class="dg-leaf">Questionnaire</span><span class="dg-leaf">User interviews</span><span class="dg-leaf">Brainstorming with stakeholders</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="diagram reveal">
+          <p class="dg-title">Vehicle design methodology</p>
+          <div class="dg-flow" style="--steps: 5">
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">1</span>Research and exploration</div>
+              <p class="dg-item">Insights from secondary and primary research</p>
+              <p class="dg-item">Competitive bench marking</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">2</span>Ideate and diverge</div>
+              <p class="dg-item">Mind mapping</p>
+              <p class="dg-item">Brainstorming with stakeholders</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">3</span>Discover and diverge</div>
+              <p class="dg-item">Detailed sketch renders and scenarios</p>
+              <p class="dg-item">Crazy 8s and random-word ideation</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">4</span>Design, develop, converge</div>
+              <p class="dg-item">Form evaluation against product benchmarks</p>
+              <p class="dg-item">Human&ndash;machine interaction</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">5</span>Mockup and prototyping</div>
+              <p class="dg-item">Scale models to evaluate the form</p>
+              <p class="dg-item">Colour, material, finish</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="diagram reveal">
+          <p class="dg-title">Service design methodology</p>
+          <div class="dg-flow" style="--steps: 6">
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">1</span>User experience mapping</div>
+              <p class="dg-item">Journey mapping</p>
+              <p class="dg-item">Looking past the interface</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">2</span>Stakeholder engagement</div>
+              <p class="dg-item">Co-designing and co-creating</p>
+              <p class="dg-item">Prioritising ideas</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">3</span>Digital ecosystem design</div>
+              <p class="dg-item">The MaaS platform</p>
+              <p class="dg-item">Designing a holistic system</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">4</span>Service blueprint</div>
+              <p class="dg-item">Analysing every touchpoint</p>
+              <p class="dg-item">Finalising the blueprint</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">5</span>Service testing</div>
+              <p class="dg-item">Interface testing with users</p>
+            </div>
+            <div class="dg-step">
+              <div class="dg-head"><span class="dg-n">6</span>Measuring the service</div>
+              <p class="dg-item">UX analytics</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">04  Concept and form</h2>
+          <div class="section-intro"><p>Concept 3 was taken forward: a three-wheel delta layout on a lightweight aluminium tube frame, front-wheel drive, with a foldable seat and the battery set at the front for weight distribution and access.</p>
+            <p>The delta arrangement &mdash; one wheel forward, two behind &mdash; gives the stability a standing scooter lacks without the width of a four-wheeler on a footpath. The frame collapses, which is the part that actually answers the research: a vehicle that folds is one you can leave at the kerb or carry inside, rather than one that needs a parking space the campus does not have.</p></div>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/pathang/g-form.jpg" alt="The selected concept: a three-wheel delta layout with a collapsible frame, shown front, side and rear" width="1435" height="644" loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="shots reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-render-1.jpg" alt="Side-profile renders of the pod in several colourways" width="1435" height="628" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-render-2.jpg" alt="A grid of form variations exploring proportion and the enclosed body" width="1435" height="676" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-cad.jpg" alt="Technical line drawings of the chassis, front fork and collapsing geometry" width="1435" height="676" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-chassis.jpg" alt="A CAD view of the bare chassis with its delta wheel arrangement" width="1435" height="805" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">05  Prototyping</h2>
+          <div class="section-intro"><p>Three passes before anything was cut. Body storming with users to find where the collapsed frame would sit and how far it had to clear them &mdash; done with a mock frame and an office chair, which is cheap and tells you more about reach and clearance than a drawing does.</p>
+            <p>Then a 1:5 model in sun board to judge the form in the round, and concept visualisation to run colour and proportion variations quickly before committing to steel.</p></div>
+        </div>
+
+        <div class="shots reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-body-1.jpg" alt="A participant seated with the mock frame, simulating the pod" width="336" height="210" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-body-2.jpg" alt="Body storming: reaching forward to the handlebar position" width="261" height="210" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-body-3.jpg" alt="A second participant testing the seated posture" width="336" height="210" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-body-4.jpg" alt="Checking the distance the collapsed frame has to clear" width="261" height="210" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-body-5.jpg" alt="Two participants comparing seated positions" width="336" height="228" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-body-6.jpg" alt="A participant holding the frame upright at rest" width="261" height="228" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="shots reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-mock-1.jpg" alt="The 1:5 sun-board model against the sketch wall" width="225" height="180" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-mock-2.jpg" alt="The model from the front quarter" width="198" height="180" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-mock-3.jpg" alt="Side view of the scale model, wheels and frame in proportion" width="225" height="213" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-mock-4.jpg" alt="The model with the handlebar extended" width="198" height="213" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-mock-5.jpg" alt="Detail of the body and the collapsing joint" width="183" height="213" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-mock-6.jpg" alt="The model standing, three-quarter view" width="225" height="204" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-mock-7.jpg" alt="Handling the model to test the fold" width="198" height="204" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">06  Fabrication</h2>
+          <div class="section-intro"><p>Two rectangular mild-steel tubes from an engineering works supplier, taken to a welder and built into the collapsing mechanism drawn in CAD. Steel rather than the specified aluminium, because the rig exists to test whether the mechanism works at all &mdash; not to hit the weight target.</p>
+            <p>It was built in five parts: the collapsible mechanism, the front fork, the handlebar, the drivetrain, and the motor mounting with the powertrain. Each one had to be fitted, trial-assembled, and in several cases re-cut.</p></div>
+        </div>
+
+        <div class="shots reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-fab-4.jpg" alt="The five fabrication stages: collapsible mechanism, front fork, handlebar, drivetrain, motor mounting and powertrain" width="1435" height="692" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-fab-1.jpg" alt="Front fork assembly &mdash; machining, drilling and fitting the plates" width="1435" height="676" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-fab-2.jpg" alt="Drivetrain assembly, hub and sprocket laid out on the ground" width="1435" height="676" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-fab-3.jpg" alt="The powertrain mounted to the frame, motor and wheel in place" width="1435" height="676" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="shots reveal shots--tall" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-scene-1.jpg" alt="Working on the rig in the shop" width="153" height="498" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-scene-2.jpg" alt="Assembling the drivetrain" width="189" height="498" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">07  Failure identification</h2>
+          <div class="section-intro"><p>Before the rig went anywhere, the obvious weak points were found and recorded. The collapsing joint is the whole idea of the vehicle and also the one part carrying a rider&rsquo;s weight through a hinge &mdash; so it is where the design is most exposed.</p>
+            <p>Documenting the failures first, rather than after a ride went wrong, is what made the testing worth doing: it meant going out with a list of things to watch rather than a hope that it would hold.</p></div>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/pathang/g-fail.jpg" alt="Failure identification: a close look at the joint that gave way under load" width="1435" height="676" loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="plate-head">
+          <h2 class="display section-title">08  Testing</h2>
+          <div class="section-intro"><p>The rig was ridden on campus roads by several people of different heights and builds. That is where the rest of it surfaced &mdash; the parts of the mechanism that bound, flexed or sat wrong once there was a real rider on it, and the difference between a frame that folds on a bench and one that folds after a trip.</p>
+            <p>It is a working rig, not a finished vehicle, and it is honest to say so. What it proves is that the collapsing delta layout can carry a person; what it does not prove is range, weather sealing, or anything autonomous.</p></div>
+        </div>
+
+        <div class="shots reveal shots--tall" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-test-1.jpg" alt="Walking the rig out onto the road" width="336" height="552" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-test-2.jpg" alt="Riding the working rig on campus" width="354" height="552" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">09  The service</h2>
+          <div class="section-intro"><p>The vehicle is half of it. A pod that folds is useless if finding one, paying for it and leaving it somewhere sensible is harder than walking. So the service was designed as one piece with the product: four ways to use a Patang, a single account behind them, and an interface built from a system rather than screen by screen.</p>
+            <p>Everything below stops short of deployment. None of it was released or tested with live users &mdash; it is the design, not a running service.</p></div>
+        </div>
+
+        <div class="diagram reveal">
+          <p class="dg-title">What the service offers</p>
+          <div class="dg-tiers">
+            <div class="dg-tier">
+              <h4>Quick ride</h4>
+              <ul><li>Point to point, paid per trip</li><li>Fare fixed before you request</li><li>From &#8377;10 across the campus loop</li></ul>
+            </div>
+            <div class="dg-tier">
+              <h4>Rental</h4>
+              <ul><li>Hourly or daily, keep the Patang with you</li><li>Lite or max storage</li><li>From &#8377;35 an hour</li></ul>
+            </div>
+            <div class="dg-tier">
+              <h4>Lease &amp; custom</h4>
+              <ul><li>Long-term allocation for a department</li><li>Build a Patang to a specification</li><li>Handled off-app, booked through the same account</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-level-head reveal"><b>The original wireframes</b><span>Where the flow was worked out: booking, arrival, remote unlock, the ride, and the review at the end.</span></div>
+
+        <div class="shots reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-wires.jpg" alt="Low-fidelity wireframes: the landing model, the rental booking flow and the quick-ride flow laid out as a screen map" width="1435" height="708" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-brand.jpg" alt="The Pathang Mobility mark, a faceted kite form, shown in relief" width="1435" height="733" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">The design system</h2>
+          <div class="section-intro"><p>Rebuilt from the wireframes as an atomic system rather than a set of screens. Atoms are the things with no smaller part &mdash; a colour, a step on the type scale, one icon. Molecules put those together into something you can use. Organisms assemble molecules into a working piece of a screen. The screens that follow are only those organisms arranged.</p>
+            <p>Working this way is what lets the rider app, the in-pod display and the operator console look like one product despite being three different problems &mdash; a phone in sunlight, a fixed screen at arm&rsquo;s length, and a desk monitor watched for hours. The two sections after this take those other surfaces in turn.</p></div>
+        </div>
+
+        <div class="ds-level-head reveal"><b>Atoms</b><span>The smallest things that carry meaning on their own: a colour, a size of type, a corner radius, a single icon.</span></div>
+        <div class="ds reveal">
+          <div class="ds-panel">
+            <h4>Colour</h4>
+            <div class="ds-swatches">
+            <span class="ds-swatch"><i class="ds-chip" style="background:#ff1e00"></i><b>Signal</b><span>#FF1E00</span></span>
+            <span class="ds-swatch"><i class="ds-chip" style="background:#141414"></i><b>Ink</b><span>#141414</span></span>
+            <span class="ds-swatch"><i class="ds-chip" style="background:#1f1f1f"></i><b>Surface</b><span>#1F1F1F</span></span>
+            <span class="ds-swatch"><i class="ds-chip" style="background:#f9e7e5"></i><b>Sheet</b><span>#F9E7E5</span></span>
+            <span class="ds-swatch"><i class="ds-chip" style="background:#19e0d0"></i><b>Live</b><span>#19E0D0</span></span>
+            <span class="ds-swatch"><i class="ds-chip" style="background:#f2eeea"></i><b>Console</b><span>#F2EEEA</span></span>
+            </div>
+            <p class="ds-note">White on signal red measures 3.86:1 &mdash; under AA for body text, so the pairing is held to large labels and fills, and anything smaller sits on ink or sheet.</p>
+          </div>
+          <div class="ds-panel">
+            <h4>Type scale</h4>
+            <div class="ds-type">
+              <div class="ds-row"><span>DISPLAY</span><b class="ds-d1">Pathang</b></div>
+              <div class="ds-row"><span>HEADING 1</span><b class="ds-h1">Choose a Patang</b></div>
+              <div class="ds-row"><span>HEADING 2</span><b class="ds-h2">Patang 002 is on the way</b></div>
+              <div class="ds-row"><span>BODY</span><b class="ds-bd">Lite storage &middot; 2 minutes away</b></div>
+            </div>
+          </div>
+          <div class="ds-panel">
+            <h4>Radii</h4>
+            <div class="ds-shapes">
+              <span class="ds-shape"><i style="border-radius:8px"></i><b>Card &middot; 8px</b></span>
+              <span class="ds-shape"><i style="border-radius:16px"></i><b>Sheet &middot; 16px</b></span>
+              <span class="ds-shape"><i style="border-radius:26px"></i><b>Panel &middot; 26px</b></span>
+              <span class="ds-shape"><i style="border-radius:100px"></i><b>Pill &middot; 100px</b></span>
+            </div>
+          </div>
+        </div>
+        <div class="ds-panel reveal" style="margin-top:1rem">
+          <h4>Icons on a 24px grid, 1.8 stroke</h4>
+          <div class="ds-icons">
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.4"/><path d="m16 16 4.2 4.2"/></svg><b>Search</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6.6-5.7 6.6-10.6A6.6 6.6 0 1 0 5.4 10.4C5.4 15.3 12 21 12 21Z"/><circle cx="12" cy="10.2" r="2.4"/></svg><b>Pick-up</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21V4"/><path d="M6 5h10.5l-1.8 3.4 1.8 3.4H6"/></svg><b>Drop</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.4" cy="17.4" r="2.9"/><circle cx="17.6" cy="17.4" r="2.9"/><path d="M6.4 17.4h8.3l2.9-9.2h2.6"/><path d="M9.2 8.2h5.1"/></svg><b>Patang</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.6" y="8" width="16" height="8.6" rx="2.2"/><path d="M21.4 11.2v2.2"/><rect x="5" y="10.4" width="7" height="3.8" rx="1" fill="currentColor" stroke="none"/></svg><b>Charge</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3.1 1.9"/></svg><b>Pre-book</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.4 5.4h9.2M7.4 9.6h9.2M15 5.4c0 3.4-2.5 4.2-5.4 4.2L16.6 19"/></svg><b>Fare</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 4.4 2.4 4.9 5.4.8-3.9 3.8.9 5.4-4.8-2.5-4.8 2.5.9-5.4-3.9-3.8 5.4-.8Z"/></svg><b>Rating</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.6" r="1.9"/><path d="M5.6 8.4h12.8"/><path d="M12 8.4v5.2m0 0-3 6m3-6 3 6"/></svg><b>Access</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8.4" r="3.6"/><path d="M5.4 20c.6-3.6 3.3-5.6 6.6-5.6s6 2 6.6 5.6"/></svg><b>Account</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.8" y="10.4" width="14.4" height="9.4" rx="2.4"/><path d="M8.4 10.4V7.8a3.6 3.6 0 0 1 7.2 0v2.6"/></svg><b>Unlock</b></span>
+            <span class="ds-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m20 4-7 16-2.2-6.8L4 11Z"/></svg><b>Navigate</b></span>
+          </div>
+        </div>
+
+        <div class="ds-level-head reveal"><b>Molecules</b><span>Atoms combined into something usable: a search field, a set of mode chips, a row that names a place, a badge that reports state.</span></div>
+        <div class="ds-stage ds-stage--grid reveal">
+          <div>
+            <div class="p-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="6.4"/><path d="m16 16 4.2 4.2"/></svg><span>Where to?</span><span class="p-kbd">Saved</span></div>
+            <p class="ds-cap">Search. Pick-up is assumed, destination is asked.</p>
+          </div>
+          <div>
+            <div class="p-chips"><span class="p-chip on">Quick ride</span><span class="p-chip">Rental</span><span class="p-chip">Lease</span><span class="p-chip">Pick &amp; drop</span></div>
+            <p class="ds-cap">Mode chips for the four ways the service can be used.</p>
+          </div>
+          <div>
+            <div class="p-sheet">
+              <div class="p-row"><span class="p-ico acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s6.6-5.7 6.6-10.6A6.6 6.6 0 1 0 5.4 10.4C5.4 15.3 12 21 12 21Z"/><circle cx="12" cy="10.2" r="2.4"/></svg></span><span><b>Department of Design</b><small>Pick-up &middot; your location</small></span><span class="p-end">Change</span></div>
+              <div class="p-row"><span class="p-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 21V4"/><path d="M6 5h10.5l-1.8 3.4 1.8 3.4H6"/></svg></span><span><b>Century Gate</b><small>Drop &middot; 2.4 km</small></span><span class="p-end">11 min</span></div>
+            </div>
+            <p class="ds-cap">Place row: icon, name, qualifier, and the one number that matters.</p>
+          </div>
+          <div>
+            <div class="p-badges"><span class="p-badge p-badge--live">In service</span><span class="p-badge p-badge--low">Low charge</span><span class="p-badge p-badge--idle">Idle</span></div>
+            <div class="p-meter" style="margin-top:.9rem"><i style="width:68%"></i></div>
+            <p class="ds-cap">State badges and progress, shared by the rider app and the console.</p>
+          </div>
+        </div>
+
+        <div class="ds-level-head reveal"><b>Organisms</b><span>Molecules assembled into a working part of a screen &mdash; the sheet that takes a booking, the card that offers a vehicle.</span></div>
+        <div class="ds-stage ds-stage--grid reveal">
+          <div>
+            <div class="p-sheet">
+              <div class="p-row"><span class="p-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.4" cy="17.4" r="2.9"/><circle cx="17.6" cy="17.4" r="2.9"/><path d="M6.4 17.4h8.3l2.9-9.2h2.6"/><path d="M9.2 8.2h5.1"/></svg></span><span><b>Patang 002</b><small>Lite storage &middot; 2 min away</small></span><span class="p-end">&#8377;10</span></div>
+              <div class="p-row"><span class="p-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.4" cy="17.4" r="2.9"/><circle cx="17.6" cy="17.4" r="2.9"/><path d="M6.4 17.4h8.3l2.9-9.2h2.6"/><path d="M9.2 8.2h5.1"/></svg></span><span><b>Patang 009</b><small>Max storage &middot; 4 min away</small></span><span class="p-end">&#8377;14</span></div>
+              <div class="p-row"><span class="p-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3.1 1.9"/></svg></span><span><b>Pre-book for later</b><small>Hourly from &#8377;35</small></span><span class="p-end">Set time</span></div>
+            </div>
+            <p class="ds-cap">Vehicle chooser: three place rows, one decision.</p>
+          </div>
+          <div>
+            <div class="p-sheet">
+              <div class="p-row"><span class="p-ico acc"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.8" y="10.4" width="14.4" height="9.4" rx="2.4"/><path d="M8.4 10.4V7.8a3.6 3.6 0 0 1 7.2 0v2.6"/></svg></span><span><b>Unlock remotely on arrival</b><small>Or scan the code on the handlebar</small></span></div>
+              <div class="p-row"><span class="p-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7.4 5.4h9.2M7.4 9.6h9.2M15 5.4c0 3.4-2.5 4.2-5.4 4.2L16.6 19"/></svg></span><span><b>&#8377;10 fixed for this trip</b><small>Charged to the campus wallet</small></span></div>
+            </div>
+            <p class="ds-cap">Arrival block: what happens next, and what it costs.</p>
+          </div>
+        </div>
+
+        <div class="ds-level-head reveal"><b>The rider app</b><span>Six screens, following the flow in the wireframes: find, choose, confirm, arrival, the ride, and the end of it.</span></div>
+
+        <div class="shots reveal shots--tall" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/app-1-find.jpg" alt="Find: search for a destination, four service modes, five Patangs nearby on a dark campus map" width="780" height="1688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/app-2-choose.jpg" alt="Choose a Patang: two vehicles with storage type, distance, fare and charge, plus pre-booking" width="780" height="1688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/app-3-confirm.jpg" alt="Confirm the ride: route, pick-up and drop, and a fare broken into base and distance" width="780" height="1688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/app-4-arriving.jpg" alt="Arriving: the Patang two minutes away, with remote unlock as the primary action" width="780" height="1688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/app-5-riding.jpg" alt="On the ride: progress to Century Gate, fare fixed, with the option to end early" width="780" height="1688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/app-6-complete.jpg" alt="Complete: fare paid from the campus wallet, a rating, and the option to favourite the vehicle" width="780" height="1688" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">10  Vehicle interactions</h2>
+          <div class="section-intro"><p>The screen inside a Patang has a different job to the one in your hand. There is no driver to read it, the rider is moving, and the whole thing is glanced at rather than used. So it carries three states and almost nothing else: unlocked and confirming where you are going, navigating, and arriving.</p>
+            <p>Everything is sized to be read at arm&rsquo;s length in daylight. Speed is the largest element on the screen because it is the only number that matters continuously; fare and distance sit in a card to one side and update quietly. The single primary action changes with the state, and there is never more than one of them.</p>
+            <p>The arrival state does the thing a driverless vehicle has to do and a taxi does not: it tells you where to leave the pod. Pull in on the left, past the guard post, bay 2 is free.</p></div>
+        </div>
+
+        <div class="shots reveal shots--wide" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/hmi-1-welcome.jpg" alt="The in-pod screen on unlock: a greeting, the confirmed destination, and one action to begin" width="2560" height="1600" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/hmi-2-nav.jpg" alt="Navigating: speed as the largest element, with route, arrival, charge and mode alongside" width="2560" height="1600" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/hmi-3-arrive.jpg" alt="Arriving: speed down to 6 km/h, with parking guidance and the fare for the trip" width="2560" height="1600" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="plate-head">
+          <h2 class="display section-title">11  Fleet management</h2>
+          <div class="section-intro"><p>Twenty-four vehicles, one operator, a whole working day. The console is the inverse of the rider app in every way that matters: light rather than dark, dense rather than spare, built to be watched for hours instead of glanced at for seconds. It shares the same tokens, type roles and state badges, which is what keeps it recognisably the same product.</p>
+            <p>It is organised around the question an operator actually has, which is never what the fleet is doing but what needs them. The overview answers that in four numbers. The pod view answers it for one vehicle, with charge, range, trips this week and the maintenance history that explains why it keeps coming back.</p>
+            <p>The incident log carries a second column most dashboards leave out: what the system already did about it. Rerouting a pod that fell below twenty per cent, holding a vehicle with a stiff fold out of service rather than letting it be booked again. Someone watching two dozen vehicles needs to know what has been handled, not only what happened. The console ships in both appearances, switched from the foot of the rail, because a control room is not always a bright room.</p></div>
+        </div>
+
+        <div class="shots reveal shots--wide" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/fleet-1-overview.jpg" alt="The console overview in light mode: 24 pods, status table, charge points and an assistant rail" width="2880" height="1800" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fleet-4-overview-dark.jpg" alt="The same overview in dark mode, for operators working a night shift" width="2880" height="1800" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fleet-2-pod.jpg" alt="A single Patang: charge, range, trips this week, maintenance log and recent journeys" width="2880" height="1800" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fleet-5-pod-dark.jpg" alt="The pod view in dark mode" width="2880" height="1800" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fleet-3-incidents.jpg" alt="The incident log, with a column for what the system handled on its own" width="2880" height="1800" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fleet-6-incidents-dark.jpg" alt="The incident log in dark mode" width="2880" height="1800" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+
+      </div>
+    </section>
+
+    <section class="section case-next">
+      <div class="wrap">
+        <p class="eyebrow">Next project</p>
+        <a class="next-project" href="etikoppaka-chess.html">
+          <div class="next-project-media">
+            <img src="../assets/etikoppaka/cover.jpg" alt="Etikoppaka Chess title card" width="1600" height="1000" loading="lazy" decoding="async" />
+          </div>
+          <div class="next-project-body">
+            <h2 class="display next-project-title">Etikoppaka Chess</h2>
+            <p class="next-project-desc">
+              A chess set co-designed with lacquerware artisans in Andhra Pradesh,
+              carrying two registered designs.
+            </p>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        <div class="case-next-actions">
+          <a class="btn btn-primary" href="../index.html#work">
+            <span class="dot" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            All projects
+          </a>
+          <a class="btn btn-outline" href="mailto:kspmobi@gmail.com">Get in touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
+    <div class="lightbox-top">
+      <p class="lightbox-caption"></p>
+      <button class="lightbox-close" type="button" aria-label="Close viewer">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="lightbox-nav lightbox-nav--prev" type="button" aria-label="Previous photograph">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 4.5 7.5 12l7.5 7.5"/>
+      </svg>
+    </button>
+
+    <figure class="lightbox-stage">
+      <img src="" alt="" decoding="async" />
+    </figure>
+
+    <button class="lightbox-nav lightbox-nav--next" type="button" aria-label="Next photograph">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 4.5 16.5 12 9 19.5"/>
+      </svg>
+    </button>
+
+    <div class="lightbox-bar">
+      <span class="lightbox-counter"></span>
+      <button class="lightbox-btn" type="button" data-lightbox-play aria-pressed="false">
+        <svg data-icon-play width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5v9l8-4.5z"/></svg>
+        <svg data-icon-pause width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" hidden><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z"/></svg>
+        <span data-play-label>Slideshow</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> KSP. Concept work shown here is unofficial and not endorsed by the organisations referenced.</p>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <a class="social" href="#" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.6 8.75 23 10.9 23 14.1V21h-4v-6.1c0-1.46-.03-3.34-2.06-3.34-2.06 0-2.38 1.58-2.38 3.23V21h-4V9Z"/>
+          </svg>
+        </a>
+        <a class="social" href="#" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+            <rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5.2"/>
+            <circle cx="12" cy="12" r="4.2"/>
+            <circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a class="social" href="#" rel="noopener" aria-label="Behance">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M8.2 5.5c1.9 0 3.3.6 3.3 2.6 0 1.1-.5 1.8-1.4 2.2 1.3.4 2 1.4 2 2.8 0 2.3-1.8 3.3-3.9 3.3H2V5.5h6.2Zm-.4 4.3c.9 0 1.4-.4 1.4-1.2 0-.9-.6-1.1-1.4-1.1H4.7v2.3h3.1Zm.2 4.7c1 0 1.7-.4 1.7-1.4 0-1-.6-1.4-1.6-1.4H4.7v2.8h3.3ZM18.4 9c2.3 0 3.6 1.7 3.6 4v.6h-5.6c.1 1.2.8 1.9 1.9 1.9.8 0 1.4-.3 1.7-.9h1.9c-.4 1.6-1.8 2.5-3.6 2.5-2.4 0-4-1.6-4-4.1 0-2.4 1.6-4 4.1-4Zm1.7 3.3c-.1-1-.7-1.7-1.7-1.7s-1.7.6-1.9 1.7h3.6ZM15.2 6.6h5v1.3h-5V6.6Z"/>
+          </svg>
+        </a>
+        <a class="social" href="mailto:kspmobi@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="2.6"/>
+            <path d="m3.4 6.3 8.6 6.2 8.6-6.2"/>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </footer>
+
+  <a class="btn edge-cta" href="mailto:kspmobi@gmail.com">
+    <span class="dot" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="edge-cta-label">Get in touch</span>
+  </a>
+
+  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
+    <span class="sr-only">Light theme</span>
+    <span class="theme-toggle-rail" aria-hidden="true">
+      <span class="theme-toggle-end theme-toggle-end--sun">
+        <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+          <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+        </svg>
+      </span>
+      <span class="theme-toggle-words">
+        <span class="theme-toggle-word">Swipe to change mode</span>
+      </span>
+      <span class="theme-toggle-end theme-toggle-end--moon">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="theme-toggle-knob">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+        </svg>
+        <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+          <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+        </svg>
+      </span>
+    </span>
+  </button>
+
+  <script src="../script.js"></script>
+</body>
+</html>
