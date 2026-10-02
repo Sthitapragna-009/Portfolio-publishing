@@ -126,16 +126,14 @@
   --bg-light-2:  rgba(0, 0, 0, 0.05);
 
   --ink:         var(--primary);
-  /* Deliberately darker than the dark theme’s dim ink rather than matched to
-     it. Light text on a dark field blooms and reads heavier than the same
-     ratio does as dark text on near-white, so matching the two numerically
-     (#484848, 8.7:1) still left light mode looking washed out. Set by eye,
-     then checked: 10.8:1 and 7.4:1 against the page background. */
-  --ink-dim:     #3a3a3a;
+  /* Matched to the dark theme's dim ink by CONTRAST, not by lightness. The
+     old #646464 measured 5.1:1 on a card against 8.1:1 for the same role in
+     dark, which is why body copy read washed out in light mode only. */
+  --ink-dim:     #484848;
   /* Still a step lighter than --ink-dim, for labels and fine print. */
-  --ink-faint:   #525252;
+  --ink-faint:   #5f5f5f;
   --ink-dark:    var(--primary);
-  --ink-dark-dim: #3a3a3a;
+  --ink-dark-dim: #484848;
 
   --on-ink:       var(--white);
   --surface:      rgba(0, 0, 0, 0.045);
@@ -156,7 +154,7 @@
   --hairline-dark: rgba(0, 0, 0, 0.12);
 
   --dot-rgb:      0, 0, 0;
-  --dot-strength: 0.34;
+  --dot-strength: 0.62;
 
   --bau-red:    #d42e12;
   --bau-yellow: #9c7400;
@@ -1955,10 +1953,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 .case-head--media .case-brief { max-width: 36rem; }
 
 .case-meta dt {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
 }
 .case-meta dd {
   margin: 0.6rem 0 0;
@@ -2125,35 +2124,22 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .plate-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(0.65rem, 1.6vw, 1rem);
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  gap: clamp(1.25rem, 5vw, 4rem);
   align-items: start;
 }
 .plate-head .section-title {
   margin-top: 0;
-  max-width: 24ch;
+  max-width: 14ch;
 }
 .plate-head .section-intro {
-  margin-top: 0.1rem;
-  /* A single short intro stays one readable column; it would otherwise be
-     stretched across the whole page as one very long line. */
-  max-width: 62ch;
+  /* Sits against the top of the heading rather than its own default offset. */
+  margin-top: 0.35rem;
+  max-width: 50ch;
 }
-/* A passage of several paragraphs runs the full measure in columns instead of
-   a tall ribbon beside the heading: the same words, a third of the height, and
-   the space under the heading gets used rather than sitting empty. The column
-   count follows the width, so it drops to two and then one by itself. */
-.plate-head .section-intro:has(p + p) {
-  max-width: none;
-  columns: 21rem;
-  column-gap: clamp(1.5rem, 3vw, 2.75rem);
-  orphans: 2;
-  widows: 2;
-}
-.plate-head .section-intro p { margin: 0 0 0.85rem; }
-.plate-head .section-intro p:last-child { margin-bottom: 0; }
 
 @media (max-width: 860px) {
+  .plate-head { grid-template-columns: 1fr; gap: 0.75rem; }
   .plate-head .section-title { max-width: 18ch; }
 }
 
@@ -2735,10 +2721,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 .reel-title {
   margin: 0;
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
 }
 
 .reel-count {
@@ -3308,10 +3295,11 @@ body.is-locked { overflow: hidden; }
 .dg-title {
   margin: 0 0 clamp(1rem, 2.5vw, 1.5rem);
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
 }
 
 /* ---- Staged flow ---- */
@@ -3427,10 +3415,11 @@ body.is-locked { overflow: hidden; }
 .dg-tier h4 {
   margin: 0 0 0.7rem;
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
 }
 
 .dg-tier ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0.45rem; }
@@ -3530,9 +3519,9 @@ body.is-locked { overflow: hidden; }
    ============================================================ */
 
 .ds {
-  --pathang-orange: #fa6e26;
+  --pathang-red: #ff1e00;
   --pathang-ink: #141414;
-  --pathang-paper: #fdfcfb;
+  --pathang-paper: #f9e7e5;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   gap: clamp(1rem, 2.5vw, 1.75rem);
@@ -3549,10 +3538,11 @@ body.is-locked { overflow: hidden; }
 .ds-panel h4 {
   margin: 0 0 1.1rem;
   font-family: var(--font-body);
-  font-size: 0.8125rem;
+  font-size: 0.6875rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
 }
 
 .ds-swatches { display: grid; grid-template-columns: repeat(auto-fit, minmax(5.5rem, 1fr)); gap: 0.6rem; }
@@ -3631,10 +3621,11 @@ body.is-locked { overflow: hidden; }
 
 .ds-level-head b {
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-text);
 }
 
 .ds-level-head span {
@@ -3671,8 +3662,8 @@ body.is-locked { overflow: hidden; }
   --p-line: rgba(255, 255, 255, 0.11);
   --p-text: #f5f5f5;
   --p-dim: rgba(245, 245, 245, 0.56);
-  --p-accent: #fa6e26;
-  --p-paper: #fdfcfb;
+  --p-accent: #ff1e00;
+  --p-paper: #f9e7e5;
   display: grid;
   gap: clamp(0.75rem, 2vw, 1.1rem);
   padding: clamp(1rem, 2.5vw, 1.5rem);
@@ -3738,8 +3729,8 @@ body.is-locked { overflow: hidden; }
 /* badges */
 .p-badges { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .p-badge { padding: 0.25rem 0.6rem; border-radius: var(--r-pill); font-size: 0.6875rem; font-weight: 600; }
-.p-badge--live { background: rgba(184, 255, 55, 0.14); color: #b8ff37; }
-.p-badge--low { background: rgba(255, 145, 82, 0.15); color: #ff9152; }
+.p-badge--live { background: rgba(25, 224, 208, 0.14); color: #19e0d0; }
+.p-badge--low { background: rgba(255, 30, 0, 0.14); color: #ff6a4a; }
 .p-badge--idle { background: rgba(255, 255, 255, 0.08); color: var(--p-dim); }
 
 /* progress */
@@ -3942,8 +3933,24 @@ body.is-locked { overflow: hidden; }
   .dg-pip { top: 0; left: 0; }
 }
 
-/* Kept as a no-op: every .plate-head now runs its prose in columns, so the
-   modifier the generator still emits no longer needs to do anything. */
+/* ---- A section whose prose runs across the full measure ----
+   Some passages would otherwise make a very tall, thin ribbon beside the
+   heading; these run the full width in columns instead. */
+.plate-head--wide {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(0.65rem, 1.6vw, 1rem);
+}
+.plate-head--wide .section-title { max-width: 22ch; }
+.plate-head--wide .section-intro {
+  max-width: none;
+  columns: 3;
+  column-gap: clamp(1.5rem, 3vw, 2.75rem);
+}
+.plate-head--wide .section-intro p { margin: 0 0 0.85rem; break-inside: avoid; }
+.plate-head--wide .section-intro p:last-child { margin-bottom: 0; }
+
+@media (max-width: 1000px) { .plate-head--wide .section-intro { columns: 2; } }
+@media (max-width: 680px) { .plate-head--wide .section-intro { columns: 1; } }
 
 /* ---- Outcomes, in the opening brief ---- */
 .case-outcomes {
@@ -3963,209 +3970,4 @@ body.is-locked { overflow: hidden; }
   font-weight: 600;
   line-height: 1.3;
   color: var(--ink);
-}
-
-/* ============================================================
-   TOOLS  (under the about copy)
-   ============================================================ */
-
-/* Out-specifies .about-body p, which would otherwise repaint this label in
-   dim body ink. */
-.about-body .tools-label,
-.tools-label {
-  margin: clamp(1.4rem, 3vw, 2rem) 0 0.75rem;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
-}
-
-.tools {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem clamp(0.9rem, 2.2vw, 1.5rem);
-}
-
-.tool { display: flex; align-items: center; gap: 0.55rem; }
-
-/* The marks are drawn in one ink rather than six brand palettes, so the row
-   reads as part of the page; the label beside each one does the identifying. */
-.tool-mark {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 2.3rem;
-  height: 2.3rem;
-  border-radius: 0.65rem;
-  border: 1px solid var(--hairline);
-  background: color-mix(in srgb, var(--ink) 5%, transparent);
-  color: var(--ink);
-}
-
-.tool-mark svg { display: block; }
-
-.tool-mark--type {
-  font-family: var(--font-display);
-  font-size: 0.875rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.01em;
-}
-
-.tool-name {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  line-height: 1.3;
-  color: var(--ink-dim);
-  white-space: nowrap;
-}
-
-@media (max-width: 420px) {
-  .tools { gap: 0.6rem 0.9rem; }
-  .tool-mark { width: 2.05rem; height: 2.05rem; }
-  .tool-name { font-size: 0.75rem; }
-}
-
-/* A line of context under a diagram title, for diagrams whose centre or
-   premise is not obvious from the branches alone. */
-.dg-lede {
-  margin: -0.65rem 0 clamp(1rem, 2.5vw, 1.5rem);
-  max-width: 60ch;
-  font-size: 0.8125rem;
-  line-height: 1.55;
-  color: var(--ink-dim);
-}
-
-/* ---- Palette ramps, gradients and typefaces ---- */
-
-.ds-sub {
-  margin: 1.1rem 0 0.55rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.01em;
-  color: var(--ink);
-}
-.ds-panel > .ds-sub:first-of-type { margin-top: 0; }
-
-.ds-ramp {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(4.1rem, 1fr));
-  gap: 0.5rem;
-}
-.ds-ramp .ds-chip { height: 2.5rem; }
-.ds-ramp .ds-swatch b { margin-top: 0.4rem; font-size: 0.6875rem; }
-.ds-ramp .ds-swatch span { font-size: 0.625rem; }
-
-/* A stroke colour is shown as a stroke, not as a filled block. */
-.ds-chip--stroke {
-  background: var(--dg-node, rgba(128, 128, 128, 0.06));
-  box-shadow: inset 0 0 0 2px #b8ff37;
-}
-
-.ds-grads { display: grid; gap: 0.75rem; }
-.ds-grad i {
-  display: block;
-  height: 3rem;
-  border-radius: var(--r-sm);
-  box-shadow: inset 0 0 0 1px rgba(128, 128, 128, 0.22);
-}
-.ds-grad b { display: block; margin-top: 0.45rem; font-size: 0.75rem; font-weight: 600; color: var(--ink); }
-.ds-grad span { display: block; font-size: 0.6875rem; line-height: 1.4; color: var(--ink-faint); }
-
-.ds-face + .ds-face { margin-top: 1.4rem; padding-top: 1.4rem; border-top: 1px solid var(--hairline); }
-.ds-face-name {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-.ds-face-name em {
-  font-family: var(--font-body);
-  font-style: normal;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  margin-left: 0.5rem;
-  vertical-align: 0.15em;
-}
-.ds-face-meta { margin: 0.3rem 0 0.9rem; font-size: 0.75rem; line-height: 1.5; color: var(--ink-dim); }
-
-/* The product interface is set in Inter, which the portfolio itself does not
-   use, so the specimens are shown in the real face rather than approximated. */
-.ds-ui { font-family: "Inter", system-ui, sans-serif; }
-.ds-num { font-family: "Inter", system-ui, sans-serif; font-variant-numeric: tabular-nums; font-size: 1rem; }
-
-/* ============================================================
-   DESIGN SYSTEM PANELS — blue glass
-   ============================================================
-   A palette has to show near-black and near-white side by side, so neither
-   the light page nor the dark one can hold all of it: on white, Paper and the
-   neon stroke disappear; on black, Ink 900 and Success do. The panels get
-   their own surface instead, a blue glass that sits between the two, and
-   every chip carries a light inner ring so the dark fills keep an edge.
-   The glass is dense enough (0.90 to 0.94) that the text contrast on it is
-   predictable rather than dependent on whatever is scrolled behind. */
-
-.ds-panel {
-  background:
-    linear-gradient(145deg, rgba(22, 46, 92, 0.90) 0%, rgba(10, 20, 42, 0.94) 100%);
-  border: 1px solid rgba(190, 212, 255, 0.18);
-  -webkit-backdrop-filter: blur(16px) saturate(150%);
-  backdrop-filter: blur(16px) saturate(150%);
-  box-shadow:
-    0 14px 34px rgba(6, 14, 30, 0.22),
-    inset 0 1px 0 rgba(214, 230, 255, 0.16);
-}
-
-.ds-panel h4,
-.ds-panel .ds-sub { color: #f4f7ff; }
-.ds-panel .ds-swatch b,
-.ds-panel .ds-grad b,
-.ds-panel .ds-shape b { color: #e8eefb; }
-.ds-panel .ds-swatch span,
-.ds-panel .ds-grad span,
-.ds-panel .ds-note,
-.ds-panel .ds-row span { color: #bfcadf; }
-
-/* Every chip keeps an edge: the ring carries the dark fills, and the light
-   fills are already separated from the glass by their own brightness. */
-.ds-panel .ds-chip { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55); }
-/* .ds-panel .ds-chip out-specifies .ds-chip--stroke, so the neon ring has
-   to be restated here or the white ring replaces it. */
-.ds-panel .ds-chip--stroke {
-  background: rgba(255, 255, 255, 0.06);
-  box-shadow: inset 0 0 0 2px #b8ff37;
-}
-
-.ds-panel .ds-shape i {
-  background: rgba(214, 230, 255, 0.16);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
-}
-
-.ds-panel .ds-face-name { color: #f4f7ff; }
-.ds-panel .ds-face-name em { color: #ffb184; }
-.ds-panel .ds-face-meta { color: #cbd5e8; }
-.ds-panel .ds-face + .ds-face { border-top-color: rgba(190, 212, 255, 0.2); }
-.ds-panel .ds-row b { color: #f4f7ff; }
-.ds-panel .ds-bd { color: #cbd5e8 !important; }
-
-.ds-panel .ds-icon {
-  border-color: rgba(190, 212, 255, 0.2);
-  background: rgba(214, 230, 255, 0.07);
-  color: #f4f7ff;
-}
-.ds-panel .ds-icon b { color: #cbd5e8; }
-
-/* Safari and Firefox without backdrop-filter get the same colours, just flat. */
-@supports not (backdrop-filter: blur(4px)) {
-  .ds-panel {
-    background: linear-gradient(145deg, #16305c 0%, #0a1430 100%);
-  }
 }

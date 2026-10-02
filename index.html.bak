@@ -139,59 +139,6 @@
             Passionate about blending craft with function, and capturing
             narratives through photography.
           </p>
-          <p class="tools-label">Tools</p>
-          <ul class="tools">
-            <li class="tool">
-              <span class="tool-mark" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
-                  <path d="M12.00 10.40L12.00 2.40M12.87 10.65L16.27 5.35M13.46 11.34L20.37 8.18M13.58 12.23L20.12 13.17M13.21 13.05L19.26 18.29M12.45 13.54L14.25 19.68M11.55 13.54L9.35 21.02M10.79 13.05L5.73 17.44M10.42 12.23L2.50 13.37M10.54 11.34L4.90 8.76M11.13 10.65L7.08 4.34" />
-                </svg>
-              </span>
-              <span class="tool-name">Claude</span>
-            </li>
-            <li class="tool">
-              <span class="tool-mark" aria-hidden="true">
-                <!-- The Figma mark: five pieces. Separated by tone rather than
-                     by brand colour, so the row stays in the page palette. -->
-                <svg width="15" height="22" viewBox="0 0 38 57" fill="currentColor">
-                  <path d="M0 9.5A9.5 9.5 0 0 1 9.5 0H19v19H9.5A9.5 9.5 0 0 1 0 9.5z" opacity="1" />
-                  <path d="M19 0h9.5a9.5 9.5 0 1 1 0 19H19V0z" opacity=".72" />
-                  <path d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z" opacity=".55" />
-                  <path d="M38 28.5a9.5 9.5 0 1 1-19 0 9.5 9.5 0 0 1 19 0z" opacity=".86" />
-                  <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 1 1-19 0z" opacity=".4" />
-                </svg>
-              </span>
-              <span class="tool-name">Figma</span>
-            </li>
-            <li class="tool">
-              <span class="tool-mark tool-mark--type" aria-hidden="true">Ps</span>
-              <span class="tool-name">Photoshop</span>
-            </li>
-            <li class="tool">
-              <span class="tool-mark tool-mark--type" aria-hidden="true">Lr</span>
-              <span class="tool-name">Lightroom</span>
-            </li>
-            <li class="tool">
-              <span class="tool-mark" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
-                  <path d="M12 2.6 20.4 7v10L12 21.4 3.6 17V7Z" />
-                  <path d="M3.6 7 12 11.6 20.4 7" />
-                  <path d="M12 11.6v9.8" />
-                </svg>
-              </span>
-              <span class="tool-name">Fusion 360</span>
-            </li>
-            <li class="tool">
-              <span class="tool-mark" aria-hidden="true">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-                  <path d="M4.6 5.4 12 18.6l7.4-13.2" />
-                  <path d="M9.2 5.4 12 10.4l2.8-5" opacity=".45" />
-                </svg>
-              </span>
-              <span class="tool-name">Vizcom</span>
-            </li>
-          </ul>
-
           <div class="about-actions">
             <a class="btn btn-primary" href="#work">
               <span class="dot" aria-hidden="true">
@@ -411,12 +358,7 @@
             <div class="project-body">
               <div>
                 <h3 class="project-title">Pathang Mobility</h3>
-                <p class="project-desc">
-                  A single-occupant autonomous pod for campus commutes, taken from research
-                  to a working rig that carries a rider. Mobility as a service around it:
-                  a ride booking app, the screen inside the pod, and a fleet console for
-                  twenty-four vehicles.
-                </p>
+                <p class="project-meta">Autonomous pod &middot; MaaS &middot; Campus</p>
               </div>
               <span class="project-arrow" aria-hidden="true">
                 <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
@@ -425,11 +367,9 @@
               </span>
             </div>
             <div class="tags">
-              <span class="tag">Mobility Design</span>
-              <span class="tag">Automotive UX</span>
+              <span class="tag">Product UI</span>
               <span class="tag">Service Design</span>
-              <span class="tag">Fleet Management</span>
-              <span class="tag">Fabrication</span>
+              <span class="tag">Prototype</span>
             </div>
           </div>
         </a>

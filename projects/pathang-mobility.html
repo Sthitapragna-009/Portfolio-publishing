@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Inter:wght@400;500;600;700&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
 
   <script>
     // Inline and blocking on purpose: setting this after first paint shows a
@@ -78,14 +78,15 @@
             </div>
           </div>
           <div class="case-brief-row">
-            <h2 class="case-brief-key">The approach</h2>
+            <h2 class="case-brief-key">Outcomes</h2>
             <div class="case-brief-val">
-              <ol class="case-steps">
-                <li>Frame the gap</li>
-                <li>Research the campus</li>
-                <li>Design, build, break, test</li>
-                <li>Design the service around it</li>
-              </ol>
+              <ul class="case-outcomes">
+                <li>Mobility design</li>
+                <li>Automotive UX</li>
+                <li>Ride booking app</li>
+                <li>Fleet management</li>
+                <li>Service design</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -171,10 +172,11 @@
           </div>
         </div>
 
-        <div class="plate-head">
+        <div class="plate-head plate-head--wide">
           <h2 class="display section-title">03  How it was run</h2>
-          <div class="section-intro"><p>Two tracks ran alongside each other &mdash; one for the vehicle, one for the service it would sit inside. The vehicle track was an agile loop adapted to a one-person project, with benchmarking folded into each pass rather than done once at the start. The service track followed the usual blueprint sequence.</p>
-            <p>They are drawn separately below because they ran at different speeds. The vehicle went all the way to a fabricated rig that could be ridden. The service stopped at a blueprint.</p></div>
+          <div class="section-intro"><p>The research ran in three parts: an introduction that set the aim and the limits, a secondary sweep through the literature and the vehicles already on the market, and primary work on the campus itself. Each part fed the next, so the gap was identified on paper and then validated against people.</p>
+            <p>Two design tracks then ran alongside each other, one for the vehicle and one for the service it would sit inside. The vehicle track was an agile loop, modified to the requirement of the project, with bench marking folded into each pass rather than done once at the start. The service track followed a blueprint sequence.</p>
+            <p>They ran at different speeds, and finished in different places. The vehicle went all the way to a fabricated rig that could be ridden. The service stopped at a designed interface.</p></div>
         </div>
 
         <div class="diagram reveal">
@@ -182,86 +184,209 @@
           <div class="dg-tree">
             <div class="dg-branch">
               <div class="dg-trunk">Introduction</div>
-              <div class="dg-leaves"><span class="dg-leaf">Aim</span><span class="dg-leaf">Objectives</span><span class="dg-leaf">Scope</span><span class="dg-leaf">Limitations</span></div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Aim</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Objectives</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Scope</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Limitations</span></div></div>
             </div>
             <div class="dg-branch">
               <div class="dg-trunk">Secondary research</div>
-              <div class="dg-leaves"><span class="dg-leaf">Literature review</span><span class="dg-leaf">Comparative analysis</span><span class="dg-leaf">Sampling of vehicles</span><span class="dg-leaf">Emerging technology</span><span class="dg-leaf">Product benchmarking</span></div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Literature review</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Comparative analysis</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Sampling of vehicles</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Identifying the gap</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Exploring design opportunities</span></div><div class="dg-minis"><span class="dg-mini">Case studies</span><span class="dg-mini">Existing technologies</span><span class="dg-mini">Exploring methodologies</span><span class="dg-mini">History of autonomous mobility</span></div></div>
             </div>
             <div class="dg-branch">
               <div class="dg-trunk">Primary research</div>
-              <div class="dg-leaves"><span class="dg-leaf">Campus mapping</span><span class="dg-leaf">Persona mapping</span><span class="dg-leaf">Stakeholder mapping</span><span class="dg-leaf">Questionnaire</span><span class="dg-leaf">User interviews</span><span class="dg-leaf">Brainstorming with stakeholders</span></div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Campus mapping</span></div><div class="dg-chain"><span class="dg-leaf">Persona mapping</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">User interviews</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Stakeholder mapping</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Brainstorming with stakeholders</span></div><div class="dg-chain"><span class="dg-leaf">Gap identification</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Need validation</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Listing out needs</span></div></div>
             </div>
           </div>
         </div>
 
         <div class="diagram reveal">
-          <p class="dg-title">Vehicle design methodology</p>
-          <div class="dg-flow" style="--steps: 5">
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">1</span>Research and exploration</div>
-              <p class="dg-item">Insights from secondary and primary research</p>
-              <p class="dg-item">Competitive bench marking</p>
+          <p class="dg-title">The two design tracks</p>
+          <div class="dg-lanes">
+            <div class="dg-lane">
+              <div class="dg-lane-key"><b>Vehicle</b><span>An agile methodology, modified to the requirement of the project</span></div>
+              <ol class="dg-rail" style="--steps: 5">
+              <li class="dg-stage">
+                <span class="dg-pip">1</span>
+                <h4 class="dg-stage-t">Research and exploration</h4>
+                <ul class="dg-stage-l"><li>Insights from secondary and primary research</li><li>Competitive bench marking</li><li>Identifying the design gaps and validating the needs</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">2</span>
+                <h4 class="dg-stage-t">Ideate and diverge</h4>
+                <ul class="dg-stage-l"><li>Mind mapping</li><li>Brainstorming with stakeholders</li><li>Scenario building and ideation sketches</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">3</span>
+                <h4 class="dg-stage-t">Discover and diverge</h4>
+                <ul class="dg-stage-l"><li>Detailed sketch renders and scenarios</li><li>Ideation techniques: crazy 8s and random word</li><li>Discussing ideas with stakeholders</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">4</span>
+                <h4 class="dg-stage-t">Design, develop and converge</h4>
+                <ul class="dg-stage-l"><li>Final form evaluation against product bench marking</li><li>Colour, material, finish</li><li>Human machine interaction and user interaction with the product</li><li>Finalising the concept</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">5</span>
+                <h4 class="dg-stage-t">Mockup and prototyping</h4>
+                <ul class="dg-stage-l"><li>Building scale models to evaluate and understand the form</li><li>Clay modelling and automotive paint on the scale model</li></ul>
+              </li>
+              </ol>
             </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">2</span>Ideate and diverge</div>
-              <p class="dg-item">Mind mapping</p>
-              <p class="dg-item">Brainstorming with stakeholders</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">3</span>Discover and diverge</div>
-              <p class="dg-item">Detailed sketch renders and scenarios</p>
-              <p class="dg-item">Crazy 8s and random-word ideation</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">4</span>Design, develop, converge</div>
-              <p class="dg-item">Form evaluation against product benchmarks</p>
-              <p class="dg-item">Human&ndash;machine interaction</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">5</span>Mockup and prototyping</div>
-              <p class="dg-item">Scale models to evaluate the form</p>
-              <p class="dg-item">Colour, material, finish</p>
+            <div class="dg-lane">
+              <div class="dg-lane-key"><b>Service</b><span>A blueprint sequence, run alongside the vehicle</span></div>
+              <ol class="dg-rail" style="--steps: 6">
+              <li class="dg-stage">
+                <span class="dg-pip">1</span>
+                <h4 class="dg-stage-t">User experience mapping</h4>
+                <ul class="dg-stage-l"><li>Journey mapping</li><li>Going beyond the UI, analysing front stage and backstage actions</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">2</span>
+                <h4 class="dg-stage-t">Stakeholder engagement</h4>
+                <ul class="dg-stage-l"><li>Co-designing and co-creating solutions</li><li>Prioritising ideas and stakeholders</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">3</span>
+                <h4 class="dg-stage-t">Digital ecosystem design</h4>
+                <ul class="dg-stage-l"><li>The MaaS platform</li><li>A holistic system incorporating multimodal transport</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">4</span>
+                <h4 class="dg-stage-t">Service blueprint</h4>
+                <ul class="dg-stage-l"><li>Analysing all touchpoints</li><li>Finalising a blueprint</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">5</span>
+                <h4 class="dg-stage-t">Service testing</h4>
+                <ul class="dg-stage-l"><li>Interface testing with users</li></ul>
+              </li>
+              <li class="dg-stage">
+                <span class="dg-pip">6</span>
+                <h4 class="dg-stage-t">Measuring the service</h4>
+                <ul class="dg-stage-l"><li>UX analytics</li></ul>
+              </li>
+              </ol>
             </div>
           </div>
-        </div>
-
-        <div class="diagram reveal">
-          <p class="dg-title">Service design methodology</p>
-          <div class="dg-flow" style="--steps: 6">
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">1</span>User experience mapping</div>
-              <p class="dg-item">Journey mapping</p>
-              <p class="dg-item">Looking past the interface</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">2</span>Stakeholder engagement</div>
-              <p class="dg-item">Co-designing and co-creating</p>
-              <p class="dg-item">Prioritising ideas</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">3</span>Digital ecosystem design</div>
-              <p class="dg-item">The MaaS platform</p>
-              <p class="dg-item">Designing a holistic system</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">4</span>Service blueprint</div>
-              <p class="dg-item">Analysing every touchpoint</p>
-              <p class="dg-item">Finalising the blueprint</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">5</span>Service testing</div>
-              <p class="dg-item">Interface testing with users</p>
-            </div>
-            <div class="dg-step">
-              <div class="dg-head"><span class="dg-n">6</span>Measuring the service</div>
-              <p class="dg-item">UX analytics</p>
-            </div>
-          </div>
+          <p class="dg-foot">The complete service is future scope. What this project carries through to a design is the application and the interaction with the vehicle; the rest of the blueprint stops at paper.</p>
         </div>
 
         <div class="plate-head">
-          <h2 class="display section-title">04  Concept and form</h2>
+          <h2 class="display section-title">04  Sketching and ideation</h2>
+          <div class="section-intro"><p>The brief was opened up before it was narrowed. A mind map took the one idea at the centre, an autonomous micro mobility vehicle, and pushed it out along eight lines at once: who would ride it, what kind of vehicle it should be, how it would sense the road, how many wheels, where the power came from, what the interface was, how it joined a wider service, and what it should look like.</p>
+            <p>Then a lot of sketching. Silhouettes by the sheet, scenario sketches to test how each one would actually be ridden, crazy 8s and random word prompts to get past the obvious, and side profiles to settle proportion. Ideas were taken back to stakeholders at each pass rather than at the end.</p>
+            <p>Three concepts came out of it: a three-wheel reverse trike with a canopy, a four-wheel sit and ride without one, and a three-wheel delta layout with a collapsible frame. The third was taken forward. Partway through, the project shifted from designing a vehicle for now to designing for autonomy, which is why the earliest iteration reads differently from the rest.</p></div>
+        </div>
+
+        <div class="diagram reveal">
+          <p class="dg-title">Mind mapping the possibilities</p>
+          <p class="dg-lede">Eight directions opened up from one centre, autonomous micro mobility vehicle design, before anything was narrowed down.</p>
+          <div class="dg-tree">
+            <div class="dg-branch">
+              <div class="dg-trunk">Types of users</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Diverse age groups</span><span class="dg-leaf">Accessibility needs</span></div></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Vehicle type</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Enclosed micro pod</span><span class="dg-leaf">Compact footprint</span><span class="dg-leaf">Climate control</span></div></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Sensor tech</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">LIDAR</span><span class="dg-leaf">Cameras</span><span class="dg-leaf">Ultrasonic sensors</span></div></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Wheel layout</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Four wheel layout</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Trike</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Delta</span></div></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Power and range</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">In wheel hub motors</span><span class="dg-leaf">Long lasting batteries</span><span class="dg-leaf">Solar powered docking stations</span><span class="dg-leaf">Charging</span></div></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">User interfaces</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Touch screen display</span><span class="dg-leaf">App integration</span></div></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Service integration</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">MaaS</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Inter modal connections</span></div></div>
+            </div>
+            <div class="dg-branch">
+              <div class="dg-trunk">Vehicle form</div>
+              <div class="dg-leaves dg-leaves--stack"><div class="dg-chain"><span class="dg-leaf">Futuristic</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Industrial design trends</span><i aria-hidden="true">&rarr;</i><span class="dg-leaf">Bio inspired design</span></div></div>
+            </div>
+          </div>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/pathang/ide-mood.jpg" alt="The moodboard: the surface language, lighting and stance the vehicle was aiming at" width="1400" height="785" loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="ds-level-head reveal"><b>Concept ideation</b><span>Sketching wide before committing, across sheets rather than screens.</span></div>
+
+        <div class="shots reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-01.jpg" alt="Concept ideation: silhouettes explored across a single sheet" width="1400" height="688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-02.jpg" alt="A second sheet, moving between standing, sit-and-ride and folded forms" width="1400" height="688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-03.jpg" alt="Scenario sketches, testing how each form would actually be ridden" width="1400" height="688" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-11.jpg" alt="Side profile sketches, exploring and brainstorming the proportions" width="1380" height="578" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <div class="ds-level-head reveal"><b>Three concepts</b><span>The directions that survived the sketching, and the one that was taken forward.</span></div>
+
+        <div class="shots reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-04.jpg" alt="Concept 1: a three-wheel reverse trike with a canopy, worked out in the sketchbook" width="944" height="716" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-05.jpg" alt="Concept 1, front view: the canopy and the enclosed volume" width="334" height="616" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-06.jpg" alt="Concept 1, rear view" width="306" height="616" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-07.jpg" alt="Concept 1 resolved as a render, with the canopy glazed" width="370" height="618" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-08.jpg" alt="Concept 2: a four-wheel sit and ride without a canopy" width="1048" height="762" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-09.jpg" alt="Concept 2, further sketches through the folding sequence" width="542" height="762" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-10.jpg" alt="Concept 2 as a render, open frame and exposed wheels" width="502" height="560" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/ide-12.jpg" alt="Concept 3: the three-wheel delta layout with a collapsible frame, the one taken forward" width="976" height="594" loading="lazy" decoding="async" />
+            </figure>
+          </div>
+          <div class="shots-bar">
+            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
+            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
+            <p class="shots-count"></p>
+            <p class="shots-hint">Click any frame to enlarge</p>
+          </div>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/pathang/ide-wheel.jpg" alt="Wheel layout selection: the delta arrangement chosen, with the powertrain and battery pack placed" width="1400" height="785" loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="plate-head">
+          <h2 class="display section-title">05  Concept and form</h2>
           <div class="section-intro"><p>Concept 3 was taken forward: a three-wheel delta layout on a lightweight aluminium tube frame, front-wheel drive, with a foldable seat and the battery set at the front for weight distribution and access.</p>
             <p>The delta arrangement &mdash; one wheel forward, two behind &mdash; gives the stability a standing scooter lacks without the width of a four-wheeler on a footpath. The frame collapses, which is the part that actually answers the research: a vehicle that folds is one you can leave at the kerb or carry inside, rather than one that needs a parking space the campus does not have.</p></div>
         </div>
@@ -294,7 +419,7 @@
         </div>
 
         <div class="plate-head">
-          <h2 class="display section-title">05  Prototyping</h2>
+          <h2 class="display section-title">06  Prototyping</h2>
           <div class="section-intro"><p>Three passes before anything was cut. Body storming with users to find where the collapsed frame would sit and how far it had to clear them &mdash; done with a mock frame and an office chair, which is cheap and tells you more about reach and clearance than a drawing does.</p>
             <p>Then a 1:5 model in sun board to judge the form in the round, and concept visualisation to run colour and proportion variations quickly before committing to steel.</p></div>
         </div>
@@ -360,42 +485,72 @@
           </div>
         </div>
 
-        <div class="plate-head">
-          <h2 class="display section-title">06  Fabrication</h2>
-          <div class="section-intro"><p>Two rectangular mild-steel tubes from an engineering works supplier, taken to a welder and built into the collapsing mechanism drawn in CAD. Steel rather than the specified aluminium, because the rig exists to test whether the mechanism works at all &mdash; not to hit the weight target.</p>
-            <p>It was built in five parts: the collapsible mechanism, the front fork, the handlebar, the drivetrain, and the motor mounting with the powertrain. Each one had to be fitted, trial-assembled, and in several cases re-cut.</p></div>
+        <div class="plate-head plate-head--wide">
+          <h2 class="display section-title">07  Fabrication</h2>
+          <div class="section-intro"><p>Two rectangular mild-steel tubes were sourced from an engineering works supplier and taken to a welder, who built the collapsing mechanism straight from the CAD model. Steel rather than the specified aluminium, because the rig exists to prove the mechanism works at all, not to hit a weight target.</p>
+            <p>It was built in five parts: the collapsible mechanism, the front fork, the handlebar, the drivetrain, and the motor mounting with the powertrain. One tube slides inside the other, so both had to be cut, faced and ground until the fit would travel without rattling.</p>
+            <p>Almost nothing was ordered in. The fork plates were drilled and filed to shape, the handlebar stem was cut and welded, and the drivetrain was assembled from a hub, a sprocket and a chain on the workshop floor. Every part was trial-fitted, and several were re-cut.</p></div>
         </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/pathang/fab-lead.jpg" alt="The five parts the rig was built in: the collapsible mechanism, the front fork, the handlebar, the drivetrain, and the motor mounting with the powertrain" width="1400" height="785" loading="lazy" decoding="async" />
+        </figure>
 
         <div class="shots reveal" data-shots>
           <div class="shots-track">
             <figure class="shot-card">
-              <img src="../assets/pathang/g-fab-4.jpg" alt="The five fabrication stages: collapsible mechanism, front fork, handlebar, drivetrain, motor mounting and powertrain" width="1435" height="692" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/fab-01.jpg" alt="Marking the mild-steel tube before the first cut" width="534" height="404" loading="lazy" decoding="async" />
             </figure>
             <figure class="shot-card">
-              <img src="../assets/pathang/g-fab-1.jpg" alt="Front fork assembly &mdash; machining, drilling and fitting the plates" width="1435" height="676" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/fab-02.jpg" alt="Cutting the section down on a chop saw at the engineering works" width="408" height="354" loading="lazy" decoding="async" />
             </figure>
             <figure class="shot-card">
-              <img src="../assets/pathang/g-fab-2.jpg" alt="Drivetrain assembly, hub and sprocket laid out on the ground" width="1435" height="676" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/fab-03.jpg" alt="Grinding the cut end square" width="534" height="342" loading="lazy" decoding="async" />
             </figure>
             <figure class="shot-card">
-              <img src="../assets/pathang/g-fab-3.jpg" alt="The powertrain mounted to the frame, motor and wheel in place" width="1435" height="676" loading="lazy" decoding="async" />
-            </figure>
-          </div>
-          <div class="shots-bar">
-            <button class="shots-nav shots-nav--prev" type="button" aria-label="Previous image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4.5 7.5 12l7.5 7.5"/></svg></button>
-            <button class="shots-nav shots-nav--next" type="button" aria-label="Next image"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5 16.5 12 9 19.5"/></svg></button>
-            <p class="shots-count"></p>
-            <p class="shots-hint">Click any frame to enlarge</p>
-          </div>
-        </div>
-
-        <div class="shots reveal shots--tall" data-shots>
-          <div class="shots-track">
-            <figure class="shot-card">
-              <img src="../assets/pathang/g-scene-1.jpg" alt="Working on the rig in the shop" width="153" height="498" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/fab-04.jpg" alt="The cut tube, checked along its length" width="688" height="762" loading="lazy" decoding="async" />
             </figure>
             <figure class="shot-card">
-              <img src="../assets/pathang/g-scene-2.jpg" alt="Assembling the drivetrain" width="189" height="498" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/fab-05.jpg" alt="Marking the slot that lets one tube slide inside the other" width="666" height="326" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-06.jpg" alt="Opening the slot with an angle grinder" width="666" height="428" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-07.jpg" alt="The collapsible base extended" width="1326" height="362" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-08.jpg" alt="The same base collapsed, one tube run inside the other" width="1326" height="362" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-09.jpg" alt="The front fork plate, machined and deburred" width="444" height="296" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-10.jpg" alt="Drilling the fork plate on the pillar drill" width="444" height="296" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-11.jpg" alt="Laying out the fork, hub and spacers before assembly" width="444" height="292" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-12.jpg" alt="The front fork assembled onto the wheel" width="444" height="292" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-13.jpg" alt="Grinding the handlebar stem to length" width="390" height="260" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-14.jpg" alt="Welding the steerer, with the rig standing on its own wheels" width="506" height="498" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-15.jpg" alt="The drive sprocket, cleaned up and test-fitted" width="482" height="322" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-16.jpg" alt="The hub stripped down on the workshop floor" width="862" height="322" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-17.jpg" alt="The powertrain: motor, chain and rear wheels mounted to the frame" width="722" height="638" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/fab-18.jpg" alt="The rig with the seat and battery box in place" width="636" height="279" loading="lazy" decoding="async" />
             </figure>
           </div>
           <div class="shots-bar">
@@ -407,7 +562,7 @@
         </div>
 
         <div class="plate-head">
-          <h2 class="display section-title">07  Failure identification</h2>
+          <h2 class="display section-title">08  Failure identification</h2>
           <div class="section-intro"><p>Before the rig went anywhere, the obvious weak points were found and recorded. The collapsing joint is the whole idea of the vehicle and also the one part carrying a rider&rsquo;s weight through a hinge &mdash; so it is where the design is most exposed.</p>
             <p>Documenting the failures first, rather than after a ride went wrong, is what made the testing worth doing: it meant going out with a list of things to watch rather than a hope that it would hold.</p></div>
         </div>
@@ -417,18 +572,21 @@
         </figure>
 
         <div class="plate-head">
-          <h2 class="display section-title">08  Testing</h2>
+          <h2 class="display section-title">09  Testing</h2>
           <div class="section-intro"><p>The rig was ridden on campus roads by several people of different heights and builds. That is where the rest of it surfaced &mdash; the parts of the mechanism that bound, flexed or sat wrong once there was a real rider on it, and the difference between a frame that folds on a bench and one that folds after a trip.</p>
             <p>It is a working rig, not a finished vehicle, and it is honest to say so. What it proves is that the collapsing delta layout can carry a person; what it does not prove is range, weather sealing, or anything autonomous.</p></div>
         </div>
 
-        <div class="shots reveal shots--tall" data-shots>
+        <div class="shots reveal" data-shots>
           <div class="shots-track">
             <figure class="shot-card">
-              <img src="../assets/pathang/g-test-1.jpg" alt="Walking the rig out onto the road" width="336" height="552" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/g-test-1.jpg" alt="Ridden on the street by a rider well outside the student age range, seat down and frame extended" width="706" height="738" loading="lazy" decoding="async" />
             </figure>
             <figure class="shot-card">
-              <img src="../assets/pathang/g-test-2.jpg" alt="Riding the working rig on campus" width="354" height="552" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/g-test-2.jpg" alt="A heavier rider seated, with the battery box and motor mounting taking the load" width="729" height="738" loading="lazy" decoding="async" />
+            </figure>
+            <figure class="shot-card">
+              <img src="../assets/pathang/g-test-3.jpg" alt="Wheeled across campus folded, which is most of what a rider actually does with it" width="426" height="738" loading="lazy" decoding="async" />
             </figure>
           </div>
           <div class="shots-bar">
@@ -440,7 +598,7 @@
         </div>
 
         <div class="plate-head">
-          <h2 class="display section-title">09  The service</h2>
+          <h2 class="display section-title">10  The service</h2>
           <div class="section-intro"><p>The vehicle is half of it. A pod that folds is useless if finding one, paying for it and leaving it somewhere sensible is harder than walking. So the service was designed as one piece with the product: four ways to use a Patang, a single account behind them, and an interface built from a system rather than screen by screen.</p>
             <p>Everything below stops short of deployment. None of it was released or tested with live users &mdash; it is the design, not a running service.</p></div>
         </div>
@@ -492,23 +650,58 @@
         <div class="ds reveal">
           <div class="ds-panel">
             <h4>Colour</h4>
-            <div class="ds-swatches">
-            <span class="ds-swatch"><i class="ds-chip" style="background:#ff1e00"></i><b>Signal</b><span>#FF1E00</span></span>
-            <span class="ds-swatch"><i class="ds-chip" style="background:#141414"></i><b>Ink</b><span>#141414</span></span>
-            <span class="ds-swatch"><i class="ds-chip" style="background:#1f1f1f"></i><b>Surface</b><span>#1F1F1F</span></span>
-            <span class="ds-swatch"><i class="ds-chip" style="background:#f9e7e5"></i><b>Sheet</b><span>#F9E7E5</span></span>
-            <span class="ds-swatch"><i class="ds-chip" style="background:#19e0d0"></i><b>Live</b><span>#19E0D0</span></span>
-            <span class="ds-swatch"><i class="ds-chip" style="background:#f2eeea"></i><b>Console</b><span>#F2EEEA</span></span>
+            <p class="ds-sub">Greys</p>
+            <div class="ds-ramp">
+              <span class="ds-swatch"><i class="ds-chip" style="background:#0A0A0A"></i><b>Ink 900</b><span>#0A0A0A</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#141414"></i><b>Ink 800</b><span>#141414</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#1F1F1F"></i><b>Ink 700</b><span>#1F1F1F</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#57514F"></i><b>Ink 500</b><span>#57514F</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#B8B2AF"></i><b>Ink 300</b><span>#B8B2AF</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#FDFCFB"></i><b>Paper</b><span>#FDFCFB</span></span>
             </div>
-            <p class="ds-note">White on signal red measures 3.86:1 &mdash; under AA for body text, so the pairing is held to large labels and fills, and anything smaller sits on ink or sheet.</p>
+            <p class="ds-sub">Orange</p>
+            <div class="ds-ramp">
+              <span class="ds-swatch"><i class="ds-chip" style="background:#FFD2B8"></i><b>Orange 200</b><span>#FFD2B8</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#FFB184"></i><b>Orange 300</b><span>#FFB184</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#FA6E26"></i><b>Orange 500</b><span>#FA6E26</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#C2410C"></i><b>Orange 700</b><span>#C2410C</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#8A2D06"></i><b>Orange 900</b><span>#8A2D06</span></span>
+            </div>
+            <p class="ds-sub">State</p>
+            <div class="ds-ramp">
+              <span class="ds-swatch"><i class="ds-chip" style="background:#16653A"></i><b>Success</b><span>#16653A</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#8A5A00"></i><b>Warning</b><span>#8A5A00</span></span>
+              <span class="ds-swatch"><i class="ds-chip" style="background:#A33C0C"></i><b>Error</b><span>#A33C0C</span></span>
+              <span class="ds-swatch"><i class="ds-chip ds-chip--stroke"></i><b>Live</b><span>#B8FF37</span></span>
+            </div>
+            <p class="ds-note">Orange 500 is the accent: pins, chips, meters, the brand mark. It will not carry white, which lands at 2.9:1, so primary buttons drop to Orange 700, where a white label reaches 5.2:1. Orange 700 is also the colour of accent type on a light surface. Live is a stroke, never a fill behind text.</p>
           </div>
           <div class="ds-panel">
-            <h4>Type scale</h4>
-            <div class="ds-type">
-              <div class="ds-row"><span>DISPLAY</span><b class="ds-d1">Pathang</b></div>
-              <div class="ds-row"><span>HEADING 1</span><b class="ds-h1">Choose a Patang</b></div>
-              <div class="ds-row"><span>HEADING 2</span><b class="ds-h2">Patang 002 is on the way</b></div>
-              <div class="ds-row"><span>BODY</span><b class="ds-bd">Lite storage &middot; 2 minutes away</b></div>
+            <h4>Gradients</h4>
+            <div class="ds-grads">
+              <span class="ds-grad"><i style="background:linear-gradient(135deg, #FA6E26 0%, #C2410C 100%)"></i><b>Accent</b><span>Primary buttons and the charge meter. Runs from Orange 500 into Orange 700.</span></span>
+              <span class="ds-grad"><i style="background:linear-gradient(160deg, #1F1F1F 0%, #0A0A0A 100%)"></i><b>Dusk</b><span>The map field and every full-bleed surface behind the in-pod screen.</span></span>
+              <span class="ds-grad"><i style="background:linear-gradient(90deg, #B8FF37 0%, #16653A 100%)"></i><b>Live</b><span>Charge and progress strokes, where the neon end marks the active edge.</span></span>
+            </div>
+          </div>
+          <div class="ds-panel">
+            <h4>Typefaces</h4>
+            <div class="ds-face">
+              <p class="ds-face-name">Bricolage Grotesque <em>Display</em></p>
+              <p class="ds-face-meta">Variable, optical size 12 to 96, weight 200 to 800. Used for anything a rider reads at a glance: the speed, the fare, a screen title.</p>
+              <div class="ds-type">
+                <div class="ds-row"><span>Display 700</span><b class="ds-d1">Pathang</b></div>
+                <div class="ds-row"><span>Heading 700</span><b class="ds-h1">Choose a Patang</b></div>
+              </div>
+            </div>
+            <div class="ds-face">
+              <p class="ds-face-name ds-ui">Inter <em>Interface</em></p>
+              <p class="ds-face-meta">Weights 400, 500, 600 and 700, with tabular numerals. Used for every label, row and caption, where the job is to be read rather than noticed.</p>
+              <div class="ds-type">
+                <div class="ds-row"><span>Body 600</span><b class="ds-h2 ds-ui">Patang 002 is on the way</b></div>
+                <div class="ds-row"><span>Caption 400</span><b class="ds-bd ds-ui">Lite storage &middot; 2 minutes away</b></div>
+                <div class="ds-row"><span>Numerals</span><b class="ds-num">&#8377;10 &middot; 84% &middot; 2.4 km</b></div>
+              </div>
             </div>
           </div>
           <div class="ds-panel">
@@ -614,13 +807,13 @@
         </div>
 
         <div class="plate-head">
-          <h2 class="display section-title">10  Vehicle interactions</h2>
+          <h2 class="display section-title">11  Vehicle interactions</h2>
           <div class="section-intro"><p>The screen inside a Patang has a different job to the one in your hand. There is no driver to read it, the rider is moving, and the whole thing is glanced at rather than used. So it carries three states and almost nothing else: unlocked and confirming where you are going, navigating, and arriving.</p>
             <p>Everything is sized to be read at arm&rsquo;s length in daylight. Speed is the largest element on the screen because it is the only number that matters continuously; fare and distance sit in a card to one side and update quietly. The single primary action changes with the state, and there is never more than one of them.</p>
             <p>The arrival state does the thing a driverless vehicle has to do and a taxi does not: it tells you where to leave the pod. Pull in on the left, past the guard post, bay 2 is free.</p></div>
         </div>
 
-        <div class="shots reveal shots--wide" data-shots>
+        <div class="shots reveal" data-shots>
           <div class="shots-track">
             <figure class="shot-card">
               <img src="../assets/pathang/hmi-1-welcome.jpg" alt="The in-pod screen on unlock: a greeting, the confirmed destination, and one action to begin" width="2560" height="1600" loading="lazy" decoding="async" />
@@ -641,31 +834,22 @@
         </div>
 
         <div class="plate-head">
-          <h2 class="display section-title">11  Fleet management</h2>
+          <h2 class="display section-title">12  Fleet management</h2>
           <div class="section-intro"><p>Twenty-four vehicles, one operator, a whole working day. The console is the inverse of the rider app in every way that matters: light rather than dark, dense rather than spare, built to be watched for hours instead of glanced at for seconds. It shares the same tokens, type roles and state badges, which is what keeps it recognisably the same product.</p>
             <p>It is organised around the question an operator actually has, which is never what the fleet is doing but what needs them. The overview answers that in four numbers. The pod view answers it for one vehicle, with charge, range, trips this week and the maintenance history that explains why it keeps coming back.</p>
-            <p>The incident log carries a second column most dashboards leave out: what the system already did about it. Rerouting a pod that fell below twenty per cent, holding a vehicle with a stiff fold out of service rather than letting it be booked again. Someone watching two dozen vehicles needs to know what has been handled, not only what happened. The console ships in both appearances, switched from the foot of the rail, because a control room is not always a bright room.</p></div>
+            <p>The incident log carries a second column most dashboards leave out: what the system already did about it. Rerouting a pod that fell below twenty per cent, holding a vehicle with a stiff fold out of service rather than letting it be booked again. Someone watching two dozen vehicles needs to know what has been handled, not only what happened.</p></div>
         </div>
 
-        <div class="shots reveal shots--wide" data-shots>
+        <div class="shots reveal" data-shots>
           <div class="shots-track">
             <figure class="shot-card">
-              <img src="../assets/pathang/fleet-1-overview.jpg" alt="The console overview in light mode: 24 pods, status table, charge points and an assistant rail" width="2880" height="1800" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="shot-card">
-              <img src="../assets/pathang/fleet-4-overview-dark.jpg" alt="The same overview in dark mode, for operators working a night shift" width="2880" height="1800" loading="lazy" decoding="async" />
+              <img src="../assets/pathang/fleet-1-overview.jpg" alt="The console overview: 24 pods, status table, charge points, and an assistant rail" width="2880" height="1800" loading="lazy" decoding="async" />
             </figure>
             <figure class="shot-card">
               <img src="../assets/pathang/fleet-2-pod.jpg" alt="A single Patang: charge, range, trips this week, maintenance log and recent journeys" width="2880" height="1800" loading="lazy" decoding="async" />
             </figure>
             <figure class="shot-card">
-              <img src="../assets/pathang/fleet-5-pod-dark.jpg" alt="The pod view in dark mode" width="2880" height="1800" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="shot-card">
               <img src="../assets/pathang/fleet-3-incidents.jpg" alt="The incident log, with a column for what the system handled on its own" width="2880" height="1800" loading="lazy" decoding="async" />
-            </figure>
-            <figure class="shot-card">
-              <img src="../assets/pathang/fleet-6-incidents-dark.jpg" alt="The incident log in dark mode" width="2880" height="1800" loading="lazy" decoding="async" />
             </figure>
           </div>
           <div class="shots-bar">
@@ -733,7 +917,7 @@
     </button>
 
     <figure class="lightbox-stage">
-      <img src="" alt="" decoding="async" />
+      <img alt="" decoding="async" />
     </figure>
 
     <button class="lightbox-nav lightbox-nav--next" type="button" aria-label="Next photograph">

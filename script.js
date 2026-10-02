@@ -1010,9 +1010,6 @@
 
     const cards = [...track.querySelectorAll(".shot-card")];
 
-    /* Scroll by whatever is actually on screen rather than a fixed step: the
-       cards are different widths, because the photographs are. */
-    const pageWidth = () => Math.max(track.clientWidth * 0.82, 160);
 
     /* Measured against the track's own left edge. offsetLeft resolves to the
        nearest positioned ancestor, which is the wrapper rather than the
@@ -1029,13 +1026,35 @@
 
     const sync = () => {
       const max = track.scrollWidth - track.clientWidth;
+      /* At the right-hand end the remaining cards share the screen, so the
+         last one never sits flush left and nearest() can never reach it.
+         Treat being scrolled out as being on the last card, or the counter
+         stops short of the total and next stays enabled but inert. */
+      const atEnd = max > 2 && track.scrollLeft >= max - 2;
+      const at = atEnd ? cards.length - 1 : nearest();
       if (prev) prev.disabled = track.scrollLeft <= 2;
-      if (next) next.disabled = track.scrollLeft >= max - 2;
-      if (count) count.textContent = (nearest() + 1) + " / " + cards.length;
+      /* A track whose cards all fit has nothing to page through. */
+      if (next) next.disabled = max <= 2 || atEnd || at >= cards.length - 1;
+      if (count) count.textContent = (at + 1) + " / " + cards.length;
     };
 
-    if (prev) prev.addEventListener("click", () => track.scrollBy({ left: -pageWidth() }));
-    if (next) next.addEventListener("click", () => track.scrollBy({ left: pageWidth() }));
+    /* Step by a whole card rather than a fraction of the viewport. The cards
+       are different widths, because the photographs are, and mandatory snap
+       was overriding a percentage step anyway: a forward step landed on the
+       next card while a back step landed between two, so returning to the
+       first card left it clipped off the left edge. */
+    const offsetOf = (i) => {
+      const base = track.getBoundingClientRect().left - track.scrollLeft;
+      return Math.round(cards[i].getBoundingClientRect().left - base);
+    };
+    const goTo = (i) => {
+      const j = Math.max(0, Math.min(cards.length - 1, i));
+      const max = track.scrollWidth - track.clientWidth;
+      track.scrollTo({ left: Math.max(0, Math.min(max, offsetOf(j))) });
+    };
+
+    if (prev) prev.addEventListener("click", () => goTo(nearest() - 1));
+    if (next) next.addEventListener("click", () => goTo(nearest() + 1));
 
     let t = null;
     track.addEventListener("scroll", () => { clearTimeout(t); t = setTimeout(sync, 80); }, { passive: true });
