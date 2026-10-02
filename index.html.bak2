@@ -244,37 +244,6 @@
           </div>
         </a>
 
-        <a class="project reveal" href="projects/pathang-mobility.html">
-          <div class="project-media">
-            <img src="assets/pathang/card.jpg" alt="Pathang Mobility: the three-wheel delta pod shown front, side and rear" loading="lazy" decoding="async" width="1435" height="805" />
-          </div>
-          <div class="project-foot">
-            <span class="foot-glass" aria-hidden="true"></span>
-            <div class="project-body">
-              <div>
-                <h3 class="project-title">Pathang Mobility</h3>
-                <p class="project-desc">
-                  A single-occupant autonomous pod for campus commutes, taken from research
-                  to a working rig that carries a rider. Mobility as a service around it:
-                  a ride booking app, the screen inside the pod, and a fleet console for
-                  twenty-four vehicles.
-                </p>
-              </div>
-              <span class="project-arrow" aria-hidden="true">
-                <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
-                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </span>
-            </div>
-            <div class="tags">
-              <span class="tag">Mobility Design</span>
-              <span class="tag">Automotive UX</span>
-              <span class="tag">Service Design</span>
-              <span class="tag">Fleet Management</span>
-              <span class="tag">Fabrication</span>
-            </div>
-          </div>
-        </a>
         <a class="project reveal" href="projects/etikoppaka-chess.html">
           <div class="project-media">
             <img src="assets/etikoppaka/cover.jpg" alt="Etikoppaka Chess title plate: an artisan&rsquo;s hands holding a freshly lacquered red and yellow chess piece" loading="lazy" decoding="async" width="1600" height="1000" />
@@ -433,6 +402,37 @@
           </div>
         </a>
 
+        <a class="project reveal" href="projects/pathang-mobility.html">
+          <div class="project-media">
+            <img src="assets/pathang/card.jpg" alt="Pathang Mobility: the three-wheel delta pod shown front, side and rear" loading="lazy" decoding="async" width="1435" height="805" />
+          </div>
+          <div class="project-foot">
+            <span class="foot-glass" aria-hidden="true"></span>
+            <div class="project-body">
+              <div>
+                <h3 class="project-title">Pathang Mobility</h3>
+                <p class="project-desc">
+                  A single-occupant autonomous pod for campus commutes, taken from research
+                  to a working rig that carries a rider. Mobility as a service around it:
+                  a ride booking app, the screen inside the pod, and a fleet console for
+                  twenty-four vehicles.
+                </p>
+              </div>
+              <span class="project-arrow" aria-hidden="true">
+                <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                  <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+            </div>
+            <div class="tags">
+              <span class="tag">Mobility Design</span>
+              <span class="tag">Automotive UX</span>
+              <span class="tag">Service Design</span>
+              <span class="tag">Fleet Management</span>
+              <span class="tag">Fabrication</span>
+            </div>
+          </div>
+        </a>
       </div>
 
       <div class="work-footer reveal">
