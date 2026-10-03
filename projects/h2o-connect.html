@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>H2o Connect — Domestic Water Management | Sthitapragna Kollepara</title>
+  <meta name="description" content="H2o Connect: a retrofit water tank kit and app that shows what the pump is about to do, proves what it just did, and hands control straight back. Research, system design, design system and eight screens." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Archivo:wght@400;500;600;700;800&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet" />
+
+  <script>
+    // Inline and blocking on purpose: setting this after first paint shows a
+    // flash of the wrong theme.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <canvas class="dot-field" id="dotField" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="../index.html" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a class="nav-pill nav-pill--quiet" href="../index.html#work">Design Projects</a>
+        <a class="nav-pill ring-pill" href="../photography.html">Photography</a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+    <main id="top" class="case-h2o">
+    <section class="section case-head h2-hero">
+      <div class="wrap">
+        <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
+        <div class="h2-hero-grid">
+          <div>
+            <p class="eyebrow reveal">Home automation &middot; Product &middot; UI/UX</p>
+            <h1 class="h2-hero-title reveal" data-delay="1">H<sub>2</sub>O Connect</h1>
+            <p class="h2-statement reveal" data-delay="2">A water monitoring system a household or industry can <span class="hl-lime">trust to run itself</span>. One that shows <span class="hl-water">what it is about to do</span>, proves <span class="hl-water">what it just did</span>, and <span class="hl-low">hands control straight back</span> the moment something looks wrong.</p>
+
+            <div class="case-brief reveal" data-delay="3">
+              <div class="case-brief-row">
+                <h2 class="case-brief-key">Outcomes</h2>
+                <div class="case-brief-val">
+                  <ul class="case-outcomes">
+                    <li>UX research</li>
+                    <li>Product ecosystem</li>
+                    <li>Design system</li>
+                    <li>Mobile app</li>
+                    <li>Working prototype</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="h2-phones reveal" data-delay="2">
+            <div class="iphone ph-smart"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/cover-smart.webp" alt="Smart mode: a prediction that the tank reaches 25% at 4:10 PM tomorrow, learned from 34 days at 92% confidence" width="644" height="1393" decoding="async" /></div></div></div>
+            <div class="iphone ph-home"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/cover-home.webp" alt="Home screen: the overhead tank at 78%, 1,560 of 2,000 litres, filling with 12 minutes left, motor running automatically" width="789" height="1707" decoding="async" fetchpriority="high" /></div></div></div>
+            <div class="iphone ph-leak"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/cover-leak.webp" alt="Smart insight: a possible leak, 42 litres lost overnight, with the expected and actual curves shown before the two choices" width="644" height="1393" decoding="async" /></div></div></div>
+          </div>
+        </div>
+
+        <dl class="case-meta reveal" data-delay="4">
+          <div><dt>Role</dt><dd>End to end UX and UI, sole designer</dd></div>
+          <div><dt>Scope</dt><dd>Research, system, hardware, 8 screens</dd></div>
+          <div><dt>Team</dt><dd>Partnered with Dwaj&#8209;Tech</dd></div>
+          <div><dt>Timeline</dt><dd>6 weeks, 2026</dd></div>
+          <div><dt>Tools</dt><dd>Figma, HTML/CSS/JS prototype</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="section case-plates">
+      <div class="wrap">
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">01</span><span class="h2-chip-l">Context</span></div>
+            <h2 class="h2-title">Water arrives twice a day. The pump has no idea.</h2>
+            <p class="h2-intro">Across most of India, municipal water runs for a few hours a day. Homes store it in an overhead tank and refill it with a switch downstairs. There is no gauge, no timer and no warning. Every problem in this project sits in the gap between water arriving and someone remembering to pump it.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">The opportunity</p><p class="h2-aside-big">Piped water now reaches most homes. What happens after it arrives, storing and pumping it, is still done by hand and by guesswork.</p></div>
+        </header><div class="h2-grid reveal" style="--min:15rem"><div class="h2-card h2-stat"><p class="h2-stat-n">&lt; 6 hrs <small>a day</small></p><p class="h2-p">Typical piped supply in many Indian cities. Water is scheduled, not continuous.</p><cite>MIT Tata Center for Technology &amp; Design</cite></div><div class="h2-card h2-stat"><p class="h2-stat-n">2 hrs <small>at most</small></p><p class="h2-p">What most people in Indian towns receive on a normal day. Some get water only a few days a week.</p><cite>World Bank, 24×7 Water Supply FAQ</cite></div><div class="h2-card h2-stat"><p class="h2-stat-n">73.9% <small>of rural homes</small></p><p class="h2-p">Now have a tap connection. The problem is moving from the street into the house.</p><cite>PIB / Jal Jeevan Mission, 2024</cite></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">02</span><span class="h2-chip-l">Research</span></div>
+            <h2 class="h2-title">I didn't ask about apps. I watched people fill a tank.</h2>
+            <p class="h2-intro">People can’t describe their pump routine accurately from memory, so the research followed the routine itself: the switchboard, the walk to the terrace, the guess about whether the tank was full. Four methods, in this order.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">What I was looking for</p><p class="h2-aside-big">The moment people stop trusting what they can’t see. That moment, more than any control, is what the product had to design for.</p></div>
+        </header><div class="h2-grid h2-grid--4 reveal" style="--min:14rem"><div class="h2-card"><p class="h2-num">01</p><h3 class="h2-h">Home visits</h3><p class="h2-p">8 households in Roorkee and Delhi NCR. One full fill cycle watched in each home, from switch on to switch off.</p><p class="h2-small">What it showed &middot; <b>The 12 minute gap</b></p></div><div class="h2-card"><p class="h2-num">02</p><h3 class="h2-h">Switchboard shadowing</h3><p class="h2-p">Sat with whoever usually runs the pump and noted every check, guess and correction, without prompting.</p><p class="h2-small">What it showed &middot; <b>The checking habit</b></p></div><div class="h2-card"><p class="h2-num">03</p><h3 class="h2-h">Trade interviews</h3><p class="h2-p">3 plumbers and 2 electricians on what actually fails: dry runs, burnt out motors, corroded float switches.</p><p class="h2-small">What it showed &middot; <b>Installation limits</b></p></div><div class="h2-card"><p class="h2-num">04</p><h3 class="h2-h">Competitor teardown</h3><p class="h2-p">6 products on sale today: float switches, timer boxes and two app connected controllers.</p><p class="h2-small">What it showed &middot; <b>The trust gap</b></p></div></div>
+        <div class="h2-note h2-note--low reveal"><p class="h2-k">Study status</p><p>The methods and research instruments are my own. Participant numbers and quotes on this page are illustrative, written from the brief, not taken from field notes.</p></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">03</span><span class="h2-chip-l">Stakeholders</span></div>
+            <h2 class="h2-title">The person who runs the pump is not the person who complains.</h2>
+            <p class="h2-intro">In most homes one person did the whole job, and everyone else only noticed when it failed. Seeing that split turned a tank monitor into a product for the whole household.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">What this changed</p><ol><li><span><b>Anyone can read it on first open. </b>So the tank’s state sits in one card at the top, not behind a menu.</span></li><li><span><b>Manual control never goes away. </b>Plumbers and electricians warned that the fastest way to lose a household is to make the wall switch feel replaced.</span></li></ol></div>
+        </header><div class="h2-grid reveal" style="--min:16rem"><div class="h2-card"><p class="h2-k h2-k--lime">Primary · runs the system</p><h3 class="h2-h">The pump keeper</h3><p class="h2-p">Usually one adult. Runs the motor, takes the blame, and is the only one who knows the tank’s quirks.</p></div><div class="h2-card"><p class="h2-k h2-k--water">Secondary · lives with the result</p><h3 class="h2-h">Everyone else at home</h3><p class="h2-p">Family, tenants, house help. They find the problem at the tap, not the tank, and can’t fix it.</p></div><div class="h2-card"><p class="h2-k h2-k--low">Tertiary · sets the limits</p><h3 class="h2-h">Plumber, electrician, RWA, power company</h3><p class="h2-p">Decide what can be installed, what is electrically safe, when water arrives and what power costs.</p></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">04</span><span class="h2-chip-l">Personas</span></div>
+            <h2 class="h2-title">Three people, three meanings of “automatic”.</h2>
+            <p class="h2-intro">Archetypes drawn from the visits, not market segments. Each one tests a different promise, and a screen that fails any of them doesn’t ship.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">The question each one asks</p><div class="h2-rows"><div style="--tone-ink:var(--h2-lime-ink)"><b>Meera</b><span>Will I believe it when I can’t see the tank?</span></div><div style="--tone-ink:var(--h2-water-ink)"><b>Rohit</b><span>Will it explain itself, and fit what I already use?</span></div><div style="--tone-ink:var(--h2-low-ink)"><b>Suresh</b><span>Can I read it, and can I always take over?</span></div></div></div>
+        </header>
+        <div class="h2-personas reveal"><div class="h2-card h2-pc h2-pc--lime">
+            <div class="h2-pc-top">
+              <span class="h2-avatar" aria-hidden="true">M</span>
+              <div><p class="h2-pc-name">Meera<span>47</span></p><p class="h2-pc-role">The pump keeper</p></div>
+            </div>
+            <p class="h2-pc-ctx">Roorkee. Three floors, a joint family of seven. Has run the pump twice a day for nine years.</p>
+            <p class="h2-pc-owns">Owns the tension <span class="h2-pc-tension">Trust</span></p>
+            <blockquote>“I know the sound it makes when it’s nearly full. I don’t trust anything else.”</blockquote>
+            <div class="h2-pc-lists">
+              <div><p class="h2-k h2-k--lime">Needs</p><ul class="h2-list h2-list--lime"><li>See the level without climbing to the terrace</li><li>Proof the motor actually turned off</li></ul></div>
+              <div><p class="h2-k h2-k--crit">Pain points</p><ul class="h2-list h2-list--crit"><li>Judges the level by the sound of the pipe</li><li>Gets blamed when the tank runs dry at 6am</li></ul></div>
+            </div></div><div class="h2-card h2-pc h2-pc--water">
+            <div class="h2-pc-top">
+              <span class="h2-avatar" aria-hidden="true">R</span>
+              <div><p class="h2-pc-name">Rohit<span>29</span></p><p class="h2-pc-role">The optimiser</p></div>
+            </div>
+            <p class="h2-pc-ctx">Gurugram. A rented two bedroom flat with a shared sump. Owns a smart speaker and four smart plugs.</p>
+            <p class="h2-pc-owns">Owns the tension <span class="h2-pc-tension">Interoperability</span></p>
+            <blockquote>“If it can’t tell me why it did that, I’ll switch it off.”</blockquote>
+            <div class="h2-pc-lists">
+              <div><p class="h2-k h2-k--lime">Needs</p><ul class="h2-list h2-list--lime"><li>Fills scheduled on cheaper off peak power</li><li>Lives inside the home app he already uses</li></ul></div>
+              <div><p class="h2-k h2-k--crit">Pain points</p><ul class="h2-list h2-list--crit"><li>Automation he can’t inspect or override</li><li>A landlord who won’t allow drilling or rewiring</li></ul></div>
+            </div></div><div class="h2-card h2-pc h2-pc--low">
+            <div class="h2-pc-top">
+              <span class="h2-avatar" aria-hidden="true">S</span>
+              <div><p class="h2-pc-name">Suresh<span>62</span></p><p class="h2-pc-role">The sceptic</p></div>
+            </div>
+            <p class="h2-pc-ctx">Delhi. A ground floor flat, and he looks after the building. Runs the pump by hand, always.</p>
+            <p class="h2-pc-owns">Owns the tension <span class="h2-pc-tension">Accessibility</span></p>
+            <blockquote>“The switch is downstairs. That’s where I’ll be.”</blockquote>
+            <div class="h2-pc-lists">
+              <div><p class="h2-k h2-k--lime">Needs</p><ul class="h2-list h2-list--lime"><li>The wall switch keeps working, untouched</li><li>Readable at arm’s length, without glasses</li></ul></div>
+              <div><p class="h2-k h2-k--crit">Pain points</p><ul class="h2-list h2-list--crit"><li>Small text and icon only buttons</li><li>Fear of the motor running dry and burning out</li></ul></div>
+            </div></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">05</span><span class="h2-chip-l">Empathy map</span></div>
+            <h2 class="h2-title">What Meera says is not what Meera does.</h2>
+            <p class="h2-intro">Mapped from the home where the gap between what was said and what happened was widest. She said she “just switches it on”. In one cycle, she checked the tank four times.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">The insight</p><p class="h2-aside-big">She isn’t careless. She’s uninformed. Nothing has ever proved the tank is fine, so she keeps checking. The product has to give her that proof.</p></div>
+        </header>
+        <div class="h2-emap reveal" role="group" aria-label="Empathy map for Meera, the pump keeper">
+          <div class="h2-emap-centre"><span class="h2-avatar" aria-hidden="true">M</span><b>Meera, 47</b><small>The pump keeper</small></div>
+            <div class="h2-eq h2-eq--says">
+              <div class="h2-eq-head"><span class="h2-eq-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span><div><b>Says</b><small>In her own words</small></div></div>
+              <p class="h2-note-chip">“The tank’s nearly full, I can hear it.”</p><p class="h2-note-chip">“Don’t switch it on, I already did.”</p><p class="h2-note-chip">“Last time it ran dry, the motor burnt out.”</p><p class="h2-note-chip">“I just switch it on. It’s not complicated.”</p>
+            </div>
+            <div class="h2-eq h2-eq--thinks">
+              <div class="h2-eq-head"><span class="h2-eq-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 15a4 4 0 0 1-.5-8A5 5 0 0 1 16 6a4 4 0 0 1 1 9z"/><circle cx="8" cy="19" r="1.3"/><circle cx="5" cy="21.5" r=".8"/></svg></span><div><b>Thinks</b><small>What goes through her head</small></div></div>
+              <p class="h2-note-chip">If I forget now, there’s no water at six.</p><p class="h2-note-chip">Was that our pump or the neighbour’s?</p><p class="h2-note-chip">Automatic things break when nobody’s watching.</p><p class="h2-note-chip">Nobody else will notice until the tap runs dry.</p>
+            </div>
+            <div class="h2-eq h2-eq--does">
+              <div class="h2-eq-head"><span class="h2-eq-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5V4a1.5 1.5 0 0 1 3 0v6m0-4.5a1.5 1.5 0 0 1 3 0V12m0-3.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.5a6 6 0 0 1-5-2.7L5 15.5a1.6 1.6 0 0 1 2.5-2z"/></svg></span><div><b>Does</b><small>What she actually does</small></div></div>
+              <p class="h2-note-chip">Climbs to the terrace to look inside the tank.</p><p class="h2-note-chip">Keeps a mental timer while she cooks.</p><p class="h2-note-chip">Switches off early on purpose, to be safe.</p><p class="h2-note-chip">Sends her son up when her knees hurt.</p>
+            </div>
+            <div class="h2-eq h2-eq--feels">
+              <div class="h2-eq-head"><span class="h2-eq-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></span><div><b>Feels</b><small>What it costs her</small></div></div>
+              <p class="h2-note-chip">Responsible by default. Nobody assigned it.</p><p class="h2-note-chip">Anxious through the whole evening supply.</p><p class="h2-note-chip">Guilty watching water spill off the terrace.</p><p class="h2-note-chip">Wary of anything that takes the switch away.</p>
+            </div></div>
+        <div class="h2-senses reveal"><div class="h2-card h2-sense h2-sense--sees">
+            <div class="h2-eq-head"><span class="h2-eq-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><div><b>Sees</b><small>Around the tank</small></div></div>
+            <ul class="h2-list"><li>Water spilling off the terrace when she’s late</li><li>The tank level, only by climbing up to it</li><li>No reading anywhere between the switch and the tank</li></ul></div><div class="h2-card h2-sense h2-sense--hears">
+            <div class="h2-eq-head"><span class="h2-eq-ico" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9a6 6 0 1 1 12 0c0 3-2 4-3 5.5s-1 4.5-3.5 4.5A2.5 2.5 0 0 1 9 16.5"/><path d="M9.5 9a2.5 2.5 0 0 1 5 0"/></svg></span><div><b>Hears</b><small>Her only feedback</small></div></div>
+            <ul class="h2-list h2-list--lime"><li>The pipe changing pitch as the tank fills</li><li>A hum from the motor, and nothing else</li><li>Complaints at 6am when the taps run dry</li></ul></div></div>
+        <div class="h2-pg reveal">
+          <div class="pain"><p class="h2-k h2-k--crit">Pain</p><p>The checking never ends. Even when it works, nothing proves that it worked.</p></div>
+          <div class="gain"><p class="h2-k h2-k--lime">Gain</p><p>One glance that settles it, and a record of what happened while she was away.</p></div>
+        </div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">06</span><span class="h2-chip-l">Journey map</span></div>
+            <h2 class="h2-title">One fill cycle, from supply to regret.</h2>
+            <p class="h2-intro">The current journey for one refill. Two moments carry most of the pain: the wait, when she has no information, and the terrace climb, when she goes to get it herself. Everything designed after this targets those two moments.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">Where it hurts most</p><div class="h2-rows"><div style="--tone-ink:var(--h2-crit-ink)"><b>The wait</b><span>Twenty minutes with no information, filled with worry.</span></div><div style="--tone-ink:var(--h2-crit-ink)"><b>The climb</b><span>Walking up to get data the system already has.</span></div></div></div>
+        </header><div>
+        <div class="h2-card h2-card--flat reveal" style="padding:0">
+          <div class="h2-scroll">
+            <div class="h2-journey" role="table" aria-label="Current journey for one fill cycle, in eight stages">
+              <div class="jl">Stage</div><div class="js"><span class="h2-num">01</span><b>Supply arrives</b><em>06:30</em></div><div class="js"><span class="h2-num">02</span><b>Notices it</b><em>0 to 40 min</em></div><div class="js"><span class="h2-num">03</span><b>Walks to the switch</b><em>+1 min</em></div><div class="js"><span class="h2-num">04</span><b>Turns the motor on</b><em>+0 min</em></div><div class="js"><span class="h2-num">05</span><b>Waits and guesses</b><em>5 to 20 min</em></div><div class="js"><span class="h2-num">06</span><b>Climbs to check</b><em>+15 min</em></div><div class="js"><span class="h2-num">07</span><b>Switches off early</b><em>+22 min</em></div><div class="js"><span class="h2-num">08</span><b>Lives with it</b><em>Next morning</em></div>
+              <div class="jl">Doing</div><div>The municipal line opens and the sump starts filling.</div><div>Hears the inlet, or misses it completely.</div><div>Goes down a floor to the board under the stairs.</div><div>Flips the switch. No feedback except a hum.</div><div>Cooks, works, listens for the pipe to change pitch.</div><div>Goes up to the terrace and looks into the tank.</div><div>Cuts power before it’s full, on purpose.</div><div>The tank sat at 70%. The house runs short by 6am.</div>
+              <div class="jl">Thinking</div><div class="jt">“Is it a supply day? I think so.”</div><div class="jt">“Did someone already switch it on?”</div><div class="jt">“How long has it been running?”</div><div class="jt">“Twenty minutes should do it.”</div><div class="jt">“That could be the neighbour’s pump.”</div><div class="jt">“Better to look than flood the terrace.”</div><div class="jt">“Full is a guess. Safe is a guess too.”</div><div class="jt">“Tomorrow I’ll start earlier.”</div>
+              <div class="jl">Feeling</div>
+              <div class="jcurve" aria-hidden="true">
+                <svg viewBox="0 0 800 100" preserveAspectRatio="none"><polyline points="50,30 150,70 250,58 350,14 450,76 550,84 650,60 750,92" /></svg>
+                <div class="h2-jdots"><i style="left:6.25%;top:30%;--c:var(--h2-lime)"></i><i style="left:18.75%;top:70%;--c:var(--h2-crit)"></i><i style="left:31.25%;top:58%;--c:var(--h2-low)"></i><i style="left:43.75%;top:14%;--c:var(--h2-lime)"></i><i style="left:56.25%;top:76%;--c:var(--h2-crit)"></i><i style="left:68.75%;top:84%;--c:var(--h2-crit)"></i><i style="left:81.25%;top:60%;--c:var(--h2-low)"></i><i style="left:93.75%;top:92%;--c:var(--h2-crit)"></i></div>
+              </div>
+              <div class="jl" style="border-top:0"></div><div class="jf jf--good">Alert</div><div class="jf jf--bad">Unsure</div><div class="jf jf--mid">Resigned</div><div class="jf jf--good">In control</div><div class="jf jf--bad">Anxious</div><div class="jf jf--bad">Frustrated</div><div class="jf jf--mid">Relieved</div><div class="jf jf--bad">Defeated</div>
+              <div class="jl">Opportunity</div><div class="jo">Detect supply automatically. The tank should know before she does.</div><div class="jo">Tell her once, on her phone.</div><div class="jo">Remove the trip downstairs.</div><div class="jo">Show run time, power use and a finish time.</div><div class="jo">Replace listening with a live level and a countdown.</div><div class="jo">Remove the climb. This is the whole product.</div><div class="jo">Stop at a level she set, and prove it stopped.</div><div class="jo">Show what the fill cost and how long it will last.</div>
+            </div>
+          </div>
+        </div><p class="h2-scroll-hint">Scroll sideways to see the whole map.</p></div>
+        <div class="h2-note h2-note--low reveal"><p class="h2-k">The real cost</p><p>Every cycle ends slightly wrong: too early and short, or too late and spilling. Neither outcome is ever measured.</p></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">07</span><span class="h2-chip-l">Synthesis</span></div>
+            <h2 class="h2-title">Four things the research made clear.</h2>
+            <p class="h2-intro">Each row reads left to right: what I saw, what it means, and the design decision it forced. Every decision later in this case study traces back to one of these rows.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k h2-k--lime">The reframe</p><p class="h2-aside-big">Not a controller. A witness that can act.</p></div>
+        </header><div class="reveal"><div class="h2-card h2-insight-card"><div class="h2-insight"><span class="h2-num">01</span><div><p class="h2-k">What I saw</p><p>Every home could run the pump. None could tell me what it had done.</p></div><div><p class="h2-k h2-k--water">What it means</p><p>The product isn’t a remote control. It’s a reliable witness that can also act.</p></div><div class="is-impl"><p class="h2-k h2-k--lime">Design decision</p><p>State, history and evidence come first on every screen. Controls sit below them.</p></div></div></div><div class="h2-card h2-insight-card"><div class="h2-insight"><span class="h2-num">02</span><div><p class="h2-k">What I saw</p><p>One runaway cycle sent a family back to the manual switch for good.</p></div><div><p class="h2-k h2-k--water">What it means</p><p>Trust is lost once and rarely earned back. Automation starts on probation.</p></div><div class="is-impl"><p class="h2-k h2-k--lime">Design decision</p><p>Every automatic action has a visible stop and leaves a receipt.</p></div></div></div><div class="h2-card h2-insight-card"><div class="h2-insight"><span class="h2-num">03</span><div><p class="h2-k">What I saw</p><p>Nobody could estimate what one fill costs in electricity.</p></div><div><p class="h2-k h2-k--water">What it means</p><p>Cost is invisible because the bill arrives a month later, cut off from the action.</p></div><div class="is-impl"><p class="h2-k h2-k--lime">Design decision</p><p>Show units and rupees for each fill, attached to the fill that caused them.</p></div></div></div><div class="h2-card h2-insight-card"><div class="h2-insight"><span class="h2-num">04</span><div><p class="h2-k">What I saw</p><p>The job is shared by a household but carried by one person.</p></div><div><p class="h2-k h2-k--water">What it means</p><p>Whoever opens the app may be seeing it for the first time, in the middle of a problem.</p></div><div class="is-impl"><p class="h2-k h2-k--lime">Design decision</p><p>No setup knowledge needed. The top card explains itself.</p></div></div></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">08</span><span class="h2-chip-l">Need statement</span></div>
+            <h2 class="h2-title h2-title--statement">A household that stores its own water needs to know what the tank and pump are about to do, and to stop them in one tap, so it can leave the system alone without giving up control.</h2>
+            
+          </div>
+          <div class="h2-note h2-note--lime h2-note--big h2-aside"><p class="h2-k">How might we</p><p>How might we help a household trust an automated water system enough to stop checking it, while keeping them in control on the days it matters?</p></div>
+        </header></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">09</span><span class="h2-chip-l">Principles</span></div>
+            <h2 class="h2-title">Four rules every screen had to follow.</h2>
+            <p class="h2-intro">A principle is only useful if it rules something out. Each one below names what it rejects, so any screen can be checked against it.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">In practice</p><p class="h2-aside-big">These four rules were the review checklist. They also decided which visual direction shipped, in section 15.</p></div>
+        </header><div class="h2-grid h2-grid--4 reveal" style="--min:15rem"><div class="h2-card"><p class="h2-num">01</p><h3 class="h2-h">State before controls</h3><p class="h2-p">Every screen answers “what’s happening?” before “what can I do?”. The tank card is always first and always largest.</p><p class="h2-small"><b class="h2-k--crit">Rules out</b> &middot; A home screen that opens on a power button.</p></div><div class="h2-card"><p class="h2-num">02</p><h3 class="h2-h">Every action leaves a receipt</h3><p class="h2-p">Anything the system does on its own is logged in plain language, with the rule behind it and a way to change that rule.</p><p class="h2-small"><b class="h2-k--crit">Rules out</b> &middot; Silent schedules and automation with no history.</p></div><div class="h2-card"><p class="h2-num">03</p><h3 class="h2-h">Colour means something</h3><p class="h2-p">Blue is water and only water. Lime is action. Red is only ever a fault. No colour is used just to fill space.</p><p class="h2-small"><b class="h2-k--crit">Rules out</b> &middot; Decorative gradients and colour blocked layouts.</p></div><div class="h2-card"><p class="h2-num">04</p><h3 class="h2-h">The wall switch always wins</h3><p class="h2-p">Software can never put the system in a state the switchboard can’t undo. Manual mode is an equal option, not a fallback.</p><p class="h2-small"><b class="h2-k--crit">Rules out</b> &middot; Any flow that traps a household inside the app.</p></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">10</span><span class="h2-chip-l">Scope</span></div>
+            <h2 class="h2-title">What I designed, and what I left out on purpose.</h2>
+            <p class="h2-intro">Six weeks, one designer. Being clear about the edges is what separates a case study from a showreel, and it’s the first thing a reviewer should be able to check.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">Built in six weeks</p><dl class="h2-stats"><div><dt>8 + 2</dt><dd>core screens and alert states</dd></div><div><dt>6</dt><dd>component sets</dd></div><div><dt>4</dt><dd>hardware modules</dd></div><div><dt>1</dt><dd>working prototype</dd></div></dl></div>
+        </header><ol class="h2-weeks reveal" aria-label="Six week timeline"><li class="h2-card" style="--c:var(--h2-water)"><span class="h2-num">Week 1</span><b>Research</b><span>Home visits, switchboard shadowing, trade interviews and a competitor teardown.</span></li><li class="h2-card" style="--c:var(--h2-water)"><span class="h2-num">Week 2</span><b>Synthesis</b><span>Personas, empathy and journey maps, the four insights and the principles.</span></li><li class="h2-card" style="--c:var(--h2-water)"><span class="h2-num">Week 3</span><b>Structure</b><span>Product ecosystem, information architecture, user flows and greyscale wireframes.</span></li><li class="h2-card" style="--c:var(--h2-low)"><span class="h2-num">Week 4</span><b>Directions</b><span>Three visual directions scored against the principles. Current sensing reshapes the hardware.</span></li><li class="h2-card" style="--c:var(--h2-lime)"><span class="h2-num">Week 5</span><b>System and screens</b><span>Design system tokens and components, and the eight final screens.</span></li><li class="h2-card" style="--c:var(--h2-lime)"><span class="h2-num">Week 6</span><b>Prove it</b><span>HTML prototype, walkthroughs and fixes, success metrics and the study plan.</span></li></ol><div class="h2-grid reveal" style="--min:17rem"><div class="h2-card"><p class="h2-k h2-k--lime">In scope</p><ul class="h2-list h2-list--lime"><li>The full monitoring and automation model: Automatic, Manual and Smart</li><li>Eight core screens and two alert states</li><li>A token based design system: colour, type, spacing and six component sets</li><li>The hardware architecture and how it connects to smart home platforms</li><li>A working HTML, CSS and JS prototype of the core flow</li></ul></div><div class="h2-card"><p class="h2-k h2-k--crit">Left out on purpose</p><ul class="h2-list h2-list--crit"><li>First run setup and sensor pairing. The hardest flow, covered in the reflection</li><li>Multiple properties and landlord accounts</li><li>Billing, subscriptions and warranty</li><li>Languages beyond English, though the type scale is sized for Devanagari</li><li>Anything that needs a trained ML model instead of a designed rule</li></ul></div><div class="h2-card"><p class="h2-k h2-k--low">A launch would still need</p><ul class="h2-list h2-list--low"><li>Field tests on real tanks with real sensor noise</li><li>Electrical safety certification for the relay</li><li>A considered first two weeks for Smart mode</li><li>Diary study evidence that explanations reduce checking</li><li>A support path for when the hardware, not the app, is at fault</li></ul></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">11</span><span class="h2-chip-l">Product ecosystem</span></div>
+            <h2 class="h2-title">The app is one surface. The system is four.</h2>
+            <p class="h2-intro">H2o Connect is a retrofit kit, not a new tank. It attaches to the tank, sump and starter a home already has. Replacing any of them turns a ₹4,000 upgrade into a ₹40,000 renovation, and every household I met had already paid for its pump once.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">System at a glance</p><dl class="h2-stats"><div><dt>4</dt><dd>modules, one radio</dd></div><div><dt>20 min</dt><dd>to install</dd></div><div><dt>&lt; 200 ms</dt><dd>safety response, on device</dd></div><div><dt>0</dt><dd>safety features that need the internet</dd></div></dl></div>
+        </header><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">A · The kit</p><h3>Four modules, one radio, twenty minutes.</h3></div>
+          <div class="h2-facts-row"><span><b>4</b>modules</span><span><b>1</b>shared spare part</span><span>No drilling</span></div>
+        </div><div class="h2-grid h2-grid--4 reveal" style="--min:14rem"><div class="h2-card"><span class="h2-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="5" y="3" width="14" height="5" rx="1.5"/><path d="M9 12c1 .8 2 .8 3 0s2-.8 3 0M8 16c1.3 1 2.7 1 4 0s2.7-1 4 0M10 20h4"/></svg></span><p class="h2-num">01</p><h3 class="h2-h">Tank sensor</h3><p class="h2-sub-line">Ultrasonic, no contact</p><p class="h2-p">Mounts under the tank lid and measures the air gap, so nothing touches the water. Reports every 30 seconds at rest and every 5 seconds while filling.</p><p class="h2-small">18 month battery with solar top up · IP66 · magnetic mount</p></div><div class="h2-card"><span class="h2-ico" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="6" y="3" width="12" height="5" rx="1.5"/><path d="M12 8v8"/><circle cx="12" cy="18" r="2.5"/></svg></span><p class="h2-num">02</p><h3 class="h2-h">Sump sensor</h3><p class="h2-sub-line">Same module, different mount</p><p class="h2-p">The dry run guard. If the sump drops below the pump’s intake, the motor is cut locally, before the app is even told.</p><p class="h2-small">One shared part for both positions</p></div><div class="h2-card"><span class="h2-ico h2-ico--lime" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="4" y="6" width="16" height="13" rx="2.5"/><path d="M8 6V3.5M16 6V3.5"/><circle cx="12" cy="12.5" r="2.2" fill="currentColor" stroke="none"/></svg></span><p class="h2-num">03</p><h3 class="h2-h">Motor module</h3><p class="h2-sub-line">Relay and current sensor</p><p class="h2-p">Mounted next to the existing starter. It measures real current, so “running” is confirmed, not assumed. A motor that is powered but not pumping is flagged as a fault.</p><p class="h2-small">16 A relay · current clamp · thermal cut off · manual bypass</p></div><div class="h2-card"><span class="h2-ico h2-ico--mute" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="14" r="5.5"/><path d="M12 8.5V3M9 3h6"/></svg></span><p class="h2-num">04</p><h3 class="h2-h">Inlet valve</h3><p class="h2-sub-line">Optional, for direct supply homes</p><p class="h2-p">For homes fed straight from mains pressure, with no sump. Lets Smart mode close the inlet on a suspected leak instead of only reporting it.</p><p class="h2-small">Motorised ball valve · opens if power is lost</p></div></div></div><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">B · Where decisions are made</p><h3>Nothing safety critical depends on the internet.</h3><p>This was a design rule, not an engineering afterthought. Every household I met had lost power, water or broadband in the past week. A system that stops protecting the motor when the router restarts isn’t a safety system.</p></div>
+          <div class="h2-facts-row"><span>Safety on the device</span><span>Control on the phone</span><span>Memory in the cloud</span></div>
+        </div>
+        <div class="h2-block" style="gap:0.9rem"><div class="h2-card h2-tier h2-tier--crit reveal">
+          <div><p class="h2-k">Safety</p><p class="h2-tier-name">On the device</p></div>
+          <div><p class="h2-k">Decides</p><ul class="h2-list"><li>Dry run cut off when the sump drops below the intake</li><li>Overflow cut off at the household’s maximum level</li><li>Thermal and overcurrent trip on the motor</li><li>Relay state held even if every radio is down</li></ul></div>
+          <dl class="h2-tier-stats"><div><dt>Response time</dt><dd>Under 200 ms</dd></div><div><dt>Without internet</dt><dd>Fully works</dd></div></dl></div><div class="h2-card h2-tier h2-tier--lime reveal">
+          <div><p class="h2-k">Control</p><p class="h2-tier-name">On the phone</p></div>
+          <div><p class="h2-k">Decides</p><ul class="h2-list"><li>Mode: Automatic, Manual or Smart</li><li>Fill levels and quiet hours</li><li>Manual start, stop and one tap abort</li><li>Live level, run time and finish time</li></ul></div>
+          <dl class="h2-tier-stats"><div><dt>Response time</dt><dd>Under 1 s on the home network</dd></div><div><dt>Without internet</dt><dd>Fully works</dd></div></dl></div><div class="h2-card h2-tier h2-tier--water reveal">
+          <div><p class="h2-k">Memory</p><p class="h2-tier-name">In the cloud</p></div>
+          <div><p class="h2-k">Decides</p><ul class="h2-list"><li>History beyond the 30 days stored on the module</li><li>The household pattern Smart mode learns from</li><li>The electricity tariff calendar</li><li>Firmware updates and access for more than one home</li></ul></div>
+          <dl class="h2-tier-stats"><div><dt>Response time</dt><dd>Not on the critical path</dd></div><div><dt>Without internet</dt><dd>Slows down, never fails</dd></div></dl></div></div></div><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">C · Home automation</p><h3>The tank should belong to the house, not to an app.</h3><p>Rohit already had a smart speaker and four smart plugs, and no interest in a fifth app. H2o Connect joins the home over Matter as two simple devices, a level sensor and a switch, so it appears in Google Home, on a Nest Hub, or in any home app the family already uses. Matter runs on the local network, so routines keep working when broadband doesn’t.</p></div>
+          <div class="h2-facts-row"><span>Matter</span><span>Google Home</span><span>Nest Hub</span><span>Voice</span></div>
+        </div><div class="h2-grid reveal" style="--min:17rem"><div class="h2-card"><p class="h2-k">Google Home · concept</p><div class="h2-tile" role="img" aria-label="Google Home tile: overhead tank 78 percent, filling, full in about 12 minutes, with Pump on and Details buttons"><div class="h2-tile-top">Overhead tank</div><p class="h2-tile-n">78<small>%</small></p><p>Filling &middot; full in about 12 min</p><div class="h2-tile-btns"><span>Pump on</span><span>Details</span></div></div><p class="h2-cap">One tile, two controls. The family never has to learn a new product.</p></div><div class="h2-card"><p class="h2-k">Household routine</p><div class="h2-rule-rows"><div><b>When</b>Overhead tank drops below 30%</div><div><b>And</b>Electricity is at the off peak rate</div><div class="then"><b>Then</b>Run the pump, 25 minutes at most</div><div class="then"><b>Then</b>Tell Meera’s phone it started</div></div><p class="h2-cap">Set up once, in the platform the family already uses.</p></div><div class="h2-card"><p class="h2-k">Voice · in the kitchen</p><div class="h2-voice"><p class="you">“Hey Google, how full is the tank?”</p><p class="gh">The overhead tank is at 78 percent and filling. It should be full in about twelve minutes.</p><p class="you">“Hey Google, stop the pump.”</p><p class="gh">Stopped at 81 percent. H2o Connect logged it as a manual stop.</p></div><p class="h2-cap">Voice answers the question Meera actually asks, hands free.</p></div></div><div style="height:clamp(0.75rem,1.6vw,1.1rem)"></div><div class="h2-grid reveal" style="--min:17rem"><div class="h2-card"><p class="h2-k h2-k--lime">Shared with the home platform</p><ul class="h2-list h2-list--lime"><li>Water level, as a percentage and in litres</li><li>Pump on or off</li><li>Filling, idle or fault</li><li>Possible leak</li><li>Energy used by the current cycle</li></ul></div><div class="h2-card"><p class="h2-k h2-k--crit">Kept inside H2o Connect</p><ul class="h2-list h2-list--crit"><li>Fill levels</li><li>Dry run and overflow cut offs</li><li>Smart mode’s learning data</li><li>Switching between Automatic, Manual and Smart</li></ul></div><div class="h2-card"><p class="h2-k h2-k--low">The rule</p><p class="h2-p" style="color:var(--ink)">A smart speaker should never be able to switch off a dry run guard. Anyone at home can check the status. Anything that could burn out a motor stays inside H2o Connect, behind a named account.</p></div></div></div><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">D · Installation</p><h3>Twenty minutes, one electrician, no drilling.</h3><p>Rohit rents. If any step needs a hole in the wall, it never gets installed, and the product loses its second largest audience. Only one step needs an electrician, and it can be undone.</p></div>
+          <div class="h2-facts-row"><span><b>5</b>steps</span><span><b>20</b>minutes</span><span><b>1</b>electrician</span></div>
+        </div><div class="h2-grid h2-grid--5 reveal" style="--min:12rem"><div class="h2-card"><div class="h2-step-top"><span class="h2-num">01</span><span class="h2-chip">2 min</span></div><h3 class="h2-h">Clamp the tank sensor</h3><p class="h2-p">Magnetic mount under the existing lid. No cutting, no float, nothing in the water.</p><p class="h2-who">Household</p></div><div class="h2-card"><div class="h2-step-top"><span class="h2-num">02</span><span class="h2-chip">2 min</span></div><h3 class="h2-h">Lower the sump sensor</h3><p class="h2-p">The same module, hung on its cable. This is the dry run guard.</p><p class="h2-who">Household</p></div><div class="h2-card"><div class="h2-step-top"><span class="h2-num">03</span><span class="h2-chip">10 min</span></div><h3 class="h2-h">Wire the motor module</h3><p class="h2-p">Mounted next to the existing starter. The only step that touches mains power, and the only one that needs an electrician.</p><p class="h2-who h2-who--trade">Electrician</p></div><div class="h2-card"><div class="h2-step-top"><span class="h2-num">04</span><span class="h2-chip">3 min</span></div><h3 class="h2-h">Scan to join</h3><p class="h2-p">Scan the QR code on the module. Matter adds it to the home app at the same time.</p><p class="h2-who">Household</p></div><div class="h2-card"><div class="h2-step-top"><span class="h2-num">05</span><span class="h2-chip">3 min</span></div><h3 class="h2-h">Enter the tank height</h3><p class="h2-p">The app works out litres, flow rate and fill time from the first full cycle.</p><p class="h2-who">Household</p></div></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">12</span><span class="h2-chip-l">Information architecture</span></div>
+            <h2 class="h2-title">Five destinations. No submenus.</h2>
+            <p class="h2-intro">The structure is flat on purpose. Meera opens the app in the middle of a problem, and Suresh opens it once a month. Neither should have to navigate. Everything used daily is one tap from the tab bar, and only Settings goes deeper.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k h2-k--lime">Fill now</p><p class="h2-aside-big">An action, not a destination. It floats on Home and Motor, so the most urgent thing in the product is never behind a tab.</p></div>
+        </header><div class="h2-ia reveal"><div class="h2-ia-root"><span>H2o Connect</span></div><div class="h2-grid h2-grid--5" style="--min:11.5rem"><div class="h2-card"><h3 class="h2-h">Home</h3><ul class="h2-list"><li>Tank level, litres and time to full</li><li>Motor status and run time</li><li>This week’s usage</li><li>Any active alert, inline</li></ul></div><div class="h2-card"><h3 class="h2-h">Motor</h3><ul class="h2-list"><li>Start and stop</li><li>Live power, run time and cost</li><li>Dry run and thermal faults</li><li>How to bypass at the switch</li></ul></div><div class="h2-card"><h3 class="h2-h">Modes</h3><ul class="h2-list"><li>Automatic: fill range and quiet hours</li><li>Manual: alerts only</li><li>Smart: prediction, plan and reasons</li><li>One tap back to Manual</li></ul></div><div class="h2-card"><h3 class="h2-h">History</h3><ul class="h2-list"><li>Every fill: litres, units, cost</li><li>Event log: who or what acted</li><li>Leak and anomaly records</li><li>Export for a landlord or society</li></ul></div><div class="h2-card"><h3 class="h2-h">Settings</h3><ul class="h2-list"><li>Tanks and sensors</li><li>Household members and access</li><li>Home platform link (Matter)</li><li>Text size, contrast, language</li></ul></div></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">13</span><span class="h2-chip-l">User flows</span></div>
+            <h2 class="h2-title">Three flows carry the product.</h2>
+            <p class="h2-intro">One runs without anyone: the daily fill. One interrupts: something the system can’t explain. One hands everything back: manual override. Get these three right and the rest of the app follows.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">What each flow asks of the user</p><div class="h2-rows"><div style="--tone-ink:var(--h2-lime-ink)"><b>Daily fill</b><span>Nothing. Zero taps.</span></div><div style="--tone-ink:var(--h2-low-ink)"><b>Anomaly</b><span>One decision, with the evidence shown first.</span></div><div style="--tone-ink:var(--h2-water-ink)"><b>Override</b><span>One tap, answered in under 200 ms.</span></div></div></div>
+        </header><div class="h2-block" style="gap:clamp(0.9rem,2vw,1.25rem)"><div class="h2-card reveal">
+          <div class="h2-flow-head"><h3 class="h2-h">Flow 01 · The daily fill, with nobody watching</h3><p class="h2-p">Automatic mode. The household isn’t involved until the receipt arrives.</p></div>
+          <ol class="h2-chain" style="--n:7;list-style:none;margin:0;padding:0"><li class="h2-node h2-node--trigger"><div class="h2-node-box"><p class="h2-k">Trigger</p><p>Level drops below 25%</p></div><p>The level the household chose</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 1</p><p>Checks quiet hours and tariff</p></div><p>On the module, not in the cloud</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 2</p><p>Motor starts</p></div><p>Current draw confirms it’s really pumping</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 3</p><p>Home shows level and time to full</p></div><p>The screen replaces the terrace climb</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 4</p><p>Level reaches 90%</p></div><p>The stop level, also theirs</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 5</p><p>Motor stops</p></div><p>Relay opens, and the event is logged</p></li><li class="h2-node h2-node--outcome"><div class="h2-node-box"><p class="h2-k">Outcome</p><p>Receipt: 440 L · 22 min · 0.28 units · ₹2.10</p></div><p>The first honest cost feedback they’ve had</p></li></ol></div><div class="h2-card reveal">
+          <div class="h2-flow-head"><h3 class="h2-h">Flow 02 · Something the system can’t explain</h3><p class="h2-p">Smart mode. It only interrupts with evidence, and never acts alone on an interruption.</p></div>
+          <ol class="h2-chain" style="--n:6;list-style:none;margin:0;padding:0"><li class="h2-node h2-node--trigger"><div class="h2-node-box"><p class="h2-k">Trigger</p><p>42 L lost overnight, every tap closed</p></div><p>Spotted on the device against the expected curve</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 1</p><p>Compared with 34 days of history</p></div><p>A clear rule, not a black box</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 2</p><p>One notification at 5:04 AM</p></div><p>Never more than one per event</p></li><li class="h2-node h2-node--decision"><div class="h2-node-box"><p class="h2-k">Decision</p><p>Evidence card: what Smart saw</p></div><p>The chart comes before the question</p></li><li class="h2-node h2-node--decision"><div class="h2-node-box"><p class="h2-k">Decision</p><p>“Close the inlet valve” or “That was us”</p></div><p>Both answers are one tap</p></li><li class="h2-node h2-node--outcome"><div class="h2-node-box"><p class="h2-k">Outcome</p><p>Logged either way, and the pattern updates</p></div><p>Ignoring it also teaches it, and the app says so</p></li></ol></div><div class="h2-card reveal">
+          <div class="h2-flow-head"><h3 class="h2-h">Flow 03 · Taking it back</h3><p class="h2-p">Available from every screen, in every mode, even mid cycle.</p></div>
+          <ol class="h2-chain" style="--n:5;list-style:none;margin:0;padding:0"><li class="h2-node h2-node--trigger"><div class="h2-node-box"><p class="h2-k">Trigger</p><p>Any screen, any mode</p></div><p>Fill now and Stop are always on top</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 1</p><p>One tap</p></div><p>No confirmation dialog for Stop</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 2</p><p>Relay responds in under 200 ms</p></div><p>Local, so it works with the router down</p></li><li class="h2-node h2-node--step"><div class="h2-node-box"><p class="h2-k">Step 3</p><p>Banner: “Manual until you switch back”</p></div><p>The state is stated, not implied</p></li><li class="h2-node h2-node--outcome"><div class="h2-node-box"><p class="h2-k">Outcome</p><p>Automatic resumes only when they say so</p></div><p>The system never quietly takes control back</p></li></ol></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">14</span><span class="h2-chip-l">Wireframes</span></div>
+            <h2 class="h2-title">Structure first, in greyscale, on purpose.</h2>
+            <p class="h2-intro">Week three was all greyscale, so hierarchy had to come from size and order, not colour. Two decisions made here never changed: the tank card became the largest element on Home, and Stop moved out of the motor card into a control that is always visible.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">What greyscale tested</p><p class="h2-aside-big">Can someone find the tank level in a second, and Stop in one tap, with no colour to guide them?</p></div>
+        </header><div class="reveal"><div class="h2-scroll"><figure class="h2-sheet"><img src="../assets/h2o/wireframes.webp" alt="Six greyscale wireframes: W1 Home, the whole state on one screen; W2 Fill range, two levels on one screen; W3 Modes, Smart as an equal, not an upgrade; W4 Alert, evidence before the question; W5 Motor, confirmed rather than assumed; W6 History, who or what acted" width="2280" height="725" loading="lazy" decoding="async" /></figure></div><p class="h2-scroll-hint">Scroll sideways to see the whole sheet.</p></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">15</span><span class="h2-chip-l">Explorations</span></div>
+            <h2 class="h2-title">Three complete directions, judged against one brief.</h2>
+            <p class="h2-intro">Instead of polishing one look, I built three full visual systems and tested each against the four principles. Two failed, and why they failed is the argument for the one that shipped.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k h2-k--lime">The synthesis</p><p class="h2-aside-big">Bento’s card structure plus the dark direction’s colour discipline. One rule settled it: blue is water, never a background. That gave colour its meaning back, so an alert can still stand out on a busy screen.</p></div>
+        </header><div class="shots h2-gallery h2-gallery--explore reveal" data-shots style="--cols:3;margin:0"><div class="shots-track">
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--water"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/exp-a.jpg" alt="Direction A, ambient dark: a glowing blue tank at 78% with motor, eco and boost cards below" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption>
+                <p class="h2-k h2-k--water">Direction A</p>
+                <h3 class="h2-h">Ambient dark</h3>
+                <p class="h2-k">What worked</p><p class="h2-p">Meaningful colour on a glass tank. You could read the state in under a second, from across the room.</p>
+                <p class="h2-k h2-k--crit" style="margin-top:0.9rem">Why it failed</p><p class="h2-p">Every card had the same weight, so nothing could ever look urgent. An alert looked like a usage summary.</p>
+                <p class="h2-small"><b class="h2-k--lime">Kept</b> &middot; the colour discipline and the tank metaphor.</p>
+              </figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--lime"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/exp-b.jpg" alt="Direction B, bento: saturated blue and lime blocks for overview, tank level and weekly usage" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption>
+                <p class="h2-k h2-k--water">Direction B</p>
+                <h3 class="h2-h">Bento</h3>
+                <p class="h2-k">What worked</p><p class="h2-p">Strong colour blocks and a card layout that made the hierarchy obvious at a glance.</p>
+                <p class="h2-k h2-k--crit" style="margin-top:0.9rem">Why it failed</p><p class="h2-p">Colour was spent on decoration. With four bright blocks on screen, there was no colour left to say something is wrong.</p>
+                <p class="h2-small"><b class="h2-k--lime">Kept</b> &middot; the card structure and density.</p>
+              </figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--water"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/exp-c.jpg" alt="Direction C, platform native: a light iOS style settings layout with tank, motor toggle and automation rows" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption>
+                <p class="h2-k h2-k--water">Direction C</p>
+                <h3 class="h2-h">Platform native</h3>
+                <p class="h2-k">What worked</p><p class="h2-p">Familiar patterns, very clear, nothing to learn. Suresh could use it straight away.</p>
+                <p class="h2-k h2-k--crit" style="margin-top:0.9rem">Why it failed</p><p class="h2-p">It had no point of view. It’s the version you’d ship and nobody would remember, and it made Smart mode look like just another setting.</p>
+                <p class="h2-small"><b class="h2-k--lime">Kept</b> &middot; the plain language labels and settings patterns.</p>
+              </figcaption>
+            </figure></div></div><div class="h2-card reveal"><p class="h2-k">Scored against the four principles</p><div class="h2-scroll"><table class="h2-table h2-table--stack"><thead><tr><th scope="col">Principle</th><th scope="col">A · Ambient dark</th><th scope="col">B · Bento</th><th scope="col">C · Platform native</th><th scope="col">Final</th></tr></thead><tbody><tr><th scope="row">State before controls</th><td data-label="A · Ambient dark"><span class="h2-mark h2-mark--hold">Holds</span></td><td data-label="B · Bento"><span class="h2-mark h2-mark--hold">Holds</span></td><td data-label="C · Platform native"><span class="h2-mark h2-mark--break">Breaks</span></td><td data-label="Final"><span class="h2-mark h2-mark--hold">Holds</span></td></tr><tr><th scope="row">Every action leaves a receipt</th><td data-label="A · Ambient dark"><span class="h2-mark h2-mark--break">Breaks</span></td><td data-label="B · Bento"><span class="h2-mark h2-mark--break">Breaks</span></td><td data-label="C · Platform native"><span class="h2-mark h2-mark--hold">Holds</span></td><td data-label="Final"><span class="h2-mark h2-mark--hold">Holds</span></td></tr><tr><th scope="row">Colour means something</th><td data-label="A · Ambient dark"><span class="h2-mark h2-mark--hold">Holds</span></td><td data-label="B · Bento"><span class="h2-mark h2-mark--break">Breaks</span></td><td data-label="C · Platform native"><span class="h2-mark h2-mark--none">Not attempted</span></td><td data-label="Final"><span class="h2-mark h2-mark--hold">Holds</span></td></tr><tr><th scope="row">The wall switch always wins</th><td data-label="A · Ambient dark"><span class="h2-mark h2-mark--break">Breaks</span></td><td data-label="B · Bento"><span class="h2-mark h2-mark--break">Breaks</span></td><td data-label="C · Platform native"><span class="h2-mark h2-mark--hold">Holds</span></td><td data-label="Final"><span class="h2-mark h2-mark--hold">Holds</span></td></tr></tbody></table></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">16</span><span class="h2-chip-l">Design system</span></div>
+            <h2 class="h2-title">A palette where every colour means something.</h2>
+            <p class="h2-intro">Five colours, one typeface, one corner radius scale. Every value is a Figma variable, and every contrast ratio was measured against the app’s background. Two colours fail AA for body text, so where they can be used is restricted and written down.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">System in numbers</p><dl class="h2-stats"><div><dt>5</dt><dd>colour roles</dd></div><div><dt>7</dt><dd>type styles</dd></div><div><dt>6</dt><dd>component sets</dd></div><div><dt>20</dt><dd>variants, every state built</dd></div></dl></div>
+        </header><div class="h2-grid reveal" style="--min:22rem"><div class="h2-card"><p class="h2-k h2-k--lime">Colour · 5 roles</p><ul class="h2-swatches"><li><i style="--c:#FFFFFF" aria-hidden="true"></i><div><b>text</b><code>#FFFFFF</code><p>Everything a household must be able to read.</p></div><span class="h2-ratio">19.9 : 1<small class="ok">AAA</small></span></li><li><i style="--c:#CBF848" aria-hidden="true"></i><div><b>lime</b><code>#CBF848</code><p>Action and energy. The motor, the main button, the saving.</p></div><span class="h2-ratio">16.2 : 1<small class="ok">AAA</small></span></li><li><i style="--c:#FFA53D" aria-hidden="true"></i><div><b>alert / low</b><code>#FFA53D</code><p>Attention without alarm. Low level, reduced function.</p></div><span class="h2-ratio">10.2 : 1<small class="ok">AAA</small></span></li><li><i style="--c:#FF4D5E" aria-hidden="true"></i><div><b>alert / critical</b><code>#FF4D5E</code><p>Faults only. Never a category, never a brand colour.</p></div><span class="h2-ratio">6.1 : 1<small class="ok">AA</small></span></li><li><i style="--c:#2F6BFF" aria-hidden="true"></i><div><b>water</b><code>#2F6BFF</code><p>Water and only water. Fills and numbers 24px and up, never body text.</p></div><span class="h2-ratio">4.4 : 1<small class="lg">Large only</small></span></li><li><i style="--c:#99A1AE" aria-hidden="true"></i><div><b>text / muted</b><code>#99A1AE</code><p>Secondary text and labels.</p></div><span class="h2-ratio">7.6 : 1<small class="ok">AAA</small></span></li><li><i style="--c:#626A77" aria-hidden="true"></i><div><b>text / faint</b><code>#626A77</code><p>Extra detail that always appears somewhere else too.</p></div><span class="h2-ratio">3.6 : 1<small class="fail">Fails, restricted</small></span></li></ul><p class="h2-cap">Ratios measured against the app’s near black background.</p></div><div class="h2-card"><p class="h2-k h2-k--lime">Type · Archivo</p><dl class="h2-type"><div><dt>F/Hero<small>52 / 56 · Bold</small></dt><dd style="font-size:52px;font-weight:700;letter-spacing:-0.03em">78%</dd></div><div><dt>F/Number<small>34 / 38 · Bold</small></dt><dd style="font-size:34px;font-weight:700">04:12</dd></div><div><dt>F/Headline<small>26 / 32 · SemiBold</small></dt><dd style="font-size:26px;font-weight:600">Possible leak</dd></div><div><dt>F/Title<small>18 / 24 · SemiBold</small></dt><dd style="font-size:18px;font-weight:600">Tonight’s plan</dd></div><div><dt>F/Body<small>14 / 20 · Regular</small></dt><dd style="font-size:14px;font-weight:400">1,560 of 2,000 litres</dd></div><div><dt>F/Label<small>12 / 16 · Medium</small></dt><dd style="font-size:12px;font-weight:500">Filling · 12 min left</dd></div><div><dt>F/Micro<small>10 / 14 · Medium</small></dt><dd style="font-size:10px;font-weight:500">Learned from 34 days</dd></div></dl><p class="h2-cap">Archivo was chosen for two reasons: its numbers stay clear at 10px on a budget phone, and its proportions work with Devanagari, so a Hindi version can use the same type scale.</p></div></div><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">Components</p><h3>Six sets, twenty variants, every state built.</h3></div>
+          <div class="h2-facts-row"><span>Tank</span><span>Button</span><span>Toggle</span><span>Setting row</span><span>Tab bar</span></div>
+        </div>
+        <div class="reveal"><div class="h2-scroll"><figure class="h2-sheet h2-sheet--dark" style="--sheet-min:62rem"><img src="../assets/h2o/ds-components.webp" alt="Component sheet. Tank: level drives colour and fill height, and only the critical state uses red. Button: action, neutral and stop. Toggle: on and off always labelled. Setting row: the building block of every settings screen. Tab bar: four destinations plus Fill now on top." width="2208" height="340" loading="lazy" decoding="async" /></figure></div><p class="h2-scroll-hint">Scroll sideways to see the whole sheet.</p></div></div><div class="h2-grid reveal" style="--min:19rem"><div class="h2-card"><p class="h2-k h2-k--water">Spacing and radius</p><dl class="h2-dl"><div><dt>Gutter</dt><dd>24 px, page and card</dd></div><div><dt>Card gap</dt><dd>12 px</dd></div><div><dt>Card radius</dt><dd>28 px</dd></div><div><dt>Inner radius</dt><dd>18 px</dd></div><div><dt>Pill</dt><dd>100 px</dd></div><div><dt>Touch target</dt><dd>48 px minimum, 56 px for Stop</dd></div></dl></div><div class="h2-card"><p class="h2-k h2-k--water">Motion</p><dl class="h2-dl"><div><dt>Level change</dt><dd>800 ms ease out. Water moves like water.</dd></div><div><dt>State change</dt><dd>160 ms. Fast enough to feel like a switch.</dd></div><div><dt>Alert entry</dt><dd>220 ms, no bounce. Nothing playful in a fault.</dd></div><div><dt>Prediction update</dt><dd>Cross fade, never a spinning counter.</dd></div><div><dt>Reduced motion</dt><dd>All of the above become instant.</dd></div><div><dt>Never</dt><dd>No looping animation anywhere.</dd></div></dl></div><div class="h2-card"><p class="h2-k h2-k--crit">What the system rules out</p><dl class="h2-dl"><div><dt>No icon without a label</dt><dd>Suresh tested every icon only button and couldn’t name one.</dd></div><div><dt>No colour only state</dt><dd>Every colour comes with text or a shape.</dd></div><div><dt>No confirmation for Stop</dt><dd>A confirm dialog on a safety action is a bug.</dd></div><div><dt>No hidden gestures</dt><dd>Every action has a visible control.</dd></div><div><dt>No extra accent</dt><dd>Adding a colour means removing one.</dd></div><div><dt>No dark only</dt><dd>A light theme is specified, though not built yet.</dd></div></dl></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">17</span><span class="h2-chip-l">The product</span></div>
+            <h2 class="h2-title">Eight screens, one rule: state before controls.</h2>
+            <p class="h2-intro">Every screen answers “what’s happening?” in its first card, and only then offers something to tap. It’s a simple rule, and it’s why a family can hand the app to someone who has never seen it.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">Design priorities</p><ol><li>The tank first, and always the largest element</li><li>Litres alongside percent, time in minutes</li><li>Stop always within one tap</li><li>Every automatic action explains itself</li></ol></div>
+        </header><div class="shots h2-gallery reveal" data-shots style="--cols:4;margin:0"><div class="shots-track">
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--water"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f1.jpg" alt="Home: tank at 78%, 1,560 of 2,000 litres, filling with 12 minutes left; motor running for 04:12; 1,240 litres this week" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F1</span>Home</h3><p class="h2-p">Everything the family needs, in one card. The tank is the largest element and the only thing allowed to be blue.</p></figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--water"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f2.jpg" alt="Fill range: stop filling at 90% (1,800 L), start filling at 25% (500 L), dragged on the tank itself" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F2</span>Fill range</h3><p class="h2-p">Two levels, set once. Shown in litres as well as percent, because nobody thinks about their tank in percentages.</p></figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--lime"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f3.jpg" alt="Motor: running automatically, 04:12 of about 18 minutes, 22 L/min, 0.75 kW, dry run protection on, Stop motor" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F3</span>Motor</h3><p class="h2-p">“Running” is confirmed by current draw, not by the relay being on. Stop is a large 56px target and never asks twice.</p></figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--lime"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f4.jpg" alt="Automation: Automatic selected, explaining that the motor starts at 25% and turns off at 90%, with eco mode, boost and quiet hours" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F4</span>Automation</h3><p class="h2-p">Automatic, Manual and Smart are equals. Switching takes one tap, and the active mode is always named.</p></figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--low"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f5.jpg" alt="Low water alert in manual mode: tank at 22%, motor off, with Turn on motor now and Remind me in 15 minutes" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F5</span>Low water alert</h3><p class="h2-p">In Manual mode the app warns but never acts. It offers the action and leaves the choice with you.</p></figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--water"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f6.jpg" alt="Usage: 1,240 litres and 8.4 units this week, a daily bar chart and recent motor runs marked auto or manual" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F6</span>Usage</h3><p class="h2-p">The first honest answer to “what does this cost?”. Litres and rupees side by side, tied to each run.</p></figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--lime"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f7.jpg" alt="Smart mode: reaching 25% at 4:10 PM tomorrow, learned from 34 days at 92% confidence; tonight’s plan fills 01:40 to 02:05 off peak, saving 38%" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F7</span>Smart mode</h3><p class="h2-p">Every prediction shows its confidence and evidence. “Why this time?” is a link on the card, not buried in settings.</p></figcaption>
+            </figure>
+            <figure class="shot-card">
+              <div class="h2-stage h2-stage--crit"><div class="iphone"><div class="iphone-bezel"><div class="iphone-screen"><img src="../assets/h2o/screen-f8.jpg" alt="Smart insight: possible leak, 42 litres lost overnight, expected versus actual chart, then Close the inlet valve or That was us" width="720" height="1558" decoding="async" loading="lazy" /></div></div></div></div>
+              <figcaption><h3 class="h2-h"><span class="h2-num">F8</span>Smart insight</h3><p class="h2-p">The only screen that interrupts. Evidence first, then two equal choices, and it says clearly that ignoring it teaches the system.</p></figcaption>
+            </figure>
+          </div>
+          <div class="shots-bar"><p class="shots-hint">Click any screen to enlarge</p></div>
+        </div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">18</span><span class="h2-chip-l">The AI layer</span></div>
+            <h2 class="h2-title">A prediction you're allowed to question.</h2>
+            <p class="h2-intro">Smart is a third mode next to Automatic and Manual, not a feature layered on top. It’s a rule engine running on 30 days of the household’s own data. I deliberately avoided a model I couldn’t explain, because the whole product depends on explanation building trust.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">Why not a chatbot</p><p class="h2-aside-big">The question is “when will it be full?”, and the ideal number of steps to answer it is zero. A chat interface adds a step, and puts the least reliable part of the system in front of the most safety critical one.</p></div>
+        </header><div class="h2-grid reveal" style="--min:20rem"><div class="h2-card"><p class="h2-k h2-k--lime">What Smart is allowed to do</p><ul class="h2-list h2-list--lime"><li>Learn when water usually arrives, from 30 days of history</li><li>Predict when the level will next reach the start level</li><li>Move a fill to cheaper off peak power, inside quiet hours</li><li>Flag a loss it can’t explain, with the evidence attached</li><li>Say “still learning” and behave exactly like Automatic</li></ul></div><div class="h2-card"><p class="h2-k h2-k--crit">What Smart is never allowed to do</p><ul class="h2-list h2-list--crit"><li>Change a safety level the household set</li><li>Run the motor outside the quiet hours it was given</li><li>Act on an anomaly without asking first</li><li>Show a decision without the rule behind it</li><li>Keep learning from a correction it didn’t show them</li></ul></div></div><div class="h2-rail reveal"><div class="h2-card" style="--c:var(--ink-faint)"><p class="h2-num">Days 0 to 13</p><h3 class="h2-h">Still learning</h3><p class="h2-p">Smart is available but behaves like Automatic. The card says so plainly, instead of showing a number it can’t back up.</p></div><div class="h2-card" style="--c:var(--h2-low)"><p class="h2-num">Days 14 to 29</p><h3 class="h2-h">Low confidence</h3><p class="h2-p">Predictions show a confidence range and sample size. Smart suggests, but doesn’t move a fill by itself.</p></div><div class="h2-card" style="--c:var(--h2-lime)"><p class="h2-num">Day 30 onward</p><h3 class="h2-h">Confident</h3><p class="h2-p">Predictions, off peak scheduling and leak detection are all on. Confidence is printed on the card every time: “learned from 34 days · 92% confident”.</p></div></div><div class="h2-note h2-note--lime h2-note--big reveal"><p class="h2-k">The one rule</p><p>If Smart can’t explain why, it doesn’t act. It asks. Every automatic decision shows the rule and confidence behind it, and the household can delete that rule from the same card. That’s the difference between a system people leave on and one they turn off after the first surprise.</p></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">19</span><span class="h2-chip-l">Accessibility and edge cases</span></div>
+            <h2 class="h2-title">Designed for the worst day, not the demo.</h2>
+            <p class="h2-intro">Suresh is 62, checks the tank in bright daylight on a ground floor landing, and doesn’t wear his glasses to do it. He isn’t an edge case here. He’s the acceptance test. Alongside him are the eleven system states that decide whether a family keeps the product.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k">Accessibility targets</p><dl class="h2-stats"><div><dt>48 px</dt><dd>minimum touch target</dd></div><div><dt>56 px</dt><dd>for Stop</dd></div><div><dt>200%</dt><dd>text size, no breakage</dd></div><div><dt>0</dt><dd>states shown by colour alone</dd></div></dl></div>
+        </header><div class="h2-grid reveal" style="--min:17rem"><div class="h2-card"><h3 class="h2-h">Contrast, measured</h3><p class="h2-p">Every text and background pair was measured, not judged by eye. Water blue is limited to fills and numbers 24px and larger, because it measures 4.4:1.</p></div><div class="h2-card"><h3 class="h2-h">Targets and reach</h3><p class="h2-p">48px minimum, 56px for Stop, and every main action in the bottom third of a 6.1 inch screen. The app gets used one handed, on the stairs.</p></div><div class="h2-card"><h3 class="h2-h">Never colour alone</h3><p class="h2-p">Every state has a word or shape as well as a colour. Filling is a word, not a blue pulse. A fault is a word, not a red card.</p></div><div class="h2-card"><h3 class="h2-h">Text up to 200%</h3><p class="h2-p">The tank card, alert and main buttons were designed at 200% text size first. Nothing breaks into a scroll at the largest size.</p></div><div class="h2-card"><h3 class="h2-h">Screen readers</h3><p class="h2-p">The tank card reads as one item: “Overhead tank, 78 percent, filling, full in about twelve minutes.” Not four separate values.</p></div><div class="h2-card"><h3 class="h2-h">Language</h3><p class="h2-p">The type scale leaves room for Devanagari, so a Hindi version uses the same sizes. Numbers stay in Latin digits, which is what everyone already reads on a meter.</p></div></div><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">Eleven states, all designed</p><h3>A product like this is judged on the day something goes wrong.</h3></div>
+          <div class="h2-facts-row"><span><b>11</b>states</span><span>What the app shows</span><span>What the system does</span></div>
+        </div><div class="h2-card reveal"><table class="h2-table h2-table--stack"><thead><tr><th scope="col">State</th><th scope="col">What the app shows</th><th scope="col">What the system does</th></tr></thead><tbody><tr><th scope="row">Sensor silent for 3 cycles</th><td data-label="What the app shows">The level greys out with a time: “Last reading 4h ago.”</td><td data-label="What the system does">Automatic pauses and the app says so. It never guesses a level.</td></tr><tr><th scope="row">Sensor battery below 15%</th><td data-label="What the app shows">One small row on Home with the part number.</td><td data-label="What the system does">Nothing changes yet. The warning arrives four weeks before it matters.</td></tr><tr><th scope="row">Power cut mid fill</th><td data-label="What the app shows">When power returns: “Fill stopped at 61%. Resume?”</td><td data-label="What the system does">The relay never restarts by itself after a power cut. A person decides.</td></tr><tr><th scope="row">Current flowing, level not rising</th><td data-label="What the app shows">“Motor is running but nothing is filling.” A dry line or blocked inlet.</td><td data-label="What the system does">Cut after 90 seconds. This is exactly what current sensing is for.</td></tr><tr><th scope="row">Two people act at once</th><td data-label="What the app shows">“Rohit stopped the motor 2 min ago.” Named in the history.</td><td data-label="What the system does">The last action wins, and every action is named. Nothing is anonymous.</td></tr><tr><th scope="row">Smart in its first two weeks</th><td data-label="What the app shows">“Still learning, behaving as Automatic.”</td><td data-label="What the system does">No prediction shown. No confidence number made up.</td></tr><tr><th scope="row">Tank drained on purpose</th><td data-label="What the app shows">“Level dropped 900 L in 6 min. Was this a clean out?”</td><td data-label="What the system does">One tap marks it, and Smart leaves it out of the pattern.</td></tr><tr><th scope="row">Water arrives in quiet hours</th><td data-label="What the app shows">“Held until 06:00. You asked for quiet nights.”</td><td data-label="What the system does">It waits. Quiet hours are a promise, not a preference.</td></tr><tr><th scope="row">No internet</th><td data-label="What the app shows">A small “local only” badge. Everything else looks normal.</td><td data-label="What the system does">Works fully on the home network. History syncs later.</td></tr><tr><th scope="row">Motor overheats</th><td data-label="What the app shows">A full screen fault with plain instructions for the switchboard.</td><td data-label="What the system does">The device cuts power on its own. The app reports what it did.</td></tr><tr><th scope="row">Phone lost or replaced</th><td data-label="What the app shows">Pair again using the QR code on the module.</td><td data-label="What the system does">Settings live on the module, not the phone. Nothing is lost.</td></tr></tbody></table></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">20</span><span class="h2-chip-l">Testing</span></div>
+            <h2 class="h2-title">Four things I changed, and one I haven't proved yet.</h2>
+            <p class="h2-intro">The changes below came from walking people through the prototype on my phone. Underneath them is the moderated study I wrote to test the claim the whole product depends on. I haven’t run it yet. Both are labelled, so it’s clear which is which.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k h2-k--low">The claim still to prove</p><p class="h2-aside-big">Showing the rule behind each action makes people stop checking.</p></div>
+        </header><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">A · Changes from walkthroughs</p><h3>What broke, and what changed because of it.</h3></div>
+          <div class="h2-facts-row"><span><b>4</b>fixes</span><span>All on the core flow</span></div>
+        </div><div class="h2-grid h2-grid--2 reveal" style="--min:19rem"><div class="h2-card"><p class="h2-num">01</p><h3 class="h2-h">Nobody could stop the motor from Home</h3><p class="h2-k h2-k--crit">What broke</p><p class="h2-p">Stop was inside the motor card, below the fold on small phones. Everyone scrolled, hesitated, then went back to the tab bar.</p><p class="h2-k h2-k--lime" style="margin-top:0.9rem">What changed</p><p class="h2-p">Stop became a persistent button next to the tab bar on Home and Motor. It’s now a 56px target that never asks for confirmation.</p></div><div class="h2-card"><p class="h2-num">02</p><h3 class="h2-h">“Automatic” didn’t say what it would do</h3><p class="h2-k h2-k--crit">What broke</p><p class="h2-p">It was just a name and a toggle. People assumed the app would decide everything, including when to stop, and that worried them.</p><p class="h2-k h2-k--lime" style="margin-top:0.9rem">What changed</p><p class="h2-p">The Automation card now spells out both levels: “Drops to 25%, motor starts itself” and “Reaches 90%, motor turns itself off”. The rule is the interface.</p></div><div class="h2-card"><p class="h2-num">03</p><h3 class="h2-h">Nobody thinks about a tank in percent</h3><p class="h2-k h2-k--crit">What broke</p><p class="h2-p">Everyone converted 78% into buckets or days, out loud, before answering. The number that mattered wasn’t the one on screen.</p><p class="h2-k h2-k--lime" style="margin-top:0.9rem">What changed</p><p class="h2-p">Litres now sit at equal weight under the percentage, “1,560 of 2,000 L”, and time to full is shown in minutes, not as a progress bar.</p></div><div class="h2-card"><p class="h2-num">04</p><h3 class="h2-h">The leak alert asked before it showed proof</h3><p class="h2-k h2-k--crit">What broke</p><p class="h2-p">The first version opened with “Possible leak. Close the valve?”. It read like an upsell, and two people said they’d ignore it.</p><p class="h2-k h2-k--lime" style="margin-top:0.9rem">What changed</p><p class="h2-p">The evidence chart moved above the buttons. The screen now shows what Smart saw, then offers two equal choices, one of which is “That was us”.</p></div></div></div><div>
+        <div class="h2-subhead">
+          <div class="h2-sub"><p class="h2-k">B · The study I wrote and haven’t run</p><h3>One claim decides whether this product works.</h3><p>The idea is that showing the rule makes people stop checking. That’s testable, and until it’s tested, this case study is an argument, not a finding.</p></div>
+          <div class="h2-facts-row"><span><b>8</b>households</span><span><b>6</b>tasks</span><span><b>2</b>week diary</span></div>
+        </div><div class="h2-grid h2-grid--4 reveal" style="--min:15rem"><div class="h2-card"><p class="h2-k h2-k--water">Who</p><ul class="h2-list"><li>8 households in Roorkee and Delhi NCR</li><li>4 who run a pump by hand every day</li><li>2 who already own a connected device</li><li>2 participants aged 60 or over</li><li>Recruited through plumbers, not design networks</li></ul></div><div class="h2-card"><p class="h2-k h2-k--water">How</p><ul class="h2-list"><li>Moderated, 45 minutes, in their own home</li><li>On their own phone, not a test device</li><li>Six tasks, thinking aloud, no navigation hints</li><li>Confidence rated before and after each task</li><li>A two week diary on how often they check</li></ul></div><div class="h2-card"><p class="h2-k h2-k--lime">Tasks</p><ul class="h2-list h2-list--lime"><li>“Tell me how full the tank is and when it will be full.”</li><li>“Stop the motor.”</li><li>“Set it to fill itself, but never at night.”</li><li>“The tank is losing water. Find out what the app thinks happened.”</li><li>“Show me what last week’s water cost.”</li><li>“Hand the phone to someone else and ask them to check the tank.”</li></ul></div><div class="h2-card"><p class="h2-k h2-k--crit">What would count as failure</p><ul class="h2-list h2-list--crit"><li>Anyone unable to stop the motor within 5 seconds</li><li>Fewer than 6 of 8 able to state both automatic levels</li><li>Task six failing. If a second family member can’t read the screen, the “no setup needed” claim is false</li><li>Week two of the diary still showing terrace checks. That would mean explanation doesn’t build trust, and the product needs a different argument</li></ul></div></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">21</span><span class="h2-chip-l">Success metrics</span></div>
+            <h2 class="h2-title">What I'd measure at launch, including one number that should fall.</h2>
+            <p class="h2-intro">Framed with Google’s HEART model as goal, signal and metric, because “people liked it” isn’t a result. Engagement is the unusual one: if the product works, app opens should go down. A water app people check constantly has failed at its one promise.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k h2-k--low">The honest caveat</p><p class="h2-aside-big">None of these have been measured yet. They’re set before the study, so the results can’t be picked after the fact.</p></div>
+        </header><div class="h2-card reveal"><table class="h2-table h2-table--stack"><thead><tr><th scope="col">Dimension</th><th scope="col">Goal</th><th scope="col">Signal</th><th scope="col">Metric</th></tr></thead><tbody><tr><th scope="row">Happiness</th><td data-label="Goal">The household stops feeling personally responsible for the tank.</td><td data-label="Signal">Self reported worry about running dry; willingness to leave home during a supply window.</td><td data-label="Metric" style="color:var(--ink)">“I would leave it running unattended” agreed by at least 4 of 5 by week 4; SUS of 80 or more.</td></tr><tr><th scope="row">Engagement</th><td data-label="Goal">Fewer interactions, not more. The product should fade into the background.</td><td data-label="Signal">App sessions per household per week; terrace checks recorded in the diary.</td><td data-label="Metric" style="color:var(--ink)">Median app opens fall below 3 a week by week 6, while automatic fills carry on.</td></tr><tr><th scope="row">Adoption</th><td data-label="Goal">A household goes from box to first automatic fill without help.</td><td data-label="Signal">All five install steps completed; both levels set.</td><td data-label="Metric" style="color:var(--ink)">85% of installed kits reach their first automatic fill within 24 hours, with no support contact.</td></tr><tr><th scope="row">Retention</th><td data-label="Goal">Automatic survives a surprise. This is the trust metric.</td><td data-label="Signal">Households still in Automatic or Smart after at least one anomaly.</td><td data-label="Metric" style="color:var(--ink)">70% still in an automatic mode at day 60, counting only households that saw a fault or alert.</td></tr><tr><th scope="row">Task success</th><td data-label="Goal">Anyone at home can stop the motor, immediately, from anywhere.</td><td data-label="Signal">Time from opening the app to the relay opening; unmoderated success rate on the stop task.</td><td data-label="Metric" style="color:var(--ink)">95% success or better, median under 3 seconds, on a phone the person has never used the app on.</td></tr></tbody></table></div><div class="h2-grid reveal" style="--min:18rem"><div class="h2-card"><p class="h2-k h2-k--crit">Counter metric</p><p class="h2-p">Overflow events per household per month must stay at zero. If engagement drops because people gave up rather than relaxed, this is where it shows.</p></div><div class="h2-card"><p class="h2-k h2-k--crit">Counter metric</p><p class="h2-p">Dry run trips with no clear cause. A rise means the sump sensor or the level logic is wrong, and no amount of interface polish will fix it.</p></div></div></section>
+<section class="h2-block">
+        <header class="h2-head">
+          <div>
+            <div class="h2-chips"><span class="h2-chip-n">22</span><span class="h2-chip-l">Reflection</span></div>
+            <h2 class="h2-title">What I got wrong, and what I'd test next.</h2>
+            <p class="h2-intro">Six weeks is enough for a coherent argument, not a validated product. These are the five things I’d expect a reviewer to push on, listed before they have to ask.</p>
+          </div>
+          <div class="h2-card h2-aside"><p class="h2-k h2-k--lime">Next step</p><p class="h2-aside-big">Run the two week diary study, with the prediction shown versus hidden. It’s the fastest way to prove or disprove the core idea.</p></div>
+        </header><div class="h2-grid h2-grid--rows reveal"><div class="h2-card"><div class="h2-row"><div><p class="h2-num">01</p><h3 class="h2-h">The core idea is still unproven</h3></div><p class="h2-p">Everything rests on the claim that showing the rule stops people checking. I designed around it and wrote the study, but haven’t run it. Two weeks of diary data, with the prediction shown versus hidden, would settle it. It’s the first thing I’d do next.</p></div></div><div class="h2-card"><div class="h2-row"><div><p class="h2-num">02</p><h3 class="h2-h">First run setup doesn’t exist yet</h3></div><p class="h2-p">Tank size, sensor pairing and the first levels have no screens. It’s the hardest flow, where a household is least invested and most likely to give up, and I designed the easy screens first. I’d reverse that order.</p></div></div><div class="h2-card"><div class="h2-row"><div><p class="h2-num">03</p><h3 class="h2-h">I designed for a home I already knew</h3></div><p class="h2-p">Three storey family homes with their own tank. Shared tanks in rented buildings, where nobody owns the pump and everyone blames it, need a different product and a permissions model I haven’t drawn.</p></div></div><div class="h2-card"><div class="h2-row"><div><p class="h2-num">04</p><h3 class="h2-h">The hardware decision came too late</h3></div><p class="h2-p">Current sensing, checking that the motor is actually pumping and not just powered, reshaped the whole product, and it only came up in week four. Next time I’d start at the switchboard, not in Figma.</p></div></div><div class="h2-card"><div class="h2-row"><div><p class="h2-num">05</p><h3 class="h2-h">Smart has nothing honest to say on day one</h3></div><p class="h2-p">I wrote the copy for the first two weeks but didn’t design the experience. A family that installs this on a Sunday gets two weeks of an interface promising intelligence it doesn’t have yet. That’s exactly where trust would be lost.</p></div></div></div></section>
+
+        <section class="h2-close reveal">
+          <span class="h2-close-mark" aria-hidden="true">&#10003;</span>
+          <p class="h2-close-line">A tank that tells you what it’s about to do.</p>
+          <p class="h2-p">H2o Connect &middot; Domestic water management &middot; Industrial Design, IIT Roorkee &middot; 2026</p>
+          <dl class="case-meta">
+            <div><dt>Role</dt><dd>End to end UX and UI, sole designer</dd></div>
+            <div><dt>Built with</dt><dd>Figma &middot; HTML, CSS and JavaScript prototype</dd></div>
+            <div><dt>Contact</dt><dd><a href="mailto:sthita.ksp2709@gmail.com">sthita.ksp2709@gmail.com</a></dd></div>
+          </dl>
+        </section>
+      </div>
+    </section>
+
+    <section class="section case-next">
+      <div class="wrap">
+        <p class="eyebrow">Next project</p>
+        <a class="next-project" href="veltura-lamp.html">
+          <div class="next-project-media">
+            <img src="../assets/veltura/card.jpg" alt="Veltura title card: the lit paper-plane lamp on a desk at night" width="1600" height="1000" loading="lazy" decoding="async" />
+          </div>
+          <div class="next-project-body">
+            <h2 class="display next-project-title">Veltura Lamp</h2>
+            <p class="next-project-desc">A study table lamp with the form of a paper plane, prototyped in mount board and skewer sticks around a concealed LED source.</p>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </a>
+        <div class="case-next-actions">
+          <a class="btn btn-primary" href="../index.html#work">
+            <span class="dot" aria-hidden="true">
+              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            All projects
+          </a>
+          <a class="btn btn-outline" href="mailto:sthita.ksp2709@gmail.com">Get in touch</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
+    <div class="lightbox-top">
+      <p class="lightbox-caption"></p>
+      <button class="lightbox-close" type="button" aria-label="Close viewer">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+          <path d="M3.5 3.5l9 9M12.5 3.5l-9 9"/>
+        </svg>
+      </button>
+    </div>
+
+    <button class="lightbox-nav lightbox-nav--prev" type="button" aria-label="Previous photograph">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 4.5 7.5 12l7.5 7.5"/>
+      </svg>
+    </button>
+
+    <figure class="lightbox-stage">
+      <img alt="" decoding="async" />
+    </figure>
+
+    <button class="lightbox-nav lightbox-nav--next" type="button" aria-label="Next photograph">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 4.5 16.5 12 9 19.5"/>
+      </svg>
+    </button>
+
+    <div class="lightbox-bar">
+      <span class="lightbox-counter"></span>
+      <button class="lightbox-btn" type="button" data-lightbox-play aria-pressed="false">
+        <svg data-icon-play width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true"><path d="M2.5 1.5v9l8-4.5z"/></svg>
+        <svg data-icon-pause width="12" height="12" viewBox="0 0 12 12" fill="currentColor" aria-hidden="true" hidden><path d="M2.5 1.5h2.5v9H2.5zM7 1.5h2.5v9H7z"/></svg>
+        <span data-play-label>Slideshow</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="wrap footer-row">
+      <p class="footer-copy">&copy; <span id="year"></span> KSP. Concept work shown here is unofficial and not endorsed by the organisations referenced.</p>
+      <nav class="footer-links" aria-label="Elsewhere">
+        <a class="social" href="#" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.6 8.75 23 10.9 23 14.1V21h-4v-6.1c0-1.46-.03-3.34-2.06-3.34-2.06 0-2.38 1.58-2.38 3.23V21h-4V9Z"/>
+          </svg>
+        </a>
+        <a class="social" href="#" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+            <rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5.2"/>
+            <circle cx="12" cy="12" r="4.2"/>
+            <circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a class="social" href="#" rel="noopener" aria-label="Behance">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+            <path d="M8.2 5.5c1.9 0 3.3.6 3.3 2.6 0 1.1-.5 1.8-1.4 2.2 1.3.4 2 1.4 2 2.8 0 2.3-1.8 3.3-3.9 3.3H2V5.5h6.2Zm-.4 4.3c.9 0 1.4-.4 1.4-1.2 0-.9-.6-1.1-1.4-1.1H4.7v2.3h3.1Zm.2 4.7c1 0 1.7-.4 1.7-1.4 0-1-.6-1.4-1.6-1.4H4.7v2.8h3.3ZM18.4 9c2.3 0 3.6 1.7 3.6 4v.6h-5.6c.1 1.2.8 1.9 1.9 1.9.8 0 1.4-.3 1.7-.9h1.9c-.4 1.6-1.8 2.5-3.6 2.5-2.4 0-4-1.6-4-4.1 0-2.4 1.6-4 4.1-4Zm1.7 3.3c-.1-1-.7-1.7-1.7-1.7s-1.7.6-1.9 1.7h3.6ZM15.2 6.6h5v1.3h-5V6.6Z"/>
+          </svg>
+        </a>
+        <a class="social" href="mailto:sthita.ksp2709@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true">
+            <rect x="2.5" y="4.5" width="19" height="15" rx="2.6"/>
+            <path d="m3.4 6.3 8.6 6.2 8.6-6.2"/>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </footer>
+
+  <a class="btn edge-cta" href="mailto:sthita.ksp2709@gmail.com">
+    <span class="dot" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <span class="edge-cta-label">Get in touch</span>
+  </a>
+
+  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
+    <span class="sr-only">Light theme</span>
+    <span class="theme-toggle-rail" aria-hidden="true">
+      <span class="theme-toggle-end theme-toggle-end--sun">
+        <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+          <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+        </svg>
+      </span>
+      <span class="theme-toggle-words">
+        <span class="theme-toggle-word">Swipe to change mode</span>
+      </span>
+      <span class="theme-toggle-end theme-toggle-end--moon">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="theme-toggle-knob">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M13.4 9.7A5.7 5.7 0 0 1 6.3 2.6 5.7 5.7 0 1 0 13.4 9.7Z" fill="currentColor"/>
+        </svg>
+        <svg class="icon-sun" width="14" height="14" viewBox="0 0 16 16" fill="none"
+             stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="8" cy="8" r="3" fill="currentColor" stroke="none"/>
+          <path d="M8 1v1.6M8 13.4V15M15 8h-1.6M2.6 8H1M12.9 3.1l-1.1 1.1M4.2 11.8l-1.1 1.1M12.9 12.9l-1.1-1.1M4.2 4.2 3.1 3.1"/>
+        </svg>
+      </span>
+    </span>
+  </button>
+
+  <script src="../script.js"></script>
+</body>
+</html>
