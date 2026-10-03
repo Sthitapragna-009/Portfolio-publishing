@@ -5907,3 +5907,10 @@ body.is-locked { overflow: hidden; }
 }
 .stk-legend .h2-k { margin-bottom: 0.25rem; }
 @media (max-width: 860px) { .stk-grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Skip case study: jumps straight to the final screens. */
+.h2-skip { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.4rem; }
+.h2-skip svg { transition: transform 0.3s var(--ease); }
+.h2-skip:hover svg { transform: translateY(2px); }
+/* Section anchors clear the fixed nav. */
+.case-h2o .h2-head { scroll-margin-top: 6rem; }
