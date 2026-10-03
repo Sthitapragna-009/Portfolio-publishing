@@ -4639,75 +4639,6 @@ body.is-locked { overflow: hidden; }
 .h2-who { margin: 0.8rem 0 0; font-size: 0.8125rem; font-weight: 700; color: var(--ink-faint); }
 .h2-who--trade { color: var(--h2-low-ink); }
 
-/* ---- 12 Information architecture ---- */
-.h2-ia-root {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.6rem;
-  position: relative;
-}
-.h2-ia-root span {
-  padding: 0.6rem 1.3rem;
-  border-radius: var(--r-pill);
-  background: var(--h2-water);
-  color: #fff;
-  font-family: var(--font-display);
-  font-weight: 700;
-}
-.h2-ia-root::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 100%;
-  width: 1px;
-  height: 1.6rem;
-  background: var(--hairline);
-}
-.h2-ia .h2-card { border-top: 2px solid var(--h2-water); }
-
-/* ---- 13 User flows ---- */
-.h2-flow-head { margin-bottom: 1.1rem; }
-.h2-chain {
-  display: grid;
-  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-  gap: 1.4rem;
-}
-.h2-node { position: relative; }
-.h2-node-box {
-  padding: 0.75rem 0.85rem;
-  border-radius: var(--r-sm);
-  border: 1px solid var(--hairline);
-  background: var(--h2-well);
-}
-.h2-node-box .h2-k { margin-bottom: 0.3rem; font-size: 0.75rem; color: var(--ink-faint); }
-.h2-node-box p { margin: 0; font-size: 0.875rem; line-height: 1.4; font-weight: 600; color: var(--ink); }
-.h2-node > p { margin: 0.5rem 0 0; font-size: 0.8125rem; line-height: 1.4; color: var(--ink-faint); }
-.h2-node--trigger  .h2-node-box { border-color: var(--h2-lime);  background: color-mix(in srgb, var(--h2-lime) 10%, transparent); }
-.h2-node--decision .h2-node-box { border-color: var(--h2-low);   background: color-mix(in srgb, var(--h2-low) 10%, transparent); }
-.h2-node--outcome  .h2-node-box { border-color: var(--h2-water); background: color-mix(in srgb, var(--h2-water) 10%, transparent); }
-.h2-node--trigger  .h2-k { color: var(--h2-lime-ink); }
-.h2-node--decision .h2-k { color: var(--h2-low-ink); }
-.h2-node--outcome  .h2-k { color: var(--h2-water-ink); }
-.h2-node:not(:last-child)::after {
-  content: "\2192";
-  position: absolute;
-  right: -1.05rem;
-  top: 1.1rem;
-  font-size: 0.875rem;
-  color: var(--ink-faint);
-}
-@media (max-width: 1100px) and (min-width: 701px) {
-  .h2-chain { grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: 1rem; }
-  .h2-node:not(:last-child)::after { content: none; }
-}
-@media (max-width: 700px) {
-  .h2-chain { grid-template-columns: minmax(0, 1fr); gap: 1.6rem; }
-  .h2-node { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr); gap: 1rem; align-items: center; }
-  .h2-node > p { margin: 0; }
-  .h2-node:not(:last-child)::after { content: "\2193"; right: auto; left: 1rem; top: auto; bottom: -1.45rem; }
-}
-@media (max-width: 560px) { .h2-node { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; } }
-
 /* ---- 14 Wireframes / 16 component sheet ---- */
 .h2-sheet {
   margin: 0;
@@ -5669,3 +5600,266 @@ body.is-locked { overflow: hidden; }
 .case-h2o .h2-card.is-planned { border-style: dashed; }
 .case-h2o .h2-card.is-planned .h2-sub-line { color: var(--ink-faint); }
 @media (max-width: 860px) { .h2-proto { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- Information architecture: sitemap tree ------------------------------
+   Lines are drawn on the page (not inside tiles), so they follow the theme;
+   the nodes are dark tiles like the rest of the board.                    */
+.ia { --line: color-mix(in srgb, var(--ink) 34%, transparent); --g: 1rem; --drop: 1.6rem; }
+.ia-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: max-content;
+  margin: 0 auto;
+  padding: 0.7rem 1.2rem 0.7rem 0.7rem;
+  border-radius: 16px;
+  background: #131519;
+  color: #f9f9f9;
+  box-shadow: 0 0 0 1px rgba(249, 249, 249, 0.1), 0 14px 30px -16px rgba(0, 0, 0, 0.6);
+}
+.ia-root img { width: 2.25rem; height: 2.25rem; }
+.ia-root b { display: block; font-family: "Archivo", var(--font-display); font-size: 1.05rem; letter-spacing: -0.01em; }
+.ia-root small { display: block; font-size: 0.75rem; color: #a9abb0; }
+.ia-root::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 2px;
+  height: var(--drop);
+  background: var(--line);
+  transform: translateX(-1px);
+}
+.ia-l1 {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--g);
+  margin: var(--drop) 0 0;
+  padding: var(--drop) 0 0;
+  list-style: none;
+}
+/* The bus: from the centre of the first column to the centre of the last. */
+.ia-l1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: calc((100% - 4 * var(--g)) / 10);
+  right: calc((100% - 4 * var(--g)) / 10);
+  height: 2px;
+  background: var(--line);
+}
+.ia-branch { position: relative; min-width: 0; }
+.ia-branch::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: calc(-1 * var(--drop));
+  width: 2px;
+  height: var(--drop);
+  background: var(--line);
+  transform: translateX(-1px);
+}
+.ia-node {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: 14px;
+  background: #131519;
+  color: #f9f9f9;
+  border-top: 3px solid var(--h2-water);
+  box-shadow: 0 0 0 1px rgba(249, 249, 249, 0.09), 0 12px 26px -16px rgba(0, 0, 0, 0.55);
+}
+.ia-branch--settings .ia-node { border-top-color: #8d9096; }
+.ia-ico {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10px;
+  background: rgba(47, 107, 255, 0.18);
+  color: #8fb0ff;
+}
+.ia-node b { display: block; font-family: "Archivo", var(--font-display); font-size: 1rem; }
+.ia-node small { display: block; font-size: 0.72rem; color: #a9abb0; }
+.ia-fab {
+  position: absolute;
+  top: -0.7rem;
+  right: 0.6rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  background: #cbf848;
+  color: #0a0a0a;
+  font-size: 0.68rem;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}
+/* Children hang off a spine on the left of each destination. */
+.ia-leaves { position: relative; margin: 0; padding: 0.9rem 0 0; list-style: none; }
+.ia-leaves::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  width: 2px;
+  height: 0.9rem;
+  background: var(--line);
+}
+.ia-leaves li { position: relative; margin-left: 2rem; padding-bottom: 0.5rem; }
+.ia-leaves li:last-child { padding-bottom: 0; }
+.ia-leaves li::before {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: calc((100% - 0.5rem) / 2);
+  width: 1rem;
+  height: 2px;
+  background: var(--line);
+}
+.ia-leaves li:last-child::before { top: 50%; }
+.ia-leaves li::after {
+  content: "";
+  position: absolute;
+  left: -1rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+.ia-leaves li:last-child::after { bottom: auto; height: calc(50% + 1px); }
+.ia-leaves span {
+  display: block;
+  padding: 0.5rem 0.65rem;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+  background: var(--surface);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.ia-leaves--deep span { border-style: dashed; padding-right: 1.4rem; position: relative; }
+.ia-leaves--deep span::after { content: "\203A"; position: absolute; right: 0.6rem; top: 50%; transform: translateY(-52%); color: var(--ink-dim); font-size: 1rem; }
+.ia-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 1.4rem;
+  margin-top: 1.4rem;
+  font-size: 0.8125rem;
+  color: var(--ink-dim);
+}
+.ia-legend span { display: inline-flex; align-items: center; gap: 0.45rem; }
+.ia-key { display: inline-block; width: 1.1rem; height: 0.8rem; border-radius: 4px; }
+.ia-key--node { background: #131519; border-top: 3px solid var(--h2-water); }
+.ia-key--leaf { border: 1px solid var(--hairline); background: var(--surface); }
+.ia-key--deep { border: 1px dashed var(--ink-faint); }
+.ia-key--fab { background: #cbf848; border-radius: 999px; }
+
+@media (max-width: 1000px) {
+  .ia-root { margin: 0; }
+  .ia-root::after { left: 1.6rem; }
+  .ia-l1 { grid-template-columns: minmax(0, 1fr); gap: 1.2rem; padding: 0 0 0 2.6rem; margin-top: var(--drop); }
+  .ia-l1::before { left: 1.6rem; right: auto; top: calc(-1 * var(--drop)); bottom: 2.2rem; width: 2px; height: auto; transform: translateX(-1px); }
+  .ia-branch::before { left: -1rem; top: 1.45rem; width: 1rem; height: 2px; transform: none; }
+}
+
+/* ---- User flows: connected tracks ---------------------------------------- */
+.fl-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+  margin-bottom: 1.8rem;
+}
+.fl-num {
+  font-family: "Archivo", var(--font-display);
+  font-weight: 700;
+  font-size: 1.7rem;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--h2-lime-ink);
+}
+.fl-title h3 { margin: 0; font-family: "Archivo", var(--font-display); font-weight: 600; font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--ink); }
+.fl-title p { margin: 0.3rem 0 0; font-size: 0.875rem; line-height: 1.5; color: var(--ink-dim); }
+.fl-tags { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; }
+.fl-mode, .fl-metric { padding: 0.25rem 0.7rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
+.fl-mode { border: 1px solid var(--hairline); color: var(--ink); }
+.fl-metric { background: #cbf848; color: #0a0a0a; }
+
+.fl-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fl-track::before {
+  content: "";
+  position: absolute;
+  top: calc(1.4rem - 1.5px);
+  left: calc(100% / var(--n) / 2);
+  right: calc(100% / var(--n) / 2);
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #cbf848, #2f6bff);
+  opacity: 0.85;
+}
+.fl-step { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
+/* Arrowheads riding the line between stops. */
+.fl-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: calc(1.4rem - 5px);
+  right: calc(-0.4rem - 4px);
+  border-left: 8px solid #8fb0ff;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+}
+.fl-dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 2.8rem;
+  height: 2.8rem;
+  margin-bottom: 0.85rem;
+  border-radius: 50%;
+  background: #1d2027;
+  border: 2px solid #2f6bff;
+  color: #f9f9f9;
+  font-family: "Archivo", var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  box-shadow: 0 0 0 5px var(--tile, #131519);
+}
+.fl-dot > span { display: grid; place-items: center; }
+.fl-step--trigger .fl-dot { background: #cbf848; border-color: #cbf848; color: #0a0a0a; }
+.fl-step--outcome .fl-dot { background: #2f6bff; border-color: #2f6bff; color: #fff; }
+.fl-step--decision .fl-dot { border-radius: 10px; transform: rotate(45deg) scale(0.86); border-color: #ffa53d; color: #ffb765; }
+.fl-step--decision .fl-dot > span { transform: rotate(-45deg); font-size: 1.15rem; }
+.fl-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.01em; color: var(--ink-faint); }
+.fl-step--trigger .fl-label { color: var(--h2-lime-ink); }
+.fl-step--decision .fl-label { color: var(--h2-low-ink); }
+.fl-step--outcome .fl-label { color: var(--h2-water-ink); }
+.fl-step b { margin-top: 0.25rem; font-size: 0.875rem; line-height: 1.35; font-weight: 600; color: var(--ink); }
+.fl-note { margin-top: 0.35rem; font-size: 0.78rem; line-height: 1.4; color: var(--ink-faint); }
+.fl-opts { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.3rem; margin-top: 0.45rem; }
+.fl-opts i { font-style: normal; font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.55rem; border-radius: 999px; border: 1px solid rgba(255, 165, 61, 0.6); color: #ffb765; }
+
+@media (max-width: 900px) {
+  .fl-head { grid-template-columns: auto minmax(0, 1fr); }
+  .fl-tags { grid-column: 1 / -1; flex-direction: row; align-items: center; }
+  .fl-track { grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+  .fl-track::before { top: 1.4rem; bottom: 1.4rem; left: calc(1.4rem - 1.5px); right: auto; width: 3px; height: auto; background: linear-gradient(180deg, #cbf848, #2f6bff); }
+  .fl-step { display: grid; grid-template-columns: 2.8rem minmax(0, 1fr); column-gap: 1rem; align-items: start; text-align: left; }
+  .fl-dot { grid-row: span 4; margin: 0; }
+  .fl-step > :not(.fl-dot) { grid-column: 2; }
+  .fl-opts { justify-content: flex-start; }
+  .fl-step:not(:last-child)::after { display: none; }
+}
