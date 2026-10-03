@@ -5528,3 +5528,144 @@ body.is-locked { overflow: hidden; }
   .h2-weeks::before { left: 0.4rem; right: auto; top: 0.5rem; bottom: 0.5rem; width: 2px; height: auto; background: linear-gradient(180deg, var(--h2-water), var(--h2-lime)); }
   .h2-weeks li::before { left: -1.55rem; top: 1.15rem; }
 }
+
+/* ---- Overflow photographs ---- */
+.h2-photos {
+  display: grid;
+  grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  gap: clamp(0.75rem, 1.6vw, 1.1rem);
+}
+.h2-photo {
+  position: relative;
+  margin: 0;
+  min-height: 14rem;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #111317;
+  box-shadow: 0 0 0 1px var(--hairline);
+}
+.h2-photo--main, .h2-cost .h2-photo { aspect-ratio: 16 / 9; }
+.h2-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.h2-photo figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2.4rem clamp(0.9rem, 2vw, 1.25rem) clamp(0.8rem, 1.6vw, 1rem);
+  background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.72));
+  color: #f9f9f9;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.h2-cost {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(0.75rem, 1.6vw, 1.1rem);
+  align-items: stretch;
+}
+.h2-cost .h2-note { display: flex; flex-direction: column; justify-content: center; }
+@media (max-width: 700px) {
+  .h2-photos, .h2-cost { grid-template-columns: minmax(0, 1fr); }
+  .h2-photos .h2-photo:not(.h2-photo--main) { aspect-ratio: 4 / 3; }
+}
+
+/* ---- Beyond the phone: product photographs with our screens ----------------
+   The devices are real product photographs with the H2o screens composited
+   onto their displays, so they open in the lightbox like the other shots. */
+.h2-gallery--photos .shot-card img {
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--hairline), 0 18px 40px -24px rgba(0, 0, 0, 0.45);
+}
+.h2-gallery--photos .shot-card { overflow: visible; }
+.h2-credit { margin: 0.5rem 0 0; font-size: 0.75rem; color: var(--ink-faint); }
+@media (max-width: 560px) { .h2-gallery--pair .shots-track { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- How it connects ---- */
+.h2-platforms .h2-card { border-top: 2px solid var(--tone, var(--h2-water)); }
+.h2-platforms .h2-h small { display: block; margin-top: 0.15rem; font-size: 0.8125rem; font-weight: 600; color: var(--h2-water-ink); }
+
+/* ---- App icon ---- */
+.h2-icon-row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: clamp(1rem, 3vw, 2.2rem); }
+.h2-icon-row figure { margin: 0; text-align: center; }
+.h2-icon-row img { display: block; margin: 0 auto 0.5rem; }
+.h2-icon-row figcaption { font-size: 0.75rem; color: var(--ink-faint); }
+.h2-appicon { width: 3.4rem; height: 3.4rem; margin-bottom: 0.9rem; filter: drop-shadow(0 10px 18px rgba(47, 107, 255, 0.35)); }
+
+
+/* Closing: the line and credits beside the product photograph. */
+.h2-close-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: center;
+}
+.h2-close-photo { margin: 0; border-radius: var(--r-lg); overflow: hidden; box-shadow: 0 0 0 1px var(--hairline), 0 24px 50px -24px rgba(0, 0, 0, 0.5); }
+.h2-close-photo img { display: block; width: 100%; height: auto; }
+.h2-close .case-meta { grid-template-columns: minmax(0, 1fr); gap: 0.9rem; }
+@media (max-width: 860px) { .h2-close-grid { grid-template-columns: minmax(0, 1fr); } }
+/* With the topic as the heading, the title reads larger and the need
+   statement sits under it as a lead. */
+.h2-title { max-width: none; }
+.h2-need { margin: 1rem 0 0; }
+
+/* ---- Working prototype: photo with numbered callouts ---- */
+.h2-proto {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(0.9rem, 2vw, 1.4rem);
+  align-items: stretch;
+}
+.h2-proto-photo {
+  position: relative;
+  margin: 0;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--hairline), 0 18px 40px -24px rgba(0, 0, 0, 0.45);
+}
+.h2-proto-photo img { display: block; width: 100%; height: auto; }
+.h2-pin {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  margin: -0.85rem 0 0 -0.85rem;
+  border-radius: 50%;
+  background: #0a0a0a;
+  color: #cbf848;
+  font-family: "Archivo", var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  box-shadow: 0 0 0 3px rgba(203, 248, 72, 0.9), 0 6px 14px rgba(0, 0, 0, 0.35);
+}
+.h2-proto-legend { display: flex; flex-direction: column; justify-content: center; }
+.h2-pins { margin: 0.4rem 0 0; padding: 0; list-style: none; counter-reset: pin; display: grid; gap: 1rem; }
+.h2-pins li { counter-increment: pin; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.2rem 0.6rem; }
+.h2-pins li::before {
+  content: counter(pin);
+  grid-row: span 2;
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 50%;
+  background: #cbf848;
+  color: #0a0a0a;
+  font-family: "Archivo", var(--font-body);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.h2-pins b { font-size: 0.9375rem; color: var(--ink); }
+.h2-pins span { font-size: 0.875rem; line-height: 1.5; color: var(--ink-dim); }
+/* Planned modules read as secondary to what exists today. */
+.case-h2o .h2-card.is-planned { border-style: dashed; }
+.case-h2o .h2-card.is-planned .h2-sub-line { color: var(--ink-faint); }
+@media (max-width: 860px) { .h2-proto { grid-template-columns: minmax(0, 1fr); } }
