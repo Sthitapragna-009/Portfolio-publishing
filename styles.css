@@ -5909,8 +5909,56 @@ body.is-locked { overflow: hidden; }
 @media (max-width: 860px) { .stk-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* Skip case study: jumps straight to the final screens. */
-.h2-skip { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.4rem; }
-.h2-skip svg { transition: transform 0.3s var(--ease); }
-.h2-skip:hover svg { transform: translateY(2px); }
+/* Hero art column: the phones, then the "Skip case study" pill and its note. */
+.h2-hero-art { display: flex; flex-direction: column; align-items: center; gap: clamp(1rem, 2.5vw, 1.75rem); min-width: 0; }
+.h2-hero-art .h2-phones { justify-self: auto; }
+.h2-skip-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; text-align: center; }
+.h2-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--h2-lime-ink) 55%, transparent);
+  background: color-mix(in srgb, var(--h2-lime-ink) 9%, transparent);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), background-color 0.35s var(--ease), color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.h2-skip-chev {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: #cbf848;
+  color: #0d0e11;
+  transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
+}
+.h2-skip-chev svg { animation: h2-chev 2.4s var(--ease) infinite; }
+/* Hover: the pill fills lime and lifts; the badge flips to dark. */
+.h2-skip:hover {
+  transform: translateY(-2px);
+  border-color: #cbf848;
+  background: #cbf848;
+  color: #0d0e11;
+  box-shadow: 0 10px 28px -12px rgba(203, 248, 72, 0.6);
+}
+.h2-skip:hover .h2-skip-chev { background: #0d0e11; color: #cbf848; }
+.h2-skip:active { transform: translateY(0); }
+.h2-skip:focus-visible { outline: 2px solid var(--h2-lime-ink); outline-offset: 4px; }
+.h2-skip-note { margin: 0; max-width: 24rem; font-size: 0.8125rem; line-height: 1.45; text-wrap: balance; color: var(--ink-dim); }
+@keyframes h2-chev {
+  0%, 100% { transform: translateY(-1px); }
+  50%      { transform: translateY(3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .h2-skip-chev svg { animation: none; }
+  .h2-skip:hover { transform: none; }
+}
 /* Section anchors clear the fixed nav. */
 .case-h2o .h2-head { scroll-margin-top: 6rem; }
