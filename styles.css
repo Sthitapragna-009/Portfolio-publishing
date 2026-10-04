@@ -5909,9 +5909,7 @@ body.is-locked { overflow: hidden; }
 @media (max-width: 860px) { .stk-grid { grid-template-columns: minmax(0, 1fr); } }
 
 /* Skip case study: jumps straight to the final screens. */
-/* Hero art column: the phones, then the "Skip case study" pill and its note. */
-.h2-hero-art { display: flex; flex-direction: column; align-items: center; gap: clamp(1rem, 2.5vw, 1.75rem); min-width: 0; }
-.h2-hero-art .h2-phones { justify-self: auto; }
+/* "Skip case study": a pill and its note, under the walkthrough film. */
 .h2-skip-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.7rem; text-align: center; }
 .h2-skip {
   display: inline-flex;
