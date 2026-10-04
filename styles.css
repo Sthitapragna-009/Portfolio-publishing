@@ -5962,3 +5962,420 @@ body.is-locked { overflow: hidden; }
 }
 /* Section anchors clear the fixed nav. */
 .case-h2o .h2-head { scroll-margin-top: 6rem; }
+
+/* ---- Walkthrough film ----
+   The stage is a square container, so every scene is laid out in cq units
+   and keeps its composition at any width. The phone's screen is a second
+   container, so the iOS home screen and banners scale with the phone. */
+.case-h2o .mo { padding: 0; overflow: hidden; }
+.mo-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  padding: clamp(1rem, 2.6vw, 2rem) clamp(1rem, 3.5vw, 3rem) clamp(0.5rem, 1.5vw, 1rem) clamp(1rem, 2.6vw, 2rem);
+}
+.mo-vis {
+  position: relative;
+  aspect-ratio: 1;
+  container-type: size;
+  overflow: hidden;
+  border-radius: calc(var(--r-lg) - 0.35rem);
+  background: radial-gradient(80% 70% at 50% 45%, rgba(255, 255, 255, 0.035), transparent 70%), #0b0c0f;
+  --mo-glow: #2f6bff;
+}
+.mo-vis::before {
+  content: "";
+  position: absolute;
+  inset: 18% 14%;
+  border-radius: 50%;
+  background-color: var(--mo-glow);
+  filter: blur(70px);
+  opacity: 0.22;
+  transition: background-color 1.2s ease;
+}
+.mo[data-scene="hw"] .mo-vis { --mo-glow: #cbf848; }
+.mo[data-scene="watch"] .mo-vis { --mo-glow: #ffa53d; }
+.mo[data-scene="home"] .mo-vis { --mo-glow: #8f6bff; }
+
+/* Scene layers fade in over the phone's movement. */
+.mo-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.mo[data-scene="hw"] .mo-hw,
+.mo[data-scene="watch"] .mo-watch,
+.mo[data-scene="home"] .mo-home,
+.mo[data-scene="end"] .mo-end { opacity: 1; transition-delay: 0.35s; }
+
+/* The phone moves between scenes. Its width comes from the stage height:
+   0.448 is the frame's width to height ratio at 92% of the stage. */
+.case-h2o .mo .mo-phone {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
+  width: 44.8cqh;
+  transform: translate(-50%, -50%) translateX(var(--px, 0px)) scale(var(--ps, 1));
+  opacity: var(--po, 1);
+  transition: transform 1.1s var(--ease), opacity 0.6s ease;
+}
+.mo[data-scene="hw"] .mo-phone { --px: 33cqw; --ps: 0.5; }
+.mo[data-scene="watch"] .mo-phone { --ps: 0.42; }
+.mo[data-scene="home"] .mo-phone,
+.mo[data-scene="end"] .mo-phone { --ps: 0.32; --po: 0; }
+
+.mo-screen { aspect-ratio: 720 / 1558; container-type: inline-size; isolation: isolate; }
+.mo-screen::after { z-index: 20; }
+.case-h2o .mo .mo-screen > img { border-radius: 0; box-shadow: none; }
+
+/* iOS home screen */
+.mo-ios {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(90% 60% at 15% 5%, #4263eb 0%, transparent 60%),
+    radial-gradient(80% 55% at 95% 60%, #0c8599 0%, transparent 62%),
+    radial-gradient(90% 50% at 30% 100%, #5f3dc4 0%, transparent 60%),
+    #0b1026;
+  transition: opacity 0.3s ease;
+}
+.mo-ios.is-off { opacity: 0; }
+.mo-sb {
+  position: absolute;
+  left: 10%;
+  right: 7%;
+  top: 2.1%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  font: 600 4.3cqw/1 "Archivo", system-ui, sans-serif;
+  color: #fff;
+}
+.mo-sb svg { width: 17cqw; height: auto; }
+.mo-app {
+  position: absolute;
+  width: 15.5%;
+  aspect-ratio: 1;
+  border-radius: 22.5%;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--c) 70%, #fff), var(--c));
+  opacity: 0.9;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.mo-app i {
+  position: absolute;
+  inset: 31%;
+  border-radius: 30%;
+  border: 1.1cqw solid rgba(255, 255, 255, 0.75);
+}
+.mo-app:nth-child(3n) i { border-radius: 50%; }
+.mo-app:nth-child(4n) i { inset: 34% 26%; border-radius: 1cqw; background: rgba(255, 255, 255, 0.75); border: 0; }
+.mo-app::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  right: 18%;
+  top: calc(100% + 1.6cqw);
+  height: 1.4cqw;
+  border-radius: 1cqw;
+  background: rgba(255, 255, 255, 0.4);
+}
+.mo-app--dock { top: 1.25%; opacity: 1; position: absolute; }
+.mo-app--dock::after { display: none; }
+.mo-icon { background: none; opacity: 1; z-index: 1; }
+.mo-icon::after { display: none; }
+.mo-icon img { display: block; width: 100%; height: auto; border-radius: 22.5%; box-shadow: 0 1.5cqw 4cqw rgba(0, 0, 0, 0.35); }
+.mo-icon b {
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 1.2cqw);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font: 500 2.75cqw/1 "Archivo", system-ui, sans-serif;
+  color: #fff;
+  text-shadow: 0 0.3cqw 1cqw rgba(0, 0, 0, 0.4);
+}
+.mo-icon.is-press { transform: scale(0.86); filter: brightness(0.75); }
+.mo-dots { position: absolute; left: 50%; top: 82.4%; display: flex; gap: 1.8cqw; transform: translateX(-50%); }
+.mo-dots i { width: 1.7cqw; height: 1.7cqw; border-radius: 50%; background: rgba(255, 255, 255, 0.4); }
+.mo-dots i:first-child { background: #fff; }
+.mo-dock {
+  position: absolute;
+  left: 3.5%;
+  right: 3.5%;
+  top: 85.6%;
+  height: 9.8%;
+  border-radius: 9cqw;
+  background: rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.mo-dock .mo-app { margin-left: -3.5%; top: 50%; transform: translateY(-50%); width: 16.8%; }
+
+/* App launch: the window grows out of the icon while the icon flies to centre. */
+.mo-launch {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: #08090b;
+  opacity: 0;
+  clip-path: inset(34% 30.75% 58.84% 53.75% round 3.5cqw);
+  transition: clip-path 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.mo-launch img {
+  position: absolute;
+  left: 53.75%;
+  top: 34%;
+  width: 15.5%;
+  height: auto;
+  border-radius: 22.5%;
+  transition: left 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), top 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.mo-launch[data-s="on"], .mo-launch[data-s="open"] { opacity: 1; }
+.mo-launch[data-s="open"] { clip-path: inset(0 round 11cqw); }
+.mo-launch[data-s="open"] img { left: 38%; top: 44.4%; width: 24%; }
+
+/* App screens. Each one enters the way it does in the app: a push, a
+   cross fade for tab and mode changes, or a sheet for alerts. */
+.case-h2o .mo .mo-scr {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #08090b;
+  transition: transform 0.45s cubic-bezier(0.32, 0.72, 0, 1), opacity 0.4s ease, filter 0.45s ease;
+}
+.case-h2o .mo .mo-scr[data-enter="fade"] { opacity: 0; }
+.case-h2o .mo .mo-scr[data-enter="push"] { transform: translateX(102%); box-shadow: -3cqw 0 6cqw rgba(0, 0, 0, 0.55); }
+.case-h2o .mo .mo-scr[data-enter="sheet"] { transform: translateY(102%); transition-duration: 0.34s; }
+.case-h2o .mo .mo-scr.is-on { opacity: 1; transform: none; }
+.case-h2o .mo .mo-scr.is-under { opacity: 1; transform: translateX(-28%); filter: brightness(0.55); }
+
+/* Notification banner, toast and the touch marker. */
+.mo-banner {
+  position: absolute;
+  left: 3.5%;
+  right: 3.5%;
+  top: 6.2%;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 10cqw minmax(0, 1fr);
+  gap: 3cqw;
+  align-items: start;
+  padding: 3.2cqw 3.6cqw;
+  border-radius: 6.5cqw;
+  background: rgba(44, 46, 52, 0.86);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 2cqw 6cqw rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-family: "Archivo", system-ui, sans-serif;
+  opacity: 0;
+  transform: translateY(-130%);
+  transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
+}
+.mo-banner.is-on { opacity: 1; transform: none; }
+.mo-banner img { width: 100%; height: auto; border-radius: 22.5%; }
+.mo-banner p { margin: 0; }
+.mo-banner-h { display: flex; justify-content: space-between; font-size: 2.6cqw; letter-spacing: 0.04em; color: rgba(255, 255, 255, 0.6); }
+.mo-banner-t { margin-top: 0.8cqw !important; font-size: 3.7cqw; font-weight: 700; }
+.mo-banner-b { margin-top: 0.4cqw !important; font-size: 3.3cqw; line-height: 1.3; color: rgba(255, 255, 255, 0.85); }
+.mo-toast {
+  position: absolute;
+  left: 50%;
+  top: 7%;
+  z-index: 11;
+  display: flex;
+  align-items: center;
+  gap: 1.8cqw;
+  margin: 0;
+  padding: 2.4cqw 4.2cqw 2.4cqw 3.2cqw;
+  border-radius: 999px;
+  background: #cbf848;
+  color: #0d0e11;
+  font: 700 3.6cqw/1 "Archivo", system-ui, sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 2cqw 6cqw rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translate(-50%, -40%) scale(0.92);
+  transition: transform 0.26s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.2s ease;
+}
+.mo-toast svg { width: 4.4cqw; height: 4.4cqw; }
+.mo-toast.is-on { opacity: 1; transform: translate(-50%, 0) scale(1); }
+.mo-tap, .mo-vtap {
+  position: absolute;
+  z-index: 12;
+  width: 15cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 0.8cqw solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.32);
+  box-shadow: 0 0 0 1.5cqw rgba(255, 255, 255, 0.12);
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+.mo-vtap { z-index: 6; width: 6cqw; border-width: 0.35cqw; box-shadow: 0 0 0 0.7cqw rgba(255, 255, 255, 0.12); }
+
+/* Hardware */
+.mo-hw-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.mo-water { transform-box: fill-box; transform-origin: 50% 100%; transform: scaleY(0.24); transition: transform 3.2s var(--ease); }
+.mo.is-fill .mo-water { transform: scaleY(0.78); }
+.mo-ping path { fill: none; stroke: #cbf848; stroke-width: 3; stroke-linecap: round; opacity: 0; animation: mo-ping 1.8s ease-out infinite; }
+.mo-ping path:nth-child(2) { animation-delay: 0.6s; }
+.mo-ping path:nth-child(3) { animation-delay: 1.2s; }
+@keyframes mo-ping { 0% { opacity: 0.95; transform: translateY(0); } 100% { opacity: 0; transform: translateY(90px); } }
+.mo-flow { stroke: #cbf848; stroke-width: 4; stroke-linecap: round; stroke-dasharray: 2 14; animation: mo-flow 0.9s linear infinite; }
+@keyframes mo-flow { to { stroke-dashoffset: -16; } }
+.mo-t1 { font-size: 30px; font-weight: 700; fill: #f9f9f9; }
+.mo-t2 { font-size: 24px; fill: #a9abb0; }
+.mo-t3 { font-size: 22px; font-weight: 600; fill: #cbf848; }
+.mo-stats {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  top: 9%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.6cqw;
+}
+.mo-pill {
+  padding: 1.3cqw 2.6cqw;
+  border-radius: 999px;
+  font: 600 max(0.62rem, 2.4cqw)/1.1 "Archivo", system-ui, sans-serif;
+  border: 1px solid;
+  opacity: 0;
+  transform: translateY(2cqw);
+  transition: opacity 0.5s ease, transform 0.6s var(--ease);
+}
+.mo-pill--lime { color: #cbf848; border-color: rgba(203, 248, 72, 0.45); background: rgba(203, 248, 72, 0.08); }
+.mo-pill--water { color: #8fb0ff; border-color: rgba(143, 176, 255, 0.45); background: rgba(47, 107, 255, 0.1); transition-delay: 0.15s; }
+.mo.is-stats .mo-pill { opacity: 1; transform: none; }
+
+/* Wearables and smart home: product photos on light cards that match
+   each photo's own background. */
+.mo-wcard, .mo-hcard {
+  position: absolute;
+  overflow: hidden;
+  border-radius: 3.2cqw;
+  box-shadow: 0 2cqw 5cqw rgba(0, 0, 0, 0.45);
+  transform: translateY(4cqw) scale(0.96);
+  transition: transform 0.9s var(--ease), opacity 0.5s ease, filter 0.5s ease;
+}
+.mo-wcard img, .mo-hcard img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; border-radius: 0; }
+.mo-wcard img { opacity: 0; transition: opacity 0.45s ease; }
+.mo-wcard img.is-on { opacity: 1; }
+.mo-wcard--aw { left: 4%; top: 9%; width: 34%; aspect-ratio: 420 / 600; background: #fafafa; }
+.mo-wcard--gw { right: 4%; top: 47%; width: 36%; aspect-ratio: 800 / 936; background: #fff; transition-delay: 0.12s; }
+.mo-hot { position: absolute; left: 47.6%; top: 67.5%; width: 1px; height: 1px; }
+.mo-tag {
+  position: absolute;
+  left: 3cqw;
+  bottom: 2.6cqw;
+  padding: 0.9cqw 1.9cqw;
+  border-radius: 999px;
+  background: rgba(13, 14, 17, 0.78);
+  color: #f9f9f9;
+  font: 600 max(0.6rem, 2cqw)/1.1 "Archivo", system-ui, sans-serif;
+  white-space: nowrap;
+}
+.mo-ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 30cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 0.5cqw solid #ffa53d;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.4);
+}
+.mo-hcard { aspect-ratio: 4 / 3; background: #fff; }
+.mo-hcard[data-k="echo"] { left: 4%; top: 9%; width: 44%; }
+.mo-hcard[data-k="nest"] { right: 4%; top: 9%; width: 44%; transition-delay: 0.1s; }
+.mo-hcard[data-k="homepod"] { left: 23%; top: 49%; width: 54%; transition-delay: 0.2s; }
+.mo[data-scene="watch"] .mo-wcard,
+.mo[data-scene="home"] .mo-hcard { transform: none; }
+.mo[data-active]:not([data-active=""]) .mo-hcard { opacity: 0.42; filter: saturate(0.4); transition-delay: 0s; }
+.mo[data-active="echo"] .mo-hcard[data-k="echo"],
+.mo[data-active="nest"] .mo-hcard[data-k="nest"],
+.mo[data-active="homepod"] .mo-hcard[data-k="homepod"] { opacity: 1; filter: none; transform: scale(1.04); z-index: 1; }
+
+/* End card */
+.mo-end { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.mo-end img { width: 20cqw; height: auto; border-radius: 22.5%; box-shadow: 0 3cqw 8cqw rgba(47, 107, 255, 0.35); }
+.mo-end p { margin: 0; font-family: "Archivo", system-ui, sans-serif; }
+.mo-end-t { margin-top: 4cqw !important; font-size: 7cqw; font-weight: 700; letter-spacing: -0.02em; color: #f9f9f9; }
+.mo-end-s { margin-top: 1.4cqw !important; font-size: max(0.75rem, 3cqw); color: #a9abb0; }
+.mo-end-k { margin-top: 4cqw !important; font-size: max(0.62rem, 2.2cqw); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #cbf848; }
+
+/* Caption */
+.mo-cap { min-width: 0; transition: opacity 0.22s ease, transform 0.22s ease; }
+.mo-cap.is-swap { opacity: 0; transform: translateY(0.4rem); }
+.mo-cap-k { margin: 0; font: 700 0.75rem/1 "Archivo", var(--font-body); letter-spacing: 0.12em; text-transform: uppercase; color: var(--h2-lime-ink); }
+.mo-cap-t { margin: 0.9rem 0 0; font: 700 clamp(1.6rem, 2.8vw, 2.5rem)/1.08 "Archivo", var(--font-display); letter-spacing: -0.025em; color: var(--ink); }
+.mo-cap-p { margin: 1rem 0 0; max-width: 40ch; font-size: clamp(0.95rem, 1.15vw, 1.0625rem); line-height: 1.6; color: var(--ink-dim); }
+
+/* Controls */
+.mo-bar { display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.25rem); padding: 0.9rem clamp(1rem, 2.6vw, 2rem) 1.15rem; }
+.mo-play {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 0;
+  border-radius: 50%;
+  background: #cbf848;
+  color: #0d0e11;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s ease;
+}
+.mo-play:hover { transform: scale(1.06); box-shadow: 0 6px 20px -8px rgba(203, 248, 72, 0.7); }
+.mo-play:focus-visible, .mo-ch:focus-visible { outline: 2px solid #cbf848; outline-offset: 3px; }
+.mo-play svg { width: 1.15rem; height: 1.15rem; }
+.mo-i-pause, .mo.is-playing .mo-i-play { display: none; }
+.mo.is-playing .mo-i-pause { display: block; }
+.mo-chs { flex: 1; min-width: 0; display: flex; gap: 0.4rem; }
+.mo-ch {
+  flex-basis: 0;
+  min-width: 4.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.6rem 0 0.2rem;
+  border: 0;
+  background: none;
+  color: var(--ink-faint);
+  font: 600 0.75rem/1 "Archivo", var(--font-body);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.mo-ch:hover, .mo-ch.is-now { color: var(--ink); }
+.mo-ch-track { position: relative; display: block; height: 4px; border-radius: 4px; background: rgba(249, 249, 249, 0.14); overflow: hidden; }
+.mo-ch-track i { position: absolute; inset: 0; border-radius: inherit; background: #cbf848; transform-origin: left; transform: scaleX(var(--p, 0)); }
+.mo-ch-l { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Seeking applies a state instantly; pausing freezes the loops. */
+.mo.is-instant *, .mo.is-instant *::before, .mo.is-instant *::after { transition: none !important; }
+.mo.is-paused * { animation-play-state: paused !important; }
+
+@media (max-width: 760px) {
+  .mo-stage { grid-template-columns: minmax(0, 1fr); padding-right: clamp(1rem, 2.6vw, 2rem); }
+  .mo-cap { min-height: 11.5rem; }
+  .mo-ch { min-width: 1.4rem; }
+  .mo-ch:not(.is-now) .mo-ch-l { visibility: hidden; }
+  .mo-ch.is-now { min-width: 5.6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mo-ping path, .mo-flow { animation: none; }
+  .mo-ping path:first-child { opacity: 0.8; }
+}
