@@ -512,18 +512,14 @@ const next = `
             <h2 class="display next-project-title">Veltura Lamp</h2>
             <p class="next-project-desc">A study table lamp with the form of a paper plane, prototyped in mount board and skewer sticks around a concealed LED source.</p>
             <span class="project-arrow" aria-hidden="true">
-              <svg width="13" height="13" viewBox="0 0 12 12" fill="none">
-                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg width="13" height="13" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
             </span>
           </div>
         </a>
         <div class="case-next-actions">
           <a class="btn btn-primary" href="../index.html#work">
             <span class="dot" aria-hidden="true">
-              <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              <svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
             </span>
             All projects
           </a>
@@ -620,7 +616,7 @@ const film = `
             </div>
           </div>
           <div class="mo-bar">
-            <button class="mo-play" type="button" aria-label="Play walkthrough"><svg class="mo-i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/></svg><svg class="mo-i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg></button>
+            <button class="mo-play" type="button" aria-label="Play walkthrough"><svg class="mo-i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><svg class="mo-i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></svg></button>
             <div class="mo-chs">${FILM_CH.map(([l, a, b]) => `<button class="mo-ch" type="button" style="flex-grow:${(b - a).toFixed(1)}" aria-label="Jump to ${l}"><span class="mo-ch-track"><i></i></span><span class="mo-ch-l">${l}</span></button>`).join("")}</div>
           </div>
         </div>`;

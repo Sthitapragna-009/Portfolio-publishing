@@ -3105,6 +3105,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* The play icon sits optically left inside a circle; nudge it back. */
 .lightbox-btn svg, .reel-play-dot svg { flex: none; }
+/* The UA's [hidden] rule only covers HTML elements, not SVG. */
+svg[hidden] { display: none; }
 
 @media (max-width: 620px) {
   /* No room for chevrons beside the frame, so the photograph spans the full
