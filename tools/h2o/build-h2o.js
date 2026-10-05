@@ -256,8 +256,8 @@ S.push(sec(shead("06", "Plan", "", "Six weeks, from the first home visit to a wo
           ${GW.map(([t, tone], i) => `<div class="gantt-cell" style="grid-column:${i + 1}"><span class="gantt-block gantt-block--${tone}${i === 3 ? " gantt-block--hatch" : ""}"></span><span class="gantt-label">${e(t)}</span></div>`).join("")}
         </div></div>` +
   bx([
-    P("w7 t12", mono("in scope") + chips(["Automatic, Manual and Smart", "8 screens and 2 alerts", "Design system", "Hardware architecture", "Watch and smart home", "HTML prototype"], "lime")),
-    P("w5 t12", mono("left out on purpose") + chips(["First run pairing", "Multiple properties", "Billing", "Hindi UI", "Trained ML models"], "mute"), "hatch"),
+    P("w7 t12", mono("in scope") + `<ul class="p-check">${["Automatic, Manual and Smart","8 screens and 2 alerts","Design system","Hardware architecture","Watch and smart home","HTML prototype"].map((i) => `<li>${e(i)}</li>`).join("")}</ul>`),
+    P("w5 t12", mono("left out on purpose") + `<ul class="p-check p-check--out">${["First run pairing","Multiple properties","Billing","Hindi UI","Trained ML models"].map((i) => `<li>${e(i)}</li>`).join("")}</ul>`, "hatch"),
   ])));
 
 // 07 Hardware
@@ -469,7 +469,7 @@ S.push(sec(shead("13", "Validation", "", "Accessibility targets, eleven designed
   ].map(([b, c], i) => P("w6 t12", `${mono("iteration 0" + (i + 1) + " · what broke")}${pt(b)}<p class="p-s p-foot"><span class="p-arrow" aria-hidden="true">&rarr;</span> ${e(c)}</p>`))) +
   bx([
     P("w4 t12", mono("edge states designed") + num("11") + ps("What the app shows, and what the system does, when something goes wrong."), "hatch"),
-    P("w8 t12", chips(["Sensor silent", "Battery low", "Power cut mid fill", "Running, not filling", "Two people act at once", "Smart still learning", "Tank drained on purpose", "Water in quiet hours", "No internet", "Motor overheats", "Phone replaced"])),
+    P("w8 t12", `<ol class="p-states">${[["Sensor silent","warn"],["Battery low","warn"],["Power cut mid fill","cut"],["Running, not filling","cut"],["Two people act at once","info"],["Smart still learning","info"],["Tank drained on purpose","info"],["Water in quiet hours","info"],["No internet","warn"],["Motor overheats","cut"],["Phone replaced","info"]].map(([t, s], i) => `<li class="sev--${s}"><p class="p-k">${String(i + 1).padStart(2, "0")}</p>${e(t)}</li>`).join("")}</ol><ul class="p-legend"><li class="sev--cut">cuts power on the device</li><li class="sev--warn">warns and waits</li><li class="sev--info">informs, nothing stops</li></ul>`),
   ]) +
   bx([
     ["happiness", "4 of 5", "would leave it running unattended by week 4"],

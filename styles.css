@@ -421,6 +421,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 .btn-outline:hover,
 .btn-outline:focus-visible { box-shadow: none; }
 
+/* Back button: the arrow points left, so it nudges left instead of the
+   45-degree turn the forward arrows make. */
+.btn-back:hover .dot { transform: translateX(-3px); }
+
 /* ============================================================
    NAV
    ============================================================ */
@@ -543,6 +547,74 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink);
 }
 .nav-pill:hover { color: var(--blue-ink); }
+/* The arrow after "Photography Page" scales with the label, so it holds
+   its size in the larger mobile menu too. */
+.nav-pill .nav-ico {
+  width: 0.72em;
+  height: 0.72em;
+  margin-left: 0.4em;
+  flex: 0 0 auto;
+  transition: transform 0.3s var(--ease);
+}
+.nav-pill:hover .nav-ico { transform: translate(1px, -1px); }
+
+/* Photography Page: a Klein-blue pill with no stroke. Two soft blobs of
+   light and shadow drift inside it on different, unrelated loops (15s and
+   23.3s, each wandering through four points), so the pattern never repeats
+   in step and reads as a slow wave. Nothing is lighter than #2a55d6, so the
+   chalk label holds 5:1 or better wherever it lands. Same in both themes. */
+.nav-links .nav-pill--photo {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: var(--chalk);
+  background: linear-gradient(100deg, #050a1f 0%, #001b6b 35%, #002fa7 70%, #001b6b 100%);
+  box-shadow: 0 8px 22px -12px rgba(0, 47, 167, 0.9);
+  transition: box-shadow 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.nav-links .nav-pill--photo::before,
+.nav-links .nav-pill--photo::after {
+  content: "";
+  position: absolute;
+  inset: -90% -40%;
+  z-index: -1;
+  pointer-events: none;
+  will-change: transform;
+}
+.nav-links .nav-pill--photo::before {
+  background:
+    radial-gradient(28% 40% at 32% 45%, #2a55d6 0%, rgba(28, 71, 201, 0.55) 45%, transparent 75%),
+    radial-gradient(26% 38% at 72% 58%, rgba(5, 10, 31, 0.95) 0%, transparent 72%);
+  animation: photoWaveA 15s ease-in-out infinite alternate;
+}
+.nav-links .nav-pill--photo::after {
+  background:
+    radial-gradient(30% 34% at 62% 36%, rgba(0, 47, 167, 0.9) 0%, transparent 70%),
+    radial-gradient(22% 30% at 26% 66%, rgba(0, 27, 107, 0.9) 0%, transparent 70%);
+  animation: photoWaveB 23.3s ease-in-out infinite alternate;
+}
+@keyframes photoWaveA {
+  0%   { transform: translate(-16%, 6%) rotate(0deg) scale(1); }
+  30%  { transform: translate(10%, -12%) rotate(28deg) scale(1.15); }
+  65%  { transform: translate(-4%, 14%) rotate(-18deg) scale(0.95); }
+  100% { transform: translate(18%, 2%) rotate(12deg) scale(1.1); }
+}
+@keyframes photoWaveB {
+  0%   { transform: translate(14%, -8%) rotate(0deg) scale(1.1); }
+  40%  { transform: translate(-12%, 10%) rotate(-30deg) scale(0.9); }
+  75%  { transform: translate(8%, 12%) rotate(20deg) scale(1.2); }
+  100% { transform: translate(-18%, -6%) rotate(-8deg) scale(1); }
+}
+.nav-links .nav-pill--photo:hover,
+.nav-links .nav-pill--photo:focus-visible {
+  color: var(--chalk);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 26px -12px rgba(0, 47, 167, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-links .nav-pill--photo::before,
+  .nav-links .nav-pill--photo::after { animation: none; }
+}
 
 /* Same pill as Photography without the gradient ring: a plain hairline that
    picks up the accent on hover. Inset shadow rather than a border, so the
@@ -2169,6 +2241,11 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .plate-head .section-intro {
   margin-top: 0.1rem;
+  /* Brighter and a step larger than the global intro: at --ink-dim and 15px
+     the passages beside the plates read as grey and faint. */
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--ink) 86%, transparent);
   /* A single short intro stays one readable column; it would otherwise be
      stretched across the whole page as one very long line. */
   max-width: 62ch;
@@ -2857,6 +2934,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .gallery-head {
   margin: 0 clamp(1rem, 4vw, 3rem) clamp(1.75rem, 4vw, 3rem);
 }
+.gallery-head .btn-back { margin-bottom: clamp(1.25rem, 3vw, 2rem); }
 
 .gallery-title {
   margin: 0;
@@ -3992,8 +4070,8 @@ body.is-locked { overflow: hidden; }
 .case-outcomes li {
   padding: 0.45rem 0.85rem;
   border-radius: var(--r-pill);
-  border: 1px solid var(--hairline);
-  background: color-mix(in srgb, var(--ink) 5%, transparent);
+  border: 1.5px dotted var(--outline-soft);
+  background: transparent;
   font-size: clamp(0.8125rem, 1vw, 0.9375rem);
   font-weight: 600;
   line-height: 1.3;
@@ -4274,6 +4352,106 @@ body.is-locked { overflow: hidden; }
   .mosaic .shots-track { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 10rem; }
   .mosaic .shot-card { grid-column: span var(--wm, 1); grid-row: span var(--hm, 1); }
 }
+
+/* ============================================================
+   Convocation: the occasion in numbers, and the Campus Bloom
+   design system. Colours are the identity's own palette:
+   Electric Violet, Turbo, Haiti and Blue Chalk. The programme
+   colours follow the banners: violet for Bachelor's, Turbo for
+   Master's, Haiti for Doctoral.
+   ============================================================ */
+.p.p--turbo { background: #f0e100; color: #18102b; --ink: #18102b; --ink-dim: rgba(24, 16, 43, 0.78); }
+.p.p--chalk { background: #f5f3ff; color: #18102b; --ink: #18102b; --ink-dim: rgba(24, 16, 43, 0.72); }
+.p.p--haiti { background: #18102b; color: #f5f3ff; --ink: #f5f3ff; --ink-dim: rgba(245, 243, 255, 0.74); }
+.bx--convo .convo-total { font-size: clamp(3.4rem, 7vw, 6rem); }
+.convo-bar {
+  display: flex;
+  gap: 3px;
+  height: clamp(2.6rem, 5vw, 3.4rem);
+  margin: 0.35rem 0 0.2rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.convo-bar span { flex: var(--n) 1 0; min-width: 6px; background: var(--cb); }
+.convo-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.875rem;
+  color: var(--ink-dim);
+}
+.convo-legend li { display: flex; align-items: baseline; gap: 0.45rem; }
+.convo-legend li::before {
+  content: "";
+  align-self: center;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 3px;
+  background: var(--cb);
+}
+.convo-legend b { font: 700 1.125rem/1 "Archivo", var(--font-display); color: var(--ink); letter-spacing: -0.02em; }
+.cb--ug  { --cb: #834dfb; }
+.cb--ma  { --cb: #f0e100; }
+.cb--phd { --cb: #18102b; }
+.cb--ms  { --cb: #b9a5ff; }
+
+/* Palette: Electric Violet leads, Haiti carries a hairline so it reads
+   against the dark frame. */
+.pal--convo .pal-b:nth-child(1) { grid-column: 1 / 7; grid-row: span 2; }
+.pal--convo .pal-b:nth-child(1) .pal-n { font-size: clamp(1.4rem, 2.6vw, 2.2rem); }
+.pal--convo .pal-b:nth-child(2) { grid-column: 7 / 13; }
+.pal--convo .pal-b:nth-child(3) { grid-column: 7 / 10; box-shadow: inset 0 0 0 1px rgba(245, 243, 255, 0.14); }
+.pal--convo .pal-b:nth-child(4) { grid-column: 10 / 13; }
+@media (max-width: 760px) { .pal--convo .pal-b:nth-child(1) { grid-column: 1 / -1 !important; min-height: 11rem; } }
+
+.bloom-theme .bloom-sdg {
+  width: min(78%, 20rem);
+  height: auto;
+  margin: clamp(0.5rem, 2vw, 1.5rem) auto;
+  border-radius: 0;
+}
+.bloom-theme .p-xl { max-width: 20ch; }
+.bloom-chips {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin: 0.3rem 0 0.4rem;
+  padding: 0;
+  list-style: none;
+}
+.bloom-chip {
+  display: grid;
+  justify-items: center;
+  gap: 0.7rem;
+  padding: clamp(1rem, 2.4vw, 1.6rem) 0.5rem clamp(0.85rem, 1.8vw, 1.1rem);
+  border-radius: 14px;
+  background: var(--bc);
+  color: var(--bt);
+}
+/* Inline SVG filled with currentColor: white on violet and Haiti, Haiti on Turbo. */
+.bloom-chip svg { display: block; width: clamp(3.2rem, 7vw, 4.8rem); height: auto; aspect-ratio: 1; }
+.bloom-chip b { font: 600 0.875rem/1.2 "Archivo", var(--font-display); }
+.bc--ba  { --bc: #834dfb; --bt: #ffffff; }
+.bc--ma  { --bc: #f0e100; --bt: #18102b; }
+.bc--phd { --bc: #18102b; --bt: #f5f3ff; }
+.p.bloom-dome { display: grid; grid-template-columns: minmax(0, 1fr) minmax(7rem, 38%); align-items: end; gap: 1rem; padding-bottom: 0; }
+.bloom-dome-text { display: flex; flex-direction: column; gap: 0.6rem; padding-bottom: clamp(1.05rem, 2.2vw, 1.6rem); }
+.bloom-dome img { width: 100%; height: auto; border-radius: 0; align-self: end; }
+
+/* Body text inside bento panels: a touch larger and closer to full ink than
+   the panel default (--ink-dim at 14px), which read as dull. Two classes so
+   it wins over the panel rules further down. */
+.bx .p-s { font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 84%, transparent); }
+
+/* Exploration panels: the artwork centred on Haiti, label above, note below. */
+.xp-art { flex: 1; display: grid; place-items: center; min-height: clamp(7rem, 14vw, 10rem); padding: 0.4rem 0; }
+.xp-art img { display: block; width: auto; height: auto; max-width: 100%; max-height: clamp(7rem, 14vw, 10rem); border-radius: 0; }
+.xp--tall .xp-art img { max-height: clamp(14rem, 30vw, 24rem); }
+.xp--wide .xp-art img { width: 100%; max-height: none; }
+@media (max-width: 640px) { .xp--tall .xp-art img { max-height: 18rem; } }
 
 /* IKEA yellow tile, with IKEA blue type (5.4:1). */
 .p.p--ikea { background: #ffda1a; color: #0051ba; --ink: #0051ba; --ink-dim: rgba(0, 81, 186, 0.8); }
@@ -6850,3 +7028,81 @@ body.is-locked { overflow: hidden; }
 [data-theme="light"] :is(.bx, .pal, .gantt, .snake-card, .h2-card, .mo) .hl-blue {
   background-image: linear-gradient(100deg, #a9bbff 0%, #6f8cff 45%, #c9d4ff 100%);
 }
+
+/* ---- Text tags, not buttons: dotted outlines with no fill ---- */
+.p-pills li,
+.p-pills--lime li,
+.p--orange .p-pills li,
+.p--blue .p-pills li {
+  padding: 0.36rem 0.75rem;
+  background: transparent;
+  box-shadow: none;
+  border: 1.5px dotted color-mix(in srgb, var(--ink) 40%, transparent);
+  color: var(--ink);
+}
+.p-pills--lime li { border-color: rgba(203, 248, 72, 0.6); color: #e4ff9c; }
+.p-pills--mute li { outline: 0; border-color: rgba(249, 249, 249, 0.22); color: var(--ink-dim); }
+.fl-mode { border: 1.5px dotted rgba(249, 249, 249, 0.35); }
+.fl-metric { background: transparent; border: 1.5px dotted rgba(203, 248, 72, 0.7); color: #cbf848; }
+
+/* Checklist: what is in, what is out. */
+.p-check { margin: 0.3rem 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr)); gap: 0 1.4rem; }
+.p-check li {
+  display: grid;
+  grid-template-columns: 1.4rem minmax(0, 1fr);
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px dotted color-mix(in srgb, var(--ink) 22%, transparent);
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.p-check li::before {
+  content: "";
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background: #cbf848 center / 0.8rem no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230d0e11' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.5 4.5 4.5L19 7.5'/%3E%3C/svg%3E");
+}
+.p-check--out li { color: var(--ink-dim); }
+.p-check--out li::before {
+  background: transparent center / 0.7rem no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a9abb0' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E");
+  box-shadow: inset 0 0 0 1.5px rgba(249, 249, 249, 0.3);
+}
+
+/* Edge states: a numbered grid, coloured by what the system does. */
+.p-states { margin: 0.2rem 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(10.5rem, 1fr)); gap: 6px; }
+.p-states li {
+  position: relative;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.75rem 0.85rem 0.8rem 1.55rem;
+  border-radius: 14px;
+  background: rgba(249, 249, 249, 0.04);
+  font: 600 0.8125rem/1.3 var(--font-body);
+  color: var(--ink);
+}
+.p-states li::before { content: ""; position: absolute; left: 0.7rem; top: 0.98rem; width: 0.38rem; height: 0.38rem; border-radius: 50%; background: var(--sev); box-shadow: 0 0 0 3px color-mix(in srgb, var(--sev) 25%, transparent); }
+.p-states .p-k { margin: 0; }
+.sev--cut { --sev: #ff4d5e; }
+.sev--warn { --sev: #ffa53d; }
+.sev--info { --sev: #6f9bff; }
+.p-legend { display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; margin: 0.6rem 0 0; padding: 0; list-style: none; font: 500 0.72rem/1.3 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; color: var(--ink-dim); }
+.p-legend li { display: inline-flex; align-items: center; gap: 0.45rem; }
+.p-legend li::before { content: ""; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--sev); }
+
+/* Research parts as a short dotted trail. */
+.p-trail { margin: 0.4rem 0 0; padding: 0; list-style: none; display: grid; gap: 0; }
+.p-trail li {
+  position: relative;
+  padding: 0 0 0.7rem 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: var(--ink);
+}
+.p-trail li::before { content: ""; position: absolute; left: 0.18rem; top: 0.32rem; width: 0.55rem; height: 0.55rem; border-radius: 50%; background: #fa6e26; box-shadow: 0 0 0 3px color-mix(in srgb, #fa6e26 22%, transparent); }
+.p-trail li::after { content: ""; position: absolute; left: 0.43rem; top: 1.05rem; bottom: 0; border-left: 1.5px dotted color-mix(in srgb, var(--ink) 35%, transparent); }
+.p-trail li:last-child { padding-bottom: 0; }
+.p-trail li:last-child::after { display: none; }
+.p-trail li:last-child::before { background: transparent; box-shadow: inset 0 0 0 2px #fa6e26; }
