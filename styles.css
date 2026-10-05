@@ -3823,6 +3823,7 @@ body.is-locked { overflow: hidden; }
   .dg-radial { overflow-x: auto; -webkit-overflow-scrolling: touch; }
   .dg-radial svg { min-width: 34rem; }
 }
+.plate--mock img { aspect-ratio: 16 / 10; object-fit: cover; object-position: 50% 45%; }
 .plate-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(0.75rem, 2vw, 1.25rem); }
 @media (max-width: 760px) { .plate-pair { grid-template-columns: minmax(0, 1fr); } }
 
