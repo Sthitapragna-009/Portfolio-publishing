@@ -859,8 +859,9 @@
       playBtn.classList.toggle("lightbox-btn--playing", on);
       playBtn.setAttribute("aria-pressed", String(on));
       playLabel.textContent = on ? "Pause" : "Slideshow";
-      iconPlay.hidden = on;
-      iconPause.hidden = !on;
+      // SVG elements have no .hidden property; set the attribute itself.
+      iconPlay.toggleAttribute("hidden", on);
+      iconPause.toggleAttribute("hidden", !on);
     };
 
     const open = (list, at, autoplay) => {
