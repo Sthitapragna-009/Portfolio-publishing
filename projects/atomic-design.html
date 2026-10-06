@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Atomic Design — Design Systems | Sthitapragna Kollepara</title>
+  <meta name="description" content="Atomic Design: a HUD-inspired design system for JetPhotos, built from atoms to pages, rebuilt as a live library with dark and light modes, then tested against Material 3, Spectrum, Carbon and visionOS." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Lato:wght@300;400;700;900&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <script>
+    // Inline and blocking on purpose: setting this after first paint shows a
+    // flash of the wrong theme.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+
+  <canvas class="dot-field" id="dotField" aria-hidden="true"></canvas>
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="../index.html" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a class="nav-pill nav-pill--quiet" href="../index.html#work">Design Projects</a>
+        <a class="nav-pill nav-pill--photo" href="../photography.html">Photography Page <svg class="nav-ico" width="12" height="12" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===================== CASE HEADER ===================== -->
+    <section class="section case-head case-head--media">
+      <div class="case-hero-carousel" aria-hidden="true">
+        <img src="../assets/atomic/hero-02.jpg" alt="" width="1280" height="853" decoding="async" fetchpriority="high" />
+        <img src="../assets/atomic/f35.jpg" alt="" width="1600" height="1067" loading="lazy" decoding="async" />
+        <img src="../assets/atomic/hero-03.jpg" alt="" width="1280" height="853" loading="lazy" decoding="async" />
+        <img src="../assets/atomic/sketch.jpg" alt="" width="1600" height="1112" loading="lazy" decoding="async" />
+      </div>
+      <div class="wrap">
+        <a class="case-back" href="../index.html#work">
+          <span aria-hidden="true">&larr;</span> All projects
+        </a>
+
+        <p class="eyebrow reveal">Interaction design &middot; Design systems</p>
+        <h1 class="display case-title reveal" data-delay="1">Atomic Design</h1>
+        <p class="case-sub reveal" data-delay="2">A design system for JetPhotos, built from atoms up</p>
+
+        <dl class="case-meta reveal" data-delay="3">
+          <div><dt>Course</dt><dd>Interaction Design, Assignment 01</dd></div>
+          <div><dt>Institute</dt><dd>Department of Design, IIT Roorkee</dd></div>
+          <div><dt>Tools</dt><dd>Figma</dd></div>
+        </dl>
+
+        <div class="case-brief reveal" data-delay="3">
+          <div class="case-brief-row">
+            <h2 class="case-brief-key">The brief</h2>
+            <div class="case-brief-val">
+              <p>Redesign JetPhotos.com twice: first with a design system of my own, built on the atomic design principle, then again with four existing systems.</p>
+            </div>
+          </div>
+          <div class="case-brief-row">
+            <h2 class="case-brief-key">The process</h2>
+            <div class="case-brief-val">
+              <ol class="case-steps">
+                <li>Generating a theme</li>
+                <li>Atoms to pages</li>
+                <li>Existing design systems</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== PLATES ===================== -->
+    <section class="section case-plates">
+      <div class="wrap">
+        <figure class="plate reveal">
+          <img src="../assets/atomic/cover.jpg" alt="Atomic UI Design title board: three iMacs in lilac, peach and green showing the redesigned JetPhotos home page" width="1600" height="1251" loading="lazy" decoding="async" />
+        </figure>
+
+        <!-- ---------- The website ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Choosing a website</h2>
+          <p class="section-intro">JetPhotos is the biggest database of aviation photographs online. This is the home page as it stood.</p>
+        </div>
+
+        <div class="bx reveal">
+          <div class="p p--photo p--light" style="--w:8;--wt:12"><img class="p-img" src="../assets/atomic/jetphotos-original.jpg" alt="The original JetPhotos home page: a large photo of a Dash 8 on the grass, three thumbnails below, and a column of upload and forum links" width="908" height="876" loading="lazy" decoding="async" /></div>
+          <div class="p p--orange" style="--w:4;--wt:12"><p class="p-k">screened photos</p><p class="p-n">5M<small>+</small></p><p class="p-s">Every one reviewed by the site&rsquo;s screeners before it goes live.</p></div>
+          <div class="p" style="--w:4;--wt:12"><p class="p-k">the redesign keeps</p><ul class="p-check"><li>Today&rsquo;s most popular, screener&rsquo;s choice, photo of the week</li><li>Upload and the discussion forum</li><li>The site at a glance, in numbers</li></ul></div>
+        </div>
+
+        <!-- ---------- Methodology ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Methodology</h2>
+          <p class="section-intro">Find a theme first, then build it atom by atom.</p>
+        </div>
+
+        <div class="bx reveal">
+          <div class="p" style="--w:6;--wt:12"><p class="p-k">01 &middot; generating a theme</p><ol class="p-trail"><li>Finding an object for inspiration</li><li>Creating a moodboard</li><li>Brainstorming and mind-mapping</li><li>2D shape ideation, the atoms</li></ol></div>
+          <div class="p" style="--w:6;--wt:12"><p class="p-k">02 &middot; atomic design process</p><ol class="p-trail"><li>Core concept and final theme</li><li>Atoms</li><li>Molecules</li><li>Organisms</li><li>Template</li><li>Pages</li></ol></div>
+        </div>
+
+        <!-- ---------- Inspiration ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Object for inspiration</h2>
+          <p class="section-intro">The F-22 Raptor and F-35: a futuristic language that already belongs to aviation.</p>
+        </div>
+
+        <div class="bx reveal">
+          <div class="p p--photo p--atm" style="--w:7;--h:2;--wt:12"><img class="atm-jet" src="../assets/atomic/f22-top.webp" alt="An F-22 Raptor seen from above in a banking turn, vapour trailing from its wingtips" width="1200" height="800" loading="lazy" decoding="async" /></div>
+          <div class="p" style="--w:5;--wt:12"><p class="p-k">why a fighter jet</p><p class="p-xl">Sharp, fast and precise, the way a site for aviation photographs should feel.</p></div>
+          <div class="p p--photo p--atm" style="--w:5;--wt:12"><img class="atm-jet atm-jet--front" src="../assets/atomic/f22-front.webp" alt="An F-22 Raptor head-on, its angled tails and intakes forming a sharp silhouette" width="1200" height="600" loading="lazy" decoding="async" /></div>
+        </div>
+
+        <!-- ---------- Moodboard ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Moodboard</h2>
+          <p class="section-intro">Angular, escape, stealthy, agility, metallic. Orange, graphite, navy and taupe carried into the palette.</p>
+        </div>
+
+        <div class="shots mosaic reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card" style="--w:6;--h:2;--wm:2">
+              <img src="../assets/atomic/mood-angular.jpg" alt="An F-22 head-on under a stormy sky, its angles traced in dashed orange lines" width="692" height="399" loading="lazy" decoding="async" />
+              <figcaption>Angular</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:3;--h:2;--wm:1">
+              <img src="../assets/atomic/mood-escape.jpg" alt="A fighter climbing away through a trail of flares against a black sky" width="564" height="705" loading="lazy" decoding="async" />
+              <figcaption>Escape</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:3;--h:2;--wm:1">
+              <img src="../assets/atomic/mood-agility.jpg" alt="An F-22 pulling hard, wrapped in vapour, afterburners lit" width="900" height="1122" loading="lazy" decoding="async" />
+              <figcaption>Agility</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:3;--h:2;--wm:1">
+              <img src="../assets/atomic/mood-metallic.jpg" alt="Brushed metal with a radial sheen" width="474" height="474" loading="lazy" decoding="async" />
+              <figcaption>Metallic</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:3;--h:2;--wm:1">
+              <img src="../assets/atomic/mood-pilots.jpg" alt="Two pilots in a tandem cockpit, their visors reflecting green and red" width="564" height="704" loading="lazy" decoding="async" />
+              <figcaption>Cockpit</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:6;--h:2;--wm:2">
+              <img src="../assets/atomic/mood-tail.webp" alt="The canted tails and stabilisers of a stealth fighter, close up" width="1280" height="720" loading="lazy" decoding="async" />
+              <figcaption>Stealthy</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- ---------- Mind map ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Brainstorming and mind-mapping</h2>
+          <p class="section-intro">Every word the jet suggested, grouped by what it would shape in the interface.</p>
+        </div>
+
+        <div class="ads ads--map reveal" data-mode="dark">
+          <div class="ads-map">
+            <div class="ads-map-core"><strong class="ads-frame">F-22 Raptor</strong></div>
+            <div><b class="ads-frame">Shape</b><ul><li class="ads-frame">Streamlined</li><li class="ads-frame">Sharp</li><li class="ads-frame">Edgy</li><li class="ads-frame">Agility</li></ul></div>
+            <div><b class="ads-frame">Mood</b><ul><li class="ads-frame">Attack</li><li class="ads-frame">Stealthy</li><li class="ads-frame">Speed</li><li class="ads-frame">Power</li><li class="ads-frame">Precision</li></ul></div>
+            <div><b class="ads-frame">Colour</b><ul><li class="ads-frame">Grays</li><li class="ads-frame">Blues</li><li class="ads-frame">Orange accents</li></ul></div>
+            <div><b class="ads-frame">Lines</b><ul><li class="ads-frame">Angular</li><li class="ads-frame">Dynamic</li><li class="ads-frame">Converging</li></ul></div>
+            <div><b class="ads-frame">Light and texture</b><ul><li class="ads-frame">Dramatic</li><li class="ads-frame">Smooth</li></ul></div>
+            <div><b class="ads-frame">Character</b><ul><li class="ads-frame">Aggressive</li><li class="ads-frame">Raw</li><li class="ads-frame">Military</li><li class="ads-frame">High tech</li><li class="ads-frame">Superior</li><li class="ads-frame">Dominance</li></ul></div>
+          </div>
+        </div>
+
+        <!-- ---------- Sketches ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">2D shape ideation</h2>
+          <p class="section-intro">The atoms, sketched: task bars, tactical toggles, scroll rails, fins and cut-corner panels.</p>
+        </div>
+
+        <figure class="plate reveal">
+          <img src="../assets/atomic/sketch.jpg" alt="Digital sketches in white and orange on black: a cut-corner task bar, toggles, a loading bar, a scroll panel with hover states, fins and angular icon frames" width="1600" height="1112" loading="lazy" decoding="async" />
+        </figure>
+
+        <!-- ---------- Core concept ---------- -->
+        <div class="bx reveal">
+          <div class="p" style="--w:8;--wt:12"><p class="p-k">core concept</p><p class="p-xl">A high-tech, futuristic system drawn from the heads-up display: sleek, near invisible, and at home in the aviation world.</p></div>
+          <div class="p p--orange" style="--w:4;--wt:12"><p class="p-k">overall theme</p><p class="p-t">Futuristic, seamless, high-tech</p><p class="p-k">atoms</p><p class="p-t">Sharp polygons, a glassy finish, orange accents</p></div>
+        </div>
+
+        <!-- ---------- Library ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">The design system</h2>
+          <p class="section-intro">Rebuilt here as a working library. Switch it between dark and light; the buttons, tabs, checkboxes, likes and the carousel all respond.</p>
+        </div>
+
+        <div class="ads" id="ads" data-mode="dark">
+          <div class="ads-top">
+            <div>
+              <h3>KSP HUD design system</h3>
+              <p>Lexend &middot; 5 colour families &middot; 6 shape primitives &middot; dark and light</p>
+            </div>
+            <div class="ads-mode" role="group" aria-label="Library colour mode">
+              <button type="button" data-ads-mode="dark" aria-pressed="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>Dark</button>
+              <button type="button" data-ads-mode="light" aria-pressed="false"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>Light</button>
+            </div>
+          </div>
+
+          <div class="ads-level"><b>Atoms</b><span>colour, type, shape</span></div>
+          <div class="ads-grid">
+            <div class="ads-cell" style="--w:12">
+              <p class="ads-k">colour</p>
+              <div class="ads-ramp"><span>Neutral</span><div class="ads-swatches"><div class="ads-swatch"><i style="--c:#000000"></i><code>#000000</code></div><div class="ads-swatch"><i style="--c:#2a2a2a"></i><code>#2A2A2A</code></div><div class="ads-swatch"><i style="--c:#333333"></i><code>#333333</code></div><div class="ads-swatch"><i style="--c:#434343"></i><code>#434343</code></div><div class="ads-swatch"><i style="--c:#525252"></i><code>#525252</code></div></div></div>
+              <div class="ads-ramp"><span>Primary</span><div class="ads-swatches"><div class="ads-swatch"><i style="--c:#ff6b00"></i><code>#FF6B00</code></div><div class="ads-swatch"><i style="--c:#ff9344"></i><code>#FF9344</code></div><div class="ads-swatch"><i style="--c:#faab72"></i><code>#FAAB72</code></div><div class="ads-swatch"><i style="--c:#fcc8a3"></i><code>#FCC8A3</code></div><div class="ads-swatch"><i style="--c:#fcd1aa"></i><code>#FCD1AA</code></div></div></div>
+              <div class="ads-ramp"><span>Secondary</span><div class="ads-swatches"><div class="ads-swatch"><i style="--c:#1c4259"></i><code>#1C4259</code></div><div class="ads-swatch"><i style="--c:#2c678a"></i><code>#2C678A</code></div><div class="ads-swatch"><i style="--c:#397fa9"></i><code>#397FA9</code></div><div class="ads-swatch"><i style="--c:#599dc6"></i><code>#599DC6</code></div><div class="ads-swatch"><i style="--c:#85d2ff"></i><code>#85D2FF</code></div></div></div>
+              <div class="ads-status">
+                <div class="ads-ramp"><span>Success</span><div class="ads-swatches" style="--n:1"><div class="ads-swatch"><i style="--c:#80e0ff"></i><code>#80E0FF</code></div></div></div>
+                <div class="ads-ramp"><span>Warning</span><div class="ads-swatches" style="--n:2"><div class="ads-swatch"><i style="--c:#ffd700"></i><code>#FFD700</code></div><div class="ads-swatch"><i style="--c:#ffe966"></i><code>#FFE966</code></div></div></div>
+                <div class="ads-ramp"><span>Error</span><div class="ads-swatches" style="--n:2"><div class="ads-swatch"><i style="--c:#ff0000"></i><code>#FF0000</code></div><div class="ads-swatch"><i style="--c:#ff4d4d"></i><code>#FF4D4D</code></div></div></div>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:12">
+              <p class="ads-k">typography &middot; Lexend</p>
+              <div class="ads-type">
+                <dl>
+                  <div><dt class="ads-t-d1">Display 1</dt><dd>Bold &middot; 72</dd></div>
+                  <div><dt class="ads-t-h1">Heading 1</dt><dd>Bold &middot; 56</dd></div>
+                  <div><dt class="ads-t-h2">Heading 2</dt><dd>Bold &middot; 48</dd></div>
+                  <div><dt class="ads-t-h3">Heading 3</dt><dd>Bold &middot; 32</dd></div>
+                  <div><dt class="ads-t-h4">Heading 4</dt><dd>Bold &middot; 24</dd></div>
+                  <div><dt class="ads-t-h4u">Heading 4 uppercase</dt><dd>Bold &middot; 24</dd></div>
+                </dl>
+                <div>
+                  <p class="ads-aa" aria-hidden="true">Aa<small>LEXEND</small></p>
+                  <dl>
+                    <div><dt class="ads-t-p1">Paragraph 1, for body copy and descriptions.</dt><dd>Regular &middot; 18</dd></div>
+                    <div><dt class="ads-t-p2">Paragraph 2, for captions and list rows.</dt><dd>Regular &middot; 16</dd></div>
+                    <div><dt class="ads-t-btn">Button</dt><dd>Bold &middot; 20</dd></div>
+                    <div><dt><a class="ads-t-link" href="#ads">Hyperlink</a></dt><dd>SemiBold &middot; 20</dd></div>
+                  </dl>
+                </div>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:12">
+              <p class="ads-k">shapes &middot; sharp polygons, cut corners, no radii</p>
+              <div class="ads-shapes" aria-hidden="true">
+                <span class="ads-shape ads-sh-bar"></span><span class="ads-shape ads-sh-pill"></span><span class="ads-shape ads-sh-play"></span><span class="ads-shape ads-sh-para"></span><span class="ads-shape ads-sh-oct"></span><span class="ads-shape ads-sh-hex"></span><span class="ads-shape ads-sh-fin"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="ads-level"><b>Molecules</b><span>atoms that do one job</span></div>
+          <div class="ads-grid">
+            <div class="ads-cell" style="--w:7;--wt:12">
+              <p class="ads-k">buttons</p>
+              <div class="ads-row">
+                <button class="ads-btn ads-btn--primary ads-frame" type="button">Register</button>
+                <button class="ads-btn ads-btn--secondary ads-frame" type="button">Photos</button>
+                <button class="ads-btn ads-btn--outline ads-frame" type="button">About</button>
+                <button class="ads-btn ads-btn--ghost ads-frame" type="button">Upload photos</button>
+              </div>
+              <div class="ads-row">
+                <span class="ads-pair"><button class="ads-frame" type="button">Sign-in</button><button class="ads-frame is-on" type="button">Sign-up</button></span>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:5;--wt:12">
+              <p class="ads-k">selection &middot; identity</p>
+              <div class="ads-row">
+                <button class="ads-check ads-frame" type="button" role="checkbox" aria-checked="false" aria-label="Checkbox, off"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></button>
+                <button class="ads-check ads-frame" type="button" role="checkbox" aria-checked="true" aria-label="Checkbox, on"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></button>
+                <span class="ads-avatar ads-frame" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+                <span class="ads-avatar ads-avatar--active ads-frame" aria-hidden="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+                <button class="ads-octo ads-frame" type="button" aria-pressed="false" aria-label="Like this photo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button>
+              </div>
+              <div class="ads-row"><span class="ads-chev" aria-hidden="true"><button type="button" tabindex="-1">&laquo;</button><button type="button" tabindex="-1">&raquo;</button></span></div>
+            </div>
+            <div class="ads-cell" style="--w:6;--wt:12">
+              <p class="ads-k">carousel tabs</p>
+              <div class="ads-tabs" role="tablist" aria-label="Photo collections">
+                <button class="ads-tab ads-frame" type="button" role="tab" aria-selected="true">Today&rsquo;s most popular</button>
+                <button class="ads-tab ads-frame" type="button" role="tab" aria-selected="false">Screener&rsquo;s choice</button>
+                <button class="ads-tab ads-frame" type="button" role="tab" aria-selected="false">Photo of the week</button>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:6;--wt:12">
+              <p class="ads-k">search</p>
+              <label class="ads-search ads-frame"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search aircraft, airline, photographer" aria-label="Search the library demo" /></label>
+            </div>
+            <div class="ads-cell" style="--w:6;--wt:12">
+              <p class="ads-k">scroll bar</p>
+              <div class="ads-scroll" aria-hidden="true"><i></i></div>
+            </div>
+            <div class="ads-cell" style="--w:6;--wt:12">
+              <p class="ads-k">section separator</p>
+              <div class="ads-sep"><b aria-hidden="true"></b><span>Jet Photos at a glance</span></div>
+            </div>
+          </div>
+
+          <div class="ads-level"><b>Organisms</b><span>molecules composed into sections</span></div>
+          <div class="ads-grid">
+            <div class="ads-cell" style="--w:12">
+              <p class="ads-k">header</p>
+              <div class="ads-header">
+                <span class="ads-burger" aria-hidden="true"><i></i><i></i><i></i></span>
+                <img class="ads-logo" src="../assets/atomic/jetphotos-logo.png" alt="JetPhotos" width="912" height="220" loading="lazy" decoding="async" />
+                <nav aria-label="Demo navigation">
+                  <button class="ads-btn ads-btn--secondary ads-frame" type="button">Photos</button>
+                  <button class="ads-btn ads-btn--outline ads-frame" type="button">About</button>
+                  <button class="ads-btn ads-btn--outline ads-frame" type="button">Social</button>
+                </nav>
+                <div class="ads-header-end">
+                  <span class="ads-pair"><button class="ads-frame" type="button">Sign-in</button><button class="ads-frame is-on" type="button">Sign-up</button></span>
+                  <label class="ads-search ads-frame"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg><input type="search" placeholder="Search" aria-label="Search the header demo" /></label>
+                  <span class="ads-octo ads-frame" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+                </div>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:8;--wt:12">
+              <p class="ads-k">photo carousel card</p>
+              <div class="ads-card ads-frame" data-ads-carousel>
+                <div class="ads-tabs" role="tablist" aria-label="Carousel collections">
+                  <button class="ads-tab ads-frame" type="button" role="tab" aria-selected="true">Today&rsquo;s most popular</button>
+                  <button class="ads-tab ads-frame" type="button" role="tab" aria-selected="false">Screener&rsquo;s choice</button>
+                </div>
+                <div class="ads-card-stage">
+                  <button class="ads-chev-btn" type="button" data-dir="-1" aria-label="Previous photo">&laquo;</button>
+                  <img src="../assets/atomic/f35.jpg" alt="An F-35 in flight against a dusky sky" width="1600" height="1067" loading="lazy" decoding="async" />
+                  <button class="ads-chev-btn" type="button" data-dir="1" aria-label="Next photo">&raquo;</button>
+                </div>
+                <div class="ads-card-foot">
+                  <div class="ads-who"><span>Sthitapragna K</span><button class="ads-octo ads-frame" type="button" aria-pressed="false" aria-label="Like this photo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button></div>
+                  <div class="ads-what"><span data-ads-model>F-35</span><br /><span data-ads-maker>Lockheed Martin</span></div>
+                </div>
+                <div class="ads-dots" aria-hidden="true"><i class="is-on"></i><i></i><i></i><i></i></div>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:4;--wt:12">
+              <p class="ads-k">discussion forum</p>
+              <div class="ads-chat ads-frame">
+                <p>Discussion forum</p>
+                <ul>
+                  <li><span class="ads-avatar ads-frame"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>Banned account problem</li>
+                  <li><span class="ads-avatar ads-frame"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>A321neo Wizz Air</li>
+                  <li><span class="ads-avatar ads-avatar--active ads-frame"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>Aviation editing advice</li>
+                  <li><span class="ads-avatar ads-frame"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>Wing photo</li>
+                  <li><span class="ads-avatar ads-frame"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>Sunset at Newark</li>
+                </ul>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:12">
+              <p class="ads-k">daily feed</p>
+              <div class="ads-feed">
+                <button class="ads-chev-btn" type="button" tabindex="-1" aria-hidden="true">&laquo;</button>
+                <figure><img src="../assets/atomic/f16.jpg" alt="An F-16 crossing a clear blue sky" width="800" height="533" loading="lazy" decoding="async" /><figcaption><span>username</span><button class="ads-octo ads-frame" type="button" aria-pressed="false" aria-label="Like this photo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button></figcaption></figure>
+                <figure><img src="../assets/atomic/dornier.jpg" alt="Three Dornier 228s in formation against a sandy sky" width="800" height="533" loading="lazy" decoding="async" /><figcaption><span>username</span><button class="ads-octo ads-frame" type="button" aria-pressed="false" aria-label="Like this photo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button></figcaption></figure>
+                <figure><img src="../assets/atomic/hawk.jpg" alt="A Hawk trainer against a deep blue sky" width="800" height="1000" loading="lazy" decoding="async" /><figcaption><span>username</span><button class="ads-octo ads-frame" type="button" aria-pressed="false" aria-label="Like this photo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></button></figcaption></figure>
+                <button class="ads-chev-btn" type="button" tabindex="-1" aria-hidden="true">&raquo;</button>
+              </div>
+            </div>
+            <div class="ads-cell" style="--w:12">
+              <p class="ads-k">footer &middot; at a glance</p>
+              <div class="ads-stats ads-frame">
+                <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m14.31 8 5.74 9.94"/><path d="M9.69 8h11.48"/><path d="m7.38 12 5.74-9.94"/><path d="M9.69 16 3.95 6.06"/><path d="M14.31 16H2.83"/><path d="m16.62 12-5.74 9.94"/></svg><b>26,960</b><span>Photographers</span></div>
+                <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg><b>390,795</b><span>Unique registrations</span></div>
+                <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg><b>6,027,038</b><span>Photos</span></div>
+                <div><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg><b>10,211,743,170</b><span>Photo views</span></div>
+              </div>
+              <div class="ads-row" style="justify-content:flex-end"><button class="ads-btn ads-btn--primary ads-frame" type="button">Register</button></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- Page ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">From template to page</h2>
+          <p class="section-intro">Header, landing carousel with the forum beside it, the feed and the footer, assembled into the home page. Scroll it below.</p>
+        </div>
+
+        <div class="ads-page reveal" tabindex="0" aria-label="The finished JetPhotos home page, scrollable">
+          <img src="../assets/atomic/page-final.jpg" alt="The finished home page in the HUD system: header, F-35 carousel with the discussion forum, three rows of feed cards, and the at-a-glance numbers with a Register button" width="1400" height="2402" loading="lazy" decoding="async" />
+        </div>
+
+        <figure class="plate plate--bare reveal">
+          <img src="../assets/atomic/imac-lilac.webp" alt="The HUD home page on a lilac iMac" width="1400" height="1050" loading="lazy" decoding="async" />
+        </figure>
+
+        <!-- ---------- Existing systems ---------- -->
+        <div class="plate-head">
+          <h2 class="display section-title">Using existing design systems</h2>
+          <p class="section-intro">The same page, rebuilt four more times with someone else&rsquo;s rules.</p>
+        </div>
+
+        <div class="bx reveal">
+          <div class="p" style="--w:3;--wt:6;--wm:12"><p class="p-k">01</p><p class="p-t">Google Material 3</p><p class="p-s">Pill buttons, filled cards, a floating search bar.</p></div>
+          <div class="p" style="--w:3;--wt:6;--wm:12"><p class="p-k">02</p><p class="p-t">Adobe Spectrum</p><p class="p-s">Quiet tabs, outlined cards, one blue action.</p></div>
+          <div class="p" style="--w:3;--wt:6;--wm:12"><p class="p-k">03</p><p class="p-t">IBM Carbon</p><p class="p-s">Square corners, flat fills, Carbon blue.</p></div>
+          <div class="p" style="--w:3;--wt:6;--wm:12"><p class="p-k">04</p><p class="p-t">Apple visionOS</p><p class="p-s">Glass panels floating in a room.</p></div>
+        </div>
+
+        <div class="shots mosaic mosaic--tall reveal" data-shots>
+          <div class="shots-track">
+            <figure class="shot-card" style="--w:3;--h:4;--wm:1;--hm:3;--pos:50% 0%">
+              <img src="../assets/atomic/sys-material.jpg" alt="JetPhotos rebuilt in Material 3: orange pill buttons, a dark card with the F-35, photo cards with save and like" width="1200" height="2291" loading="lazy" decoding="async" />
+              <figcaption>Material 3</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:3;--h:4;--wm:1;--hm:3;--pos:50% 0%">
+              <img src="../assets/atomic/sys-spectrum.jpg" alt="JetPhotos rebuilt in Adobe Spectrum: underlined tabs, a white photo card and blue sign up and like buttons" width="1200" height="2291" loading="lazy" decoding="async" />
+              <figcaption>Spectrum</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:3;--h:4;--wm:1;--hm:3;--pos:50% 0%">
+              <img src="../assets/atomic/sys-carbon.jpg" alt="JetPhotos rebuilt in IBM Carbon: square cards, flat grey fills and blue like buttons" width="1200" height="2381" loading="lazy" decoding="async" />
+              <figcaption>Carbon</figcaption>
+            </figure>
+            <figure class="shot-card" style="--w:3;--h:4;--wm:1;--hm:3;--pos:50% 0%">
+              <img src="../assets/atomic/sys-vision.jpg" alt="JetPhotos rebuilt for visionOS: frosted glass windows floating in a living room" width="1200" height="2041" loading="lazy" decoding="async" />
+              <figcaption>visionOS</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="plate-duo">
+          <figure class="plate plate--bare reveal" style="--ar: 1.333">
+            <img src="../assets/atomic/imac-peach.webp" alt="The Material 3 version on a peach iMac" width="1400" height="1050" loading="lazy" decoding="async" />
+          </figure>
+          <figure class="plate plate--bare reveal" data-delay="1" style="--ar: 1.333">
+            <img src="../assets/atomic/imac-green.webp" alt="The Spectrum version on a green iMac" width="1400" height="1050" loading="lazy" decoding="async" />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== NEXT ===================== -->
+    <section class="section case-next">
+      <div class="wrap">
+        <p class="eyebrow">Next project</p>
+
+        <a class="next-project" href="veltura-lamp.html">
+          <div class="next-project-media">
+            <img src="../assets/veltura/card.jpg" alt="Veltura title card: the lit paper-plane lamp on a desk at night" width="1600" height="1000" loading="lazy" decoding="async" />
+          </div>
+          <div class="next-project-body">
+            <h2 class="display next-project-title">Veltura Lamp</h2>
+            <p class="next-project-desc">A study table lamp with the form of a paper plane, prototyped in mount board and skewer sticks around a concealed LED source.</p>
+            <span class="project-arrow" aria-hidden="true">
+              <svg width="13" height="13" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <div class="case-next-actions">
+          <a class="btn btn-primary" href="../index.html#work">
+            <span class="dot" aria-hidden="true">
+              <svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+            </span>
+            All projects
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <h2 class="display contact-title reveal">Let&rsquo;s build <span class="accent">something</span></h2>
+      <div class="contact-card reveal" data-delay="1">
+        <p class="ghost contact-ghost" aria-hidden="true">Contact me</p>
+        <div class="contact-intro">
+          <p class="contact-name">Sthitapragna Kollepara</p>
+          <p class="contact-s">Write, connect and follow along!</p>
+        </div>
+        <nav class="contact-links" aria-label="Contact">
+          <a class="contact-row" href="mailto:sthita.ksp2709@gmail.com">
+            <span class="contact-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>
+            <span class="contact-txt"><small>Email</small><b>sthita.ksp2709@gmail.com</b></span>
+            <span class="dot" aria-hidden="true"><svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+          </a>
+          <a class="contact-row" href="https://www.linkedin.com/in/sthitapragna-kollepara-136a031aa" target="_blank" rel="noopener">
+            <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.6 8.75 23 10.9 23 14.1V21h-4v-6.1c0-1.46-.03-3.34-2.06-3.34-2.06 0-2.38 1.58-2.38 3.23V21h-4V9Z"/></svg></span>
+            <span class="contact-txt"><small>LinkedIn</small><b>Sthitapragna Kollepara</b></span>
+            <span class="dot" aria-hidden="true"><svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+          </a>
+          <a class="contact-row" href="https://www.instagram.com/capture_master_ksp/" target="_blank" rel="noopener">
+            <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></span>
+            <span class="contact-txt"><small>Instagram</small><b>@capture_master_ksp</b></span>
+            <span class="dot" aria-hidden="true"><svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
+    <span class="sr-only">Light theme</span>
+    <span class="theme-toggle-rail" aria-hidden="true">
+      <span class="theme-toggle-end theme-toggle-end--sun">
+        <svg class="icon-sun" width="14" height="14" viewBox="0.57 0.57 22.86 22.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.14" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </span>
+      <span class="theme-toggle-words">
+        <span class="theme-toggle-word">Swipe to change mode</span>
+      </span>
+      <span class="theme-toggle-end theme-toggle-end--moon">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </span>
+      <span class="theme-toggle-knob">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+        <svg class="icon-sun" width="14" height="14" viewBox="0.57 0.57 22.86 22.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.14" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </span>
+    </span>
+  </button>
+
+  <script src="../script.js"></script>
+  <script>
+    // Library interactions: colour mode, tabs, checkboxes, likes, sign-in pair
+    // and the photo carousel. Scoped to the .ads blocks on this page.
+    (function () {
+      var lib = document.getElementById("ads");
+      if (!lib) return;
+      lib.querySelectorAll("[data-ads-mode]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          lib.dataset.mode = b.dataset.adsMode;
+          lib.querySelectorAll("[data-ads-mode]").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+        });
+      });
+      lib.addEventListener("click", function (e) {
+        var t = e.target.closest("button");
+        if (!t || !lib.contains(t)) return;
+        if (t.getAttribute("role") === "tab") {
+          t.parentElement.querySelectorAll("[role=tab]").forEach(function (o) { o.setAttribute("aria-selected", String(o === t)); });
+        } else if (t.getAttribute("role") === "checkbox") {
+          t.setAttribute("aria-checked", String(t.getAttribute("aria-checked") !== "true"));
+        } else if (t.classList.contains("ads-octo")) {
+          t.setAttribute("aria-pressed", String(t.getAttribute("aria-pressed") !== "true"));
+        } else if (t.parentElement.classList.contains("ads-pair")) {
+          t.parentElement.querySelectorAll("button").forEach(function (o) { o.classList.toggle("is-on", o === t); });
+        }
+      });
+      var card = lib.querySelector("[data-ads-carousel]");
+      if (!card) return;
+      var slides = [["../assets/atomic/f35.jpg","An F-35 in flight against a dusky sky","F-35","Lockheed Martin"],["../assets/atomic/rafale.jpg","A Rafale banking overhead, both engines glowing","Rafale","Dassault"],["../assets/atomic/mig29.jpg","A MiG-29 low over the runway, afterburners lit","MiG-29","Mikoyan"],["../assets/atomic/alh.jpg","An ALH Dhruv helicopter skimming over water","ALH Dhruv","HAL"]];
+      var i = 0;
+      var img = card.querySelector(".ads-card-stage img");
+      var dots = card.querySelectorAll(".ads-dots i");
+      card.querySelectorAll("[data-dir]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          i = (i + Number(b.dataset.dir) + slides.length) % slides.length;
+          img.src = slides[i][0];
+          img.alt = slides[i][1];
+          card.querySelector("[data-ads-model]").textContent = slides[i][2];
+          card.querySelector("[data-ads-maker]").textContent = slides[i][3];
+          dots.forEach(function (d, k) { d.classList.toggle("is-on", k === i); });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -652,62 +652,10 @@ ul { margin: 0; padding: 0; list-style: none; }
 .nav.is-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 
-/* ---------- Floating contact button ---------- */
-
-/* Sits above every section, light or dark, so it carries its own accent
-   fill rather than the white of .btn-primary, which would vanish on the
-   light sections. Inherits the gradient hover from .btn. */
-.edge-cta {
-  position: fixed;
-  right: clamp(0.9rem, 2vw, 1.75rem);
-  /* Sits below the vertical midpoint rather than dead centre. */
-  top: 64%;
-  transform: translateY(-50%);
-  z-index: 90;
-  padding: 0.5rem;
-  /* .btn sets a flex gap; it would hold the collapsed pill open, so spacing
-     comes from the label's own margin once it expands. */
-  gap: 0;
-  background: var(--blue-gradient);
-  color: var(--chalk);
-  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.45), 0 8px 26px -10px rgba(0, 47, 167, 0.8);
-  transition: color 0.3s var(--ease), padding 0.45s var(--ease),
-              transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-
-.edge-cta .dot { background: rgba(0, 0, 0, 0.28); color: var(--white); }
-
-.edge-cta:hover,
-.edge-cta:focus-visible {
-  padding-right: 1.35rem;
-  transform: translateY(-50%) scale(1.02);
-}
-
-.edge-cta:hover .dot { transform: rotate(45deg); }
-
-/* Collapsed to nothing, opened by max-width: width cannot transition to
-   auto, and the 0fr/1fr grid trick stalls mid-interpolation here. */
-.edge-cta-label {
-  max-width: 0;
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  transition: max-width 0.45s var(--ease), opacity 0.3s var(--ease),
-              margin-left 0.45s var(--ease);
-}
-
-.edge-cta:hover .edge-cta-label,
-.edge-cta:focus-visible .edge-cta-label {
-  max-width: 12rem;
-  opacity: 1;
-  margin-left: 0.7rem;
-}
-
 /* --- Day / night switch, parked in the bottom-right corner ------------- */
 
 /* A horizontal pill: sun at the left, moon at the right, the label between
-   them, and the knob riding the length. It shares the right edge with
-   .edge-cta, which floats higher up, so on wide screens the two never meet. */
+   them, and the knob riding the length. */
 .theme-toggle {
   position: fixed;
   right: clamp(0.9rem, 2vw, 1.75rem);
@@ -837,25 +785,12 @@ ul { margin: 0; padding: 0; list-style: none; }
 .theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-sun  { opacity: 1; transform: none; }
 .theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
 
-/* On phones .edge-cta drops into this same corner, so the switch stacks above
-   it and sheds its label to stay out of the way. */
+/* On phones the switch sheds its label to stay out of the way. */
 @media (max-width: 720px) {
   .theme-toggle-rail { width: 4.5rem; }
   .theme-toggle-words { display: none; }
   /* rail 4.5 - knob 1.75 - inset 0.5 = 2.25rem */
   .theme-toggle[aria-checked="false"] .theme-toggle-knob { --seat: 2.25rem; --lean: -0.6rem; }
-}
-
-/* Touch devices never fire hover, which would leave an unlabelled circle.
-   Show the label outright there instead. */
-@media (hover: none) {
-  .edge-cta { padding-right: 1.35rem; }
-
-  .edge-cta-label {
-    max-width: 12rem;
-    opacity: 1;
-    margin-left: 0.7rem;
-  }
 }
 
 /* ============================================================
@@ -1731,100 +1666,153 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 
 /* ============================================================
-   CONTACT
+   CONTACT (the footer on every page)
    ============================================================ */
 
-.contact {
-  position: relative;
-  /* Transparent so the dot field shows through; <html> supplies the black. */
-  background: transparent;
-  isolation: isolate;
-  text-align: center;
-}
-
-.contact::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(70% 60% at 50% 108%, rgba(232, 80, 2, 0.34), transparent 68%);
-}
-
-.contact-title {
-  font-size: clamp(2.5rem, 9vw, 7.5rem);
-  letter-spacing: -0.05em;
-  line-height: 0.9;
-  margin-block: 1.25rem 1.75rem;
-}
-
-.contact-lede {
-  color: var(--ink-dim);
-  max-width: 44ch;
-  margin-inline: auto;
-  line-height: 1.65;
-  margin-bottom: 2.5rem;
-}
-
-.contact-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.9rem;
-  flex-wrap: wrap;
-}
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-
+/* One composition closes every page: the "Let's build something" headline,
+   the channels and the "Contact me" watermark, all in a single card. */
 .footer {
   /* Transparent so the dot field shows through; <html> supplies the black. */
   background: transparent;
-  border-top: 1px solid var(--hairline);
-  padding-block: 2.25rem;
+  padding-top: clamp(3rem, 7vw, 6rem);
+  /* Room under the card for the day/night switch parked in the corner. */
+  padding-bottom: clamp(4.5rem, 8vw, 5.5rem);
 }
 
-.footer-row {
+/* Contact card: a Klein blue panel with chalk type, so it reads the same on
+   the dark and light themes. Intro on the left, one row per channel. */
+/* The wrap is a size container so the headline can be fitted to one line. */
+.footer > .wrap { container-type: inline-size; }
+
+.contact-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(0.75rem, 2vw, 1.5rem) clamp(1.5rem, 3.5vw, 3rem);
+  padding: clamp(1.5rem, 4vw, 3.25rem);
+  border-radius: 28px;
+  /* Same moving wave as the Photography pill: a dark Klein blue base with two
+     blob layers drifting on the pill's keyframes, so the two read as a pair. */
+  background: linear-gradient(100deg, #050a1f 0%, #001b6b 35%, #002fa7 70%, #001b6b 100%);
+  color: var(--chalk);
+}
+.contact-card::before,
+.contact-card::after {
+  content: "";
+  position: absolute;
+  inset: -45% -20%;
+  z-index: -1;
+  pointer-events: none;
+  will-change: transform;
+}
+.contact-card::before {
+  background:
+    radial-gradient(28% 40% at 32% 45%, #2a55d6 0%, rgba(28, 71, 201, 0.55) 45%, transparent 75%),
+    radial-gradient(26% 38% at 72% 58%, rgba(5, 10, 31, 0.95) 0%, transparent 72%);
+  animation: photoWaveA 15s ease-in-out infinite alternate;
+}
+.contact-card::after {
+  background:
+    radial-gradient(30% 34% at 62% 36%, rgba(0, 47, 167, 0.9) 0%, transparent 70%),
+    radial-gradient(22% 30% at 26% 66%, rgba(0, 27, 107, 0.9) 0%, transparent 70%);
+  animation: photoWaveB 23.3s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-card::before,
+  .contact-card::after { animation: none; }
+}
+
+/* "Contact me" uses the section watermark (.ghost) as is; only the ink
+   changes, since --ghost-ink is black in light mode and would vanish on blue. */
+.contact-ghost {
+  grid-column: 1 / -1;
+  color: rgba(244, 242, 236, 0.16);
+}
+.contact-name {
+  font: 800 clamp(2rem, 4.6vw, 3.75rem)/0.95 var(--font-display);
+  letter-spacing: -0.035em;
+  color: var(--chalk);
+}
+/* "Let's build something" sits on one line just above the card, in page ink
+   with the brand orange accent, sized off the wrap width so it never wraps. */
+.contact-title {
+  margin: 0 0 clamp(0.75rem, 1.6vw, 1.25rem);
+  font-size: min(7.4cqi, 6.25rem);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  white-space: nowrap;
+}
+.contact-s {
+  margin-top: 0.5rem;
+  font-size: 1.0625rem;
+  color: rgba(244, 242, 236, 0.86);
+}
+
+.contact-links { display: grid; gap: 6px; }
+
+.contact-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  gap: 0.85rem;
+  padding: 0.7rem 0.8rem 0.7rem 0.9rem;
+  border-radius: 16px;
+  background: rgba(244, 242, 236, 0.09);
+  color: var(--chalk);
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
 }
-
-.footer-copy {
-  font-size: 0.8125rem;
-  color: var(--ink-faint);
-  letter-spacing: -0.01em;
-}
-
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.8125rem;
-  color: var(--ink-dim);
-}
-.footer-links a { transition: color 0.25s var(--ease); }
-
-.footer-links .social {
+.contact-ico {
   display: grid;
   place-items: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 0 auto;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.22);
+}
+.contact-txt { display: grid; min-width: 0; flex: 1; }
+.contact-txt small {
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(244, 242, 236, 0.74);
+  transition: color 0.3s var(--ease);
+}
+.contact-txt b {
+  font-size: 1rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.contact-row .dot {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 auto;
   border-radius: 50%;
-  border: 1px solid var(--hairline);
-  color: var(--ink-dim);
-  transition: color 0.25s var(--ease), border-color 0.25s var(--ease),
-              background-color 0.25s var(--ease);
+  background: rgba(0, 0, 0, 0.22);
+  transition: background-color 0.3s var(--ease), transform 0.4s var(--ease);
 }
-.footer-links .social:hover,
-.footer-links .social:focus-visible {
-  color: var(--on-ink);
-  background: var(--ink);
-  border-color: var(--ink);
+
+.contact-row:hover,
+.contact-row:focus-visible { background: var(--chalk); color: var(--blue); }
+.contact-row:hover .contact-txt small,
+.contact-row:focus-visible .contact-txt small { color: rgba(0, 47, 167, 0.72); }
+.contact-row:hover .contact-ico,
+.contact-row:hover .dot { background: rgba(0, 47, 167, 0.1); }
+.contact-row:hover .dot { transform: rotate(45deg); }
+
+@media (max-width: 720px) {
+  .contact-card { grid-template-columns: 1fr; }
 }
-.footer-links a:hover { color: var(--blue-ink); }
+/* Phones: the arrow badge gives its width to the email address. */
+@media (max-width: 480px) {
+  .contact-row .dot { display: none; }
+  .contact-txt b { font-size: 0.9375rem; }
+}
 
 /* ============================================================
    REVEAL
@@ -1912,20 +1900,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 @media (max-width: 720px) {
   .nav-links { display: none; }
 
-  /* Out of the vertical middle on phones, where it would sit over content. */
-  .edge-cta {
-    top: auto;
-    bottom: clamp(1rem, 4vw, 1.75rem);
-    transform: none;
-  }
-  .edge-cta:hover,
-  .edge-cta:focus-visible { transform: scale(1.02); }
-
-  /* Clears .edge-cta, which drops into this corner at the same breakpoint. */
-  .theme-toggle {
-    bottom: calc(clamp(1rem, 4vw, 1.75rem) + 3.5rem);
-  }
-
   .wordmark-name { font-size: 0.85rem; }
   .wordmark .glyph { height: 1.75rem; padding-inline: 0.7rem; font-size: 0.8125rem; }
 
@@ -1960,7 +1934,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   .process-grid { grid-template-columns: 1fr; }
   .step-name { margin-top: 2rem; }
   .cap-panel p { padding-left: 0; }
-  .footer-row { flex-direction: column; align-items: flex-start; }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4447,11 +4421,429 @@ body.is-locked { overflow: hidden; }
 .bx .p-s { font-size: 0.9375rem; line-height: 1.55; color: color-mix(in srgb, var(--ink) 84%, transparent); }
 
 /* Exploration panels: the artwork centred on Haiti, label above, note below. */
-.xp-art { flex: 1; display: grid; place-items: center; min-height: clamp(7rem, 14vw, 10rem); padding: 0.4rem 0; }
-.xp-art img { display: block; width: auto; height: auto; max-width: 100%; max-height: clamp(7rem, 14vw, 10rem); border-radius: 0; }
-.xp--tall .xp-art img { max-height: clamp(14rem, 30vw, 24rem); }
-.xp--wide .xp-art img { width: 100%; max-height: none; }
-@media (max-width: 640px) { .xp--tall .xp-art img { max-height: 18rem; } }
+.bx--explore .p { padding: clamp(0.9rem, 1.6vw, 1.15rem); gap: 0.45rem; }
+.bx--explore .p-s { font-size: 0.8125rem; }
+.xp-art { flex: 1; display: grid; place-items: center; min-height: clamp(4.5rem, 8vw, 6rem); padding: 0.2rem 0; }
+/* Full width with contain, so each image has a box before it loads (lazy
+   loading skips a zero-size image) and keeps its proportions inside it. */
+.xp-art img { display: block; width: 100%; height: auto; max-height: clamp(4.5rem, 8vw, 6rem); object-fit: contain; border-radius: 0; }
+.xp--tall .xp-art img { max-height: clamp(7rem, 13vw, 10rem); }
+.xp--wide .xp-art img { max-height: clamp(4.5rem, 9vw, 7.5rem); }
+
+/* Team credit at the end of the case. */
+.convo-team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.9rem 1.5rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.convo-team li {
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--ink) 16%, transparent);
+  font: 600 clamp(1.1rem, 1.8vw, 1.4rem)/1.2 "Archivo", var(--font-display);
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+/* Design-process timeline: two phases sized by time (two months, one month),
+   each a bar with its milestones underneath. Stacks on phones. */
+.tl {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 6px;
+  margin: 0.3rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.tl-phase { display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+.tl-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: var(--tl-c);
+  color: var(--tl-t);
+}
+.tl-bar b { font: 700 clamp(1.05rem, 1.6vw, 1.3rem)/1.1 "Archivo", var(--font-display); letter-spacing: -0.02em; }
+.tl-bar span { font-size: 0.875rem; opacity: 0.9; }
+.tl-phase--approve { --tl-c: #834dfb; --tl-t: #ffffff; }
+.tl-phase--build   { --tl-c: #f0e100; --tl-t: #18102b; }
+.tl-steps { display: grid; gap: 0.7rem; margin: 0; padding: 0 0.25rem; list-style: none; }
+.tl-steps li {
+  position: relative;
+  padding-left: 1.3rem;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--ink) 86%, transparent);
+}
+.tl-steps li::before {
+  content: "";
+  position: absolute;
+  left: 0.1rem;
+  top: 0.42em;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 50%;
+  background: var(--tl-c);
+}
+/* Dotted thread joining the milestones within a phase. */
+.tl-steps li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 0.36rem;
+  top: calc(0.42em + 0.7rem);
+  bottom: -0.6rem;
+  border-left: 1.5px dotted color-mix(in srgb, var(--tl-c) 70%, transparent);
+}
+.tl-steps .tl-end { color: var(--ink); font-weight: 600; }
+.tl-steps .tl-end::before { background: transparent; box-shadow: inset 0 0 0 2px var(--tl-c); }
+@media (max-width: 640px) {
+  .tl { grid-template-columns: 1fr; gap: 1.4rem; }
+}
+
+/* ============================================================
+   ATOMIC DESIGN  (projects/atomic-design.html)
+   A live rebuild of the JetPhotos HUD design system. Everything
+   inside .ads reads its own tokens, so the library switches between
+   dark and light on its own control, independent of the site theme.
+   Values are taken from the Figma atoms board.
+   ============================================================ */
+.ads {
+  /* Palette, exactly as specified on the atoms board. */
+  --ads-n0: #000000; --ads-n1: #2a2a2a; --ads-n2: #333333; --ads-n3: #434343; --ads-n4: #525252;
+  --ads-p0: #ff6b00; --ads-p1: #ff9344; --ads-p2: #faab72; --ads-p3: #fcc8a3; --ads-p4: #fcd1aa;
+  --ads-s0: #1c4259; --ads-s1: #2c678a; --ads-s2: #397fa9; --ads-s3: #599dc6; --ads-s4: #85d2ff;
+  --ads-success: #80e0ff; --ads-warn0: #ffd700; --ads-warn1: #ffe966; --ads-err0: #ff0000; --ads-err1: #ff4d4d;
+
+  /* Semantic roles: dark mode, the HUD as designed. */
+  --ads-bg: linear-gradient(135deg, #150c4f 0%, #24106a 50%, #5a1490 100%);
+  --ads-ink: #ffffff;
+  --ads-ink-dim: rgba(255, 255, 255, 0.72);
+  --ads-line: rgba(255, 255, 255, 0.34);
+  --ads-glass: rgba(76, 70, 190, 0.42);
+  --ads-glass-line: rgba(170, 160, 240, 0.55);
+  --ads-well: rgba(10, 6, 40, 0.42);
+  --ads-accent: var(--ads-p0);
+  --ads-on-accent: #ffffff;
+  --ads-fill: var(--ads-s0);
+  --ads-on-fill: #ffffff;
+  --ads-link: #00ffb8;
+  --ads-logo: none;
+
+  --ads-cut: 12px;
+  font-family: "Lexend", var(--font-body);
+  color: var(--ads-ink);
+  background: var(--ads-bg);
+  border-radius: 26px;
+  padding: clamp(1rem, 3vw, 2.25rem);
+  transition: color 0.35s var(--ease);
+}
+
+/* Light mode: the same shapes and roles on a chalk-violet ground. The
+   orange darkens a step so strokes and labels keep 3:1 on white, the link
+   green drops to a readable teal, and the navy fill becomes a pale tint. */
+.ads[data-mode="light"] {
+  --ads-bg: linear-gradient(135deg, #f1edff 0%, #f7f2ff 50%, #ffeadd 100%);
+  --ads-ink: #14102b;
+  --ads-ink-dim: rgba(20, 16, 43, 0.72);
+  --ads-line: rgba(20, 16, 43, 0.3);
+  --ads-glass: rgba(255, 255, 255, 0.72);
+  --ads-glass-line: rgba(90, 78, 180, 0.35);
+  --ads-well: rgba(20, 16, 43, 0.05);
+  --ads-accent: #d95700;
+  --ads-on-accent: #ffffff;
+  --ads-fill: #dcecf7;
+  --ads-on-fill: #1c4259;
+  --ads-link: #00785a;
+  --ads-logo: invert(1) brightness(0.18);
+}
+
+/* ---------- Library chrome ---------- */
+.ads-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+.ads-top h3 { margin: 0; font: 700 clamp(1.3rem, 2.4vw, 1.75rem)/1.1 "Lexend", sans-serif; letter-spacing: -0.02em; }
+.ads-top p { margin: 0.3rem 0 0; font-size: 0.875rem; color: var(--ads-ink-dim); }
+.ads-mode { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--ads-well); box-shadow: inset 0 0 0 1px var(--ads-line); }
+.ads-mode button {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.45rem 0.95rem; border: 0; border-radius: 999px;
+  font: 600 0.8125rem/1 "Lexend", sans-serif; color: var(--ads-ink-dim);
+  background: transparent; cursor: pointer;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.ads-mode button[aria-pressed="true"] { background: var(--ads-accent); color: var(--ads-on-accent); }
+.ads-mode svg { width: 14px; height: 14px; }
+
+.ads-level { display: flex; align-items: center; gap: 0.75rem; margin: clamp(1.75rem, 4vw, 2.75rem) 0 0.9rem; }
+.ads-top + .ads-level { margin-top: 0; }
+.ads-level b { font: 700 clamp(1.1rem, 2vw, 1.4rem)/1 "Lexend", sans-serif; letter-spacing: -0.01em; }
+.ads-level span { font-size: 0.8125rem; color: var(--ads-ink-dim); }
+.ads-level::after { content: ""; flex: 1; height: 1px; background: var(--ads-line); }
+
+.ads-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 10px; }
+.ads-cell {
+  grid-column: span var(--w, 12);
+  min-width: 0;
+  display: flex; flex-direction: column; gap: 0.9rem;
+  padding: clamp(0.95rem, 2vw, 1.35rem);
+  border-radius: 18px;
+  background: var(--ads-well);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ads-line) 60%, transparent);
+}
+.ads-k { margin: 0; font: 500 0.72rem/1.3 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; color: var(--ads-ink-dim); letter-spacing: 0.02em; }
+@media (max-width: 900px) { .ads-cell { grid-column: span var(--wt, 12); } }
+
+/* ---------- Atoms: colour ---------- */
+.ads-ramp { display: grid; gap: 0.55rem; }
+.ads-ramp + .ads-ramp { margin-top: 0.4rem; }
+.ads-ramp > span { font-size: 0.8125rem; color: var(--ads-ink-dim); }
+.ads-swatches { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; }
+.ads-swatch { display: grid; gap: 0.35rem; }
+.ads-swatch i {
+  display: block; height: 2.6rem;
+  background: var(--c);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+}
+.ads-swatch code { font: 500 0.7rem/1 ui-monospace, Menlo, Consolas, monospace; color: var(--ads-ink-dim); }
+.ads-status { display: grid; grid-template-columns: 1fr 2fr 2fr; gap: 10px; }
+.ads-status .ads-swatches { grid-template-columns: repeat(var(--n), minmax(0, 1fr)); }
+@media (max-width: 640px) {
+  .ads-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ads-status { grid-template-columns: 1fr; }
+}
+
+/* ---------- Atoms: type ---------- */
+.ads-type { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(1rem, 3vw, 2.5rem); align-items: start; }
+.ads-type dl { margin: 0; display: grid; gap: 0.9rem; }
+.ads-type dt { margin: 0; line-height: 1.05; letter-spacing: -0.02em; overflow-wrap: anywhere; }
+.ads-type dd { margin: 0.2rem 0 0; font: 500 0.7rem/1 ui-monospace, Menlo, Consolas, monospace; color: var(--ads-ink-dim); }
+.ads-t-d1 { font: 700 clamp(2.4rem, 5.6vw, 4.5rem)/1 "Lexend", sans-serif; }
+.ads-t-h1 { font: 700 clamp(2rem, 4.4vw, 3.5rem)/1 "Lexend", sans-serif; }
+.ads-t-h2 { font: 700 clamp(1.75rem, 3.8vw, 3rem)/1 "Lexend", sans-serif; }
+.ads-t-h3 { font: 700 clamp(1.4rem, 2.6vw, 2rem)/1.1 "Lexend", sans-serif; }
+.ads-t-h4 { font: 700 1.5rem/1.15 "Lexend", sans-serif; }
+.ads-t-h4u { font: 700 1.5rem/1.15 "Lexend", sans-serif; text-transform: uppercase; letter-spacing: 0.01em; }
+.ads-t-p1 { font: 400 1.125rem/1.5 "Lexend", sans-serif; }
+.ads-t-p2 { font: 400 1rem/1.5 "Lexend", sans-serif; }
+.ads-t-btn { font: 700 1.25rem/1.2 "Lexend", sans-serif; }
+.ads-t-link { font: 600 1.25rem/1.2 "Lexend", sans-serif; color: var(--ads-link); text-decoration: underline; text-underline-offset: 0.2em; }
+.ads-aa { margin: 0; font: 400 clamp(5rem, 14vw, 11rem)/0.85 "Lexend", sans-serif; letter-spacing: -0.04em; color: color-mix(in srgb, var(--ads-ink) 30%, transparent); }
+.ads-aa small { display: block; margin-top: 0.6rem; font-size: 0.16em; letter-spacing: 0.4em; }
+@media (max-width: 760px) { .ads-type { grid-template-columns: 1fr; } }
+
+/* ---------- Atoms: shapes ---------- */
+.ads-shapes { display: flex; flex-wrap: wrap; align-items: center; gap: 1.1rem 1.5rem; }
+.ads-shape { display: block; flex: none; background: var(--sc, var(--ads-accent)); }
+.ads-sh-bar { width: 8.5rem; height: 1.6rem; --sc: var(--ads-fill); clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, 100% 100%, 0 100%); box-shadow: inset 0 0 0 2px var(--ads-accent); }
+.ads-sh-pill { width: 7rem; height: 1rem; --sc: var(--ads-accent); clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 8px 100%, 0 50%); }
+.ads-sh-play { width: 2.4rem; height: 2.6rem; --sc: var(--ads-ink-dim); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.ads-sh-para { width: 5rem; height: 1.6rem; --sc: var(--ads-ink-dim); clip-path: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%); }
+.ads-sh-oct { width: 3.2rem; height: 3.2rem; --sc: var(--ads-p1); clip-path: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); }
+.ads-sh-hex { width: 2.8rem; height: 3.2rem; --sc: var(--ads-s0); clip-path: polygon(50% 0, 100% 22%, 100% 70%, 50% 100%, 0 78%, 0 30%); }
+.ads-sh-fin { width: 3rem; height: 3.4rem; --sc: var(--ads-s1); clip-path: polygon(100% 0, 100% 100%, 0 70%); }
+
+/* ---------- Stroke-and-fill shapes ----------
+   A clip-path cannot carry a border, so each framed shape is two layers:
+   ::before fills the polygon, ::after draws its 1.5px outline as an even-odd
+   ring (the outer polygon minus the same points pulled 1.5px inward). That
+   keeps the outline true even when the fill is transparent. */
+.ads-frame { position: relative; isolation: isolate; background: transparent; }
+.ads-frame::before, .ads-frame::after { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.ads-frame::before { clip-path: var(--shape); background: var(--fill, transparent); }
+.ads-frame::after { clip-path: var(--ring); background: var(--stroke, var(--ads-accent)); }
+
+/* ---------- Molecules ---------- */
+.ads-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1rem; }
+
+.ads-btn {
+  --shape: polygon(0 0, calc(100% - var(--ads-cut)) 0, 100% var(--ads-cut), 100% 100%, var(--ads-cut) 100%, 0 calc(100% - var(--ads-cut))); --ring: polygon(evenodd, 0 0, calc(100% - var(--ads-cut)) 0, 100% var(--ads-cut), 100% 100%, var(--ads-cut) 100%, 0 calc(100% - var(--ads-cut)), 0 0, 1.5px 1.5px, calc(calc(100% - var(--ads-cut)) - 1.5px) 1.5px, calc(100% - 1.5px) calc(var(--ads-cut) + 1.5px), calc(100% - 1.5px) calc(100% - 1.5px), calc(var(--ads-cut) + 1.5px) calc(100% - 1.5px), 1.5px calc(calc(100% - var(--ads-cut)) - 1.5px), 1.5px 1.5px);
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-width: 9rem; padding: 0.7rem 1.4rem;
+  border: 0; cursor: pointer;
+  font: 700 1rem/1 "Lexend", sans-serif; color: var(--ads-on-fill);
+  transition: transform 0.25s var(--ease), filter 0.25s var(--ease);
+}
+.ads-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.ads-btn:focus-visible { outline: 2px solid var(--ads-link); outline-offset: 3px; }
+.ads-btn--primary { --stroke: var(--ads-accent); --fill: var(--ads-accent); color: var(--ads-on-accent); --shape: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%); --ring: polygon(evenodd, 14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%, 14px 0, calc(14px + 1.5px) 1.5px, calc(calc(100% - 14px) - 1.5px) 1.5px, calc(100% - 1.5px) 50%, calc(calc(100% - 14px) - 1.5px) calc(100% - 1.5px), calc(14px + 1.5px) calc(100% - 1.5px), 1.5px 50%, calc(14px + 1.5px) 1.5px); }
+.ads-btn--secondary { --stroke: var(--ads-accent); --fill: var(--ads-fill); }
+.ads-btn--outline { --stroke: var(--ads-accent); --fill: transparent; color: var(--ads-ink); }
+.ads-btn--ghost { --stroke: var(--ads-ink); --fill: transparent; color: var(--ads-ink); --shape: polygon(14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%); --ring: polygon(evenodd, 14px 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 14px 100%, 0 50%, 14px 0, calc(14px + 1.5px) 1.5px, calc(calc(100% - 14px) - 1.5px) 1.5px, calc(100% - 1.5px) 50%, calc(calc(100% - 14px) - 1.5px) calc(100% - 1.5px), calc(14px + 1.5px) calc(100% - 1.5px), 1.5px 50%, calc(14px + 1.5px) 1.5px); }
+.ads-btn--small { min-width: 0; padding: 0.45rem 0.9rem; font-size: 0.75rem; font-weight: 500; }
+
+.ads-pair { display: inline-flex; gap: 2px; }
+.ads-pair a, .ads-pair button {
+  --shape: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); --ring: polygon(evenodd, 10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%, 10px 0, calc(10px + 1.5px) 1.5px, calc(100% - 1.5px) 1.5px, calc(calc(100% - 10px) - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), calc(10px + 1.5px) 1.5px);
+  display: inline-flex; align-items: center; padding: 0.4rem 1rem;
+  border: 0; cursor: pointer; font: 400 0.875rem/1 "Lexend", sans-serif;
+  color: var(--ads-ink); --stroke: var(--ads-ink); --fill: transparent;
+}
+.ads-pair .is-on { --stroke: var(--ads-accent); --fill: var(--ads-accent); color: var(--ads-on-accent); }
+
+.ads-check {
+  --shape: polygon(9px 0, 100% 0, calc(100% - 9px) 100%, 0 100%); --ring: polygon(evenodd, 9px 0, 100% 0, calc(100% - 9px) 100%, 0 100%, 9px 0, calc(9px + 1.5px) 1.5px, calc(100% - 1.5px) 1.5px, calc(calc(100% - 9px) - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), calc(9px + 1.5px) 1.5px);
+  --stroke: var(--ads-accent); --fill: transparent;
+  display: inline-grid; place-items: center; width: 2.4rem; height: 1.7rem;
+  border: 0; cursor: pointer; color: #fff;
+}
+.ads-check svg { width: 15px; height: 15px; opacity: 0; transition: opacity 0.2s var(--ease); }
+.ads-check[aria-checked="true"] { --fill: var(--ads-accent); }
+.ads-check[aria-checked="true"] svg { opacity: 1; }
+
+.ads-avatar {
+  --shape: polygon(50% 0, 100% 22%, 100% 70%, 50% 100%, 0 78%, 0 30%); --ring: polygon(evenodd, 50% 0, 100% 22%, 100% 70%, 50% 100%, 0 78%, 0 30%, 50% 0, 50% 1.5px, calc(100% - 1.5px) calc(22% + 1.5px), calc(100% - 1.5px) calc(70% - 1.5px), 50% calc(100% - 1.5px), 1.5px calc(78% - 1.5px), 1.5px calc(30% + 1.5px), 50% 1.5px);
+  --stroke: var(--ads-accent); --fill: var(--ads-s0);
+  display: inline-grid; place-items: center; width: 2.4rem; height: 2.7rem; color: #fff; flex: none;
+}
+.ads-avatar--active { --stroke: var(--ads-warn0); }
+.ads-avatar svg { width: 15px; height: 15px; }
+
+.ads-octo {
+  --shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); --ring: polygon(evenodd, 30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%, 30% 0, calc(30% + 1.5px) 1.5px, calc(70% - 1.5px) 1.5px, calc(100% - 1.5px) calc(30% + 1.5px), calc(100% - 1.5px) calc(70% - 1.5px), calc(70% - 1.5px) calc(100% - 1.5px), calc(30% + 1.5px) calc(100% - 1.5px), 1.5px calc(70% - 1.5px), 1.5px calc(30% + 1.5px), calc(30% + 1.5px) 1.5px);
+  --stroke: #ffffff; --fill: var(--ads-p1);
+  display: inline-grid; place-items: center; width: 2.6rem; height: 2.6rem;
+  border: 0; cursor: pointer; color: #fff; flex: none;
+  transition: transform 0.25s var(--ease);
+}
+.ads-octo svg { width: 16px; height: 16px; }
+.ads-octo[aria-pressed="true"] { --fill: var(--ads-accent); transform: scale(1.08); }
+.ads-octo[aria-pressed="true"] svg { fill: currentColor; }
+
+.ads-chev { display: inline-flex; gap: 1.5rem; }
+.ads-chev button { border: 0; background: none; padding: 0.2rem; cursor: pointer; color: var(--ads-accent); font: 700 2rem/1 "Lexend", sans-serif; }
+
+.ads-tabs { display: flex; flex-wrap: wrap; gap: 4px; }
+.ads-tab {
+  --shape: polygon(12px 0, calc(100% - 4px) 0, 100% 100%, 0 100%); --ring: polygon(evenodd, 12px 0, calc(100% - 4px) 0, 100% 100%, 0 100%, 12px 0, calc(12px + 1.5px) 1.5px, calc(calc(100% - 4px) - 1.5px) 1.5px, calc(100% - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), calc(12px + 1.5px) 1.5px);
+  --stroke: var(--ads-accent); --fill: transparent;
+  padding: 0.45rem 1.1rem 0.4rem; border: 0; cursor: pointer;
+  font: 400 0.75rem/1 "Lexend", sans-serif; color: var(--ads-ink);
+}
+.ads-tab[aria-selected="true"] { --fill: var(--ads-fill); color: var(--ads-on-fill); }
+
+.ads-search {
+  --shape: polygon(14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%); --ring: polygon(evenodd, 14px 0, 100% 0, calc(100% - 14px) 100%, 0 100%, 14px 0, calc(14px + 1.5px) 1.5px, calc(100% - 1.5px) 1.5px, calc(calc(100% - 14px) - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), calc(14px + 1.5px) 1.5px);
+  --stroke: var(--ads-accent); --fill: transparent;
+  display: flex; align-items: center; gap: 0.6rem; width: min(100%, 22rem); padding: 0.55rem 1.4rem;
+  color: var(--ads-ink);
+}
+.ads-search input { flex: 1; min-width: 0; border: 0; background: none; font: 400 0.9375rem/1.2 "Lexend", sans-serif; color: inherit; outline: none; }
+.ads-search input::placeholder { color: var(--ads-ink-dim); }
+.ads-search svg { width: 16px; height: 16px; flex: none; }
+
+.ads-scroll { position: relative; height: 0.7rem; width: 100%; box-shadow: inset 0 0 0 1.5px var(--ads-ink); }
+.ads-scroll i { position: absolute; top: 2px; bottom: 2px; left: 10%; width: 14%; background: var(--ads-accent); clip-path: polygon(6px 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 6px 100%, 0 50%); }
+
+.ads-sep { position: relative; display: flex; align-items: flex-end; height: 2rem; }
+.ads-sep::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--ads-accent); }
+.ads-sep b { position: relative; display: block; width: 6rem; height: 2rem; background: var(--ads-accent); clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%); }
+.ads-sep span { margin: 0 0 0.15rem 0.6rem; font-size: 0.8125rem; }
+
+/* ---------- Organisms ---------- */
+.ads-header {
+  display: flex; align-items: center; gap: clamp(0.5rem, 1.5vw, 1rem); flex-wrap: wrap;
+  padding: 0.6rem 0 0.9rem;
+  border-bottom: 1.5px solid var(--ads-line);
+}
+.ads-header .ads-logo { height: 1.8rem; width: auto; filter: var(--ads-logo); }
+.ads-burger { display: grid; gap: 4px; width: 1.4rem; flex: none; }
+.ads-burger i { height: 3px; background: var(--ads-ink); clip-path: polygon(0 0, 100% 0, 85% 100%, 15% 100%); }
+.ads-header nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.ads-header .ads-btn { min-width: 6.5rem; padding: 0.5rem 1rem; font-size: 0.75rem; font-weight: 400; }
+.ads-header .ads-search { width: 11rem; padding: 0.4rem 1.1rem; }
+.ads-header .ads-search input { font-size: 0.8125rem; }
+.ads-header-end { display: flex; align-items: center; gap: 0.75rem; margin-left: auto; }
+
+.ads-card {
+  --shape: polygon(0 4%, 3% 0, 34% 0, 38% 7%, 100% 7%, 100% 100%, 0 100%); --ring: polygon(evenodd, 0 4%, 3% 0, 34% 0, 38% 7%, 100% 7%, 100% 100%, 0 100%, 0 4%, 1.5px calc(4% + 1.5px), calc(3% + 1.5px) 1.5px, calc(34% + 1.5px) 1.5px, calc(38% + 1.5px) calc(7% + 1.5px), calc(100% - 1.5px) calc(7% + 1.5px), calc(100% - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), 1.5px calc(4% + 1.5px));
+  position: relative;
+  --stroke: var(--ads-glass-line); --fill: var(--ads-glass);
+  padding: clamp(2.2rem, 4vw, 3rem) clamp(1.2rem, 3vw, 2.4rem) 1rem;
+}
+.ads-card .ads-tabs { position: absolute; top: 0.6rem; left: 1.2rem; }
+.ads-card-stage { position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.75rem; }
+.ads-card-stage img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 0; transition: opacity 0.35s var(--ease); }
+.ads-card-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 0.9rem; font-size: 0.8125rem; }
+.ads-card-foot .ads-who { display: flex; align-items: center; gap: 0.75rem; }
+.ads-card-foot .ads-what { text-align: right; text-transform: uppercase; font-size: 0.75rem; line-height: 1.4; }
+.ads-dots { display: flex; gap: 4px; margin-top: 0.7rem; justify-content: flex-end; }
+.ads-dots i { width: 0.85rem; height: 1rem; background: color-mix(in srgb, var(--ads-ink) 30%, transparent); }
+.ads-dots i.is-on { background: var(--ads-accent); }
+
+.ads-chat {
+  --shape: polygon(8% 0, 92% 0, 100% 6%, 100% 94%, 92% 100%, 8% 100%, 0 94%, 0 6%); --ring: polygon(evenodd, 8% 0, 92% 0, 100% 6%, 100% 94%, 92% 100%, 8% 100%, 0 94%, 0 6%, 8% 0, calc(8% + 1.5px) 1.5px, calc(92% - 1.5px) 1.5px, calc(100% - 1.5px) calc(6% + 1.5px), calc(100% - 1.5px) calc(94% - 1.5px), calc(92% - 1.5px) calc(100% - 1.5px), calc(8% + 1.5px) calc(100% - 1.5px), 1.5px calc(94% - 1.5px), 1.5px calc(6% + 1.5px), calc(8% + 1.5px) 1.5px);
+  --stroke: var(--ads-accent); --fill: transparent;
+  display: flex; flex-direction: column; padding: 1.1rem 1.2rem 1.4rem; height: 100%;
+}
+.ads-chat p { margin: 0 0 1rem; text-align: center; font-size: 0.8125rem; }
+.ads-chat ul { flex: 1; position: relative; display: grid; align-content: start; gap: 0.85rem; margin: 0; padding: 0 1.4rem 0 0; list-style: none; }
+.ads-chat li { display: flex; align-items: center; gap: 0.85rem; font-size: 0.75rem; }
+.ads-chat ul::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 0.6rem; box-shadow: inset 0 0 0 1px var(--ads-ink); background: linear-gradient(var(--ads-accent), var(--ads-accent)) center 12% / 0.3rem 22% no-repeat; }
+
+.ads-feed { display: grid; grid-template-columns: auto repeat(3, minmax(0, 1fr)) auto; align-items: center; gap: clamp(0.5rem, 1.6vw, 1.1rem); }
+.ads-feed figure { margin: 0; }
+.ads-feed img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 0; clip-path: polygon(0 0, 88% 0, 100% 14%, 100% 100%, 12% 100%, 0 86%); }
+.ads-feed figcaption { display: flex; align-items: center; justify-content: space-between; margin-top: 0.6rem; font-size: 0.75rem; }
+.ads-feed .ads-octo { width: 2.1rem; height: 2.1rem; }
+@media (max-width: 640px) {
+  .ads-feed { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ads-feed > .ads-chev-btn { display: none; }
+  .ads-feed figcaption span { display: none; }
+}
+.ads-chev-btn { border: 0; background: none; cursor: pointer; color: var(--ads-accent); font: 700 1.8rem/1 "Lexend", sans-serif; padding: 0.2rem; }
+
+.ads-stats {
+  --shape: polygon(0 0, 100% 0, 100% 100%, 0 100%); --ring: polygon(evenodd, 0 0, 100% 0, 100% 100%, 0 100%, 0 0, 1.5px 1.5px, calc(100% - 1.5px) 1.5px, calc(100% - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), 1.5px 1.5px);
+  --stroke: var(--ads-ink); --fill: #13202a;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; padding: 1.3rem 1.6rem;
+  color: #ffffff;
+}
+.ads[data-mode="light"] .ads-stats { --fill: #ffffff; color: var(--ads-ink); }
+.ads-stats div { display: grid; grid-template-columns: auto 1fr; column-gap: 0.6rem; align-items: center; }
+.ads-stats svg { grid-row: span 2; width: 1.6rem; height: 1.6rem; }
+.ads-stats b { font: 700 clamp(1.05rem, 2vw, 1.5rem)/1.1 "Lexend", sans-serif; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.ads-stats span { font-size: 0.625rem; letter-spacing: 0.06em; text-transform: uppercase; opacity: 0.82; }
+@media (max-width: 760px) { .ads-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* The full page, scrollable inside a frame rather than one very tall plate. */
+.ads-page { max-height: min(82vh, 56rem); overflow: auto; border-radius: 20px; overscroll-behavior: contain; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.55); }
+.ads-page img { display: block; width: 100%; height: auto; border-radius: 0; }
+
+/* Mind map: the branches as HUD chips. */
+.ads-map { display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 10px; }
+.ads-map > div { display: grid; gap: 0.6rem; align-content: start; padding: 1rem; border-radius: 18px; background: var(--ads-well); }
+.ads-map b { --shape: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%); --ring: polygon(evenodd, 12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%, 12px 0, calc(12px + 1.5px) 1.5px, calc(100% - 1.5px) 1.5px, calc(calc(100% - 12px) - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), calc(12px + 1.5px) 1.5px); --stroke: var(--ads-accent); --fill: var(--ads-fill); justify-self: start; padding: 0.4rem 1.2rem; font: 600 0.9375rem/1.2 "Lexend", sans-serif; color: var(--ads-on-fill); }
+.ads-map ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ads-map li { --shape: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%); --ring: polygon(evenodd, 10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%, 10px 0, calc(10px + 1.5px) 1.5px, calc(100% - 1.5px) 1.5px, calc(calc(100% - 10px) - 1.5px) calc(100% - 1.5px), 1.5px calc(100% - 1.5px), calc(10px + 1.5px) 1.5px); --stroke: var(--ads-accent); --fill: transparent; padding: 0.35rem 1rem; font-size: 0.8125rem; }
+.ads-map-core { grid-column: 1 / -1; justify-items: center; text-align: center; }
+.ads-map-core strong { --shape: polygon(30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%); --ring: polygon(evenodd, 30% 0, 70% 0, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0 70%, 0 30%, 30% 0, calc(30% + 1.5px) 1.5px, calc(70% - 1.5px) 1.5px, calc(100% - 1.5px) calc(30% + 1.5px), calc(100% - 1.5px) calc(70% - 1.5px), calc(70% - 1.5px) calc(100% - 1.5px), calc(30% + 1.5px) calc(100% - 1.5px), 1.5px calc(70% - 1.5px), 1.5px calc(30% + 1.5px), calc(30% + 1.5px) 1.5px); --stroke: var(--ads-accent); --fill: transparent; padding: 1rem 2.4rem; font: 600 1.125rem/1.2 "Lexend", sans-serif; }
+
+/* Phones: the header wraps into rows, the carousel tabs sit above the photo. */
+.ads-pair a, .ads-pair button { white-space: nowrap; }
+@media (max-width: 640px) {
+  .ads-header-end { flex-wrap: wrap; width: 100%; margin-left: 0; }
+  .ads-header .ads-search { flex: 1; width: auto; min-width: 0; }
+  .ads-card { padding-top: 1rem; }
+  .ads-card .ads-tabs { position: static; margin-bottom: 0.8rem; }
+  .ads-card-foot { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ads *, .ads { transition: none !important; }
+}
+
+/* Page-level pieces around the library. */
+.p.p--atm { display: grid; place-items: center; padding: clamp(1rem, 3vw, 2rem); background: linear-gradient(135deg, #150c4f 0%, #3a127a 60%, #5a1490 100%); }
+.p--atm .atm-jet { width: 100%; height: 100%; max-height: 26rem; object-fit: contain; border-radius: 0; }
+.p--atm .atm-jet--front { max-height: 13rem; }
+.ads--map { padding: clamp(0.75rem, 2vw, 1.25rem); }
+/* Transparent device renders: no frame, no shadow box around the cut-out. */
+.plate--bare img { border-radius: 0; box-shadow: none; filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.35)); }
+.mosaic--tall .shots-track { grid-auto-rows: clamp(7rem, 11vw, 10rem); }
 
 /* IKEA yellow tile, with IKEA blue type (5.4:1). */
 .p.p--ikea { background: #ffda1a; color: #0051ba; --ink: #0051ba; --ink-dim: rgba(0, 81, 186, 0.8); }

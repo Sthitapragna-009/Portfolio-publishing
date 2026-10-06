@@ -505,13 +505,13 @@ const next = `
     <section class="section case-next">
       <div class="wrap">
         <p class="eyebrow">Next project</p>
-        <a class="next-project" href="veltura-lamp.html">
+        <a class="next-project" href="atomic-design.html">
           <div class="next-project-media">
-            <img src="../assets/veltura/card.jpg" alt="Veltura title card: the lit paper-plane lamp on a desk at night" width="1600" height="1000" loading="lazy" decoding="async" />
+            <img src="../assets/atomic/card.jpg" alt="Atomic UI Design title board: the redesigned JetPhotos home page on lilac, peach and green iMacs" width="1600" height="1000" loading="lazy" decoding="async" />
           </div>
           <div class="next-project-body">
-            <h2 class="display next-project-title">Veltura Lamp</h2>
-            <p class="next-project-desc">A study table lamp with the form of a paper plane, prototyped in mount board and skewer sticks around a concealed LED source.</p>
+            <h2 class="display next-project-title">Atomic Design</h2>
+            <p class="next-project-desc">A HUD-inspired design system for JetPhotos, built from atoms to pages, then rebuilt in four existing systems.</p>
             <span class="project-arrow" aria-hidden="true">
               <svg width="13" height="13" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
             </span>
@@ -523,8 +523,7 @@ const next = `
               <svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
             </span>
             All projects
-          </a>
-          <a class="btn btn-outline" href="mailto:sthita.ksp2709@gmail.com">Get in touch</a>
+          </a>
         </div>
       </div>
     </section>
