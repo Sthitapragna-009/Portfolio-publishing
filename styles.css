@@ -1666,6 +1666,200 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 
 /* ============================================================
+   RESUME (resume.html)
+   ============================================================ */
+
+/* A header in the page voice, then the CV itself on one opaque sheet so the
+   dot field stays out from under the reading text. */
+.cv-hero {
+  padding-top: clamp(7rem, 15vh, 10rem);
+  padding-bottom: clamp(1.75rem, 4vw, 3rem);
+}
+.cv-name {
+  font-size: clamp(2.5rem, 7.5vw, 6.5rem);
+  letter-spacing: -0.05em;
+  line-height: 0.92;
+}
+.cv-role {
+  margin-top: 1rem;
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-weight: 600;
+  color: var(--ink);
+}
+.cv-sep { margin-inline: 0.4em; color: var(--ink-faint); font-weight: 400; }
+.cv-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1.4rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+  color: var(--ink-dim);
+}
+.cv-meta a { text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--hairline); transition: color 0.25s var(--ease); }
+.cv-meta a:hover { color: var(--blue-ink); }
+.cv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1.75rem;
+}
+.cv-file { font-size: 0.8125rem; color: var(--ink-faint); }
+
+.cv-sheet {
+  padding: clamp(0.5rem, 2.5vw, 2rem) clamp(1.25rem, 4vw, 3.5rem);
+  border: 1px solid var(--hairline);
+  border-radius: 28px;
+  background: var(--bg);
+}
+
+/* Each section: its title in a narrow left column, the entries on the right. */
+.cv-sec {
+  display: grid;
+  grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr);
+  gap: 1rem clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: clamp(1.5rem, 3vw, 2.25rem);
+}
+.cv-sec + .cv-sec { border-top: 1px solid var(--hairline); }
+.cv-h {
+  align-self: start;
+  position: sticky;
+  top: 6rem;
+  font: 700 1.125rem/1.2 var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.cv-n {
+  display: block;
+  margin-bottom: 0.35rem;
+  font: 600 0.75rem/1 var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--accent-text);
+}
+
+.cv-item + .cv-item { margin-top: 1.6rem; }
+.cv-item-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.2rem 1.5rem;
+}
+.cv-item-t {
+  font: 650 1.0625rem/1.35 var(--font-display);
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.cv-date {
+  font-size: 0.875rem;
+  color: var(--ink-faint);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.cv-org {
+  margin-top: 0.2rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink-dim);
+}
+.cv-summary,
+.cv-desc,
+.cv-bullets li {
+  font-size: 0.9875rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.cv-summary { font-size: clamp(1rem, 1.3vw, 1.125rem); color: var(--ink); max-width: 62ch; }
+.cv-desc { margin-top: 0.3rem; }
+.cv-bullets { margin: 0.55rem 0 0; padding-left: 1.1rem; list-style: disc; }
+.cv-bullets li + li { margin-top: 0.3rem; }
+.cv-bullets li::marker { color: var(--accent-text); }
+
+/* Titles that have a case study on this site link to it. */
+.cv-link { transition: color 0.25s var(--ease); }
+.cv-link-ico {
+  display: inline-grid;
+  place-items: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-left: 0.45rem;
+  vertical-align: 0.05em;
+  border-radius: 50%;
+  background: var(--surface-hi);
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease), transform 0.35s var(--ease);
+}
+.cv-link-ico svg { width: 9px; height: 9px; }
+.cv-link:hover,
+.cv-link:focus-visible { color: var(--blue-ink); }
+.cv-link:hover .cv-link-ico,
+.cv-link:focus-visible .cv-link-ico { background: var(--blue); color: var(--chalk); transform: rotate(45deg); }
+
+.cv-edu-row {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 0.25rem 1.25rem;
+  padding-block: 0.85rem;
+}
+.cv-edu-row:first-child { padding-top: 0; }
+.cv-edu-row + .cv-edu-row { border-top: 1px solid var(--hairline); }
+.cv-grade {
+  font: 700 1rem/1 var(--font-display);
+  color: var(--ink);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.cv-skills { display: grid; gap: 1rem; margin: 0; }
+.cv-skills div { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 0.5rem 1rem; align-items: baseline; }
+.cv-skills dt { font-weight: 700; font-size: 0.9375rem; color: var(--ink); }
+.cv-skills dd { margin: 0; }
+/* Skills and interests read as running text, each item split by a thin
+   orange slash, rather than as tags. */
+.cv-inline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9875rem;
+  line-height: 1.75;
+  color: var(--ink-dim);
+}
+/* Each item stays whole; lines break only at a slash. */
+.cv-inline li { display: inline; white-space: nowrap; }
+/* The slash trails its item, so a wrapped line starts on a word, not a slash. */
+.cv-inline li:not(:last-child)::after {
+  content: "/";
+  margin-left: 0.6em;
+  margin-right: 0.3em;
+  color: var(--accent-text);
+  font-weight: 300;
+}
+.cv-inline--lead { font-size: clamp(1rem, 1.3vw, 1.125rem); color: var(--ink); }
+
+.cv-rows { margin: 0; padding: 0; list-style: none; }
+.cv-rows li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.2rem 1.5rem;
+  padding-block: 0.8rem;
+}
+.cv-rows li:first-child { padding-top: 0; }
+.cv-rows li + li { border-top: 1px solid var(--hairline); }
+.cv-rows .cv-org { margin: 0; font-weight: 400; }
+
+@media (max-width: 760px) {
+  .cv-sec { grid-template-columns: 1fr; }
+  .cv-h { position: static; }
+  .cv-edu-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .cv-edu-row .cv-date { grid-column: 1 / -1; }
+  .cv-skills div { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
    CONTACT (the footer on every page)
    ============================================================ */
 
