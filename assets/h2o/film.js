@@ -230,3 +230,30 @@
     else if (!en.isIntersecting) pause();
   }, { threshold: 0.45 }).observe(vis);
 })();
+
+/* Dynamic Island demo video: plays while it is on screen, unless the visitor
+   paused it or prefers less motion; the button pauses and resumes it. */
+(() => {
+  const video = document.querySelector("[data-island-video]");
+  const btn = document.querySelector("[data-island-toggle]");
+  if (!video || !btn) return;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let userPaused = reduce;
+  const label = btn.querySelector("span");
+  const sync = () => {
+    const paused = video.paused;
+    btn.setAttribute("aria-pressed", String(paused));
+    label.textContent = paused ? "Play" : "Pause";
+  };
+  video.addEventListener("play", sync);
+  video.addEventListener("pause", sync);
+  btn.addEventListener("click", () => {
+    if (video.paused) { userPaused = false; video.play().catch(() => {}); }
+    else { userPaused = true; video.pause(); }
+  });
+  new IntersectionObserver(([en]) => {
+    if (en.isIntersecting && !userPaused) video.play().catch(() => {});
+    else if (!en.isIntersecting) video.pause();
+  }, { threshold: 0.2 }).observe(video);
+  sync();
+})();

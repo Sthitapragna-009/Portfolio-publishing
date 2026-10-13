@@ -2592,3 +2592,80 @@
 .p-trail li:last-child { padding-bottom: 0; }
 .p-trail li:last-child::after { display: none; }
 .p-trail li:last-child::before { background: transparent; box-shadow: inset 0 0 0 2px #fa6e26; }
+
+/* ---------- 12 Dynamic Island ---------- */
+/* The recorded prototype stands in a phone on a water-lit panel. The video
+   carries its own island, so the frame's painted one is switched off. */
+.p.p--h2-live {
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  background:
+    radial-gradient(70% 45% at 50% 38%, rgba(47, 107, 255, 0.3), transparent 72%),
+    #101216;
+}
+.p--h2-live .iphone { width: min(100%, 300px); }
+.iphone--live .iphone-screen::after { display: none; }
+.iphone--live video { display: block; width: 100%; height: auto; background: #000; }
+.h2-live-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  width: min(100%, 300px);
+}
+.h2-live-bar small { font-size: 0.75rem; color: rgba(244, 242, 236, 0.66); }
+.h2-live-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(244, 242, 236, 0.12);
+  color: #f4f2ec;
+  font: 600 0.8125rem/1 var(--font-body);
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease), color 0.25s var(--ease);
+}
+.h2-live-btn svg { width: 11px; height: 11px; }
+.h2-live-btn .i-play,
+.h2-live-btn[aria-pressed="true"] .i-pause { display: none; }
+.h2-live-btn[aria-pressed="true"] .i-play { display: block; }
+.h2-live-btn:hover,
+.h2-live-btn:focus-visible { background: #f4f2ec; color: #002fa7; }
+
+/* Three alerts side by side, each under a rule in its own colour. */
+.h2-alerts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.9rem, 2.5vw, 1.75rem);
+  margin-top: auto;
+}
+.h2-alerts > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding-top: 0.8rem;
+  border-top: 3px solid var(--tone);
+}
+@media (max-width: 640px) {
+  .h2-alerts { grid-template-columns: 1fr; }
+}
+
+/* Rules as a short numbered list rather than tags. */
+.h2-rules { margin: 0; padding: 0; list-style: none; counter-reset: rule; }
+.h2-rules li {
+  counter-increment: rule;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.55rem 0;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+.h2-rules li + li { border-top: 1px solid rgba(255, 255, 255, 0.1); }
+.h2-rules li::before {
+  content: counter(rule, decimal-leading-zero);
+  font: 600 0.75rem/1.9 var(--font-mono, ui-monospace, monospace);
+  color: var(--h2-lime);
+}

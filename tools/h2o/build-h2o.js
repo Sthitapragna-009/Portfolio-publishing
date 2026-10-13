@@ -113,7 +113,7 @@ const hero = `
     </section>`;
 
 // ---------- sections ----------
-// v2: thirteen short chapters on flush bento panels. Visuals carry the story; copy is captions.
+// v2: fourteen short chapters on flush bento panels. Visuals carry the story; copy is captions.
 const S = [];
 
 // Bento helpers. A panel's spec is "w6 h2 t12 m6": desktop columns (of 12), rows,
@@ -438,10 +438,27 @@ S.push(sec(shead("11", "The product", "", "Every screen answers “what's happen
     P("w4 t12", mono("why not a chatbot") + ps("The question is “when will it be full?”, and the ideal number of steps to answer it is zero."), "hatch"),
   ])));
 
-// 12 Beyond the phone
+// 12 Dynamic Island
+// The recorded prototype plays in a phone frame (its own island, so the frame's
+// painted one is switched off). film.js plays it while on screen and honours
+// reduced motion; the button pauses it.
+const live = `<div class="iphone iphone--live"><div class="iphone-bezel"><div class="iphone-screen"><video data-island-video src="${A}dynamic-island-demo.mp4" poster="${A}dynamic-island-poster.jpg" width="780" height="1688" muted loop playsinline preload="metadata" aria-label="Demo of the H2o Connect Live Activity: leaving the app, expanding the Dynamic Island, switching to Manual, stopping and starting the motor, then a low water alert answered with Start motor"></video></div></div></div>
+            <div class="h2-live-bar"><button class="h2-live-btn" type="button" data-island-toggle aria-pressed="false"><svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span>Pause</span></button><small>28 s · recorded from the prototype</small></div>`;
+const alertCol = (tone, title, action) => `<div style="--tone:var(--h2-${tone})"><h3 class="p-t">${e(title)}</h3><p class="p-s">${e(action)}</p></div>`;
+S.push(sec(shead("12", "Dynamic Island", "", "Leave the app and the tank comes along. A Live Activity keeps the level and the countdown beside the camera, with the motor one tap away.") +
+  bx([
+    P("w4 h3 t6 m12", live, "flat h2-live"),
+    P("w4 t6 m12", mono("compact · beside the camera") + pt("Level and time left") + ps("A ring fills with the tank on one side of the camera and the countdown runs on the other. It turns orange when the tank runs low.")),
+    P("w4 t6 m12", mono("expanded · one tap") + pt("Stop, start, switch mode") + ps("Auto, Manual and Smart sit beside the motor button. Each change confirms in the line under the timer, so the island never jumps away.")),
+    P("w8 t6 m12", mono("alerts · grow out of the island, then fold back") + `<div class="h2-alerts">${alertCol("low", "Water is low", "Start motor, or Later") + alertCol("lime", "Tank full", "Stopped at 90%, 1,800 L") + alertCol("crit", "Possible leak", "Close inlet, or That was us")}</div>`),
+    P("w4 t6 m12", mono("from any app") + num("2", "taps") + ps("to stop the motor: the island, then Stop."), "lime"),
+    P("w4 t6 m12", mono("rules it keeps") + `<ol class="h2-rules">${["Only outside the app, as on iOS", "Auto on a low tank starts the motor", "Stop never asks twice"].map((r) => `<li>${e(r)}</li>`).join("")}</ol>`, "hatch"),
+  ]) + fine("On an iPhone this is a Live Activity whose buttons run App Intents (iOS 17 and later). There a tap opens the app and a long press expands the island; the prototype expands on a tap so it works in a browser.")));
+
+// 13 Beyond the phone
 const shot = (img, w, h, alt, title, cap, extra) => '<figure class="shot-card"><img src="' + A + img + '" alt="' + e(alt) + '" width="' + w + '" height="' + h + '" loading="lazy" decoding="async" /><figcaption><h3 class="p-t">' + e(title) + '</h3><p class="p-s">' + e(cap) + '</p>' + (extra || "") + '</figcaption></figure>';
 const gallery = (cols, items, cls) => '<div class="shots h2-gallery h2-gallery--photos' + (cls ? " " + cls : "") + ' reveal" data-shots style="--cols:' + cols + ';margin:0"><div class="shots-track">' + items.join("") + '</div></div>';
-S.push(sec(shead("12", "Beyond the phone", "", "The same rules on the wrist, the speaker and the kitchen display. Every surface can stop the pump.") +
+S.push(sec(shead("13", "Beyond the phone", "", "The same rules on the wrist, the speaker and the kitchen display. Every surface can stop the pump.") +
   gallery(3, [
     shot("dev-aw-1.jpg", 420, 600, "Apple Watch showing H2o: tank at 78%, 1,560 litres, filling with 12 minutes left, and a Stop button", "Apple Watch · glance", "Level and time to full. Stop where the thumb lands."),
     shot("dev-aw-3.jpg", 420, 600, "Apple Watch alert from H2o Connect: possible leak, 42 litres lost overnight, with Close valve and That was us buttons", "Apple Watch · alert", "The evidence in one line, two equal choices."),
@@ -456,8 +473,8 @@ S.push(sec(shead("12", "Beyond the phone", "", "The same rules on the wrist, the
     shot("dev-nest.jpg", 776, 582, "Nest Hub showing H2o: the overhead tank at 78% with the pump switched on, 3 runs today, and a suggested off peak routine", "Nest Hub · Google Home", "Status on the counter, with an off peak routine."),
   ]) + fine("Anyone at home can check the level and stop the pump from any surface. Safety settings only change in the app.")));
 
-// 13 Validation
-S.push(sec(shead("13", "Validation", "", "Accessibility targets, eleven designed edge states, four fixes from prototype walkthroughs, and the metrics a study would hold the product to.") +
+// 14 Validation
+S.push(sec(shead("14", "Validation", "", "Accessibility targets, eleven designed edge states, four fixes from prototype walkthroughs, and the metrics a study would hold the product to.") +
   bx([
     ["48", "px", "minimum touch target"], ["56", "px", "for Stop, never confirmed"], ["200", "%", "text size without breaking"], ["0", "", "states shown by colour alone"],
   ].map(([n, u, t], i) => P("w3 t6", mono("accessibility") + num(n, u) + ps(t), i === 1 ? "lime" : ""))) +
