@@ -579,7 +579,9 @@
 
     const build = () => {
       readDotColour();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Capped at 1.5: the dots are 1 to 1.5 px, and a full-screen canvas at
+      // 2x is four times the pixels to redraw every frame.
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       w = field.clientWidth;
       h = field.clientHeight;
       if (!w || !h) return;
@@ -669,8 +671,22 @@
 
     };
 
+    // The wave is slow, so 20 fps reads as continuous; and while the page is
+    // scrolling the field holds still, so the compositor only has to move the
+    // page instead of repainting the canvas (and the blurred nav over it) too.
+    const FRAME_MS = 50;
+    let lastDraw = 0;
+    let scrollingUntil = 0;
+    const markScroll = () => { scrollingUntil = performance.now() + 180; };
+    window.addEventListener("scroll", markScroll, { passive: true });
+    window.addEventListener("wheel", markScroll, { passive: true });
+    window.addEventListener("touchmove", markScroll, { passive: true });
+
     const loop = (now) => {
-      draw((now - started) / 1000);
+      if (now >= scrollingUntil && now - lastDraw >= FRAME_MS) {
+        lastDraw = now;
+        draw((now - started) / 1000);
+      }
       frame = requestAnimationFrame(loop);
     };
 
