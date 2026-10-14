@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" font-family="'Archivo', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <clipPath id="abdomen"><ellipse cx="0" cy="40" rx="52" ry="80"/></clipPath>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#0d0d0e"/>
+
+  <!-- Yellow leaf tile: the wordmark -->
+  <path d="M260 110 H852 A18 18 0 0 1 870 128 V520 A150 150 0 0 1 720 670 H128 A18 18 0 0 1 110 652 V260 A150 150 0 0 1 260 110 Z" fill="#f6c10e"/>
+  <text x="186" y="318" font-size="150" font-weight="800" letter-spacing="-6" fill="#0d0d0e">Paraga</text>
+  <text x="186" y="456" font-size="150" font-weight="800" letter-spacing="-6" fill="#0d0d0e">Mitra</text>
+  <text x="196" y="542" font-family="'Noto Sans Devanagari', 'Nirmala UI', 'Mangal', 'Kohinoor Devanagari', sans-serif" font-size="50" font-weight="700" fill="#0d0d0e">पराग मित्र</text>
+  <text x="196" y="600" font-family="'Archivo', 'Segoe UI', Arial, sans-serif" font-size="22" font-weight="600" letter-spacing="2" fill="#0d0d0e" opacity="0.75">POLLINATION AS A SERVICE</text>
+
+  <!-- White leaf tile: the four-petal mark -->
+  <path d="M1020 110 H1182 A18 18 0 0 1 1200 128 V550 A120 120 0 0 1 1080 670 H918 A18 18 0 0 1 900 652 V230 A120 120 0 0 1 1020 110 Z" fill="#f7f5ef"/>
+  <g transform="translate(980 320) scale(5.833)" fill="#0d0d0e">
+    <path d="M2 2H5A6 6 0 0 1 11 8V11H8A6 6 0 0 1 2 5Z"/>
+    <path d="M19 2H22V5A6 6 0 0 1 16 11H13V8A6 6 0 0 1 19 2Z"/>
+    <path d="M8 13H11V16A6 6 0 0 1 5 22H2V19A6 6 0 0 1 8 13Z"/>
+    <path d="M13 13H16A6 6 0 0 1 22 19V22H19A6 6 0 0 1 13 16Z"/>
+  </g>
+
+  <!-- Outlined leaf: who it serves -->
+  <path d="M190 700 H852 A18 18 0 0 1 870 718 V820 A80 80 0 0 1 790 900 H128 A18 18 0 0 1 110 882 V780 A80 80 0 0 1 190 700 Z" fill="none" stroke="#f7f5ef" stroke-opacity="0.35" stroke-width="2"/>
+  <text x="180" y="790" font-size="32" font-weight="600" fill="#f7f5ef">Farmers × migratory beekeepers</text>
+  <text x="180" y="838" font-size="24" font-weight="500" fill="#f7f5ef" opacity="0.6">Booked to the bloom. Safe from sprays. Paid on time.</text>
+
+  <!-- A drawn bee -->
+  <g transform="translate(1385 390) rotate(-18)">
+    <ellipse cx="-38" cy="-62" rx="60" ry="28" transform="rotate(-32 -38 -62)" fill="#f7f5ef" opacity="0.85"/>
+    <ellipse cx="38" cy="-62" rx="60" ry="28" transform="rotate(32 38 -62)" fill="#f7f5ef" opacity="0.6"/>
+    <path d="M-28 -30 L-70 -10 M-30 -10 L-74 26 M-24 10 L-60 58 M28 -30 L70 -10 M30 -10 L74 26 M24 10 L60 58" stroke="#f6c10e" stroke-width="5" stroke-linecap="round"/>
+    <ellipse cx="0" cy="40" rx="52" ry="80" fill="#f6c10e"/>
+    <g clip-path="url(#abdomen)" stroke="#0d0d0e" stroke-width="18">
+      <path d="M-60 12 H60 M-60 50 H60 M-60 88 H60"/>
+    </g>
+    <circle cx="0" cy="-38" r="36" fill="#26262a" stroke="#f6c10e" stroke-width="3"/>
+    <circle cx="0" cy="-90" r="26" fill="#0d0d0e" stroke="#f6c10e" stroke-width="3"/>
+    <path d="M-10 -112 C -20 -140, -36 -150, -50 -148 M10 -112 C 20 -140, 36 -150, 50 -148" fill="none" stroke="#f6c10e" stroke-width="4" stroke-linecap="round"/>
+  </g>
+
+  <!-- The route: three blooms -->
+  <path d="M930 840 C 1050 760, 1200 900, 1460 800" fill="none" stroke="#f6c10e" stroke-width="6" stroke-linecap="round" stroke-dasharray="0.1 18"/>
+  <g font-family="'Archivo', 'Segoe UI', Arial, sans-serif" font-size="20" font-weight="600" fill="#f7f5ef">
+    <circle cx="930" cy="840" r="14" fill="#f6c10e"/>
+    <text x="930" y="890" text-anchor="middle">MUSTARD · DEC</text>
+    <circle cx="1142.5" cy="827.5" r="14" fill="#f6c10e"/>
+    <text x="1142.5" y="877" text-anchor="middle">LITCHI · FEB</text>
+    <circle cx="1460" cy="800" r="14" fill="#f6c10e"/>
+    <text x="1460" y="760" text-anchor="end">APPLE · APR</text>
+  </g>
+</svg>
