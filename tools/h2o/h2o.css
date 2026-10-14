@@ -2107,13 +2107,13 @@
 .mo-hcard { aspect-ratio: 4 / 3; background: #fff; }
 .mo-hcard[data-k="echo"] { left: 4%; top: 9%; width: 44%; }
 .mo-hcard[data-k="nest"] { right: 4%; top: 9%; width: 44%; transition-delay: 0.1s; }
-.mo-hcard[data-k="homepod"] { left: 23%; top: 49%; width: 54%; transition-delay: 0.2s; }
+.mo-hcard[data-k="homeview"] { left: 23%; top: 49%; width: 54%; transition-delay: 0.2s; }
 .mo[data-scene="watch"] .mo-wcard,
 .mo[data-scene="home"] .mo-hcard { transform: none; }
 .mo[data-active]:not([data-active=""]) .mo-hcard { opacity: 0.42; filter: saturate(0.4); transition-delay: 0s; }
 .mo[data-active="echo"] .mo-hcard[data-k="echo"],
 .mo[data-active="nest"] .mo-hcard[data-k="nest"],
-.mo[data-active="homepod"] .mo-hcard[data-k="homepod"] { opacity: 1; filter: none; transform: scale(1.04); z-index: 1; }
+.mo[data-active="homeview"] .mo-hcard[data-k="homeview"] { opacity: 1; filter: none; transform: scale(1.04); z-index: 1; }
 
 /* End card */
 .mo-end { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }

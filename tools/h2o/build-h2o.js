@@ -443,7 +443,7 @@ S.push(sec(shead("11", "The product", "", "Every screen answers “what's happen
 // painted one is switched off). film.js plays it while on screen and honours
 // reduced motion; the button pauses it.
 const live = `<div class="iphone iphone--live"><div class="iphone-bezel"><div class="iphone-screen"><video data-island-video src="${A}dynamic-island-demo.mp4" poster="${A}dynamic-island-poster.jpg" width="780" height="1688" muted loop playsinline preload="metadata" aria-label="Demo of the H2o Connect Live Activity: leaving the app, expanding the Dynamic Island, switching to Manual, stopping and starting the motor, then a low water alert answered with Start motor"></video></div></div></div>
-            <div class="h2-live-bar"><button class="h2-live-btn" type="button" data-island-toggle aria-pressed="false"><svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span>Pause</span></button><small>28 s · recorded from the prototype</small></div>`;
+            <div class="h2-live-bar"><button class="h2-live-btn" type="button" data-island-toggle aria-pressed="false"><svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></svg><svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg><span>Pause</span></button><small>40 s · recorded from the prototype</small></div>`;
 const alertCol = (tone, title, action) => `<div style="--tone:var(--h2-${tone})"><h3 class="p-t">${e(title)}</h3><p class="p-s">${e(action)}</p></div>`;
 S.push(sec(shead("12", "Dynamic Island", "", "Leave the app and the tank comes along. A Live Activity keeps the level and the countdown beside the camera, with the motor one tap away.") +
   bx([
@@ -468,7 +468,7 @@ S.push(sec(shead("13", "Beyond the phone", "", "The same rules on the wrist, the
     shot("dev-aw-2.jpg", 420, 600, "Apple Watch showing H2o with the motor off: tank at 24%, 480 litres, and a Start motor button", "Apple Watch · start", "Low tank, motor off: Start is the only action."),
   ], "h2-gallery--watch") +
   gallery(3, [
-    shot("dev-homepod.jpg", 986, 740, "Concept of a HomePod with a screen showing H2o: the overhead tank at 78% with Stop pump, tonight's off peak fill plan, and a Siri request to stop the pump", "HomePod with a screen · concept", "“Hey Siri, stop the pump.”", '<p class="h2-credit">Concept device render: 9to5Mac. Screen: H2o Connect.</p>'),
+    shot("dev-homeview.jpg", 1200, 900, "Apple HomeView showing H2o on its 7 inch display: the overhead tank at 78%, 1,560 of 2,000 litres, filling and full in 12 minutes, a large Stop pump button, tonight's off peak fill from 01:40 to 02:05, and a Siri request to stop the pump", "Apple HomeView · Siri", "Reads from across the kitchen. “Siri, stop the pump.”", '<p class="h2-credit">Device: Apple HomeView, Apple Newsroom image. Screen: H2o Connect.</p>'),
     shot("dev-echo.jpg", 880, 660, "Echo Show 5 showing H2o: the overhead tank at 78%, filling, with Stop pump and Details buttons and an Alexa request", "Echo Show · Alexa", "“Alexa, how full is the tank?”"),
     shot("dev-nest.jpg", 776, 582, "Nest Hub showing H2o: the overhead tank at 78% with the pump switched on, 3 runs today, and a suggested off peak routine", "Nest Hub · Google Home", "Status on the counter, with an off peak routine."),
   ]) + fine("Anyone at home can check the level and stop the pump from any surface. Safety settings only change in the app.")));
@@ -588,7 +588,7 @@ const film = `
           </div>
         </header>
         <div class="h2-card mo reveal" data-film data-scene="launch">
-          <p class="sr-only">${e("Animated walkthrough. A tap on the H2o Connect icon opens the app on Home. The tour then shows the fill range, the motor screen, a low water alert, the three automation modes, the smart prediction, weekly usage and a possible leak alert that closes the inlet valve in one tap. It then shows the sonar sensor on the tank, the display unit by the motor switch and the app working together, a low water alert on Apple Watch and Galaxy Watch that starts the motor from the wrist, and the tank on Amazon Echo Show, Google Nest Hub and a concept HomePod with a screen.")}</p>
+          <p class="sr-only">${e("Animated walkthrough. A tap on the H2o Connect icon opens the app on Home. The tour then shows the fill range, the motor screen, a low water alert, the three automation modes, the smart prediction, weekly usage and a possible leak alert that closes the inlet valve in one tap. It then shows the sonar sensor on the tank, the display unit by the motor switch and the app working together, a low water alert on Apple Watch and Galaxy Watch that starts the motor from the wrist, and the tank on Amazon Echo Show, Google Nest Hub and Apple HomeView.")}</p>
           <div class="mo-stage">
             <div class="mo-vis" aria-hidden="true">
               <div class="mo-layer mo-hw">${hwSvg}
@@ -602,7 +602,7 @@ const film = `
               <div class="mo-layer mo-home">
                 <div class="mo-hcard" data-k="echo">${moImg("dev-echo.jpg", 880, 660)}<span class="mo-tag">Echo Show</span></div>
                 <div class="mo-hcard" data-k="nest">${moImg("dev-nest.jpg", 776, 582)}<span class="mo-tag">Nest Hub</span></div>
-                <div class="mo-hcard" data-k="homepod">${moImg("dev-homepod.jpg", 986, 740)}<span class="mo-tag">HomePod with a screen &middot; concept</span></div>
+                <div class="mo-hcard" data-k="homeview">${moImg("dev-homeview.jpg", 1200, 900)}<span class="mo-tag">Apple HomeView</span></div>
               </div>
               <div class="mo-layer mo-end">
                 <img src="${A}app-icon.svg" alt="" width="208" height="208" />

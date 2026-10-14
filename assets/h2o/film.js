@@ -25,10 +25,10 @@
     ["Hardware", "Built to save power", "Zero-contact sensing eliminates corrosion. Automated motor scheduling is estimated to cut energy bills by 20 to 40% for large facilities."],
     ["Wearables", "Alerts on the wrist", "The low water alert reaches Apple Watch and Galaxy Watch with the action attached, so the fix is one tap away."],
     ["Wearables", "Start and stop from the watch", "Start the motor from the wrist and watch the tank fill. Stop is always the biggest thing on the screen."],
-    ["Smart home", "Every screen in the house", "The same tank on Echo Show, Nest Hub and a HomePod with a screen. One Matter certification covers them all."],
+    ["Smart home", "Every screen in the house", "The same tank on Echo Show, Nest Hub and Apple HomeView. One Matter certification covers them all."],
     ["Smart home", "Amazon Echo Show", "“Alexa, how full is the tank?” The answer and the Stop button share one glanceable card."],
     ["Smart home", "Google Nest Hub", "The tank sits beside the rest of the home controls, with today’s runs, the cost and a suggested off-peak routine."],
-    ["Smart home", "HomePod with a screen", "Designed for Apple’s rumoured home display: “Hey Siri, stop the pump.” Concept device render: 9to5Mac."],
+    ["Smart home", "Apple HomeView", "Set for HomeView’s 7-inch display: the level reads from across the kitchen, and “Siri, stop the pump” works hands-free."],
     ["H2o Connect", "One tank. Every screen in the home.", "A product by Dwaj‑Tech. Research, system, hardware and app, designed end to end."],
   ];
   const CH = [0, 3.8, 35, 44.5, 53];
@@ -114,7 +114,7 @@
   at(53, (s) => { s.scene = "home"; s.cap = 14; });
   at(54.6, (s) => { s.active = "echo"; s.cap = 15; });
   at(57, (s) => { s.active = "nest"; s.cap = 16; });
-  at(59.4, (s) => { s.active = "homepod"; s.cap = 17; });
+  at(59.4, (s) => { s.active = "homeview"; s.cap = 17; });
   // End card
   at(62, (s) => { s.scene = "end"; s.active = ""; s.cap = 18; });
   T.sort((a, b) => a.t - b.t);
