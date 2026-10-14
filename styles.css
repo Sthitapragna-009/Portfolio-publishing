@@ -5636,7 +5636,7 @@ body.is-locked { overflow: hidden; }
 .pg-bee { min-width: 0; justify-self: end; }
 .pg-ascii {
   margin: 0;
-  font: 600 clamp(5px, 0.78vw, 12px)/1 ui-monospace, "Cascadia Mono", Consolas, Menlo, "DejaVu Sans Mono", monospace;
+  font: 500 clamp(4.5px, 0.64vw, 10.5px)/1 ui-monospace, "Cascadia Mono", Consolas, Menlo, "DejaVu Sans Mono", monospace;
   letter-spacing: 0;
   white-space: pre;
   color: var(--ink);
@@ -5644,6 +5644,12 @@ body.is-locked { overflow: hidden; }
 .pg-ascii .k { color: var(--ink); }
 .pg-ascii .y { color: var(--pg-bee-y); }
 .pg-ascii .w { color: color-mix(in srgb, var(--ink) 50%, transparent); }
+.pg-ascii .a { color: color-mix(in srgb, var(--ink) 62%, transparent); }
+/* The live pollen: a second layer, cell for cell over the art, that the
+   page script fills with drifting specks. */
+.pg-art { position: relative; }
+.pg-dust { position: absolute; inset: 0; color: var(--pg-bee-y); pointer-events: none; text-shadow: 0 0 6px rgba(246, 193, 14, 0.85), 0 0 14px rgba(246, 193, 14, 0.35); }
+[data-theme="light"] .pg-dust { text-shadow: 0 0 5px rgba(229, 165, 0, 0.45); }
 .pg-ascii .sq { display: inline-block; width: 1ch; overflow: hidden; text-align: center; vertical-align: top; }
 .pg-ascii .g { animation: pg-blink 4.2s steps(1, end) infinite; animation-delay: var(--d, 0s); }
 @keyframes pg-blink { 0%, 100% { opacity: 1; } 46% { opacity: 0.12; } 62% { opacity: 1; } }
@@ -5653,7 +5659,7 @@ body.is-locked { overflow: hidden; }
 @media (max-width: 900px) {
   .pg-hero { grid-template-columns: 1fr; }
   .pg-bee { justify-self: stretch; overflow: hidden; }
-  .pg-ascii { font-size: calc((100vw - 2 * var(--gutter)) / 68); }
+  .pg-ascii { font-size: calc((100vw - 2 * var(--gutter)) / 83); }
 }
 
 /* ============================================================

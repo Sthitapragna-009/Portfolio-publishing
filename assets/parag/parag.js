@@ -10,6 +10,82 @@
     else img.addEventListener("error", markEmpty);
   });
 
+  // ---------- Pollen over the ASCII scene ----------
+  // Specks leave the blossom's anthers. Most stream towards the bee on a
+  // wobbling path; the rest drift up and away like stardust. Positions are in
+  // character cells of the art, drawn into an empty <pre> laid over it.
+  document.querySelectorAll("[data-dust]").forEach((art) => {
+    const layer = art.querySelector(".pg-dust");
+    const COLS = Number(art.dataset.cols), ROWS = Number(art.dataset.rows);
+    const [fx, fy, bx, by] = art.dataset.dust.split(",").map(Number);
+    const rand = Math.random;
+    const N = 90;
+
+    const spawn = (p) => {
+      p.x = fx + (rand() - 0.5) * 12;
+      p.y = fy + (rand() - 0.5) * 5;
+      p.toBee = rand() < 0.65;
+      p.vx = p.toBee ? -(0.15 + rand() * 0.3) : (rand() - 0.5) * 0.5;
+      p.vy = p.toBee ? -(0.05 + rand() * 0.12) : -(0.05 + rand() * 0.13);
+      p.life = 0;
+      p.max = 70 + rand() * 100;
+      p.ph = rand() * Math.PI * 2;
+      return p;
+    };
+    const parts = Array.from({ length: N }, () => spawn({}));
+
+    const step = () => {
+      for (const p of parts) {
+        if (p.toBee) {
+          p.vx += (bx - p.x) * 0.0012 + Math.cos(p.ph * 1.3 + p.life * 0.09) * 0.01;
+          p.vy += (by - p.y) * 0.0022 + Math.sin(p.ph + p.life * 0.12) * 0.012;
+          p.vx *= 0.985; p.vy *= 0.985;
+        } else {
+          p.vx += Math.sin(p.ph + p.life * 0.07) * 0.008;
+          p.vy -= 0.0015;
+          p.vx *= 0.99; p.vy *= 0.99;
+        }
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life += 1;
+        const arrived = p.toBee && Math.hypot(p.x - bx, (p.y - by) * 1.7) < 2.5;
+        if (arrived || p.life > p.max || p.x < 0 || p.x >= COLS || p.y < 0 || p.y >= ROWS) spawn(p);
+      }
+    };
+
+    const render = () => {
+      const grid = Array.from({ length: ROWS }, () => new Array(COLS).fill(" "));
+      for (const p of parts) {
+        const c = Math.round(p.x), r = Math.round(p.y);
+        if (r < 0 || r >= ROWS || c < 0 || c >= COLS) continue;
+        const t = p.life / p.max;
+        const tw = Math.sin(p.ph * 3 + p.life * 0.5);
+        grid[r][c] = t < 0.08 || t > 0.85 ? "." : tw > 0.75 ? "*" : tw > 0.2 ? "+" : "·";
+      }
+      layer.textContent = grid.map((row) => row.join("").replace(/\s+$/, "")).join("\n");
+    };
+
+    // Start mid-flight, so the stream is already there on first paint.
+    for (let i = 0; i < 160; i++) step();
+    render();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    let visible = true, last = 0, raf = 0;
+    const FRAME = 1000 / 14;
+    const tick = (now) => {
+      raf = 0;
+      if (!visible || document.hidden) return;
+      if (now - last >= FRAME) { last = now; step(); render(); }
+      raf = requestAnimationFrame(tick);
+    };
+    const run = () => { if (!raf && visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(([e]) => { visible = e.isIntersecting; run(); }).observe(art);
+    }
+    document.addEventListener("visibilitychange", run);
+    run();
+  });
+
   // ---------- Mockups ----------
   // Live screens are cloned onto product photos and mapped to the glass with
   // a homography. Each figure carries the photo width it was measured on, the
