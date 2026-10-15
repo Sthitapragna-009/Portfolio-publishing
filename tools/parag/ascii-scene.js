@@ -1,8 +1,10 @@
 // Generates the ASCII header scene for projects/paraga-mitra.html: the
-// dot-matrix bee (dense shading, yellow bands, dissolving into squares) and a
-// stippled blossom made only of dots, annotated like a specimen poster, with
-// a faint trail of pollen between them. A second, empty <pre> sits on top for
-// the live pollen that assets/parag/parag.js animates.
+// dot-matrix bee from the moodboard (dense shading, yellow bands, its tail
+// dissolving into squares) flying towards a blossom filled with digits.
+//
+// The page script (assets/parag/parag.js) reads the art back out of the
+// <pre> and animates it: pollen floating up from the flower, more of it
+// shaken loose under the cursor, and faint ripples where the cursor passes.
 //
 //   node tools/parag/ascii-scene.js
 //
@@ -12,7 +14,7 @@ const fs = require("fs");
 const path = require("path");
 
 const COLS = 136;
-const ROWS = 80;
+const ROWS = 92;
 // World units: one column wide. A monospace cell is ~0.6 as wide as it is
 // tall, so one row is 1/0.6 units high. Circles stay circles.
 const ROW_H = 1 / 0.6;
@@ -47,9 +49,8 @@ function segDist(x, y, pts) {
 }
 
 // ---- The bee: the dot-matrix bee from the moodboard, in its own 0-100
-// frame, placed top left. Dense shading, yellow bands, and its tail end
-// dissolving into squares. ----
-const BEE = { x: 0, y: 2, s: 0.66 };
+// frame, placed top right, facing left towards the flower. ----
+const BEE = { x: 44, y: -5, s: 0.9 };
 const BEE_RAMP = " .:-=+*#%@";
 // k^0.6 pushes the body towards the dense end of the ramp, so it reads small.
 const beeShade = (k) => BEE_RAMP[Math.max(1, Math.min(BEE_RAMP.length - 1, Math.round(Math.pow(Math.max(0, k), 0.6) * (BEE_RAMP.length - 1))))];
@@ -76,7 +77,7 @@ function bee(X, Y, r, c) {
   const x = (X - BEE.x) / BEE.s, y = (Y - BEE.y) / BEE.s;
   if (x < -2 || x > 102 || y < -2 || y > 102) return null;
   const cellW = 1 / BEE.s;
-  // How far into the dissolve: 0 on the left, 1 at the far right.
+  // How far into the dissolve: 0 at the head, 1 at the far right.
   const decay = Math.max(0, (x - 55) / 45) * 0.9 + Math.max(0, (y - 62) / 38) * 0.6;
 
   const head = ell(x, y, 24, 38, 9, 10, -10);
@@ -116,63 +117,61 @@ function bee(X, Y, r, c) {
   return null;
 }
 
-// ---- The blossom: stippled, after a dot-drawn flower. Made only of dots,
-// densest along petal edges and midribs, sparse on the back petals. Three
-// quarter view, bottom right. ----
-const FL = { x: 96, y: 92, s: 0.74 };
+// ---- The blossom, filled with digits like a number drawing: bright rims
+// and midribs, a fuller body, a darker heart. Bottom left. ----
+const FL = { x: 42, y: 106, s: 0.72 };
 // [centre x, centre y, length, width, angle, opacity], in the flower's frame.
 const petals = [
-  [-34, -6, 31, 7.5, 172, 1],     // the long sweep to the left
-  [-22, 22, 31, 5.5, 132, 0.95],  // the thin one falling down left
-  [26, -9, 22, 12, -18, 1],       // the big petal curling right
-  [24, -31, 20, 10, -52, 0.7],    // upper right
-  [2, -31, 16, 22, -84, 0.5],     // the back petal, behind the stamens
-  [-22, -21, 17, 10, -150, 0.6],  // upper left
-  [22, 20, 22, 6.5, 38, 0.8],     // the sweep down right
-  [3, 31, 14, 22, 95, 0.42],      // the lower petal, mostly air
+  [34, -6, 31, 7.5, 8, 1],        // the long sweep to the right
+  [22, 22, 31, 5.5, 48, 0.95],    // the thin one falling down right
+  [-26, -9, 22, 12, 198, 1],      // the big petal curling left
+  [-24, -31, 20, 10, 232, 0.8],   // upper left
+  [-2, -31, 16, 22, 264, 0.7],    // the back petal, behind the stamens
+  [22, -21, 17, 10, 330, 0.75],   // upper right
+  [-22, 20, 22, 6.5, 142, 0.85],  // the sweep down left
+  [-3, 31, 14, 22, 85, 0.6],      // the lower petal
 ];
 const stamens = Array.from({ length: 24 }, (_, i) => {
   const a = ((-152 + (i / 23) * 124 + (rnd() - 0.5) * 8) * Math.PI) / 180;
   const len = 9 + rnd() * 8;
   return { a, len };
 });
-const flStem = [[6, 18], [10, 44], [15, 62]];
+const flStem = [[-6, 18], [-10, 44], [-15, 62]];
+const DIGITS = "0123456789";
+const digit = () => DIGITS[Math.floor(rnd() * 10)];
 
 function blossom(X, Y) {
   const fx = (X - FL.x) / FL.s, fy = (Y - FL.y) / FL.s;
   const rad = Math.hypot(fx, fy);
   if (rad > 72) return null;
 
-  let I = 0;
-  for (const [cx, cy, rx, ry, a, op] of petals) {
-    const e = ell(fx, fy, cx, cy, rx, ry, a);
-    if (e.d >= 1) continue;
-    // Dots gather in a band along the rim, measured in cells so a thin
-    // petal becomes one dotted stroke and a wide one keeps a sparse inside,
-    // plus a midrib that fades to the tip.
-    const toEdge = (1 - e.d) * Math.min(rx, ry) * FL.s;
-    let v = toEdge < 1.7 ? 0.95 : 0.2;
-    if (Math.abs(e.v) * ry * FL.s < 0.9 && Math.abs(e.u) < 0.85) v = Math.max(v, 0.55 + 0.4 * (1 - Math.abs(e.u)));
-    I = Math.max(I, v * op) + 0.08 * v * op;
-  }
-  const cup = ell(fx, fy, 0, 2, 12, 7.5, -8);
-  if (cup.d < 1) I = Math.max(I, 0.4 + 0.55 * (1 - cup.d));
-
   // Stamens: dotted filaments with a pollen-yellow anther at the tip.
   for (const s of stamens) {
     const tx = Math.cos(s.a) * s.len, ty = Math.sin(s.a) * s.len - 2;
     if (Math.hypot(fx - tx, fy - ty) < 1.3) return ["•", "y"];
-    if (segDist(fx, fy, [[0, -1], [tx, ty]]) < 0.55 && rnd() < 0.7) return ["·", "k"];
+    if (segDist(fx, fy, [[0, -1], [tx, ty]]) < 0.55 && rnd() < 0.75) return ["·", "k"];
   }
 
-  // The stem, thinning to nothing.
+  let I = 0;
+  for (const [cx, cy, rx, ry, a, op] of petals) {
+    const e = ell(fx, fy, cx, cy, rx, ry, a);
+    if (e.d >= 1) continue;
+    const toEdge = (1 - e.d) * Math.min(rx, ry) * FL.s;
+    let v = toEdge < 1.6 ? 1 : 0.62;
+    if (Math.abs(e.v) * ry * FL.s < 0.9 && Math.abs(e.u) < 0.85) v = Math.max(v, 0.8 + 0.2 * (1 - Math.abs(e.u)));
+    I = Math.max(I, v * op);
+  }
+  // The heart sits in shadow: present, but darker and sparser.
+  const cup = ell(fx, fy, 0, 2, 12, 7.5, 8);
+  if (cup.d < 1) {
+    if (rnd() > 0.55 + 0.35 * cup.d) return null;
+    return [digit(), cup.d > 0.8 ? "kd" : "w"];
+  }
   const sd = segDist(fx, fy, flStem);
-  if (sd < 1.4 && fy > 14) I = Math.max(I, 0.7 * Math.max(0, 1 - (fy - 14) / 52));
+  if (sd < 1.6 && fy > 14) I = Math.max(I, 0.85 * Math.max(0, 1 - (fy - 14) / 60));
 
-  // Further out, the dots thin, as in a stipple drawing.
-  I *= Math.max(0.35, 1 - Math.max(0, rad - 28) / 60);
-  if (I <= 0.06 || rnd() > Math.min(1, I * 0.95)) return null;
-  return [I > 0.8 ? "•" : I > 0.4 ? "·" : ".", "k"];
+  if (I <= 0.05 || rnd() > Math.min(1, 0.3 + I * 0.75)) return null;
+  return [digit(), I > 0.85 ? "k" : I > 0.5 ? "kd" : "w"];
 }
 
 // ---- Build the grid ----
@@ -185,45 +184,60 @@ for (let r = 0; r < ROWS; r++) {
   }
 }
 
-// A faint trail of pollen from the anthers towards the bee.
-const B = { x: BEE.x + 39 * BEE.s, y: BEE.y + 42 * BEE.s };
-const P0 = [FL.x - 2, FL.y - 10], P1 = [72, 50], P2 = [B.x + 14, B.y + 6];
-for (let i = 0; i < 52; i++) {
-  const t = 0.06 + (i / 52) * 0.88;
-  const x = (1 - t) ** 2 * P0[0] + 2 * (1 - t) * t * P1[0] + t * t * P2[0] + (rnd() - 0.5) * 8;
-  const y = (1 - t) ** 2 * P0[1] + 2 * (1 - t) * t * P1[1] + t * t * P2[1] + (rnd() - 0.5) * 10;
+// ---- The meadow, drawn faint behind everything else: a few small flowers
+// on thin stems, then grass along an uneven ground line. Both only fill
+// empty cells, so the bee and the blossom stay on top. ----
+const put = (r, c, ch, cls) => {
+  if (r >= 0 && r < ROWS && c >= 0 && c < COLS && grid[r][c][0] === " ") grid[r][c] = [ch, cls];
+};
+const ground = (c) => ROWS - 2 + Math.round(Math.sin(c * 0.09 + 1.3) * 0.9);
+// "@" is the yellow centre; everything else is a faint petal.
+const SPRITES = [
+  [" o ", "o@o", " o "],
+  [" * ", "*@*", " ' "],
+  ["(@)"],
+  [".o.", "(@)", "'o'"],
+];
+// [column, head row, sprite]
+const smalls = [[6, 80, 1], [18, 84, 3], [48, 86, 2], [76, 83, 0], [88, 79, 3], [101, 85, 1], [114, 81, 0], [127, 86, 2]];
+const blooms = [];
+for (const [c, r, k] of smalls) {
+  const sp = SPRITES[k], h = sp.length, w = sp[0].length;
+  sp.forEach((line, i) => [...line].forEach((ch, j) => {
+    if (ch !== " ") put(r - (h >> 1) + i, c - (w >> 1) + j, ch, ch === "@" ? "ym" : "m");
+  }));
+  const leaf = 2 + Math.floor(rnd() * 3), side = rnd() < 0.5 ? -1 : 1;
+  for (let y = r - (h >> 1) + h; y <= ground(c); y++) {
+    put(y, c, "|", "m");
+    if (y === r + leaf) put(y, c + side, side < 0 ? "\\" : "/", "m");
+  }
+  blooms.push([c, r]);
+}
+// Grass: thicker and taller around the blossom, thinning towards the right
+// edge. On the left it runs straight on: the page script carries the meadow
+// past the art to the left edge of the header, on the same ground line.
+for (let c = 0; c < COLS; c++) {
+  const x = c + 0.5;
+  const edge = Math.min(1, (COLS - x) / 14);
+  const near = Math.exp(-(((x - FL.x) / 38) ** 2));
+  if (rnd() > (0.3 + 0.5 * near) * edge) continue;
+  const h = 1 + Math.floor(rnd() * (2 + 5 * near));
+  const lean = rnd() * 2 - 1;
+  const g = ground(c);
+  for (let k = 0; k < h; k++) {
+    const col = c + Math.round(lean * k * 0.45);
+    const ch = k === h - 1 && h > 1 ? (lean > 0 ? "'" : ",") : lean > 0.35 ? "/" : lean < -0.35 ? "\\" : "|";
+    put(g - k, col, ch, "m");
+  }
+  if (rnd() < 0.5 * edge) put(g + 1, c, ".", "m");
+}
+
+// A few specks of pollen already in the air above the flower.
+for (let i = 0; i < 36; i++) {
+  const x = FL.x - 20 + rnd() * 60, y = FL.y - 62 + rnd() * 44;
   const c = Math.round(x - 0.5), r = Math.round(y / ROW_H - 0.5);
   if (r >= 0 && r < ROWS && c >= 0 && c < COLS && grid[r][c][0] === " ") grid[r][c] = [rnd() < 0.25 ? "*" : rnd() < 0.5 ? "·" : ".", "y"];
 }
-
-// ---- Annotations, drawn over the art like a specimen poster ----
-const put = (r, c, ch, cls = "a") => { if (r >= 0 && r < ROWS && c >= 0 && c < COLS) grid[r][c] = [ch, cls]; };
-const text = (r, c, s, cls = "a") => [...s].forEach((ch, i) => put(r, c + i, ch, cls));
-const box = (r0, c0, r1, c1) => {
-  for (let c = c0 + 1; c < c1; c++) { put(r0, c, "─"); put(r1, c, "─"); }
-  for (let r = r0 + 1; r < r1; r++) { put(r, c0, "│"); put(r, c1, "│"); }
-  put(r0, c0, "┌"); put(r0, c1, "┐"); put(r1, c0, "└"); put(r1, c1, "┘");
-};
-const dotted = (r0, c0, r1, c1, every = 2) => {
-  const n = Math.max(Math.abs(r1 - r0), Math.abs(c1 - c0));
-  for (let i = 1; i < n; i += every) put(Math.round(r0 + ((r1 - r0) * i) / n), Math.round(c0 + ((c1 - c0) * i) / n), "·");
-};
-
-box(5, 1, 36, 66);
-box(46, 84, 60, 108);
-dotted(36, 66, 46, 84);
-dotted(5, 66, 3, 69, 1);
-text(2, 70, "object (1)");
-text(5, 70, "bee.ascii");
-text(6, 70, "carrying");
-text(7, 70, "pollen");
-dotted(53, 84, 53, 43, 1);
-text(50, 28, "object (2)");
-text(53, 28, "blossom.ascii");
-text(54, 28, "the nectar");
-text(55, 28, "is found");
-text(72, 40, "pollen,");
-text(73, 40, "in flight");
 
 // ---- Serialise: runs of one class become one span. Squares come from a
 // fallback font, so each is pinned to one cell width; debris squares also
@@ -254,9 +268,18 @@ for (const row of grid) {
   out += line.replace(/\s+$/, "") + "\n";
 }
 
-// The live pollen leaves from the anthers and heads for the bee's thorax.
-const dust = [FL.x, (FL.y - 9) / ROW_H, B.x, B.y / ROW_H].map((n) => n.toFixed(1)).join(",");
-const art = `<div class="pg-art" data-dust="${dust}" data-cols="${COLS}" data-rows="${ROWS}"><pre class="pg-ascii" aria-hidden="true">${out.replace(/\n+$/, "")}</pre><pre class="pg-ascii pg-dust" aria-hidden="true"></pre></div>`;
+// What the page script needs, in cells: the flower (for the pollen shake),
+// where pollen leaves from, and the small flowers the little bees visit.
+const cell = ([x, y]) => [+(x - 0.5).toFixed(1), +(y / ROW_H - 0.5).toFixed(1)];
+const scene = {
+  cols: COLS,
+  rows: ROWS,
+  rowH: +ROW_H.toFixed(4),
+  flower: { at: cell([FL.x, FL.y]), r: 38 },
+  anthers: cell([FL.x, FL.y - 9]),
+  blooms,
+};
+const art = `<div class="pg-art" data-scene='${JSON.stringify(scene)}'><pre class="pg-ascii" aria-hidden="true">${out.replace(/\n+$/, "")}</pre><pre class="pg-ascii pg-dust" aria-hidden="true"></pre></div>`;
 
 const page = path.resolve(__dirname, "../../projects/paraga-mitra.html");
 const html = fs.readFileSync(page, "utf8");
