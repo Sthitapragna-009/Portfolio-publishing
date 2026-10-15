@@ -11,41 +11,80 @@
   });
 
   // ---------- The header scene: ASCII bee and blossom ----------
-  // The art is read back out of its <pre> into a grid of [character, class]
-  // and redrawn each frame: pollen floats up from the flower in a second
-  // <pre> on top, and moving over the flower shakes more of it loose. Where
-  // the cursor passes, a faint ripple runs out: inside the art it lifts each
-  // character it crosses by one step; behind the rest of the header it prints
-  // a ring of very small dots, out to the left edge. A few little bees work
-  // the small flowers in the grass, in the same layer as the pollen.
+  // The art is static text; only its debris squares blink, in CSS. What
+  // moves is drawn on a canvas laid over it, so it glides between cells
+  // instead of jumping: pollen floating up from the flower (moving over the
+  // flower shakes more loose) and a few little bees working the small
+  // flowers. Behind the whole header a second canvas prints a single soft
+  // ripple where the cursor passes, out to the left edge, and the meadow is
+  // carried on past the art to the left edge too.
   document.querySelectorAll("[data-scene]").forEach((art) => {
-    const pre = art.querySelector(".pg-ascii:not(.pg-dust)");
-    const layer = art.querySelector(".pg-dust");
+    const pre = art.querySelector(".pg-ascii");
+    const dust = art.querySelector(".pg-dust");
     const head = art.closest(".pg-head");
-    const canvas = head && head.querySelector(".pg-halftone");
+    if (!pre || !dust || !head) return;
+    const dctx = dust.getContext("2d");
+    const canvas = head.querySelector(".pg-halftone");
     const ctx = canvas && canvas.getContext("2d");
     const S = JSON.parse(art.dataset.scene);
     const { cols: COLS, rows: ROWS } = S;
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const rand = Math.random;
 
-    // Read the art back: text nodes carry the characters, spans the class.
-    const base = Array.from({ length: ROWS }, () => Array.from({ length: COLS }, () => [" ", ""]));
-    let rr = 0, cc = 0;
-    const walk = (node, cls) => {
-      for (const n of node.childNodes) {
-        if (n.nodeType === 3) {
-          for (const ch of n.data) {
-            if (ch === "\n") { rr++; cc = 0; continue; }
-            if (rr < ROWS && cc < COLS) base[rr][cc] = [ch, cls];
-            cc++;
-          }
-        } else if (n.nodeType === 1) walk(n, (n.getAttribute("class") || "").replace(/\s*\bsq\b/, ""));
+    // Which cells of the art hold a character: the ripple leaves those alone.
+    const filled = Array.from({ length: ROWS }, () => new Uint8Array(COLS));
+    {
+      let r = 0, c = 0;
+      for (const ch of pre.textContent) {
+        if (ch === "\n") { r++; c = 0; continue; }
+        if (r < ROWS && c < COLS && ch !== " ") filled[r][c] = 1;
+        c++;
       }
-    };
-    walk(pre, "");
+    }
 
-    // ---- Pollen, in cells of the art ----
+    // ---- Layout, from offsets rather than screen boxes, since the art
+    // slides in on reveal. Colours and font come from the page. ----
+    let AX = 0, AY = 0, AW = 1, AH = 1, CW = 1, CH = 1, HW = 0, HH = 0, DPR = 1;
+    let INK = "#000", YEL = "#f6c10e", FONT = "10px monospace";
+    // Each glyph is drawn once into its own little canvas, then stamped:
+    // far cheaper than setting text every frame.
+    let glyphs = new Map();
+    const glyph = (ch, colour) => {
+      const key = ch + colour;
+      let g = glyphs.get(key);
+      if (!g) {
+        g = document.createElement("canvas");
+        g.width = Math.max(1, Math.ceil(CW * 2 * DPR)); g.height = Math.max(1, Math.ceil(CH * DPR));
+        const c = g.getContext("2d");
+        c.scale(DPR, DPR);
+        c.font = FONT; c.textAlign = "center"; c.textBaseline = "middle"; c.fillStyle = colour;
+        c.fillText(ch, CW, CH / 2);
+        glyphs.set(key, g);
+      }
+      return g;
+    };
+    const stamp = (ch, colour, x, y) => dctx.drawImage(glyph(ch, colour), x - CW, y - CH / 2, CW * 2, CH);
+    const readColours = () => {
+      const cs = getComputedStyle(pre);
+      INK = cs.color;
+      YEL = cs.getPropertyValue("--pg-bee-y").trim() || YEL;
+      glyphs = new Map();
+    };
+    const measure = () => {
+      AX = 0; AY = 0;
+      for (let el = pre; el && el !== head; el = el.offsetParent) { AX += el.offsetLeft; AY += el.offsetTop; }
+      AW = pre.offsetWidth || 1; AH = pre.offsetHeight || 1;
+      CW = AW / COLS; CH = AH / ROWS;
+      HW = head.clientWidth; HH = head.clientHeight;
+      DPR = Math.min(2, window.devicePixelRatio || 1);
+      const cs = getComputedStyle(pre);
+      FONT = `${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`;
+      dust.width = Math.round(AW * DPR); dust.height = Math.round(AH * DPR);
+      readColours();
+    };
+
+    // ---- Pollen, in cells of the art. Steps are scaled by k, the time
+    // since the last frame in sixteenths of a second. ----
     const parts = [];
     let ptr = null;
     const emit = (x, y, burst) => {
@@ -54,21 +93,23 @@
       const sp = burst ? 0.2 + rand() * 0.5 : 0.04 + rand() * 0.1;
       parts.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp * 0.6 - (burst ? 0.12 : 0.05), life: 0, max: 140 + rand() * 170, ph: rand() * Math.PI * 2 });
     };
-    const stepPollen = () => {
-      if (rand() < 0.4) emit(S.anthers[0] + (rand() - 0.5) * 10, S.anthers[1] + (rand() - 0.5) * 3);
+    const stepPollen = (k) => {
+      if (rand() < 0.4 * k) emit(S.anthers[0] + (rand() - 0.5) * 10, S.anthers[1] + (rand() - 0.5) * 3);
+      const damp = Math.pow(0.975, k);
       for (let i = parts.length - 1; i >= 0; i--) {
         const p = parts[i];
-        p.vx += Math.sin(p.ph + p.life * 0.045 + p.y * 0.12) * 0.006 + 0.0012;
-        p.vy += Math.cos(p.ph * 1.7 + p.life * 0.037 + p.x * 0.09) * 0.005 - 0.0018;
+        p.vx += (Math.sin(p.ph + p.life * 0.045 + p.y * 0.12) * 0.006 + 0.0012) * k;
+        p.vy += (Math.cos(p.ph * 1.7 + p.life * 0.037 + p.x * 0.09) * 0.005 - 0.0018) * k;
         if (ptr && p.life > 30) {
           const dx = p.x - ptr.cx, dy = (p.y - ptr.cy) * S.rowH, d = Math.hypot(dx, dy) || 1;
-          if (d < 6) { const push = ((6 - d) / 6) * 0.06; p.vx += (dx / d) * push; p.vy += ((dy / d) * push) / S.rowH; }
+          if (d < 6) { const push = ((6 - d) / 6) * 0.06 * k; p.vx += (dx / d) * push; p.vy += ((dy / d) * push) / S.rowH; }
         }
-        p.vx *= 0.975; p.vy *= 0.975;
-        p.x += p.vx; p.y += p.vy; p.life += 1;
+        p.vx *= damp; p.vy *= damp;
+        p.x += p.vx * k; p.y += p.vy * k; p.life += k;
         if (p.life > p.max || p.x < 0 || p.x >= COLS || p.y < 0 || p.y >= ROWS) parts.splice(i, 1);
       }
     };
+
     // ---- Little bees: each hovers a figure of eight over one flower, then
     // now and then flies off to another. They shy away from the cursor. ----
     const spots = [...(S.blooms || []), S.anthers];
@@ -76,67 +117,58 @@
       const home = (i * 3 + 1) % spots.length;
       return { home, x: spots[home][0], y: spots[home][1] - 3, vx: 0, vy: 0, t: rand() * 6.3, dir: 1, stay: 80 + rand() * 260 };
     });
-    const stepBees = () => {
+    const stepBees = (k) => {
+      const damp = Math.pow(0.9, k);
       for (const b of bees) {
-        if (--b.stay < 0) { b.home = Math.floor(rand() * spots.length); b.stay = 160 + rand() * 320; }
-        b.t += 0.07;
+        b.stay -= k;
+        if (b.stay < 0) { b.home = Math.floor(rand() * spots.length); b.stay = 160 + rand() * 320; }
+        b.t += 0.07 * k;
         const [hx, hy] = spots[b.home];
         const tx = hx + Math.sin(b.t) * 4, ty = hy - 3.5 + Math.sin(b.t * 2) * 1.2;
-        b.vx += (tx - b.x) * 0.012; b.vy += (ty - b.y) * 0.012;
+        b.vx += (tx - b.x) * 0.012 * k; b.vy += (ty - b.y) * 0.012 * k;
         if (ptr) {
           const dx = b.x - ptr.cx, dy = (b.y - ptr.cy) * S.rowH, d = Math.hypot(dx, dy) || 1;
-          if (d < 9) { b.vx += (dx / d) * 0.12; b.vy += (dy / d) * 0.07; }
+          if (d < 9) { b.vx += (dx / d) * 0.12 * k; b.vy += (dy / d) * 0.07 * k; }
         }
-        b.vx *= 0.9; b.vy *= 0.9;
-        b.x += b.vx; b.y += b.vy;
+        b.vx *= damp; b.vy *= damp;
+        b.x += b.vx * k; b.y += b.vy * k;
         if (b.vx > 0.06) b.dir = 1; else if (b.vx < -0.06) b.dir = -1;
       }
     };
-    let flap = 0;
-    const drawPollen = () => {
-      const g = Array.from({ length: ROWS }, () => new Array(COLS).fill(" "));
-      const cls = Array.from({ length: ROWS }, () => new Array(COLS).fill(""));
+
+    // Pollen fades in and out; a bee is a wing that flaps over a striped
+    // body and a head that turns the way it flies.
+    const drawDust = (now) => {
+      dctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      dctx.clearRect(0, 0, AW, AH);
       for (const p of parts) {
-        const c = Math.round(p.x), r = Math.round(p.y);
-        if (r < 0 || r >= ROWS || c < 0 || c >= COLS) continue;
         const t = p.life / p.max;
         const tw = Math.sin(p.ph * 3 + p.life * 0.4);
-        g[r][c] = t < 0.06 || t > 0.86 ? "." : tw > 0.8 ? "*" : tw > 0.2 ? "+" : "·";
+        dctx.globalAlpha = Math.max(0, Math.min(1, t / 0.08, (1 - t) / 0.16));
+        stamp(tw > 0.8 ? "*" : tw > 0.2 ? "+" : "·", YEL, (p.x + 0.5) * CW, (p.y + 0.5) * CH);
       }
-      // A bee is two rows: a wing that flaps, over a striped body and a head.
-      flap += 1;
+      dctx.globalAlpha = 1;
+      const up = Math.floor(now / 90) % 2 === 0;
       for (const b of bees) {
-        const c = Math.round(b.x), r = Math.round(b.y);
-        const cells = [[r - 1, c, flap % 2 ? "^" : "-", "bw"], [r, c, "8", "by"], [r, c + b.dir, b.dir > 0 ? ">" : "<", "bk"]];
-        for (const [y, x, ch, k] of cells) if (y >= 0 && y < ROWS && x >= 0 && x < COLS) { g[y][x] = ch; cls[y][x] = k; }
+        const x = (b.x + 0.5) * CW, y = (b.y + 0.5) * CH;
+        dctx.globalAlpha = 0.55;
+        stamp(up ? "^" : "-", INK, x, y - CH);
+        dctx.globalAlpha = 1;
+        stamp(b.dir > 0 ? ">" : "<", INK, x + b.dir * CW, y);
+        stamp("8", YEL, x, y);
       }
-      layer.innerHTML = g.map((row, y) => {
-        let line = "", run = "", k = null;
-        for (let x = 0; x < COLS; x++) {
-          const c = row[x] === " " ? null : cls[y][x];
-          if (c !== k) { line += k ? `<span class="${k}">${run}</span>` : run; run = ""; k = c; }
-          run += row[x] === "<" ? "&lt;" : row[x];
-        }
-        line += k ? `<span class="${k}">${run}</span>` : run;
-        return line.replace(/\s+$/, "");
-      }).join("\n");
     };
-
-    for (let i = 0; i < 200; i++) { stepPollen(); stepBees(); }
-    drawPollen();
 
     // ---- The meadow, carried on to the left edge of the header: a strip of
     // the same faint grass and small flowers, cell for cell with the art and
     // on the same ground line (tools/parag/ascii-scene.js), as wide as the
     // gap. Seeded, so it grows the same each time. ----
-    const meadow = head && document.createElement("pre");
+    const meadow = document.createElement("pre");
+    meadow.className = "pg-ascii pg-meadow";
+    meadow.setAttribute("aria-hidden", "true");
+    head.appendChild(meadow);
     const growMeadow = () => {
-      if (!meadow) return;
-      // Layout offsets, not screen boxes: the art slides in on reveal.
-      let px = 0, py = 0;
-      for (let el = pre; el && el !== head; el = el.offsetParent) { px += el.offsetLeft; py += el.offsetTop; }
-      const cw = pre.offsetWidth / COLS, ch = pre.offsetHeight / ROWS;
-      const n = Math.floor(px / cw);
+      const n = Math.floor(AX / CW);
       if (n < 1) { meadow.hidden = true; return; }
       const TOP = 14;
       let seed = 7;
@@ -179,172 +211,117 @@
         return line.replace(/\s+$/, "");
       }).join("\n");
       meadow.hidden = false;
-      meadow.style.left = `${px - n * cw}px`;
-      meadow.style.top = `${py + (ROWS - TOP) * ch}px`;
-      meadow.style.width = `${n * cw}px`;
-      meadow.style.lineHeight = `${ch}px`;
+      meadow.style.left = `${AX - n * CW}px`;
+      meadow.style.top = `${AY + (ROWS - TOP) * CH}px`;
+      meadow.style.width = `${n * CW}px`;
+      meadow.style.lineHeight = `${CH}px`;
     };
-    if (meadow) {
-      meadow.className = "pg-ascii pg-meadow";
-      meadow.setAttribute("aria-hidden", "true");
-      head.appendChild(meadow);
-      growMeadow();
-      if ("ResizeObserver" in window) {
-        let wait = 0;
-        new ResizeObserver(() => { clearTimeout(wait); wait = setTimeout(growMeadow, 120); }).observe(head);
-      }
-    }
 
-    if (reduced) return;
-
-    // ---- Ripples, in header pixels; the art reads them in its own cells ----
+    // ---- The ripple, in header pixels: one soft ring of tiny dots on a
+    // 45 degree lattice. The dots are kept in square buckets, so each frame
+    // only visits the buckets the ring is passing through. ----
+    const DOT = 8, BUCKET = 48, BAND = 56, SPEED = 0.2, LIFE = 5200;
     const ripples = [];
-    const SPEED = 9, LIFE = 150;
-    let artBox = { x: 0, y: 0, w: 1, h: 1 };
-    const within = (el) => {
-      let x = 0, y = 0;
-      for (let n = el; n && n !== head; n = n.offsetParent) { x += n.offsetLeft; y += n.offsetTop; }
-      return { x, y };
-    };
-
-    // The faint ring behind the header: a 45 degree lattice of tiny dots.
-    let CW = 0, CH = 0, DPR = 1, LX = null, LY = null, LM = 0;
-    const DOT = 4;
-    const fitCanvas = () => {
+    let buckets = [], NBX = 0, NBY = 0, ringsShown = false;
+    const fitRings = () => {
       if (!ctx) return;
-      const rect = head.getBoundingClientRect();
-      CW = Math.round(rect.width); CH = Math.round(rect.height);
-      DPR = Math.min(2, window.devicePixelRatio || 1);
-      canvas.width = Math.round(CW * DPR); canvas.height = Math.round(CH * DPR);
-      const at = within(pre);
-      artBox = { x: at.x, y: at.y, w: pre.offsetWidth || 1, h: pre.offsetHeight || 1 };
-      const pts = [];
-      const c = Math.SQRT1_2 * DOT, n = Math.ceil(Math.hypot(CW, CH) / DOT) + 2;
-      for (let i = -n; i <= n; i++) for (let j = -n; j <= n; j++) {
-        const x = (i - j) * c, y = (i + j) * c;
-        if (x < 0 || y < 0 || x > CW || y > CH) continue;
-        // The art prints its own ripple in the cells that hold a character;
-        // everywhere else, blank cells inside the art included, gets dots.
-        const ac = Math.floor(((x - artBox.x) / artBox.w) * COLS), ar = Math.floor(((y - artBox.y) / artBox.h) * ROWS);
-        if (ar >= 0 && ar < ROWS && ac >= 0 && ac < COLS && base[ar][ac][0] !== " ") continue;
-        pts.push(x, y);
+      canvas.width = Math.round(HW * DPR); canvas.height = Math.round(HH * DPR);
+      ringsShown = false;
+      NBX = Math.ceil(HW / BUCKET); NBY = Math.ceil(HH / BUCKET);
+      const lists = Array.from({ length: NBX * NBY }, () => []);
+      const step = Math.SQRT1_2 * DOT;
+      for (let ry = 0; ry * step <= HH; ry++) {
+        for (let rx = ry & 1; rx * step <= HW; rx += 2) {
+          const x = rx * step, y = ry * step;
+          const ac = Math.floor((x - AX) / CW), ar = Math.floor((y - AY) / CH);
+          if (ar >= 0 && ar < ROWS && ac >= 0 && ac < COLS && filled[ar][ac]) continue;
+          lists[Math.min(NBY - 1, Math.floor(y / BUCKET)) * NBX + Math.min(NBX - 1, Math.floor(x / BUCKET))].push(x, y);
+        }
       }
-      LM = pts.length / 2;
-      LX = new Float32Array(LM); LY = new Float32Array(LM);
-      for (let k = 0; k < LM; k++) { LX[k] = pts[2 * k]; LY[k] = pts[2 * k + 1]; }
+      buckets = lists.map((l) => Float32Array.from(l));
     };
-    fitCanvas();
-    if ("ResizeObserver" in window && head) {
-      let pending = 0;
-      new ResizeObserver(() => { clearTimeout(pending); pending = setTimeout(fitCanvas, 120); }).observe(head);
-    }
-    const ringAt = (r, x, y) => {
-      const dist = Math.hypot(x - r.x, y - r.y), off = dist - r.age * SPEED;
-      if (off > 120 || off < -120) return 0;
-      return Math.max(0, Math.exp(-((off / 48) ** 2)) * Math.cos((off / 24) * Math.PI * 2)) * (1 - r.age / LIFE) / (1 + dist / 700);
-    };
-    const drawRings = () => {
-      if (!ctx) return;
+    const drawRings = (now) => {
+      if (!ctx || (!ripples.length && !ringsShown)) return;
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-      ctx.clearRect(0, 0, CW, CH);
-      if (!ripples.length) return;
-      const light = document.documentElement.dataset.theme === "light";
-      const path = new Path2D();
-      for (let k = 0; k < LM; k++) {
-        let d = 0;
-        for (const r of ripples) d = Math.max(d, ringAt(r, LX[k], LY[k]));
-        if (d < 0.08) continue;
-        const rad = DOT * 0.5 * Math.sqrt(d * 0.22);
-        path.moveTo(LX[k] + rad, LY[k]);
-        path.arc(LX[k], LY[k], rad, 0, Math.PI * 2);
-      }
-      ctx.fillStyle = light ? "rgba(29, 26, 20, 0.45)" : "rgba(236, 233, 225, 0.4)";
-      ctx.fill(path);
-    };
-
-    // ---- Redrawing the art ----
-    const LIFT = { ".": ":", "·": ":", ":": "-", "-": "=", "=": "+", "+": "*", "*": "#", "#": "%", "%": "@" };
-    const SQUARES = "■□▪▫";
-    const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-    const draw = (frame) => {
-      const cw = artBox.w / COLS, ch = artBox.h / ROWS;
-      const rip = ripples.map((r) => ({ x: (r.x - artBox.x) / cw, y: (r.y - artBox.y) / ch, R: (r.age * SPEED) / cw, f: 1 - r.age / LIFE }));
-      let html = "";
-      for (let y = 0; y < ROWS; y++) {
-        let line = "", run = "", runCls = null;
-        const flush = () => {
-          if (!run) return;
-          line += runCls ? `<span class="${runCls}">${esc(run)}</span>` : esc(run);
-          run = "";
-        };
-        for (let x = 0; x < COLS; x++) {
-          let [chr, cls] = base[y][x];
-          if (chr !== " ") {
-            for (const r of rip) {
-              const d = Math.hypot(x - r.x, (y - r.y) * S.rowH);
-              if (Math.abs(d - r.R) < 1 && r.f > 0.15) { chr = LIFT[chr] || chr; cls += " rp"; break; }
+      ctx.clearRect(0, 0, HW, HH);
+      ringsShown = ripples.length > 0;
+      if (!ringsShown) return;
+      ctx.fillStyle = INK;
+      ctx.globalAlpha = 0.32;
+      ctx.beginPath();
+      for (const r of ripples) {
+        const age = now - r.t0, R = age * SPEED, fade = Math.pow(1 - age / LIFE, 1.5);
+        for (let by = 0; by < NBY; by++) {
+          const y0 = by * BUCKET, y1 = y0 + BUCKET;
+          const ny = Math.max(y0 - r.y, 0, r.y - y1), fy = Math.max(Math.abs(r.y - y0), Math.abs(r.y - y1));
+          for (let bx = 0; bx < NBX; bx++) {
+            const x0 = bx * BUCKET, x1 = x0 + BUCKET;
+            const nx = Math.max(x0 - r.x, 0, r.x - x1), fx = Math.max(Math.abs(r.x - x0), Math.abs(r.x - x1));
+            if (Math.hypot(nx, ny) > R + BAND || Math.hypot(fx, fy) < R - BAND) continue;
+            const pts = buckets[by * NBX + bx];
+            for (let i = 0; i < pts.length; i += 2) {
+              const d = Math.hypot(pts[i] - r.x, pts[i + 1] - r.y), off = d - R;
+              if (off < -BAND || off > BAND) continue;
+              const w = Math.exp(-((off / 22) ** 2)) * fade / (1 + d / 900);
+              if (w < 0.06) continue;
+              const s = 2 * Math.sqrt(w);
+              ctx.rect(pts[i] - s / 2, pts[i + 1] - s / 2, s, s);
             }
           }
-          // Debris squares blink here, since redrawing would restart a CSS one.
-          if (/\bg\b/.test(cls)) {
-            cls = cls.replace(/\s*\bg\b/, "");
-            if ((frame / 16 + (y * COLS + x) * 0.37) % 4.2 > 3.3) cls += " off";
-          }
-          if (SQUARES.includes(chr)) {
-            flush(); runCls = null;
-            line += `<span class="${cls} sq">${chr}</span>`;
-            continue;
-          }
-          const k = chr === " " ? null : cls;
-          if (k !== runCls) { flush(); runCls = k; }
-          run += chr;
         }
-        flush();
-        html += line.replace(/\s+$/, "") + "\n";
       }
-      pre.innerHTML = html.replace(/\n+$/, "");
+      ctx.fill();
+      ctx.globalAlpha = 1;
     };
 
-    // ---- The cursor ----
-    let lastRip = 0, lastAt = null;
-    (head || art).addEventListener("pointermove", (e) => {
-      const hr = (head || art).getBoundingClientRect();
+    const fit = () => { measure(); fitRings(); growMeadow(); drawDust(performance.now()); };
+    for (let i = 0; i < 200; i++) { stepPollen(1); stepBees(1); }
+    fit();
+    if ("ResizeObserver" in window) {
+      let wait = 0;
+      new ResizeObserver(() => { clearTimeout(wait); wait = setTimeout(fit, 120); }).observe(head);
+    }
+    new MutationObserver(() => { readColours(); drawDust(performance.now()); }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    if (reduced) return;
+
+    // ---- The cursor: at most one ripple every few seconds, and only after
+    // the cursor has really moved. Over the flower it shakes pollen loose. ----
+    let lastRipple = -Infinity, lastAt = null;
+    head.addEventListener("pointermove", (e) => {
+      const hr = head.getBoundingClientRect();
       const x = e.clientX - hr.left, y = e.clientY - hr.top;
-      const cw = artBox.w / COLS, ch = artBox.h / ROWS;
-      ptr = { cx: (x - artBox.x) / cw, cy: (y - artBox.y) / ch };
+      ptr = { cx: (x - AX) / CW - 0.5, cy: (y - AY) / CH - 0.5 };
       const now = performance.now();
-      if (!lastAt || (now - lastRip > 420 && Math.hypot(x - lastAt.x, y - lastAt.y) > 60)) {
-        ripples.push({ x, y, age: 0 });
-        if (ripples.length > 3) ripples.shift();
-        lastRip = now; lastAt = { x, y };
+      if (now - lastRipple > 3000 && (!lastAt || Math.hypot(x - lastAt.x, y - lastAt.y) > 140)) {
+        ripples.push({ x, y, t0: now });
+        if (ripples.length > 2) ripples.shift();
+        lastRipple = now; lastAt = { x, y };
       }
       const [fx, fy] = S.flower.at;
-      if (Math.hypot(ptr.cx - fx, (ptr.cy - fy) * S.rowH) < S.flower.r) {
-        for (let i = 0; i < 3; i++) emit(ptr.cx + (rand() - 0.5) * 6, ptr.cy + (rand() - 0.5) * 3, true);
-        if (rand() < 0.6) emit(S.anthers[0] + (rand() - 0.5) * 8, S.anthers[1], true);
+      if (Math.hypot(ptr.cx - fx, (ptr.cy - fy) * S.rowH) < S.flower.r && rand() < 0.5) {
+        emit(ptr.cx + (rand() - 0.5) * 6, ptr.cy + (rand() - 0.5) * 3, true);
+        if (rand() < 0.5) emit(S.anthers[0] + (rand() - 0.5) * 8, S.anthers[1], true);
       }
-      run();
-    });
-    (head || art).addEventListener("pointerleave", () => { ptr = null; });
+      start();
+    }, { passive: true });
+    head.addEventListener("pointerleave", () => { ptr = null; });
 
-    // ---- The loop, about 16 frames a second, only while on screen ----
-    let frame = 0, last = 0, raf = 0, visible = true;
-    const FRAME = 1000 / 16;
+    // ---- The loop: every display frame, only while the header is on screen. ----
+    let raf = 0, last = 0, visible = true;
     const tick = (now) => {
       raf = 0;
-      if (!visible || document.hidden) return;
-      if (now - last >= FRAME) {
-        last = now; frame += 1;
-        stepPollen(); stepBees();
-        for (let i = ripples.length - 1; i >= 0; i--) if (++ripples[i].age > LIFE) ripples.splice(i, 1);
-        draw(frame); drawPollen(); drawRings();
-      }
+      if (!visible || document.hidden) { last = 0; return; }
+      const k = last ? Math.min(4, (now - last) / (1000 / 16)) : 1;
+      last = now;
+      stepPollen(k); stepBees(k);
+      for (let i = ripples.length - 1; i >= 0; i--) if (now - ripples[i].t0 > LIFE) ripples.splice(i, 1);
+      drawDust(now); drawRings(now);
       raf = requestAnimationFrame(tick);
     };
-    const run = () => { if (!raf && visible && !document.hidden) raf = requestAnimationFrame(tick); };
-    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; run(); }).observe(art);
-    document.addEventListener("visibilitychange", run);
-    run();
+    const start = () => { if (!raf && visible && !document.hidden) raf = requestAnimationFrame(tick); };
+    if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; start(); }).observe(head);
+    document.addEventListener("visibilitychange", start);
+    start();
   });
 
   // ---------- Mockups ----------

@@ -3,8 +3,8 @@
 // dissolving into squares) flying towards a blossom filled with digits.
 //
 // The page script (assets/parag/parag.js) reads the art back out of the
-// <pre> and animates it: pollen floating up from the flower, more of it
-// shaken loose under the cursor, and faint ripples where the cursor passes.
+// <pre> for which cells are filled and animates the scene on canvases: pollen
+// floating up from the flower, little bees, and a soft ripple behind it all.
 //
 //   node tools/parag/ascii-scene.js
 //
@@ -279,7 +279,7 @@ const scene = {
   anthers: cell([FL.x, FL.y - 9]),
   blooms,
 };
-const art = `<div class="pg-art" data-scene='${JSON.stringify(scene)}'><pre class="pg-ascii" aria-hidden="true">${out.replace(/\n+$/, "")}</pre><pre class="pg-ascii pg-dust" aria-hidden="true"></pre></div>`;
+const art = `<div class="pg-art" data-scene='${JSON.stringify(scene)}'><pre class="pg-ascii" aria-hidden="true">${out.replace(/\n+$/, "")}</pre><canvas class="pg-dust" aria-hidden="true"></canvas></div>`;
 
 const page = path.resolve(__dirname, "../../projects/paraga-mitra.html");
 const html = fs.readFileSync(page, "utf8");
