@@ -499,6 +499,76 @@
     startAuto();
   }
 
+  /* ---------- Work filters ---------- */
+  // The discipline buttons above the project grid. Counts come from the
+  // cards' data-disciplines, so they stay right as projects are added.
+  // Leaving cards fade out first, then the grid reflows and arrivals fade in.
+  const filterBar = document.querySelector(".work-filter");
+  const filterGrid = document.querySelector(".work-grid");
+
+  if (filterBar && filterGrid) {
+    const cards = [...filterGrid.querySelectorAll(".project[data-disciplines]")];
+    const buttons = [...filterBar.querySelectorAll(".filter-btn")];
+    const status = document.getElementById("workFilterStatus");
+    const matches = (card, f) => f === "all" || card.dataset.disciplines.split(" ").includes(f);
+    // A filter can set its own running order with data-order-<filter> on the
+    // cards (1 first); cards without one follow in page order.
+    const rankKey = (f) => "order" + f.charAt(0).toUpperCase() + f.slice(1);
+    const hasOrder = (f) => f !== "all" && cards.some((c) => c.dataset[rankKey(f)]);
+    const setOrder = (f) => cards.forEach((c) => { c.style.order = hasOrder(f) ? (c.dataset[rankKey(f)] || 99) : ""; });
+    let current = "all";
+    let filterTimer = null;
+
+    buttons.forEach((b) => {
+      b.querySelector(".filter-n").textContent = "(" + cards.filter((c) => matches(c, b.dataset.filter)).length + ")";
+    });
+
+    const applyFilter = (f) => {
+      buttons.forEach((b) => {
+        const on = b.dataset.filter === f;
+        b.classList.toggle("is-active", on);
+        b.setAttribute("aria-pressed", String(on));
+      });
+      const show = cards.filter((c) => matches(c, f));
+      const label = buttons.find((b) => b.dataset.filter === f).querySelector(".filter-label").textContent;
+      if (status) status.textContent = "Showing " + show.length + " " + (f === "all" ? "projects" : label + " projects");
+
+      // Settle anything a quick earlier click left mid-animation.
+      clearTimeout(filterTimer);
+      cards.forEach((c) => { c.classList.remove("is-out"); c.style.transitionDelay = ""; });
+
+      // When the running order changes, every visible card fades out and back
+      // in around the re-sort, so nothing jumps to a new place in view.
+      const reorder = hasOrder(f) || hasOrder(current);
+      current = f;
+      const leaving = cards.filter((c) => !c.hidden && (reorder || !show.includes(c)));
+      const arriving = show.filter((c) => reorder || c.hidden);
+      if (reduced) {
+        setOrder(f);
+        cards.forEach((c) => { c.hidden = !show.includes(c); c.classList.add("in"); });
+        return;
+      }
+      filterGrid.classList.add("is-filtering");
+      leaving.forEach((c) => c.classList.add("is-out"));
+      filterTimer = setTimeout(() => {
+        leaving.forEach((c) => { c.hidden = true; c.classList.remove("is-out"); });
+        setOrder(f);
+        arriving.forEach((c) => { c.classList.add("is-out", "in"); c.hidden = false; });
+        // Stagger in the order they now appear.
+        arriving.sort((a, b) => (+a.style.order || 0) - (+b.style.order || 0) || cards.indexOf(a) - cards.indexOf(b));
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          arriving.forEach((c, i) => { c.style.transitionDelay = i * 60 + "ms"; c.classList.remove("is-out"); });
+        }));
+        filterTimer = setTimeout(() => {
+          filterGrid.classList.remove("is-filtering");
+          arriving.forEach((c) => { c.style.transitionDelay = ""; });
+        }, 800);
+      }, leaving.length ? 300 : 0);
+    };
+
+    buttons.forEach((b) => b.addEventListener("click", () => applyFilter(b.dataset.filter)));
+  }
+
   /* ---------- Ambient dot field ---------- */
   const field = document.getElementById("dotField");
 
