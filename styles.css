@@ -1404,6 +1404,18 @@ ul { margin: 0; padding: 0; list-style: none; }
   --glass-spark: rgba(96, 152, 255, 0.55);   /* highlight in the bloom   */
   --card-arrow:  #c8f848;                    /* lime, from the mockup UI */
 }
+/* Paraga Mitra: honey to deep amber, from the app's yellow and its dark UI.
+   Kept dark enough under the text that white still reads on hover. */
+.project[data-accent="parag"] {
+  --glass-near:  rgba(246, 193, 14, 0.5);    /* Paraga yellow, lower left */
+  --glass-far:   rgba(255, 170, 30, 0.42);   /* warmer amber, right edge  */
+  --glass-mid:   rgba(140, 92, 0, 0.78);     /* honey body                */
+  --glass-deep:  rgba(14, 11, 4, 0.9);       /* near-black, top           */
+  --glass-body:  rgba(46, 32, 4, 0.88);      /* panel, middle             */
+  --glass-base:  rgba(120, 80, 0, 0.9);      /* panel, bottom             */
+  --glass-spark: rgba(255, 214, 90, 0.38);   /* highlight in the bloom    */
+  --card-arrow:  #f6c10e;                    /* Paraga yellow             */
+}
 
 /* The panel: blur lives on the wrapper, colour on its backdrop layer, so the
    two transition independently (a backdrop-filter under opacity:0 is
