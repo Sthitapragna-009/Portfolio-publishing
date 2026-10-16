@@ -301,7 +301,7 @@
           <div class="section-intro"><p>Four archetypes built from the research, not from interviews. Two of them never meet without someone in between.</p></div>
         </div>
 
-        <div class="bx reveal">
+        <div class="bx pg-swipe reveal">
           <div class="p p--pollen" style="--w:3;--wt:6"><p class="p-k">archetype 01</p><h3 class="p-t">The migratory beekeeper</h3><p class="p-s">Three hundred boxes, four or five moves a year, a route planned on memory and calls.</p><p class="p-src">needs &middot; a full route, safe sites</p></div>
           <div class="p" style="--w:3;--wt:6"><p class="p-k">archetype 02</p><h3 class="p-t">The field-crop farmer</h3><p class="p-s">Mustard on four acres. Knows bees help, but not how many hives, or when. May not read comfortably.</p><p class="p-src">needs &middot; hives at the right week</p></div>
           <div class="p" style="--w:3;--wt:6"><p class="p-k">archetype 03</p><h3 class="p-t">The orchardist</h3><p class="p-s">Apples in Kullu, already rents boxes every April, wants healthier colonies and fewer losses.</p><p class="p-src">needs &middot; strong colonies, proof</p></div>
@@ -457,7 +457,7 @@
           <div class="section-intro"><p>Six things the research kept pointing at, each turned into a rule the service has to keep.</p></div>
         </div>
 
-        <div class="bx reveal">
+        <div class="bx pg-swipe reveal">
           <div class="p" style="--w:4;--wt:6"><p class="p-idx">01</p><h3 class="p-t">The bloom is the deadline, not the date</h3><p class="p-s p-foot">Book against a forecast bloom window per field, and move the window when the weather does.</p></div>
           <div class="p" style="--w:4;--wt:6"><p class="p-idx">02</p><h3 class="p-t">The value sits with the farmer, the risk with the beekeeper</h3><p class="p-s p-foot">Price the risk in: escrow up front, spray clauses, compensation drawn from a deposit.</p></div>
           <div class="p p--pollen" style="--w:4;--wt:12"><p class="p-idx">03</p><h3 class="p-t">One spray can erase a season</h3><p class="p-s p-foot">Spray safety is part of the core service, not a feature. Every placement sits inside a geofence.</p></div>
@@ -472,7 +472,7 @@
           <div class="section-intro"><p>Six offerings, with one account for each farmer and each beekeeper, and field agents and state departments plugged in. The farmer pays for bees per hive, per bloom. Everything else is there to make that booking safe.</p></div>
         </div>
 
-        <div class="bx reveal">
+        <div class="bx pg-swipe reveal">
           <div class="p p--pollen" style="--w:4;--wt:12"><p class="p-k">for farmers</p><h3 class="p-t">Pollination booking</h3><p class="p-s">Hives sized to the field (3 per hectare for mustard with <i>A. mellifera</i>), placed before 10% bloom.</p></div>
           <div class="p" style="--w:4;--wt:6"><p class="p-k">for beekeepers</p><h3 class="p-t">Route planner</h3><p class="p-s">Bloom forecasts along the route, with unbooked gaps shown as open capacity.</p></div>
           <div class="p" style="--w:4;--wt:6"><p class="p-k">for both</p><h3 class="p-t">Spray-safe network</h3><p class="p-s">Farmers and input dealers log sprays. Apiaries nearby are warned in time to act.</p></div>
@@ -775,7 +775,7 @@
         </div>
         <div class="plate-head plate-head--wide">
           <h2 class="display section-title">13  The product, step by step</h2>
-          <div class="section-intro"><p>From the first tap to the end of a season: onboarding for each side, then the features that carry the service. Every screen is live HTML in the same system as the prototype, not a picture of one.</p></div>
+          <div class="section-intro"><p>From the first tap to the end of a season. Every screen is live HTML in the same system as the prototype, not a picture of one.</p></div>
         </div>
 
         <div class="bx reveal">
@@ -843,11 +843,17 @@
           </div>
         </div>
 
-        <!-- Onboarding: farmer -->
+        <!-- Screens: onboarding for each side and the features, one rail at a time -->
         <div class="bx reveal" style="margin-top:6px">
-          <div class="p" style="--w:12">
-            <div class="pg-rail-head"><b>Onboarding &middot; farmer</b><span>6 screens &middot; about 2 minutes, or done by an agent</span></div>
-            <div class="pg-rail">
+          <div class="p" style="--w:12" data-rails>
+            <div class="pg-rail-tabs" role="tablist" aria-label="App screens">
+              <button type="button" role="tab" id="rt-farmer" aria-controls="rp-farmer" aria-selected="true">Farmer setup<small>6</small></button>
+              <button type="button" role="tab" id="rt-keeper" aria-controls="rp-keeper" aria-selected="false" tabindex="-1">Beekeeper setup<small>4</small></button>
+              <button type="button" role="tab" id="rt-use" aria-controls="rp-use" aria-selected="false" tabindex="-1">Using the app<small>6</small></button>
+            </div>
+            <div class="pg-rail-panel" role="tabpanel" id="rp-farmer" aria-labelledby="rt-farmer">
+              <p class="pg-rail-note">6 screens &middot; about 2 minutes, or done by an agent</p>
+              <div class="pg-rail">
 
               <figure class="pg-shot"><div class="pg-phone pg-phone--mini"><div class="pg-glass">
                 <section class="ap" aria-label="Choose a language">
@@ -920,7 +926,7 @@
                     <div class="ap-head"><button class="ap-back" type="button"><svg><use href="#i-back"/></svg>Back</button><span style="flex:1"></span><button class="ap-ib ap-ib--say" type="button" aria-label="Read aloud"><svg><use href="#i-say"/></svg></button></div>
                     <p class="ap-step">Step 4 of 4 <span aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></p>
                     <p class="ap-h">Your field</p>
-                    <div class="ap-map" aria-hidden="true"><svg viewBox="0 0 300 230" preserveAspectRatio="xMidYMid slice"><defs><pattern id="mgrid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="rgba(246,193,14,.08)"/></pattern></defs><rect width="300" height="230" fill="url(#mgrid)"/><path d="M0 150 C 80 130, 160 170, 300 120" stroke="rgba(247,245,239,.18)" stroke-width="6" fill="none"/><path d="M40 40h70v60H40zM190 150h80v60h-80z" fill="rgba(247,245,239,.05)" stroke="rgba(247,245,239,.15)"/><path d="M118 52 L214 64 L204 132 L106 118 Z" fill="rgba(246,193,14,.28)" stroke="#f6c10e" stroke-width="2.5"/><circle cx="118" cy="52" r="6" fill="#f6c10e"/><circle cx="214" cy="64" r="6" fill="#f6c10e"/><circle cx="204" cy="132" r="6" fill="#f6c10e"/><circle cx="106" cy="118" r="6" fill="#f6c10e"/><circle cx="160" cy="92" r="7" fill="#0d0d0e" stroke="#f7f5ef" stroke-width="2.5"/></svg></div>
+                    <div class="ap-map" aria-hidden="true"><svg viewBox="0 0 300 230" preserveAspectRatio="xMidYMid slice"><defs><pattern id="mgrid" width="22" height="22" patternUnits="userSpaceOnUse"><path d="M22 0H0V22" fill="none" stroke="rgba(13,13,14,.06)"/></pattern></defs><rect width="300" height="230" fill="url(#mgrid)"/><path d="M0 150 C 80 130, 160 170, 300 120" stroke="#fff" stroke-width="8" fill="none"/><path d="M40 40h70v60H40zM190 150h80v60h-80z" fill="rgba(255,255,255,.6)" stroke="rgba(13,13,14,.1)"/><path d="M118 52 L214 64 L204 132 L106 118 Z" fill="rgba(246,193,14,.3)" stroke="#0d0d0e" stroke-width="2"/><circle cx="118" cy="52" r="6" fill="#f6c10e" stroke="#0d0d0e" stroke-width="1.5"/><circle cx="214" cy="64" r="6" fill="#f6c10e" stroke="#0d0d0e" stroke-width="1.5"/><circle cx="204" cy="132" r="6" fill="#f6c10e" stroke="#0d0d0e" stroke-width="1.5"/><circle cx="106" cy="118" r="6" fill="#f6c10e" stroke="#0d0d0e" stroke-width="1.5"/><circle cx="160" cy="92" r="7" fill="#0d0d0e" stroke="#fff" stroke-width="2.5"/></svg></div>
                     <div class="ap-card ap-row"><span><p class="ap-k"><svg><use href="#i-check"/></svg>Found in the land record</p><p class="ap-t">Khasra 214 &middot; 1.6 ha</p></span><span class="ap-badge ap-badge--ok">AgriStack</span></div>
                     <button class="ap-pill" type="button"><span>Yes, this is my field</span></button>
                     <p class="ap-note">Not right? Walk around it, or tap its corners.</p>
@@ -949,15 +955,11 @@
                 </section>
               </div></div><figcaption><b><i>06</i>Crop</b><span>Weeks ago on a stepper, not a date picker. Then the home screen, with the forecast.</span></figcaption></figure>
 
+              </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Onboarding: beekeeper -->
-        <div class="bx reveal" style="margin-top:6px">
-          <div class="p" style="--w:12">
-            <div class="pg-rail-head"><b>Onboarding &middot; beekeeper</b><span>after the same language, role and phone steps &middot; 4 screens</span></div>
-            <div class="pg-rail">
+            <div class="pg-rail-panel" role="tabpanel" id="rp-keeper" aria-labelledby="rt-keeper">
+              <p class="pg-rail-note">after the same language, role and phone steps &middot; 4 screens</p>
+              <div class="pg-rail">
 
               <figure class="pg-shot"><div class="pg-phone pg-phone--mini"><div class="pg-glass">
                 <section class="ap" aria-label="Verify Madhukranti ID">
@@ -1029,15 +1031,11 @@
                 </section>
               </div></div><figcaption><b><i>04</i>Payout</b><span>Verified with a one-rupee test. The two-part payment is explained once, here.</span></figcaption></figure>
 
+              </div>
             </div>
-          </div>
-        </div>
-
-        <!-- Features -->
-        <div class="bx reveal" style="margin-top:6px">
-          <div class="p" style="--w:12">
-            <div class="pg-rail-head"><b>Using the app &middot; features</b><span>6 screens &middot; AI-assisted ones are marked</span></div>
-            <div class="pg-rail">
+            <div class="pg-rail-panel" role="tabpanel" id="rp-use" aria-labelledby="rt-use">
+              <p class="pg-rail-note">6 screens &middot; AI-assisted ones are marked</p>
+              <div class="pg-rail">
 
               <figure class="pg-shot"><div class="pg-phone pg-phone--mini"><div class="pg-glass">
                 <section class="ap" id="scr-ask" aria-label="Ask Mitra by voice">
@@ -1134,7 +1132,7 @@
                   <div class="ap-status"><span>3:14</span><i aria-hidden="true"></i></div>
                   <div class="ap-body">
                     <div class="ap-head"><span class="ap-av" aria-hidden="true" style="box-shadow:none;background:#f6c10e;color:#0d0d0e"><svg style="width:20px;height:20px"><use href="#i-jar"/></svg></span><p class="ap-hello">Honey passport<small>paragamitra.in/h/MK-RJ-0412</small></p></div>
-                    <div class="ap-mini-map" aria-hidden="true"><svg viewBox="0 0 300 110" preserveAspectRatio="xMidYMid slice"><rect width="300" height="110" fill="#15140e"/><path d="M30 80 C 90 40, 160 90, 270 30" stroke="rgba(246,193,14,.5)" stroke-width="2" stroke-dasharray="2 6" fill="none"/><circle cx="90" cy="58" r="22" fill="rgba(246,193,14,.18)"/><circle cx="90" cy="58" r="6" fill="#f6c10e"/><text x="120" y="62" font-family="Lato, sans-serif" font-size="11" fill="#f7f5ef">Sri Ganganagar, RJ</text></svg></div>
+                    <div class="ap-mini-map" aria-hidden="true"><svg viewBox="0 0 300 110" preserveAspectRatio="xMidYMid slice"><rect width="300" height="110" fill="#f1ecdc"/><path d="M30 80 C 90 40, 160 90, 270 30" stroke="rgba(13,13,14,.35)" stroke-width="2" stroke-dasharray="2 6" fill="none"/><circle cx="90" cy="58" r="22" fill="rgba(246,193,14,.18)"/><circle cx="90" cy="58" r="6" fill="#f6c10e" stroke="#0d0d0e" stroke-width="1.5"/><text x="120" y="62" font-family="Lato, sans-serif" font-size="11" fill="#0d0d0e">Sri Ganganagar, RJ</text></svg></div>
                     <p class="ap-h" style="font-size:18px">Mustard honey &middot; 1,480 kg</p>
                     <div class="ap-stats">
                       <div><b>41</b><small>farms</small></div>
@@ -1147,6 +1145,7 @@
                 </section>
               </div></div><figcaption><b><i>06</i>Honey passport</b><span>What a buyer sees after scanning the jar: where, from whom, and how safely.</span><em>traceability</em></figcaption></figure>
 
+              </div>
             </div>
           </div>
         </div>
@@ -1470,7 +1469,7 @@
                           <p class="ap-t">Mustard honey &middot; 1,480 kg</p>
                           <p class="ap-s">Batch MK-RJ-0412 &middot; from 41 farms</p>
                         </span>
-                        <span style="padding:6px;border-radius:8px;background:#f7f5ef" aria-label="QR code for buyers">
+                        <span style="padding:6px;border-radius:8px;background:#fff;box-shadow:inset 0 0 0 1px rgba(13,13,14,.1)" aria-label="QR code for buyers">
                           <span class="ap-qr" aria-hidden="true"><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i><i class="o"></i><i class="o"></i><i></i><i class="o"></i><i></i><i class="o"></i><i></i><i></i><i></i><i></i><i class="o"></i><i></i><i></i><i></i></span>
                         </span>
                       </div>
@@ -1522,30 +1521,144 @@
 
         <!-- 15 -->
         <div class="plate-head plate-head--wide">
-          <h2 class="display section-title">15  AI in Paraga Mitra</h2>
-          <div class="section-intro"><p>AI does the forecasting, matching and checking that no one has time for. People make every decision that moves money or bees. Behind the scenes it automates the work. On screen it lets someone who can&rsquo;t read the interface still use the service.</p></div>
+          <h2 class="display section-title">15  AI in the app</h2>
+          <div class="section-intro"><p>Behind the scenes AI forecasts, matches and checks. On screen it shows up in three places people actually touch: where the boxes go, a question asked out loud, and a hive check. People still make every decision that moves money or bees.</p></div>
         </div>
 
         <div class="bx reveal">
-          <div class="p" style="--w:6;--wt:12">
-            <p class="p-k">AI for automation &middot; backstage</p>
-            <ul class="pg-ai-list">
-              <li><i aria-hidden="true"><svg><use href="#i-flower"/></svg></i><b>Bloom forecasting</b><span>A bloom window for every field, from crop, sowing date, district weather and satellite greenness, with a stated confidence.</span><em>crop model &middot; IMD &middot; Sentinel-2</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-map"/></svg></i><b>Matching and route planning</b><span>Fills each keeper&rsquo;s hive-weeks along a route and keeps truck kilometres down, within the hard rules on species and density.</span><em>constraint solver + learned fit score</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-camera"/></svg></i><b>Colony strength from a photo</b><span>Estimates comb coverage on one frame at the placement check, so &ldquo;strong&rdquo; means the same thing on every farm.</span><em>vision model &middot; agent confirms</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-alert"/></svg></i><b>Spray risk</b><span>Spots likely spray days from dealer sales, crop stage and weather, and warns keepers before anyone has logged a spray.</span><em>risk model &middot; early warning</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-list"/></svg></i><b>Dispute triage and anomalies</b><span>Gathers the evidence for an agent: photos, tags, timelines, past incidents. Flags patterns like the same count gap appearing season after season.</span><em>summaries &middot; anomaly detection</em></li>
+          <div class="p" style="--w:12">
+            <div class="pg-lab" data-lab>
+              <div class="pg-phone pg-lab-phone">
+                <div class="pg-glass">
+                  <section class="ap ap--lab" aria-label="Paraga Mitra app, AI tools">
+                    <div class="ap-status"><span>9:41</span><i aria-hidden="true"></i></div>
+                    <div class="ap-seg" role="tablist" aria-label="AI tools">
+                      <button type="button" role="tab" id="lab-t-place" aria-controls="lab-p-place" aria-selected="true" data-lab-tab="place">Place boxes</button>
+                      <button type="button" role="tab" id="lab-t-ask" aria-controls="lab-p-ask" aria-selected="false" tabindex="-1" data-lab-tab="ask">Ask Mitra</button>
+                      <button type="button" role="tab" id="lab-t-check" aria-controls="lab-p-check" aria-selected="false" tabindex="-1" data-lab-tab="check">Hive check</button>
+                    </div>
+
+                    <!-- Place boxes: the interactive field map -->
+                    <div class="ap-body ap-lab-pane" role="tabpanel" id="lab-p-place" aria-labelledby="lab-t-place" data-lab-pane="place">
+                      <div class="ap-head"><p class="ap-hello">Place the boxes<small>North field &middot; 1.6 ha &middot; 5 boxes booked</small></p><button class="ap-ib ap-ib--say" type="button" aria-label="Read aloud"><svg><use href="#i-say"/></svg></button></div>
+                      <div class="ap-plan" data-plan>
+                        <svg class="ap-plan-map" viewBox="0 0 300 250" data-plan-map role="group" aria-label="Map of the north field. A spray zone covers its top right corner and a road runs along the bottom. Drag a box, or tap inside the field to add one.">
+                          <defs>
+                            <pattern id="plan-hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V7" stroke="#e0482a" stroke-width="1.6" stroke-opacity=".38"/></pattern>
+                            <pattern id="plan-crop" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="0.9" fill="#0d0d0e" fill-opacity=".12"/></pattern>
+                            <clipPath id="plan-clip"><rect width="300" height="250" rx="0"/></clipPath>
+                          </defs>
+                          <g clip-path="url(#plan-clip)">
+                            <rect width="300" height="250" fill="#f1ecdc"/>
+                            <path d="M0 62H300M0 132H300M96 0V250M196 0V250" stroke="#0d0d0e" stroke-opacity=".07"/>
+                            <path d="M8 8h80v46H8zM104 8h84v46h-84zM8 72h80v52H8zM204 140h88v52h-88z" fill="#fff" fill-opacity=".55"/>
+                            <path d="M14 150c18-6 40-4 58 6s26 30 10 38-44 4-62-6-24-32-6-38Z" fill="#dfe8e4" stroke="#0d0d0e" stroke-opacity=".12"/>
+                            <path d="M22 166c8-2 16 0 22 4M30 178c8-2 16 0 22 4" stroke="#0d0d0e" stroke-opacity=".18" fill="none"/>
+                            <text class="ap-plan-lab" x="44" y="210" text-anchor="middle">pond</text>
+                            <path d="M-10 226C80 214 180 236 310 218" stroke="#fff" stroke-width="16" fill="none"/>
+                            <path d="M-10 226C80 214 180 236 310 218" stroke="#0d0d0e" stroke-opacity=".22" stroke-width="1.2" stroke-dasharray="6 7" fill="none"/>
+                            <text class="ap-plan-lab" x="250" y="242" text-anchor="middle">road</text>
+                            <g data-plan-danger>
+                              <circle cx="262" cy="30" r="92" fill="url(#plan-hatch)"/>
+                              <circle cx="262" cy="30" r="92" fill="#ff6b4d" fill-opacity=".08" stroke="#e0482a" stroke-width="1.5" stroke-dasharray="5 4"/>
+                              <path d="M-10 226C80 214 180 236 310 218" stroke="#ff6b4d" stroke-opacity=".14" stroke-width="56" fill="none"/>
+                            </g>
+                            <path d="M104 76 L248 66 L258 196 L96 204 Z" fill="#f6c10e" fill-opacity=".2"/>
+                            <path d="M104 76 L248 66 L258 196 L96 204 Z" fill="url(#plan-crop)" stroke="#0d0d0e" stroke-width="1.6" stroke-linejoin="round" data-plan-field/>
+                            <g data-plan-reach></g>
+                            <g transform="translate(262 30)"><circle r="6" fill="#e0482a"/><path d="M0-3v3.4M0 2.6v.1" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></g>
+                            <g transform="translate(206 20)"><rect x="-36" y="-9" width="72" height="18" rx="9" fill="#0d0d0e"/><text class="ap-plan-tag" x="0" y="3.6" text-anchor="middle">Spray &middot; 10 Jan</text></g>
+                            <g data-plan-boxes></g>
+                          </g>
+                        </svg>
+                        <div class="ap-plan-leg" aria-hidden="true"><span><i class="bx-k"></i>Box</span><span><i class="bx-r"></i>Pollination</span><span><i class="bx-d"></i>Danger</span></div>
+                      </div>
+                      <div class="ap-card ap-plan-read" aria-live="polite">
+                        <div class="ap-row"><span><p class="ap-k">Field well pollinated</p><p class="ap-big" data-plan-cover>0%</p></span><span class="ap-badge" data-plan-state>2 of 5 placed</span></div>
+                        <div class="ap-conf"><i><b data-plan-bar style="--v:0%"></b></i></div>
+                        <p class="ap-s" data-plan-msg>Tap inside the field to add a box.</p>
+                      </div>
+                      <div class="ap-pair">
+                        <button class="ap-pill ap-pill--ghost" type="button" data-plan-reset><span>Start over</span></button>
+                        <button class="ap-pill" type="button" data-plan-ai><svg><use href="#i-spark"/></svg><span>Suggest spots</span></button>
+                      </div>
+                    </div>
+
+                    <!-- Ask Mitra: questions answered from the farmer's own booking -->
+                    <div class="ap-body ap-lab-pane" role="tabpanel" id="lab-p-ask" aria-labelledby="lab-t-ask" data-lab-pane="ask">
+                      <div class="ap-head"><p class="ap-hello">Ask Mitra<small>Answers from your booking PR-2291</small></p><span class="ap-ib" aria-hidden="true">हिं</span></div>
+                      <div class="ap-ask-log" data-ask-log aria-live="polite">
+                        <div class="ap-bubble"><p class="ap-t" style="font-size:13px">Namaste Ramesh. Ask me about your bees, a spray or the weather.</p><span class="ap-hi">नमस्ते रमेश। मधुमक्खी, छिड़काव या मौसम के बारे में पूछें।</span></div>
+                      </div>
+                      <div class="ap-chips" data-ask-chips>
+                        <button type="button" data-ask="0">मधुमक्खियाँ कब आएँगी?<small>When do the bees come?</small></button>
+                        <button type="button" data-ask="1">कल छिड़काव कर सकता हूँ?<small>Can I spray tomorrow?</small></button>
+                        <button type="button" data-ask="2">कितने बक्से चाहिए?<small>How many boxes?</small></button>
+                      </div>
+                      <button class="ap-mic ap-mic--sm" type="button" data-ask-mic aria-label="Speak a question"><svg><use href="#i-mic"/></svg></button>
+                      <p class="ap-note" data-ask-hint>Tap a question, or the microphone</p>
+                    </div>
+
+                    <!-- Hive check: one photo becomes a number everyone agrees on -->
+                    <div class="ap-body ap-lab-pane" role="tabpanel" id="lab-p-check" aria-labelledby="lab-t-check" data-lab-pane="check">
+                      <div class="ap-head"><p class="ap-hello">Hive check<small>Box 3 of 5 &middot; Gurnam Singh</small></p><button class="ap-ib ap-ib--say" type="button" aria-label="Read aloud"><svg><use href="#i-say"/></svg></button></div>
+                      <div class="ap-frame" data-check-frame>
+                        <span class="ap-frame-scan" aria-hidden="true"></span>
+                        <span class="ap-frame-box" style="left:7%;top:12%;width:46%;height:52%"><b>capped brood</b></span>
+                        <span class="ap-frame-box" style="left:56%;top:8%;width:37%;height:34%"><b>honey</b></span>
+                        <span class="ap-frame-box is-empty" style="left:58%;top:58%;width:34%;height:32%"><b>empty</b></span>
+                      </div>
+                      <div class="ap-card ap-check-read" data-check-read>
+                        <p class="ap-k"><span class="ap-aitag"><svg><use href="#i-spark"/></svg>Estimate</span></p>
+                        <div class="ap-row"><p class="ap-big" data-check-num>&ndash;</p><span class="ap-badge" data-check-badge>Not checked</span></div>
+                        <div class="ap-conf"><span>Sure</span><i><b data-check-conf style="--v:0%"></b></i><span data-check-pc>&ndash;</span></div>
+                        <p class="ap-s" data-check-msg>Point at one frame from the middle of the box.</p>
+                      </div>
+                      <button class="ap-pill" type="button" data-check-go><svg><use href="#i-camera"/></svg><span>Check this frame</span></button>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <div class="pg-lab-side">
+                <p class="p-k">try it &middot; the phone is live</p>
+                <div class="pg-lab-note" data-lab-note="place">
+                  <h3 class="p-t">Where the boxes go</h3>
+                  <p class="p-s">Drag a box, or tap inside the field to add one. Each ring is where that box&rsquo;s bees pollinate most. The red hatch is danger: a neighbour logged an insect spray on 10 Jan, and the road brings dust and drift. A box in it turns red and stops counting.</p>
+                  <dl class="pg-lab-dl"><div><dt>The AI uses</dt><dd>The field from the land record, logged sprays, crop and wind</dd></div><div><dt>People decide</dt><dd>The beekeeper places the boxes. The agent checks them on arrival</dd></div></dl>
+                </div>
+                <div class="pg-lab-note" data-lab-note="ask" hidden>
+                  <h3 class="p-t">A question, asked out loud</h3>
+                  <p class="p-s">Mitra answers only from the farmer&rsquo;s own booking and the crop guide. Every answer names its source and how sure it is, and is read aloud. When it isn&rsquo;t sure, it offers a call to the agent instead.</p>
+                  <dl class="pg-lab-dl"><div><dt>The AI uses</dt><dd>Bhashini speech, the booking record, the spray rules</dd></div><div><dt>People decide</dt><dd>Nothing is booked or changed by voice without a tap to confirm</dd></div></dl>
+                </div>
+                <div class="pg-lab-note" data-lab-note="check" hidden>
+                  <h3 class="p-t">A photo becomes a number</h3>
+                  <p class="p-s">At the placement check the agent photographs one frame. A vision model estimates how much comb the bees cover, so &ldquo;strong colony&rdquo; means the same thing on every farm. The agent signs off, not the model, and only then is the first payment released.</p>
+                  <dl class="pg-lab-dl"><div><dt>The AI uses</dt><dd>One frame photo, the agreed strength in the booking</dd></div><div><dt>People decide</dt><dd>The agent confirms, or retakes the photo</dd></div></dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="p" style="--w:7;--wt:12">
+            <p class="p-k">behind the scenes &middot; automation</p>
+            <ul class="pg-ai-list pg-ai-list--tight">
+              <li><i aria-hidden="true"><svg><use href="#i-flower"/></svg></i><b>Bloom forecasting</b><span>A bloom window for every field, with a stated confidence.</span><em>crop model &middot; IMD &middot; Sentinel-2</em></li>
+              <li><i aria-hidden="true"><svg><use href="#i-map"/></svg></i><b>Matching and routes</b><span>Fills each keeper&rsquo;s hive-weeks and keeps truck kilometres down.</span><em>constraint solver + learned fit</em></li>
+              <li><i aria-hidden="true"><svg><use href="#i-alert"/></svg></i><b>Spray risk</b><span>Spots likely spray days from dealer sales, crop stage and weather.</span><em>risk model &middot; early warning</em></li>
+              <li><i aria-hidden="true"><svg><use href="#i-list"/></svg></i><b>Disputes and anomalies</b><span>Gathers the evidence for an agent and flags repeat patterns.</span><em>summaries &middot; anomaly detection</em></li>
             </ul>
           </div>
-          <div class="p p--pollen" style="--w:6;--wt:12">
-            <p class="p-k">AI for experience &middot; frontstage</p>
-            <ul class="pg-ai-list">
-              <li><i aria-hidden="true"><svg><use href="#i-mic"/></svg></i><b>Ask Mitra, by voice</b><span>Questions in Hindi, Punjabi or Bhojpuri, answered aloud from the farmer&rsquo;s own bookings, never from guesswork.</span><em>Bhashini speech + grounded answers</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-say"/></svg></i><b>Every screen read aloud</b><span>Including the agreement, summarised into one minute of plain speech.</span><em>text to speech &middot; summarising</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-bell"/></svg></i><b>Proactive nudges</b><span>&ldquo;Flowers are coming early. Move the bees?&rdquo; One question, at the right time, with a yes and a no.</span><em>forecast &rarr; plain language</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-check"/></svg></i><b>Smart defaults</b><span>The field from the land record, the crop from last season, the route from the forecasts. Fewer questions to answer.</span><em>AgriStack &middot; history</em></li>
-              <li><i aria-hidden="true"><svg><use href="#i-spark"/></svg></i><b>Ops copilot</b><span>In the dashboard, answers questions like &ldquo;which placements are at risk this week?&rdquo; with the records behind them, and drafts the fix for a person to approve.</span><em>retrieval over bookings &middot; drafts, not actions</em></li>
+          <div class="p p--hatch" style="--w:5;--wt:12">
+            <p class="p-k">guardrails</p>
+            <ul class="p-check">
+              <li>No AI action moves money or bees without a person or a written rule</li>
+              <li>Every prediction shows its confidence and its inputs</li>
+              <li>A human path on every AI screen: call the agent</li>
+              <li>Below 60% sure, it asks instead of suggesting</li>
             </ul>
+            <p class="p-s p-foot">If the app can&rsquo;t explain why in one spoken sentence, it doesn&rsquo;t suggest it.</p>
           </div>
 
           <div class="p" style="--w:12">
@@ -1567,33 +1680,20 @@
                 <span class="pg-pin" style="right:-0.6rem;bottom:0.5rem">5</span>
               </div>
               <ol class="pg-anat-list">
-                <li><b>Say it is AI, and what changed</b><span>The tag names the source. People should know a model is talking.</span></li>
+                <li><b>Say it is AI, and what changed</b><span>People should know a model is talking.</span></li>
                 <li><b>The claim, in plain words</b><span>Five days early, not &ldquo;bloom onset revised&rdquo;.</span></li>
-                <li><b>How sure, shown as a bar</b><span>A number and a length, for people who don&rsquo;t read percentages.</span></li>
-                <li><b>Two equal choices</b><span>Same size, same weight. Saying no is never the small grey link.</span></li>
-                <li><b>Who else agreed, and the way back</b><span>The other side&rsquo;s answer and an undo window, so nothing feels final by accident.</span></li>
+                <li><b>How sure, shown as a bar</b><span>A length, for people who don&rsquo;t read percentages.</span></li>
+                <li><b>Two equal choices</b><span>Saying no is never the small grey link.</span></li>
+                <li><b>Who else agreed, and the way back</b><span>An undo window, so nothing feels final by accident.</span></li>
               </ol>
             </div>
           </div>
-
-          <div class="p p--hatch" style="--w:7;--wt:12">
-            <p class="p-k">guardrails</p>
-            <ul class="p-check">
-              <li>No AI action moves money or bees without a person or a written rule</li>
-              <li>Every prediction shows its confidence and its inputs</li>
-              <li>A human path on every AI screen: call the agent</li>
-              <li>Voice answers come only from the user&rsquo;s own records</li>
-              <li>Photos and voice notes used to improve models only with consent</li>
-              <li>Confidence below 60% means ask, not suggest</li>
-            </ul>
-          </div>
-          <div class="p p--paper" style="--w:5;--wt:12"><p class="p-k">the test</p><p class="p-lg">If the app can&rsquo;t explain why in one spoken sentence, it doesn&rsquo;t suggest it.</p></div>
         </div>
 
         <!-- 16 -->
         <div class="plate-head plate-head--wide">
           <h2 class="display section-title">16  Management dashboard</h2>
-          <div class="section-intro"><p>The ops console Paraga Mitra&rsquo;s regional team and the state horticulture departments use during a season, on a tablet in the field office or a screen at the regional desk. It shows the season at a glance, today&rsquo;s plan, what is at risk and why, and a copilot that drafts the next move. All figures are illustrative.</p></div>
+          <div class="section-intro"><p>The ops console the regional team and state horticulture departments use during a season: the season at a glance, today&rsquo;s plan, what is at risk and why, and a copilot that drafts the next move. Figures are illustrative.</p></div>
         </div>
 
         <div class="bx reveal">
@@ -1695,18 +1795,18 @@
         <!-- 17 -->
         <div class="plate-head">
           <h2 class="display section-title">17  The design system</h2>
-          <div class="section-intro"><p>Black, Pollen yellow and white, with leaf-cut corners on everything that matters. Yellow on black measures about 11:1, well above the 4.5:1 minimum for body text. Every label has a Devanagari twin in the same type family.</p></div>
+          <div class="section-intro"><p>The app shares the dashboard&rsquo;s look: comb cream, white cards, black ink and one Pollen yellow, with leaf-cut corners on what matters. Light surfaces read better in the sun, and black on yellow measures about 11:1. Every label has a Devanagari twin in the same type family.</p></div>
         </div>
 
         <div class="pal pal--parag reveal" role="list" aria-label="Paraga Mitra colour palette">
           <div class="pal-b" role="listitem" style="--c:#F6C10E;--t:#0d0d0e"><p class="pal-n">Pollen &middot; primary</p><dl class="pal-v"><div><dt>HEX</dt><dd>#F6C10E</dd></div><div><dt>Role</dt><dd>The one action, booked weeks, the mark</dd></div></dl></div>
-          <div class="pal-b" role="listitem" style="--c:#0D0D0E;--t:#f7f5ef"><p class="pal-n">Hive &middot; surface</p><dl class="pal-v"><div><dt>HEX</dt><dd>#0D0D0E</dd></div><div><dt>Role</dt><dd>Every screen</dd></div></dl></div>
-          <div class="pal-b" role="listitem" style="--c:#F7F5EF;--t:#0d0d0e"><p class="pal-n">Comb</p><dl class="pal-v"><div><dt>HEX</dt><dd>#F7F5EF</dd></div><div><dt>Role</dt><dd>Text, the QR card</dd></div></dl></div>
-          <div class="pal-b" role="listitem" style="--c:#1B1B1E;--t:#f7f5ef"><p class="pal-n">Panel</p><dl class="pal-v"><div><dt>HEX</dt><dd>#1B1B1E</dd></div><div><dt>Role</dt><dd>Cards and tiles</dd></div></dl></div>
+          <div class="pal-b" role="listitem" style="--c:#0D0D0E;--t:#f7f5ef"><p class="pal-n">Hive &middot; ink</p><dl class="pal-v"><div><dt>HEX</dt><dd>#0D0D0E</dd></div><div><dt>Role</dt><dd>Text, quiet buttons, the AI tag</dd></div></dl></div>
+          <div class="pal-b" role="listitem" style="--c:#F3F1EC;--t:#0d0d0e"><p class="pal-n">Comb &middot; surface</p><dl class="pal-v"><div><dt>HEX</dt><dd>#F3F1EC</dd></div><div><dt>Role</dt><dd>Every screen, as on the dashboard</dd></div></dl></div>
+          <div class="pal-b" role="listitem" style="--c:#FFFFFF;--t:#0d0d0e"><p class="pal-n">Card</p><dl class="pal-v"><div><dt>HEX</dt><dd>#FFFFFF</dd></div><div><dt>Role</dt><dd>Cards and tiles, at 74%</dd></div></dl></div>
           <div class="pal-b" role="listitem" style="--c:#FF6B4D;--t:#0d0d0e"><p class="pal-n">Spray &middot; danger</p><dl class="pal-v"><div><dt>HEX</dt><dd>#FF6B4D</dd></div><div><dt>Role</dt><dd>The one non-bee colour: harm to bees</dd></div></dl></div>
           <div class="pal-b" role="listitem" style="--c:#FFF1B8;--t:#0d0d0e"><p class="pal-n">Cream &middot; done</p><dl class="pal-v"><div><dt>HEX</dt><dd>#FFF1B8</dd></div><div><dt>Role</dt><dd>Checked, paid, safe</dd></div></dl></div>
           <div class="pal-b" role="listitem" style="--c:#E0A800;--t:#0d0d0e"><p class="pal-n">Honey &middot; moves</p><dl class="pal-v"><div><dt>HEX</dt><dd>#E0A800</dd></div><div><dt>Role</dt><dd>Transit, waits, history</dd></div></dl></div>
-          <div class="pal-b" role="listitem" style="--c:#A8A59E;--t:#0d0d0e"><p class="pal-n">Dust</p><dl class="pal-v"><div><dt>HEX</dt><dd>#A8A59E</dd></div><div><dt>Role</dt><dd>Second lines, 6.9:1 on Panel</dd></div></dl></div>
+          <div class="pal-b" role="listitem" style="--c:#6D675A;--t:#f7f5ef"><p class="pal-n">Dust</p><dl class="pal-v"><div><dt>HEX</dt><dd>#6D675A</dd></div><div><dt>Role</dt><dd>Second lines, 5:1 on Comb</dd></div></dl></div>
         </div>
 
         <div class="bx reveal" style="margin-top:6px">
@@ -1736,7 +1836,7 @@
 
         <div class="ds-level-head reveal"><b>UI kit</b><span>Atoms to organisms, built from the same code as the screens above.</span></div>
 
-        <div class="bx reveal">
+        <div class="bx pg-swipe reveal">
           <div class="p" style="--w:7;--wt:12">
             <p class="p-k">atoms &middot; buttons and their states</p>
             <div class="ap-kit pg-kit-cell">
@@ -1824,37 +1924,30 @@
 
         <!-- 18 -->
         <div class="plate-head plate-head--wide">
-          <h2 class="display section-title">18  Outcomes and the pilot</h2>
-          <div class="section-intro"><p>What success would be measured on, and a rollout that starts where a rental market already exists. The targets are hypotheses to test, not results.</p></div>
+          <h2 class="display section-title">18  Outcomes, limits and next</h2>
+          <div class="section-intro"><p>What success would be measured on, a rollout that starts where a rental market already exists, and what this project doesn&rsquo;t know yet. The targets are hypotheses to test, not results.</p></div>
         </div>
 
         <div class="bx reveal">
-          <div class="p" style="--w:4;--wt:6"><p class="p-k">for farmers</p><h3 class="p-t">Bloom coverage</h3><p class="p-s">Share of booked hectares with hives in place before 10% bloom.</p><p class="p-tag">target &middot; 90%+</p></div>
-          <div class="p" style="--w:4;--wt:6"><p class="p-k">for colonies</p><h3 class="p-t">Spray incidents</h3><p class="p-s">Unannounced sprays near placements, per 100 bookings.</p><p class="p-tag">target &middot; falling each season</p></div>
-          <div class="p" style="--w:4;--wt:12"><p class="p-k">for beekeepers</p><h3 class="p-t">Days to payment</h3><p class="p-s">From the end of bloom to money in the account.</p><p class="p-tag">target &middot; 2 days</p></div>
-          <div class="p" style="--w:6;--wt:12"><p class="p-k">for low-literate users</p><h3 class="p-t">Booked without help</h3><p class="p-s">Share of farmers who complete a booking by app or IVR, without an agent.</p><p class="p-tag p-tag--mute">baseline unknown &middot; measure first</p></div>
-          <div class="p" style="--w:6;--wt:12"><p class="p-k">for the service</p><h3 class="p-t">Repeat bookings</h3><p class="p-s">Farmers who book the same or a better-rated beekeeper next season.</p><p class="p-tag p-tag--mute">baseline unknown &middot; measure first</p></div>
-          <div class="p p--pollen" style="--w:12"><p class="p-k">pilot &middot; three phases, one route</p><ol class="p-steps"><li>Himachal apple, with the horticulture department</li><li>Bihar litchi, through FPOs and the KVK</li><li>Rajasthan and Punjab mustard, with input dealers</li></ol><p class="p-s">Start by digitising a market that already pays. Then add the agent network. Then take on the hardest part, field crops with heavy spraying.</p></div>
-        </div>
-
-        <!-- 19 -->
-        <div class="plate-head">
-          <h2 class="display section-title">19  Limits and next steps</h2>
-          <div class="section-intro"><p>What this project doesn&rsquo;t know yet, said plainly.</p></div>
-        </div>
-
-        <div class="bx reveal">
-          <div class="p" style="--w:6;--wt:12"><p class="p-k">limits</p><ul class="p-check p-check--out"><li>Desk research plus informal visits. Not a structured study</li><li>Yield gains are from specific trials and won&rsquo;t hold everywhere</li><li>Prices in the prototype are illustrative</li><li>The low-literacy guidelines come from a review, not from tests with these users</li><li>Effects on native bees need an ecologist, not a designer</li></ul></div>
-          <div class="p" style="--w:6;--wt:12"><p class="p-k">next</p><ul class="p-check"><li>Structured interviews along one route, both sides</li><li>Test the icons and voice flow with low-literate farmers</li><li>Test a light mode against the dark one in direct sun</li><li>Co-design the spray protocol with input dealers</li><li>Run a paper pilot of escrow with one FPO</li></ul></div>
+          <div class="p" style="--w:12">
+            <p class="p-k">measured on</p>
+            <ul class="pg-metrics">
+              <li><small>for farmers</small><b>Bloom coverage</b><span>Booked hectares with hives in place before 10% bloom</span><em>target &middot; 90%+</em></li>
+              <li><small>for colonies</small><b>Spray incidents</b><span>Unannounced sprays near placements, per 100 bookings</span><em>falling each season</em></li>
+              <li><small>for beekeepers</small><b>Days to payment</b><span>From the end of bloom to money in the account</span><em>target &middot; 2 days</em></li>
+              <li><small>for low-literate users</small><b>Booked without help</b><span>Farmers who book by app or IVR, without an agent</span><em class="is-mute">measure first</em></li>
+              <li><small>for the service</small><b>Repeat bookings</b><span>Farmers who book again next season</span><em class="is-mute">measure first</em></li>
+            </ul>
+          </div>
+          <div class="p p--pollen" style="--w:4;--wt:12"><p class="p-k">pilot &middot; three phases, one route</p><ol class="p-steps"><li>Himachal apple, with the horticulture department</li><li>Bihar litchi, through FPOs and the KVK</li><li>Rajasthan and Punjab mustard, with input dealers</li></ol></div>
+          <div class="p" style="--w:4;--wt:6"><p class="p-k">limits</p><ul class="p-check p-check--out"><li>Desk research plus informal visits, not a structured study</li><li>Yield gains are from specific trials</li><li>Prices in the prototype are illustrative</li><li>Effects on native bees need an ecologist</li></ul></div>
+          <div class="p" style="--w:4;--wt:6"><p class="p-k">next</p><ul class="p-check"><li>Structured interviews along one route</li><li>Test the icons and voice with low-literate farmers</li><li>Test the light app in direct sun</li><li>Run a paper pilot of escrow with one FPO</li></ul></div>
         </div>
 
         <!-- Sources -->
-        <div class="plate-head">
-          <h2 class="display section-title">Sources</h2>
-          <div class="section-intro"><p>The figures and guidelines on this page, and where they come from.</p></div>
-        </div>
-
-        <ol class="pg-refs reveal">
+        <details class="pg-sources reveal">
+          <summary><span class="display">Sources</span><small>12 references for the figures and guidelines on this page</small><i aria-hidden="true"></i></summary>
+          <ol class="pg-refs">
           <li>Ghosal, A. and Sahu, N. C. &ldquo;Impact of Crop-specific Technologies and Organic Growth Stimulants on Mustard, Black Gram and Green Gram in Sundarban area of West Bengal.&rdquo; <i>Journal of the Indian Society of Coastal Agricultural Research</i> 40(2), 2022. <a href="https://epubs.icar.org.in/index.php/JISCAR/article/view/123179" target="_blank" rel="noopener">epubs.icar.org.in</a></li>
           <li>Department of Horticulture, Government of Himachal Pradesh. &ldquo;Development of Beekeeping.&rdquo; <a href="https://eudyan.hp.gov.in/cms/en/developebeekeeping" target="_blank" rel="noopener">eudyan.hp.gov.in</a></li>
           <li>Down To Earth. &ldquo;Apple orchardists in Himachal worry after unseasonal rain and snow kill Italian honeybees.&rdquo; <a href="https://www.downtoearth.org.in/news/agriculture/apple-orchardists-in-himachal-worry-after-unseasonal-rain-and-snow-kill-italian-honeybees-88929" target="_blank" rel="noopener">downtoearth.org.in</a></li>
@@ -1868,6 +1961,7 @@
           <li>Guimar&atilde;es, L., Martins, N., Pereira, L., Penedos-Santiago, E. and Brand&atilde;o, D. &ldquo;Interface design guidelines for low literature users: a literature review.&rdquo; <i>ICEEL 2022</i>, ACM. <a href="https://doi.org/10.1145/3578837.3578842" target="_blank" rel="noopener">doi.org/10.1145/3578837.3578842</a></li>
           <li>Service Design Tools. &ldquo;Journey map.&rdquo; <a href="https://servicedesigntools.org/tools/journey-map" target="_blank" rel="noopener">servicedesigntools.org</a></li>
         </ol>
+        </details>
 
       </div>
     </section>

@@ -168,7 +168,7 @@
     meadow.setAttribute("aria-hidden", "true");
     head.appendChild(meadow);
     const growMeadow = () => {
-      const n = Math.floor(AX / CW);
+      const n = pre.offsetWidth ? Math.floor(AX / CW) : 0;
       if (n < 1) { meadow.hidden = true; return; }
       const TOP = 14;
       let seed = 7;
@@ -224,7 +224,9 @@
     const ripples = [];
     let buckets = [], NBX = 0, NBY = 0, ringsShown = false;
     const fitRings = () => {
-      if (!ctx) return;
+      // A header not laid out yet (a background tab) has no size; the
+      // ResizeObserver calls again once it has one.
+      if (!ctx || !HW || !HH) { buckets = []; NBX = NBY = 0; return; }
       canvas.width = Math.round(HW * DPR); canvas.height = Math.round(HH * DPR);
       ringsShown = false;
       NBX = Math.ceil(HW / BUCKET); NBY = Math.ceil(HH / BUCKET);
@@ -487,6 +489,438 @@
     if ("ResizeObserver" in window) new ResizeObserver(fit).observe(holder);
     else window.addEventListener("resize", fit);
   });
+
+  // ---------- Tabs ----------
+  // Shared by the screen rails and the AI phone: click or arrow keys, one
+  // panel shown at a time. Without the script every panel stays visible.
+  const tabset = (tabs, onPick) => {
+    const pick = (t, focus) => {
+      tabs.forEach((x) => {
+        const on = x === t;
+        x.setAttribute("aria-selected", String(on));
+        x.tabIndex = on ? 0 : -1;
+      });
+      if (focus) t.focus();
+      onPick(t);
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener("click", () => pick(t));
+      t.addEventListener("keydown", (e) => {
+        const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+        if (!step) return;
+        e.preventDefault();
+        pick(tabs[(i + step + tabs.length) % tabs.length], true);
+      });
+    });
+    pick(tabs.find((t) => t.getAttribute("aria-selected") === "true") || tabs[0]);
+  };
+
+  document.querySelectorAll("[data-rails]").forEach((box) => {
+    const tabs = [...box.querySelectorAll('[role="tab"]')];
+    tabset(tabs, (t) => {
+      box.querySelectorAll(".pg-rail-panel").forEach((p) => {
+        p.hidden = p.id !== t.getAttribute("aria-controls");
+        if (!p.hidden) p.querySelector(".pg-rail").scrollLeft = 0;
+      });
+    });
+  });
+
+  // ---------- The AI phone ----------
+  const lab = document.querySelector("[data-lab]");
+  if (lab) {
+    const reducedLab = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    tabset([...lab.querySelectorAll("[data-lab-tab]")], (t) => {
+      const k = t.dataset.labTab;
+      lab.querySelectorAll("[data-lab-pane]").forEach((p) => { p.hidden = p.dataset.labPane !== k; });
+      lab.querySelectorAll("[data-lab-note]").forEach((n) => { n.hidden = n.dataset.labNote !== k; });
+    });
+
+    // ---- Place boxes ----
+    // Boxes follow the finger 1:1 from where they were grabbed. "Suggest
+    // spots" works out the best five spots outside the danger zones, then each
+    // box springs there from wherever it is (critically damped, so no bounce,
+    // and a box grabbed mid-flight simply stops and follows the finger).
+    const plan = lab.querySelector("[data-plan]");
+    if (plan) {
+      const svg = plan.querySelector("[data-plan-map]");
+      const gBoxes = svg.querySelector("[data-plan-boxes]");
+      const gReach = svg.querySelector("[data-plan-reach]");
+      const pane = plan.closest(".ap-lab-pane");
+      const read = pane.querySelector(".ap-plan-read");
+      const out = {
+        cover: pane.querySelector("[data-plan-cover]"),
+        bar: pane.querySelector("[data-plan-bar]"),
+        state: pane.querySelector("[data-plan-state]"),
+        msg: pane.querySelector("[data-plan-msg]"),
+      };
+      const NS = "http://www.w3.org/2000/svg";
+      const FIELD = [[104, 76], [248, 66], [258, 196], [96, 204]];
+      const SPRAY = { x: 262, y: 30, r: 92 };
+      const ROAD_Y = 194;
+      const REACH = 42, MAX = 5;
+      const START = [[140, 112], [226, 98]];
+
+      const inside = (x, y) => {
+        let hit = false;
+        for (let i = 0, j = FIELD.length - 1; i < FIELD.length; j = i++) {
+          const [xi, yi] = FIELD[i], [xj, yj] = FIELD[j];
+          if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) hit = !hit;
+        }
+        return hit;
+      };
+      const danger = (x, y) => (Math.hypot(x - SPRAY.x, y - SPRAY.y) < SPRAY.r ? "spray" : y > ROAD_Y ? "road" : null);
+
+      // Points across the field, for measuring how much of it is covered.
+      const samples = [];
+      for (let y = 60; y < 210; y += 6) for (let x = 90; x < 262; x += 6) if (inside(x, y)) samples.push([x, y]);
+      const coverOf = (pts) => {
+        let n = 0;
+        for (const [sx, sy] of samples) if (pts.some(([x, y]) => (x - sx) ** 2 + (y - sy) ** 2 < REACH * REACH)) n++;
+        return n / samples.length;
+      };
+      // The suggestion: greedy, one box at a time, each where it adds the
+      // most new cover, never in a danger zone or hard against the edge.
+      const suggest = () => {
+        const cands = [];
+        for (let y = 70; y < 206; y += 4) for (let x = 96; x < 260; x += 4) {
+          if (inside(x, y) && !danger(x, y) && !danger(x + 8, y - 8) && inside(x + 8, y) && inside(x - 8, y) && inside(x, y + 8) && inside(x, y - 8)) cands.push([x, y]);
+        }
+        const picked = [], covered = new Uint8Array(samples.length);
+        for (let k = 0; k < MAX; k++) {
+          let best = null, bestGain = -1;
+          for (const c of cands) {
+            let gain = 0;
+            for (let s = 0; s < samples.length; s++) {
+              if (!covered[s] && (c[0] - samples[s][0]) ** 2 + (c[1] - samples[s][1]) ** 2 < REACH * REACH) gain++;
+            }
+            if (gain > bestGain) { bestGain = gain; best = c; }
+          }
+          picked.push(best);
+          samples.forEach(([sx, sy], s) => { if ((best[0] - sx) ** 2 + (best[1] - sy) ** 2 < REACH * REACH) covered[s] = 1; });
+        }
+        return picked;
+      };
+
+      const el = (tag, attrs) => {
+        const n = document.createElementNS(NS, tag);
+        for (const k in attrs) n.setAttribute(k, attrs[k]);
+        return n;
+      };
+      let boxes = [];
+      let suggested = false;
+      const make = (x, y) => {
+        const g = el("g", { class: "ap-plan-box", tabindex: "0", role: "button" });
+        g.append(
+          el("circle", { class: "bx-ring", r: "14" }),
+          el("rect", { class: "bx-body", x: "-9", y: "-8", width: "18", height: "16", rx: "4" }),
+          el("path", { class: "bx-line", d: "M-5-2.5h10M-5 2.5h10" }),
+        );
+        const warn = el("g", { class: "bx-warn", transform: "translate(9 -9)" });
+        warn.append(el("circle", { r: "5.5", fill: "#0d0d0e" }), el("path", { d: "M0-2.6v2.8M0 2.4v.1", stroke: "#fff", "stroke-width": "1.7", "stroke-linecap": "round" }));
+        g.append(warn);
+        const ring = el("circle", { r: String(REACH) });
+        gReach.append(ring);
+        gBoxes.append(g);
+        const b = { x, y, vx: 0, vy: 0, tx: null, ty: null, g, ring, out: false };
+        boxes.push(b);
+        bind(b);
+        return b;
+      };
+      const remove = (b) => {
+        b.g.remove(); b.ring.remove();
+        boxes = boxes.filter((x) => x !== b);
+      };
+      const paint = () => {
+        boxes.forEach((b, i) => {
+          b.g.setAttribute("transform", `translate(${b.x.toFixed(1)} ${b.y.toFixed(1)})`);
+          b.ring.setAttribute("cx", b.x.toFixed(1));
+          b.ring.setAttribute("cy", b.y.toFixed(1));
+          const bad = !!danger(b.x, b.y);
+          b.g.classList.toggle("is-bad", bad);
+          b.ring.classList.toggle("is-bad", bad);
+          b.g.style.opacity = b.out ? "0.45" : "";
+          b.ring.style.opacity = b.out ? "0" : "";
+          const where = danger(b.x, b.y);
+          b.g.setAttribute("aria-label", `Box ${i + 1}${where === "spray" ? ", in the spray zone" : where === "road" ? ", too close to the road" : ""}. Drag, or use the arrow keys. Delete removes it.`);
+        });
+        gReach.classList.add("ap-plan-reach");
+      };
+      const report = () => {
+        const good = boxes.filter((b) => !b.out && !danger(b.x, b.y));
+        const bad = boxes.findIndex((b) => !b.out && danger(b.x, b.y));
+        const pc = Math.round(coverOf(good.map((b) => [b.x, b.y])) * 100);
+        out.cover.textContent = pc + "%";
+        out.bar.style.setProperty("--v", pc + "%");
+        out.state.textContent = `${boxes.length} of ${MAX} placed`;
+        out.state.className = "ap-badge" + (bad >= 0 ? " ap-badge--warn" : boxes.length === MAX && pc >= 85 ? " ap-badge--ok" : "");
+        read.classList.toggle("is-bad", bad >= 0);
+        const held = boxes.find((b) => b.out);
+        let msg;
+        if (held) msg = "Let go here to take this box away.";
+        else if (bad >= 0) msg = danger(boxes[bad].x, boxes[bad].y) === "spray"
+          ? `Box ${bad + 1} is in the spray zone. Drag it out of the red, or let Mitra suggest.`
+          : `Box ${bad + 1} is too close to the road. Dust and drift reach it there.`;
+        else if (suggested && boxes.length === MAX) msg = `Mitra's five spots reach ${pc}% of the field, none in danger. The beekeeper can still move any of them.`;
+        else if (boxes.length < MAX) msg = `Tap inside the field to add box ${boxes.length + 1}.`;
+        else if (pc < 85) msg = "Spread the boxes out to reach more of the field.";
+        else msg = `Good: ${pc}% of the field, and every box is safe.`;
+        out.msg.textContent = msg;
+      };
+
+      // ---- Springs ----
+      const RESPONSE = 0.4;
+      const W = (2 * Math.PI) / RESPONSE;
+      let raf = 0, last = 0;
+      const step = (now) => {
+        const dt = Math.min(0.032, (now - last) / 1000 || 0.016);
+        last = now;
+        let moving = false;
+        for (const b of boxes) {
+          if (b.tx === null) continue;
+          for (const [p, v, t] of [["x", "vx", "tx"], ["y", "vy", "ty"]]) {
+            const a = -W * W * (b[p] - b[t]) - 2 * W * b[v];
+            b[v] += a * dt;
+            b[p] += b[v] * dt;
+          }
+          if (Math.hypot(b.x - b.tx, b.y - b.ty) < 0.15 && Math.hypot(b.vx, b.vy) < 0.5) { b.x = b.tx; b.y = b.ty; b.tx = b.ty = null; b.vx = b.vy = 0; }
+          else moving = true;
+        }
+        paint(); report();
+        raf = moving ? requestAnimationFrame(step) : 0;
+      };
+      // Restart the loop on every request, so one frame that never came
+      // (a tab in the background) cannot leave it stuck.
+      const animate = () => { cancelAnimationFrame(raf); last = performance.now(); raf = requestAnimationFrame(step); };
+      const send = (b, x, y) => {
+        if (reducedLab) { b.x = x; b.y = y; b.tx = b.ty = null; return; }
+        b.tx = x; b.ty = y;
+      };
+
+      // ---- Pointer ----
+      const toMap = (e) => {
+        const m = svg.getScreenCTM();
+        if (!m) return [0, 0];
+        const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+        return [p.x, p.y];
+      };
+      let drag = null, dragEnded = 0;
+      function bind(b) {
+        b.g.addEventListener("pointerdown", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const [x, y] = toMap(e);
+          // Grabbing a box mid-flight stops it where it is, then it follows.
+          b.tx = b.ty = null; b.vx = b.vy = 0;
+          drag = { b, dx: b.x - x, dy: b.y - y, sx: x, sy: y, moved: false, home: [b.x, b.y] };
+          b.g.classList.add("is-held");
+          gBoxes.append(b.g);
+          svg.setPointerCapture(e.pointerId);
+        });
+        b.g.addEventListener("keydown", (e) => {
+          const d = e.shiftKey ? 12 : 4;
+          const mv = { ArrowLeft: [-d, 0], ArrowRight: [d, 0], ArrowUp: [0, -d], ArrowDown: [0, d] }[e.key];
+          if (mv) {
+            e.preventDefault();
+            const nx = b.x + mv[0], ny = b.y + mv[1];
+            if (inside(nx, ny)) { b.x = nx; b.y = ny; suggested = false; paint(); report(); }
+          } else if (e.key === "Delete" || e.key === "Backspace") {
+            e.preventDefault();
+            const i = boxes.indexOf(b);
+            remove(b); paint(); report();
+            (boxes[i] || boxes[i - 1] || svg).focus?.();
+          }
+        });
+      }
+      svg.addEventListener("pointermove", (e) => {
+        if (!drag) return;
+        const [x, y] = toMap(e);
+        if (!drag.moved && Math.hypot(x - drag.sx, y - drag.sy) < 2) return;
+        drag.moved = true;
+        const b = drag.b;
+        b.x = Math.max(4, Math.min(296, x + drag.dx));
+        b.y = Math.max(4, Math.min(246, y + drag.dy));
+        b.out = !inside(b.x, b.y);
+        suggested = false;
+        paint(); report();
+      });
+      const end = () => {
+        if (!drag) return;
+        const b = drag.b;
+        b.g.classList.remove("is-held");
+        if (b.out) remove(b);
+        if (drag.moved) dragEnded = performance.now();
+        drag = null;
+        paint(); report();
+      };
+      svg.addEventListener("pointerup", end);
+      svg.addEventListener("pointercancel", end);
+      // A tap on the field itself adds a box there.
+      svg.addEventListener("click", (e) => {
+        // The release after a drag is not a tap.
+        if (e.target.closest(".ap-plan-box") || performance.now() - dragEnded < 300) return;
+        const [x, y] = toMap(e);
+        if (!inside(x, y)) { out.msg.textContent = "Boxes go inside your field, the outlined shape."; return; }
+        if (boxes.length >= MAX) { out.msg.textContent = `All ${MAX} boxes are placed. Drag one to move it.`; return; }
+        make(x, y);
+        suggested = false;
+        paint(); report();
+      });
+
+      pane.querySelector("[data-plan-ai]").addEventListener("click", () => {
+        const spots = suggest();
+        // Each spot goes to the nearest box still free; a missing box
+        // appears on its spot.
+        const free = [...boxes];
+        while (boxes.length > MAX) remove(boxes[boxes.length - 1]);
+        spots.forEach(([x, y]) => {
+          let k = -1, best = Infinity;
+          free.forEach((b, i) => { const d = Math.hypot(b.x - x, b.y - y); if (d < best) { best = d; k = i; } });
+          if (k >= 0) send(free.splice(k, 1)[0], x, y);
+          else make(x, y);
+        });
+        suggested = true;
+        paint(); report();
+        animate();
+      });
+      pane.querySelector("[data-plan-reset]").addEventListener("click", () => {
+        [...boxes].forEach(remove);
+        START.forEach(([x, y]) => make(x, y));
+        suggested = false;
+        paint(); report();
+      });
+
+      START.forEach(([x, y]) => make(x, y));
+      paint(); report();
+    }
+
+    // ---- Ask Mitra ----
+    // Three questions it can answer from the booking, each with its source
+    // and how sure it is. A fourth, asked by voice, it can't: it says so and
+    // offers the agent, which is the rule below 60%.
+    const log = lab.querySelector("[data-ask-log]");
+    if (log) {
+      const pane = log.closest(".ap-lab-pane");
+      const chips = [...pane.querySelectorAll("[data-ask]")];
+      const mic = pane.querySelector("[data-ask-mic]");
+      const hint = pane.querySelector("[data-ask-hint]");
+      const QA = [
+        { a: "Gurnam&rsquo;s truck reaches your field on 16 Dec, before sunrise. That is two days before the flowers open.", hi: "गुरनाम का ट्रक 16 दिसंबर को सुबह से पहले पहुँचेगा।", src: "Booking PR-2291 &middot; truck plan", sure: 92 },
+        { a: "Better not. The bees work your field until 25 Jan. If you must, log it here first: Gurnam gets 24 hours to close the boxes, and spray after 6 pm.", hi: "बेहतर है नहीं। पहले यहाँ बताएँ, शाम 6 बजे के बाद छिड़कें।", src: "Spray rules &middot; your booking", sure: 88 },
+        { a: "Five, for 1.6 ha of mustard: about three a hectare. That is what you booked.", hi: "पाँच बक्से, 1.6 हेक्टेयर सरसों के लिए।", src: "Crop guide &middot; ICAR", sure: 95 },
+      ];
+      const UNSURE = { q: "पिछले साल से ज़्यादा फ़सल होगी?", en: "Will I get more than last year?", a: "I can&rsquo;t say that from your records. Shall I ask Pooja, your agent, to call you?", hi: "यह मैं आपके रिकॉर्ड से नहीं बता सकता। पूजा को फ़ोन करने को कहूँ?", src: "Not in your records", sure: 40 };
+      let busy = false, asked = 0;
+      const scroll = () => pane.scrollTo({ top: pane.scrollHeight, behavior: reducedLab ? "auto" : "smooth" });
+      const bubble = (html, me) => {
+        const b = document.createElement("div");
+        b.className = "ap-bubble" + (me ? " ap-bubble--me" : "");
+        b.innerHTML = html;
+        log.append(b);
+        scroll();
+        return b;
+      };
+      const answer = (q, en, r) => {
+        busy = true;
+        chips.forEach((c) => (c.disabled = true));
+        bubble(`<p class="ap-t" style="font-size:13px">${q}</p><span class="ap-hi">${en}</span>`, true);
+        const wait = bubble('<span class="ap-typing" aria-label="Mitra is answering"><i></i><i></i><i></i></span>');
+        setTimeout(() => {
+          const low = r.sure < 60;
+          wait.innerHTML = `<p class="ap-t" style="font-size:13px">${r.a}</p><span class="ap-hi">${r.hi}</span>`
+            + `<span class="ap-src"><svg><use href="#i-list"/></svg>${r.src}</span>`
+            + `<div class="ap-conf"><span>Sure</span><i><b style="--v:${r.sure}%"></b></i><span>${r.sure}%</span></div>`
+            + (low ? '<button class="ap-pill ap-pill--dark" type="button" style="min-height:42px;font-size:12.5px"><svg><use href="#i-call"/></svg><span>Call Pooja</span></button>' : "");
+          scroll();
+          busy = false;
+          asked++;
+          chips.forEach((c) => (c.disabled = c.dataset.used === "1"));
+          hint.textContent = asked >= 4 ? "Every answer names where it came from" : "Tap a question, or the microphone";
+        }, reducedLab ? 200 : 900);
+      };
+      chips.forEach((c) => c.addEventListener("click", () => {
+        if (busy || c.dataset.used === "1") return;
+        c.dataset.used = "1";
+        const [q, en] = [c.firstChild.textContent.trim(), c.querySelector("small").textContent];
+        answer(q, en, QA[Number(c.dataset.ask)]);
+      }));
+      mic.addEventListener("click", () => {
+        if (busy) return;
+        busy = true;
+        mic.classList.add("is-on");
+        hint.textContent = "Listening…";
+        setTimeout(() => {
+          mic.classList.remove("is-on");
+          busy = false;
+          const next = chips.find((c) => c.dataset.used !== "1");
+          if (next) next.click();
+          else answer(UNSURE.q, UNSURE.en, UNSURE);
+        }, reducedLab ? 200 : 1200);
+      });
+    }
+
+    // ---- Hive check ----
+    const frame = lab.querySelector("[data-check-frame]");
+    if (frame) {
+      const pane = frame.closest(".ap-lab-pane");
+      const go = pane.querySelector("[data-check-go]");
+      const label = go.querySelector("span");
+      const num = pane.querySelector("[data-check-num]");
+      const badge = pane.querySelector("[data-check-badge]");
+      const conf = pane.querySelector("[data-check-conf]");
+      const pcOut = pane.querySelector("[data-check-pc]");
+      const msg = pane.querySelector("[data-check-msg]");
+      let stage = 0;
+      const countTo = (to) => {
+        if (reducedLab) { num.innerHTML = `${to}%<small>comb covered</small>`; return; }
+        const t0 = performance.now();
+        const tick = (now) => {
+          const k = Math.min(1, (now - t0) / 600), e = 1 - (1 - k) ** 3;
+          num.innerHTML = `${Math.round(to * e)}%<small>comb covered</small>`;
+          if (k < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      go.addEventListener("click", () => {
+        if (stage === 0) {
+          stage = -1;
+          go.disabled = true;
+          label.textContent = "Checking…";
+          frame.classList.remove("is-done");
+          frame.classList.add("is-scanning");
+          setTimeout(() => {
+            frame.classList.remove("is-scanning");
+            frame.classList.add("is-done");
+            countTo(72);
+            badge.textContent = "Strong";
+            badge.className = "ap-badge ap-badge--ok";
+            conf.style.setProperty("--v", "84%");
+            pcOut.textContent = "84%";
+            msg.textContent = "The booking agreed 60% or more. A person still has to say yes.";
+            go.disabled = false;
+            label.textContent = "Agent confirms";
+            go.classList.add("ap-pill--dark");
+            stage = 1;
+          }, reducedLab ? 150 : 1300);
+        } else if (stage === 1) {
+          badge.textContent = "Confirmed by Pooja";
+          msg.textContent = "First 50% released to Gurnam by UPI.";
+          label.textContent = "Check another frame";
+          go.classList.remove("ap-pill--dark");
+          stage = 2;
+        } else if (stage === 2) {
+          frame.classList.remove("is-done");
+          num.innerHTML = "&ndash;";
+          badge.textContent = "Not checked";
+          badge.className = "ap-badge";
+          conf.style.setProperty("--v", "0%");
+          pcOut.innerHTML = "&ndash;";
+          msg.textContent = "Point at one frame from the middle of the box.";
+          label.textContent = "Check this frame";
+          stage = 0;
+        }
+      });
+    }
+  }
 
   // ---------- Prototype ----------
   const proto = document.querySelector("[data-proto]");
