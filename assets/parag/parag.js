@@ -1002,25 +1002,91 @@
     show(at);
   }
 
+  // ---------- Sketch to screen, and the eye-tracking plan ----------
+  // The final frames are the live screens, copied in, so the wireframes are
+  // always compared with what actually shipped.
+  document.querySelectorAll("[data-wf-clone]").forEach((glass) => {
+    const copy = cloneScreen(glass.dataset.wfClone);
+    if (!copy) return;
+    copy.style.animation = "none";
+    glass.replaceChildren(copy);
+  });
+
+  // The study's areas of interest sit on the real elements of the copied
+  // screen, measured, so they stay true if the screen changes.
+  document.querySelectorAll(".pg-eye-phone").forEach((fig) => {
+    const place = () => {
+      const box = fig.getBoundingClientRect();
+      fig.querySelectorAll("[data-aoi]").forEach((a) => {
+        const t = fig.querySelector(".pg-glass " + a.dataset.aoi);
+        if (!t) { a.hidden = true; return; }
+        const r = t.getBoundingClientRect(), pad = 3;
+        a.style.left = r.left - box.left - pad + "px";
+        a.style.top = r.top - box.top - pad + "px";
+        a.style.width = r.width + pad * 2 + "px";
+        a.style.height = r.height + pad * 2 + "px";
+      });
+    };
+    place();
+    if ("ResizeObserver" in window) new ResizeObserver(place).observe(fig);
+  });
+
+  // ---------- Sticky-note boards ----------
+  // Notes can be dragged around the board with a mouse or pen, 1:1 from where
+  // they were grabbed; on touch the board scrolls as usual.
+  document.querySelectorAll("[data-board]").forEach((board) => {
+    let drag = null;
+    board.addEventListener("pointerdown", (e) => {
+      const note = e.target.closest(".pg-note");
+      if (!note || e.pointerType === "touch" || e.button !== 0) return;
+      e.preventDefault();
+      const [tx, ty] = (note.style.translate || "0px 0px").split(" ").map((v) => parseFloat(v) || 0);
+      drag = { note, x: e.clientX - tx, y: e.clientY - ty };
+      note.classList.add("is-dragging");
+      note.setPointerCapture(e.pointerId);
+    });
+    board.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const b = board.getBoundingClientRect(), n = drag.note;
+      let x = e.clientX - drag.x, y = e.clientY - drag.y;
+      // Keep the note on the board.
+      const home = n.getBoundingClientRect();
+      const [tx, ty] = (n.style.translate || "0px 0px").split(" ").map((v) => parseFloat(v) || 0);
+      const left = home.left - tx, top = home.top - ty;
+      x = Math.max(b.left - left + 6, Math.min(b.right - left - home.width - 6, x));
+      y = Math.max(b.top - top + 6, Math.min(b.bottom - top - home.height - 6, y));
+      n.style.translate = `${x}px ${y}px`;
+    });
+    const end = () => {
+      if (!drag) return;
+      drag.note.classList.remove("is-dragging");
+      drag = null;
+    };
+    board.addEventListener("pointerup", end);
+    board.addEventListener("pointercancel", end);
+  });
+
   // ---------- Section navigator ----------
   // Built from the section headings, so it never drifts from the page: the
-  // overview, each numbered section, and the three parts of the design system.
+  // overview, each numbered section with its design thinking phase, and the
+  // named parts inside a section (the design system, the village desk).
   {
     const reducedNav = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const items = [];
     const top = document.getElementById("pg-top");
     if (top) items.push({ el: top, html: "Overview" });
-    document.querySelectorAll(".plate-head .section-title").forEach((t) => {
-      const m = t.textContent.trim().replace(/\s+/g, " ").match(/^(\d+) (.*)$/);
-      if (!m) return;
-      const head = t.closest(".plate-head");
-      if (!head.id) head.id = "s-" + m[1];
-      items.push({ el: head, html: `<b>${m[1]}</b>${m[2]}` });
-      if (m[1] === "17") {
-        document.querySelectorAll(".pg-ds-head[id]").forEach((d) => {
-          items.push({ el: d, html: d.querySelector("b").textContent, sub: true });
-        });
+    let phase = null;
+    document.querySelectorAll(".plate-head .section-title, .pg-ds-head[id]").forEach((t) => {
+      if (t.classList.contains("pg-ds-head")) {
+        items.push({ el: t, html: t.querySelector("b").textContent, sub: true, phase });
+        return;
       }
+      const name = t.textContent.trim().replace(/\s+/g, " ");
+      const head = t.closest(".plate-head");
+      if (!name || !head.id) return;
+      const p = t.dataset.phase || null;
+      items.push({ el: head, html: name, phase: p, start: p && p !== phase });
+      phase = p;
     });
 
     if (items.length > 3) {
@@ -1036,6 +1102,7 @@
       items.forEach((it) => {
         const li = document.createElement("li");
         if (it.sub) li.className = "is-sub";
+        if (it.start) li.classList.add("is-phase-start");
         const a = document.createElement("a");
         a.href = "#" + (it.el.id || "pg-top");
         a.innerHTML = `<i aria-hidden="true"></i><span>${it.html}</span>`;
@@ -1055,10 +1122,31 @@
       // current one. Measured again whenever the window changes size.
       const mid = (it) => it.a.parentElement.offsetTop + it.a.offsetHeight / 2;
       let y0 = 0;
+      // Each design thinking phase is named once, upright along its stretch
+      // of the line, and lights up while you are in it.
+      const phases = [];
+      items.forEach((it) => {
+        if (!it.phase) return;
+        let g = phases[phases.length - 1];
+        if (!g || g.name !== it.phase) {
+          g = { name: it.phase, items: [], label: document.createElement("span") };
+          g.label.className = "pg-toc-phase";
+          g.label.setAttribute("aria-hidden", "true");
+          g.label.textContent = it.phase;
+          ol.append(g.label);
+          phases.push(g);
+        }
+        g.items.push(it);
+      });
       const measure = () => {
         y0 = mid(items[0]);
         track.style.top = fill.style.top = y0 + "px";
         track.style.height = mid(items[items.length - 1]) - y0 + "px";
+        phases.forEach((g) => {
+          const a = mid(g.items[0]) - 6, b = mid(g.items[g.items.length - 1]) + 6;
+          g.label.style.top = a + "px";
+          g.label.style.height = b - a + "px";
+        });
       };
       measure();
       const foot = document.querySelector(".case-next");
@@ -1093,6 +1181,7 @@
           else it.a.removeAttribute("aria-current");
         });
         fill.style.height = mid(items[k]) - y0 + "px";
+        phases.forEach((g) => g.label.classList.toggle("is-now", g.name === items[k].phase));
       };
       const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
       window.addEventListener("scroll", onScroll, { passive: true });
