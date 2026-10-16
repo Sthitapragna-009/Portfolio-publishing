@@ -809,12 +809,14 @@
         { a: "Five, for 1.6 ha of mustard: about three a hectare. That is what you booked.", hi: "पाँच बक्से, 1.6 हेक्टेयर सरसों के लिए।", src: "Crop guide &middot; ICAR", sure: 95 },
       ];
       const UNSURE = { q: "पिछले साल से ज़्यादा फ़सल होगी?", en: "Will I get more than last year?", a: "I can&rsquo;t say that from your records. Shall I ask Pooja, your agent, to call you?", hi: "यह मैं आपके रिकॉर्ड से नहीं बता सकता। पूजा को फ़ोन करने को कहूँ?", src: "Not in your records", sure: 40 };
+      // Mitra's turns carry the AI mark.
+      const BOT = '<span class="ap-bot" aria-hidden="true"><svg><use href="#i-ai"/></svg></span>';
       let busy = false, asked = 0;
       const scroll = () => pane.scrollTo({ top: pane.scrollHeight, behavior: reducedLab ? "auto" : "smooth" });
       const bubble = (html, me) => {
         const b = document.createElement("div");
-        b.className = "ap-bubble" + (me ? " ap-bubble--me" : "");
-        b.innerHTML = html;
+        b.className = "ap-bubble" + (me ? " ap-bubble--me" : " ap-bubble--ai");
+        b.innerHTML = (me ? "" : BOT) + html;
         log.append(b);
         scroll();
         return b;
@@ -826,7 +828,7 @@
         const wait = bubble('<span class="ap-typing" aria-label="Mitra is answering"><i></i><i></i><i></i></span>');
         setTimeout(() => {
           const low = r.sure < 60;
-          wait.innerHTML = `<p class="ap-t" style="font-size:13px">${r.a}</p><span class="ap-hi">${r.hi}</span>`
+          wait.innerHTML = BOT + `<p class="ap-t" style="font-size:13px">${r.a}</p><span class="ap-hi">${r.hi}</span>`
             + `<span class="ap-src"><svg><use href="#i-list"/></svg>${r.src}</span>`
             + `<div class="ap-conf"><span>Sure</span><i><b style="--v:${r.sure}%"></b></i><span>${r.sure}%</span></div>`
             + (low ? '<button class="ap-pill ap-pill--dark" type="button" style="min-height:42px;font-size:12.5px"><svg><use href="#i-call"/></svg><span>Call Pooja</span></button>' : "");
@@ -864,6 +866,7 @@
       const pane = frame.closest(".ap-lab-pane");
       const go = pane.querySelector("[data-check-go]");
       const label = go.querySelector("span");
+      const icon = go.querySelector("use");
       const num = pane.querySelector("[data-check-num]");
       const badge = pane.querySelector("[data-check-badge]");
       const conf = pane.querySelector("[data-check-conf]");
@@ -897,15 +900,18 @@
             pcOut.textContent = "84%";
             msg.textContent = "The booking agreed 60% or more. A person still has to say yes.";
             go.disabled = false;
+            // Now it is a person's call, so the button stops being purple.
             label.textContent = "Agent confirms";
-            go.classList.add("ap-pill--dark");
+            go.classList.replace("ap-pill--ai", "ap-pill--dark");
+            icon.setAttribute("href", "#i-user");
             stage = 1;
           }, reducedLab ? 150 : 1300);
         } else if (stage === 1) {
           badge.textContent = "Confirmed by Pooja";
           msg.textContent = "First 50% released to Gurnam by UPI.";
           label.textContent = "Check another frame";
-          go.classList.remove("ap-pill--dark");
+          go.classList.replace("ap-pill--dark", "ap-pill--ai");
+          icon.setAttribute("href", "#i-ai");
           stage = 2;
         } else if (stage === 2) {
           frame.classList.remove("is-done");
@@ -919,6 +925,179 @@
           stage = 0;
         }
       });
+    }
+  }
+
+  // ---------- Tracking a booking ----------
+  // Eight steps from booked to settled. The controls beside the phone move
+  // the season on a step at a time; the log fills in as it goes, newest
+  // first, and the step that just happened is marked.
+  const track = document.querySelector("[data-track]");
+  if (track) {
+    const STEPS = [
+      { t: "Booked", s: "You booked 5 boxes. Gurnam answers within a day.", n: "Next: pay, held safely", d: "14 Nov" },
+      { t: "Paid, held safely", s: "₹7,000 is held. Nobody is paid until the bees are on your field.", n: "Next: arrival date fixed, early Dec", d: "14 Nov" },
+      { t: "Arrival date fixed", s: "Mitra moved the flowers 2 days earlier. The bees arrive on 16 Dec.", n: "Next: on the way, 15 Dec", d: "6 Dec" },
+      { t: "On the way", s: "Gurnam's truck is on the road, 140 km out.", n: "Next: placed and checked, 16 Dec", d: "15 Dec" },
+      { t: "Placed and checked", s: "5 strong boxes are on your field. Gurnam got the first ₹3,500.", n: "Next: flowers open, about 18 Dec", d: "16 Dec" },
+      { t: "Bees at work", s: "The flowers are open and the bees are working your field.", n: "Next: bees leave, about 26 Jan", d: "10 Jan" },
+      { t: "Bees leave", s: "Gurnam collected the boxes. The bloom is over.", n: "Next: settled, about 28 Jan", d: "26 Jan" },
+      { t: "Season complete", s: "Gurnam has the last ₹3,500. Thank you for the bees' season.", n: "Book again for next season", d: "28 Jan" },
+    ];
+    const out = {
+      k: track.querySelector("[data-track-k]"),
+      pc: track.querySelector("[data-track-pc]"),
+      now: track.querySelector("[data-track-now]"),
+      sub: track.querySelector("[data-track-sub]"),
+      next: track.querySelector("[data-track-then]"),
+      count: track.querySelector("[data-track-count]"),
+      day: track.querySelector("[data-track-day]"),
+    };
+    const bars = [...track.querySelectorAll(".ap-track-bar i")];
+    const steps = [...track.querySelectorAll(".ap-track-steps li")];
+    const log = [...track.querySelectorAll(".ap-track-log li")];
+    const prev = track.querySelector("[data-track-prev]");
+    const next = track.querySelector("[data-track-next]");
+    let at = 6;
+
+    const show = (n, fresh) => {
+      at = Math.max(1, Math.min(STEPS.length, n));
+      const done = at === STEPS.length;
+      const S = STEPS[at - 1];
+      out.k.textContent = done ? "All 8 steps done" : `Step ${at} of ${STEPS.length} · now`;
+      out.pc.textContent = (done ? 100 : Math.round(((at - 0.5) / STEPS.length) * 100)) + "%";
+      out.now.textContent = S.t;
+      out.sub.textContent = S.s;
+      out.next.textContent = S.n;
+      out.day.textContent = `Step through the season: now ${S.d}`;
+      bars.forEach((b, i) => {
+        b.classList.toggle("on", i < at - 1 || done);
+        b.classList.toggle("now", i === at - 1 && !done);
+      });
+      steps.forEach((li) => {
+        const k = Number(li.dataset.step);
+        li.classList.toggle("done", k < at || done);
+        li.classList.toggle("now", k === at && !done);
+        if (k === at) li.setAttribute("aria-current", "step"); else li.removeAttribute("aria-current");
+      });
+      let shown = 0;
+      log.forEach((li) => {
+        const k = Number(li.dataset.step);
+        li.hidden = k > at;
+        li.classList.toggle("is-new", !!fresh && k === at);
+        if (!li.hidden) shown++;
+      });
+      out.count.textContent = shown;
+      prev.disabled = at === 1;
+      next.disabled = done;
+    };
+
+    tabset([...track.querySelectorAll("[data-track-tab]")], (t) => {
+      track.querySelectorAll("[data-track-pane]").forEach((p) => { p.hidden = p.dataset.trackPane !== t.dataset.trackTab; });
+    });
+    prev.addEventListener("click", () => show(at - 1));
+    next.addEventListener("click", () => show(at + 1, true));
+    // Tapping a step in the phone jumps the season to it.
+    steps.forEach((li) => li.addEventListener("click", () => show(Number(li.dataset.step))));
+    show(at);
+  }
+
+  // ---------- Section navigator ----------
+  // Built from the section headings, so it never drifts from the page: the
+  // overview, each numbered section, and the three parts of the design system.
+  {
+    const reducedNav = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const items = [];
+    const top = document.getElementById("pg-top");
+    if (top) items.push({ el: top, html: "Overview" });
+    document.querySelectorAll(".plate-head .section-title").forEach((t) => {
+      const m = t.textContent.trim().replace(/\s+/g, " ").match(/^(\d+) (.*)$/);
+      if (!m) return;
+      const head = t.closest(".plate-head");
+      if (!head.id) head.id = "s-" + m[1];
+      items.push({ el: head, html: `<b>${m[1]}</b>${m[2]}` });
+      if (m[1] === "17") {
+        document.querySelectorAll(".pg-ds-head[id]").forEach((d) => {
+          items.push({ el: d, html: d.querySelector("b").textContent, sub: true });
+        });
+      }
+    });
+
+    if (items.length > 3) {
+      const nav = document.createElement("nav");
+      nav.className = "pg-toc";
+      nav.setAttribute("aria-label", "Case study sections");
+      const ol = document.createElement("ol");
+      const track = document.createElement("span");
+      const fill = document.createElement("span");
+      track.className = "pg-toc-track";
+      fill.className = "pg-toc-fill";
+      ol.append(track, fill);
+      items.forEach((it) => {
+        const li = document.createElement("li");
+        if (it.sub) li.className = "is-sub";
+        const a = document.createElement("a");
+        a.href = "#" + (it.el.id || "pg-top");
+        a.innerHTML = `<i aria-hidden="true"></i><span>${it.html}</span>`;
+        li.append(a);
+        ol.append(li);
+        it.a = a;
+      });
+      nav.append(ol);
+      document.body.append(nav);
+
+      // Row heights come from the window's height (CSS), shared across the
+      // rows; the smaller design-system dots count as part of a row.
+      const subs = items.filter((it) => it.sub).length;
+      nav.style.setProperty("--rows", String(items.length - subs + subs * 0.72));
+
+      // The line runs from the first circle to the last; the fill to the
+      // current one. Measured again whenever the window changes size.
+      const mid = (it) => it.a.parentElement.offsetTop + it.a.offsetHeight / 2;
+      let y0 = 0;
+      const measure = () => {
+        y0 = mid(items[0]);
+        track.style.top = fill.style.top = y0 + "px";
+        track.style.height = mid(items[items.length - 1]) - y0 + "px";
+      };
+      measure();
+      const foot = document.querySelector(".case-next");
+
+      nav.addEventListener("click", (e) => {
+        const a = e.target.closest("a");
+        if (!a) return;
+        e.preventDefault();
+        const el = document.getElementById(a.hash.slice(1));
+        if (!el) return;
+        el.scrollIntoView({ behavior: reducedNav ? "auto" : "smooth", block: "start" });
+        history.replaceState(null, "", a.hash);
+      });
+
+      let cur = -1, ticking = false;
+      const update = () => {
+        ticking = false;
+        const line = innerHeight * 0.35;
+        let k = 0;
+        items.forEach((it, i) => { if (it.el.getBoundingClientRect().top <= line) k = i; });
+        // It joins once the header is mostly scrolled past, and steps aside
+        // when the next-project footer comes up, so it never sits on its links.
+        const pastHead = !top || top.getBoundingClientRect().bottom < innerHeight * 0.55;
+        const atFoot = foot && foot.getBoundingClientRect().top < innerHeight * 0.9;
+        nav.classList.toggle("is-on", pastHead && !atFoot);
+        if (k === cur) return;
+        cur = k;
+        items.forEach((it, i) => {
+          it.a.classList.toggle("is-now", i === k);
+          it.a.classList.toggle("is-past", i < k);
+          if (i === k) it.a.setAttribute("aria-current", "location");
+          else it.a.removeAttribute("aria-current");
+        });
+        fill.style.height = mid(items[k]) - y0 + "px";
+      };
+      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", () => { measure(); cur = -1; onScroll(); });
+      update();
     }
   }
 

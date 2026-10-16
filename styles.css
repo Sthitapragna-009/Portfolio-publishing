@@ -5800,15 +5800,7 @@ body.is-locked { overflow: hidden; }
 [data-page="parag"] .sev--cut { --sev: #ff6b4d; }
 [data-page="parag"] .p-states li { background: rgba(246, 193, 14, 0.05); }
 
-/* Yellow touches on the page type: a highlighter under section titles, and
-   the outcomes as filled pollen pills. */
-[data-page="parag"] .plate-head .section-title {
-  width: fit-content;
-  background: linear-gradient(transparent 64%, var(--pollen) 64%, var(--pollen) 90%, transparent 90%);
-}
-[data-page="parag"]:not([data-theme="light"]) .plate-head .section-title {
-  background: linear-gradient(transparent 64%, rgba(246, 193, 14, 0.38) 64%, rgba(246, 193, 14, 0.38) 90%, transparent 90%);
-}
+/* Section titles stay plain; the outcomes are filled pollen pills. */
 [data-page="parag"] .case-outcomes li { background: var(--pollen); border-color: var(--pollen); color: #0d0d0e; }
 
 /* ---- The page header and its ASCII bee ---- */
@@ -6055,6 +6047,43 @@ body.is-locked { overflow: hidden; }
 .ap-map, .ap-mini-map { background: #f1ecdc; box-shadow: inset 0 0 0 1px var(--line); }
 @media (prefers-reduced-transparency: reduce) { .ap-tabbar { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; } }
 
+/* ---- AI: electric purple ----
+   The one colour that isn't the bee's, so anything a model does reads as
+   different at a glance: the buttons that ask it to act, its tags, the voice
+   microphone and its scan. Chalk white on it, 4.6:1 at the light end. People's
+   actions stay yellow and black. */
+.ap, .ap-kit, .pg-fl-track, .db { --ai: linear-gradient(135deg, #4f12e0 0%, #7b25ff 55%, #9d3bff 100%); --ai-ink: #f7f5ef; --ai-glow: rgba(123, 37, 255, 0.55); }
+.ap-pill--ai {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--ai); color: var(--ai-ink);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.18), 0 10px 22px -10px var(--ai-glow);
+  transition: transform 0.1s ease-out, box-shadow 0.25s var(--ease);
+}
+.ap-pill--ai svg { color: var(--ai-ink); }
+.ap-pill--ai .ap-hi { color: rgba(247, 245, 239, 0.78); }
+/* A sheen crosses it on hover and focus, never on a loop. */
+.ap-pill--ai::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.28) 48%, transparent 66%);
+  transform: translateX(-120%); transition: transform 0.7s var(--ease);
+}
+.ap-pill--ai:hover::after, .ap-pill--ai:focus-visible::after { transform: translateX(120%); }
+.ap-pill--ai:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), inset 0 -1px 0 rgba(0, 0, 0, 0.18), 0 14px 28px -10px var(--ai-glow); }
+.ap-pill--ai:active { transform: scale(0.97); }
+.ap-pill--ai:focus-visible { outline: 2px solid #7b25ff; outline-offset: 2px; }
+.ap-pill--ai:disabled { opacity: 0.7; cursor: progress; }
+.ap-aitag, .ap-card--pollen .ap-aitag { background: var(--ai); color: var(--ai-ink); }
+.ap-aitag svg { width: 12px; height: 12px; }
+.ap-mic { background: var(--ai); color: var(--ai-ink); box-shadow: 0 0 0 12px rgba(123, 37, 255, 0.14), 0 0 0 26px rgba(123, 37, 255, 0.06); }
+.ap-mic--sm { box-shadow: 0 0 0 8px rgba(123, 37, 255, 0.16); }
+.ap-mic--sm.is-on { box-shadow: 0 0 0 8px rgba(123, 37, 255, 0.28), 0 0 0 18px rgba(123, 37, 255, 0.1); }
+.ap-mic--sm:focus-visible { outline-color: #7b25ff; }
+.ap-wave i { background: #7b25ff; }
+.ap-frame-scan { background: linear-gradient(transparent, rgba(123, 37, 255, 0.55)); border-bottom-color: #b06bff; }
+.pg-fl-track .is-ai .pg-fl-dot { background: var(--ai); color: var(--ai-ink); box-shadow: 0 6px 14px -6px var(--ai-glow); }
+.db .db-ai > svg { box-sizing: content-box; width: 14px; height: 14px; padding: 6px; border-radius: 50%; background: var(--ai); color: var(--ai-ink); }
+@media (prefers-reduced-motion: reduce) { .ap-pill--ai::after { display: none; } }
+
 /* ---- Screen rails behind tabs: one rail on screen at a time ---- */
 .pg-rail-tabs { display: flex; flex-wrap: wrap; gap: 4px; width: fit-content; max-width: 100%; margin: 0 0 1.1rem; padding: 4px; border-radius: 999px; background: rgba(255, 255, 255, 0.07); }
 .pg-rail-tabs button {
@@ -6184,6 +6213,166 @@ body.is-locked { overflow: hidden; }
 /* Behind the scenes, as a tight list. */
 .pg-ai-list--tight li { padding: 0.65rem 0; }
 .pg-ai-list--tight li span { font-size: 0.8rem; }
+
+/* ---- 13 · Tracking a booking: the steps, the log ---- */
+.pg-lab--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 21rem); }
+.pg-lab--flip .pg-lab-phone { order: 2; }
+.pg-track-nav { margin-top: 0.4rem; }
+@media (max-width: 860px) { .pg-lab--flip { grid-template-columns: minmax(0, 1fr); } .pg-lab--flip .pg-lab-phone { order: 0; } }
+.ap-track .ap-hello { margin: 0 0 10px; font-size: 18px; }
+.ap-track-hero .ap-row { align-items: baseline; }
+.ap-track-hero .ap-t { font-size: 18px; letter-spacing: -0.01em; }
+.ap-track-bar { display: grid; grid-template-columns: repeat(8, 1fr); gap: 3px; margin: 10px 0 6px; }
+.ap-track-bar i { height: 6px; border-radius: 6px; background: rgba(13, 13, 14, 0.16); transition: background-color 0.3s var(--ease); }
+.ap-track-bar i.on { background: #0d0d0e; }
+.ap-track-bar i.now { background: linear-gradient(90deg, #0d0d0e 50%, rgba(13, 13, 14, 0.16) 50%); }
+.ap-seg--in { margin: 2px 0 10px; background: rgba(13, 13, 14, 0.06); grid-template-columns: repeat(2, 1fr); }
+.ap-seg button small { margin-left: 6px; padding: 2px 6px; border-radius: 999px; background: rgba(13, 13, 14, 0.1); font-size: 10px; }
+.ap-seg button[aria-selected="true"] small { background: rgba(255, 255, 255, 0.2); }
+.ap-track-steps li > i svg { width: 15px; height: 15px; }
+.ap-track-steps li b { transition: color 0.3s var(--ease); }
+.ap-track-steps li:not(.done):not(.now) b, .ap-track-steps li:not(.done):not(.now) small { color: rgba(13, 13, 14, 0.42); }
+.ap-track-steps li:not(.done):not(.now) > i { background: transparent; box-shadow: inset 0 0 0 1.5px rgba(13, 13, 14, 0.18); color: rgba(13, 13, 14, 0.4); }
+.ap-track-steps li.now b { font-size: 13.5px; }
+.ap-list li > i.ai { background: var(--ai); color: var(--ai-ink); }
+.ap-track-log li > i svg { width: 15px; height: 15px; }
+.ap-track-log li.is-new { animation: ap-pop 0.35s var(--ease) both; background: linear-gradient(90deg, rgba(246, 193, 14, 0.18), transparent 70%); }
+.ap-track-log time { white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { .ap-track-log li.is-new { animation: none; } }
+
+/* ---- 17 · The design system as one section ----
+   Every specimen sits on the app's own surface, so the parts are seen the way
+   people will see them, not on the page's dark panels. */
+.p > .ap-kit {
+  display: grid; gap: 10px; padding: 14px; border-radius: 18px; color: var(--ink);
+  background:
+    radial-gradient(70% 60% at 100% 100%, #fbdc7a 0%, transparent 70%),
+    linear-gradient(160deg, #f3f1ec 0%, #f5efdc 70%, #f8e3a2 100%);
+}
+.ap-kit .pg-kit-cell > small { color: var(--dim); }
+.pg-kit-note { margin: 0; font-size: 11.5px; line-height: 1.4; color: var(--dim); }
+.pg-ds-head { margin-top: clamp(2.4rem, 5vw, 3.6rem); scroll-margin-top: 6rem; }
+.pg-ds-head b { font: 600 1.05rem/1.2 "Archivo", var(--font-display); }
+#ds-found { margin-top: clamp(1rem, 2vw, 1.5rem); }
+.pal .pal-b.pal-b--ai { background: linear-gradient(135deg, #4f12e0 0%, #7b25ff 55%, #9d3bff 100%); }
+
+/* The mark at its sizes, and its plain ink version. */
+.pg-ai-marks { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.pg-ai-mark { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ai); color: var(--ai-ink); box-shadow: 0 8px 18px -8px var(--ai-glow); }
+.pg-ai-mark svg { width: 24px; height: 24px; }
+.pg-ai-mark--lg { width: 64px; height: 64px; }
+.pg-ai-mark--lg svg { width: 34px; height: 34px; }
+.pg-ai-mark--sm { width: 28px; height: 28px; }
+.pg-ai-mark--sm svg { width: 15px; height: 15px; }
+.pg-ai-mark--ink { background: transparent; color: #0d0d0e; box-shadow: inset 0 0 0 1.5px var(--line); }
+.ap-pill--ai.is-pressed { transform: scale(0.97); filter: brightness(0.9); }
+.ap-pill--ai.is-working::after { animation: ai-sheen 1.6s linear infinite; }
+@keyframes ai-sheen { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+.ap-dots { display: inline-flex; gap: 3px; }
+.ap-dots i { width: 5px; height: 5px; border-radius: 50%; background: currentColor; animation: ap-dot 1s ease-in-out infinite; }
+.ap-dots i:nth-child(2) { animation-delay: 0.15s; }
+.ap-dots i:nth-child(3) { animation-delay: 0.3s; }
+
+/* Chatbot: Mitra's turn carries the mark. */
+.ap-bubble--ai { position: relative; padding-left: 42px; box-shadow: inset 0 0 0 1px var(--line); }
+.ap-bot { position: absolute; left: 10px; top: 10px; display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--ai); color: var(--ai-ink); }
+.ap .ap-bot svg, .ap-kit .ap-bot svg { width: 13px; height: 13px; }
+.ap-bubble--wait { width: fit-content; padding-right: 14px; }
+.pg-kit-chat { gap: 8px; }
+.pg-kit-chat .ap-bubble { margin: 0; }
+.pg-kit-chat .ap-bubble--me { justify-self: end; max-width: 78%; margin-left: 0; }
+.pg-kit-chat .ap-bubble--ai { margin-right: 18px; }
+.ap-chip { padding: 7px 11px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); font: 600 11.5px/1.2 "Noto Sans Devanagari", "Noto Sans", sans-serif; }
+.pg-kit-chat-bar { gap: 6px; }
+.ap-mic--xs { width: 44px; height: 44px; margin: 0 0 0 auto; }
+.ap-mic--xs svg { width: 20px; height: 20px; }
+.ap-typing--ai i { background: #7b25ff; }
+
+/* Copilot: the dashboard's black bar, at phone size, and its card. */
+.ap-copilot { display: flex; align-items: center; gap: 10px; padding: 6px 6px 6px 7px; border-radius: 999px; background: #0d0d0e; color: #f7f5ef; font-size: 12px; line-height: 1.3; }
+.ap-copilot p { flex: 1; min-width: 0; margin: 0; }
+.ap-copilot p b { margin-right: 4px; color: #cba8ff; }
+.ap-copilot-mark { display: grid; place-items: center; flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--ai); color: var(--ai-ink); }
+.ap-kit .ap-copilot-mark svg { width: 16px; height: 16px; }
+.ap-copilot-go { flex: none; min-height: 32px; padding: 0 13px; border: 0; border-radius: 999px; background: var(--pollen); color: #0d0d0e; font: 600 11.5px/1 "Noto Sans", sans-serif; cursor: pointer; }
+.ap-copilot--card { display: grid; gap: 6px; padding: 12px; border-radius: 20px; background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+.ap-copilot-list { margin: 0; padding: 0; list-style: none; }
+.ap-copilot-list li { display: grid; gap: 2px; padding: 8px 0; border-top: 1px solid var(--line); }
+.ap-copilot-list b { font-size: 12.5px; }
+.ap-copilot-list span { font-size: 11px; color: var(--dim); }
+
+/* Loading: the shape of the answer first, in a purple shimmer. */
+.ap-skel { display: grid; gap: 8px; margin: 0; }
+.ap-skel .ap-aitag { justify-self: start; }
+.ap-skel-line, .ap-skel-cells i { display: block; border-radius: 6px; background: linear-gradient(90deg, rgba(13, 13, 14, 0.07) 0%, rgba(123, 37, 255, 0.18) 40%, rgba(13, 13, 14, 0.07) 80%) 0 0 / 200% 100%; animation: ai-shim 1.4s linear infinite; }
+.ap-skel-line { height: 10px; }
+.ap-skel-cells { display: grid; grid-template-columns: repeat(10, 1fr); gap: 3px; }
+.ap-skel-cells i { aspect-ratio: 1; border-radius: 4px; }
+@keyframes ai-shim { to { background-position: -200% 0; } }
+.pg-load-row { display: grid; grid-template-columns: auto auto minmax(0, 1fr); gap: 8px; }
+.pg-load { display: grid; align-content: start; gap: 8px; padding: 10px 12px; border-radius: 14px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.pg-load small { font-size: 10px; font-weight: 600; color: var(--dim); }
+.ap-wave--sm { justify-content: flex-start; height: 22px; margin: 0; }
+.ap-indet { position: relative; display: block; height: 6px; margin-top: 8px; border-radius: 6px; overflow: hidden; background: rgba(123, 37, 255, 0.14); }
+.ap-indet i { position: absolute; top: 0; bottom: 0; left: 0; width: 40%; border-radius: 6px; background: var(--ai); animation: ai-indet 1.3s ease-in-out infinite; }
+@keyframes ai-indet { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+@media (max-width: 520px) { .pg-load-row { grid-template-columns: 1fr 1fr; } .pg-load--wide { grid-column: span 2; } }
+
+/* Confidence, in three bands. */
+.ap-kit .ap-card { margin: 0; }
+.ap-conf--hi i b { background: #0d0d0e; }
+.ap-conf--mid i b { background: #e0a800; }
+.ap-conf--lo i b { background: var(--spray); }
+@media (prefers-reduced-motion: reduce) {
+  .ap-pill--ai.is-working::after, .ap-dots i, .ap-skel-line, .ap-skel-cells i, .ap-indet i { animation: none; }
+  .ap-indet i { transform: translateX(80%); }
+}
+
+/* ---- Section navigator: a line down the left edge, a circle per section ----
+   The line fills to the section on screen. Only the narrow column of the line
+   and its circles takes the pointer: hovering a circle (or the line beside it)
+   shows that one section's name, and a click scrolls there. The circles
+   spread over most of the window's height. Hidden where there is no margin,
+   and over the footer. */
+.pg-toc { position: fixed; z-index: 40; left: clamp(8px, 1.3vw, 20px); top: 50%; width: 24px; transform: translateY(-50%); opacity: 0; visibility: hidden; transition: opacity 0.3s var(--ease), visibility 0s linear 0.3s; }
+.pg-toc.is-on { opacity: 1; visibility: visible; transition: opacity 0.3s var(--ease), visibility 0s; }
+.pg-toc ol { position: relative; margin: 0; padding: 0; list-style: none; }
+.pg-toc-track, .pg-toc-fill { position: absolute; left: 7px; width: 2px; border-radius: 2px; pointer-events: none; }
+.pg-toc-track { background: var(--hairline); }
+.pg-toc-fill { background: var(--pollen); transition: height 0.35s var(--ease); }
+.pg-toc li { position: relative; }
+.pg-toc a {
+  position: relative; display: flex; align-items: center; width: 24px;
+  height: clamp(18px, calc((100vh - 180px) / var(--rows, 22)), 36px);
+  color: var(--ink); text-decoration: none; outline: none;
+}
+.pg-toc li.is-sub a { height: clamp(14px, calc((100vh - 180px) / var(--rows, 22) * 0.72), 26px); }
+.pg-toc a i { position: relative; z-index: 1; display: grid; place-items: center; flex: none; width: 16px; height: 16px; }
+.pg-toc a i::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 1.5px var(--ink-faint); transition: transform 0.2s var(--ease), background-color 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+.pg-toc li.is-sub a i::before { width: 5px; height: 5px; }
+.pg-toc a.is-past i::before { background: var(--pollen); box-shadow: none; }
+.pg-toc a.is-now i::before { background: var(--pollen); box-shadow: 0 0 0 4px color-mix(in srgb, var(--pollen) 32%, transparent); transform: scale(1.35); }
+.pg-toc a:hover i::before { transform: scale(1.5); }
+.pg-toc a.is-now:hover i::before { transform: scale(1.6); }
+.pg-toc a:focus-visible i::before { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--focus); }
+/* The name: out of the flow, so it never widens what the pointer can hit. */
+.pg-toc a span {
+  position: absolute; left: 26px; top: 50%;
+  padding: 5px 11px; border-radius: 999px; white-space: nowrap;
+  font: 500 0.78rem/1.2 var(--font-body); color: var(--ink);
+  background: var(--nav-bg-solid); -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px var(--hairline), 0 8px 20px -10px rgba(0, 0, 0, 0.45);
+  opacity: 0; transform: translate(-6px, -50%); pointer-events: none;
+  transition: opacity 0.16s var(--ease), transform 0.16s var(--ease);
+}
+.pg-toc a span b { margin-right: 5px; font: 600 0.7rem/1 var(--pg-mono); color: var(--accent-text); }
+.pg-toc a:hover span, .pg-toc a:focus-visible span { opacity: 1; transform: translate(0, -50%); }
+@media (max-width: 999px) { .pg-toc { display: none; } }
+@media (prefers-reduced-motion: reduce) { .pg-toc a span, .pg-toc-fill { transition: none; } }
+@media (prefers-reduced-transparency: reduce) { .pg-toc a span { -webkit-backdrop-filter: none; backdrop-filter: none; } }
+
+/* Headings land below the fixed nav when jumped to. */
+[data-page="parag"] .plate-head { scroll-margin-top: 6rem; }
 
 /* ---- 18 · Five measures in one row ---- */
 .pg-metrics { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; margin: 0.4rem 0 0; padding: 0; list-style: none; }

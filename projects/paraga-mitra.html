@@ -81,6 +81,8 @@
     <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M8 3.5v4M16 3.5v4M4 10h16"/></symbol>
     <symbol id="i-bee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="14.5" rx="4" ry="5.5"/><path d="M8.3 13h7.4M8.3 16.3h7.4"/><path d="M11 9.2C9 6 5.5 5.7 4.5 7.5s1.6 4 6.5 3.5M13 9.2c2-3.2 5.5-3.5 6.5-1.7s-1.6 4-6.5 3.5"/></symbol>
     <symbol id="i-spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3l1.9 5.1L18 10l-5.1 1.9L11 17l-1.9-5.1L4 10l5.1-1.9Z"/><path d="M18.5 15l.8 2.2 2.2.8-2.2.8-.8 2.2-.8-2.2-2.2-.8 2.2-.8Z"/></symbol>
+    <!-- AI: a honeycomb of linked lobes, 2, 3, 2. Filled, unlike the line icons. -->
+    <symbol id="i-ai" viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="8.25" cy="6.3" r="2.35"/><circle cx="15.75" cy="6.3" r="2.35"/><circle cx="4.5" cy="12" r="2.35"/><circle cx="12" cy="12" r="2.35"/><circle cx="19.5" cy="12" r="2.35"/><circle cx="8.25" cy="17.7" r="2.35"/><circle cx="15.75" cy="17.7" r="2.35"/><path d="M8.25 3.95C9.35 3.95 10.5 5.05 12 5.05S14.65 3.95 15.75 3.95V8.65C14.65 8.65 13.5 7.55 12 7.55S9.35 8.65 8.25 8.65ZM4.5 9.65C5.6 9.65 6.75 10.75 8.25 10.75S10.9 9.65 12 9.65V14.35C10.9 14.35 9.75 13.25 8.25 13.25S5.6 14.35 4.5 14.35ZM12 9.65C13.1 9.65 14.25 10.75 15.75 10.75S18.4 9.65 19.5 9.65V14.35C18.4 14.35 17.25 13.25 15.75 13.25S13.1 14.35 12 14.35ZM8.25 15.35C9.35 15.35 10.5 16.45 12 16.45S14.65 15.35 15.75 15.35V20.05C14.65 20.05 13.5 18.95 12 18.95S9.35 20.05 8.25 20.05Z"/></symbol>
     <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5 4.5 14H11l-1 7.5L19.5 10H13Z"/></symbol>
     <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/></symbol>
     <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></symbol>
@@ -814,7 +816,7 @@
               <li class="is-trigger"><span class="pg-fl-dot"><svg><use href="#i-bolt"/></svg></span><small>Trigger</small><b>Sows mustard</b><span>An agent or a missed call starts the app</span></li>
               <li><span class="pg-fl-dot"><svg><use href="#i-say"/></svg></span><small>Step</small><b>Language, role, phone</b><span>Tiles and a number pad</span></li>
               <li><span class="pg-fl-dot"><svg><use href="#i-map"/></svg></span><small>Step</small><b>Field from the land record</b><span>Or tap its corners on the map</span></li>
-              <li class="is-ai"><span class="pg-fl-dot"><svg><use href="#i-spark"/></svg></span><small>AI</small><b>Bloom window and box count</b><span>From crop, sowing date, weather</span></li>
+              <li class="is-ai"><span class="pg-fl-dot"><svg><use href="#i-ai"/></svg></span><small>AI</small><b>Bloom window and box count</b><span>From crop, sowing date, weather</span></li>
               <li><span class="pg-fl-dot"><svg><use href="#i-coin"/></svg></span><small>Step</small><b>Choose and pay</b><span>Three keepers, money held safely</span></li>
               <li class="is-outcome"><span class="pg-fl-dot"><svg><use href="#i-check"/></svg></span><small>Outcome</small><b>Arrival booked</b><span>Before 10% bloom</span></li>
             </ol></div>
@@ -823,7 +825,7 @@
             <div class="pg-fl-head"><span class="pg-fl-n">02</span><h3>The flowers come early</h3><div class="pg-fl-tags"><span class="is-y">AI nudge</span><span>both sides</span><span>one tap each</span></div></div>
             <div class="pg-scroll"><ol class="pg-fl-track" style="--n:6">
               <li class="is-trigger"><span class="pg-fl-dot"><svg><use href="#i-bolt"/></svg></span><small>Trigger</small><b>Hot week in the IMD outlook</b><span>District forecast updates</span></li>
-              <li class="is-ai"><span class="pg-fl-dot"><svg><use href="#i-spark"/></svg></span><small>AI</small><b>Bloom re-forecast</b><span>17 Dec, not 22 Dec &middot; 78% sure</span></li>
+              <li class="is-ai"><span class="pg-fl-dot"><svg><use href="#i-ai"/></svg></span><small>AI</small><b>Bloom re-forecast</b><span>17 Dec, not 22 Dec &middot; 78% sure</span></li>
               <li class="is-decision"><span class="pg-fl-dot"><svg><use href="#i-alert"/></svg></span><small>Decision</small><b>Moved by 3 days or more?</b><span>Smaller shifts are absorbed quietly</span></li>
               <li><span class="pg-fl-dot"><svg><use href="#i-bell"/></svg></span><small>Step</small><b>Both asked, plainly</b><span>&ldquo;Move bee arrival to 16 Dec?&rdquo;</span></li>
               <li><span class="pg-fl-dot"><svg><use href="#i-truck"/></svg></span><small>Step</small><b>Truck re-planned</b><span>Every farm on it gets the new time</span></li>
@@ -950,7 +952,7 @@
                     </div>
                     <p class="ap-k">When?</p>
                     <div class="ap-stepper"><span aria-hidden="true">&minus;</span><b>6 weeks<small>ago</small></b><span aria-hidden="true">+</span></div>
-                    <button class="ap-pill" type="button"><svg><use href="#i-spark"/></svg><span>Show when it will flower</span></button>
+                    <button class="ap-pill ap-pill--ai" type="button"><svg><use href="#i-ai"/></svg><span>Show when it will flower</span></button>
                   </div>
                 </section>
               </div></div><figcaption><b><i>06</i>Crop</b><span>Weeks ago on a stepper, not a date picker. Then the home screen, with the forecast.</span></figcaption></figure>
@@ -1001,7 +1003,7 @@
                     <p class="ap-step">Step 3 of 4 <span aria-hidden="true"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></p>
                     <p class="ap-h">Your season</p>
                     <div class="ap-card ap-card--pollen">
-                      <span class="ap-aitag"><svg><use href="#i-spark"/></svg>Suggested route</span>
+                      <span class="ap-aitag"><svg><use href="#i-ai"/></svg>Suggested route</span>
                       <p class="ap-t" style="margin-top:8px">3 stops, about 3,000 km</p>
                       <p class="ap-s">From bloom forecasts on fields that want bees.</p>
                       <div class="ap-conf"><span>Fit</span><i><b style="--v:81%"></b></i><span>81%</span></div>
@@ -1041,7 +1043,7 @@
                 <section class="ap" id="scr-ask" aria-label="Ask Mitra by voice">
                   <div class="ap-status"><span>6:40</span><i aria-hidden="true"></i></div>
                   <div class="ap-body">
-                    <div class="ap-head"><button class="ap-back" type="button"><svg><use href="#i-back"/></svg>Help</button><span style="flex:1"></span><span class="ap-aitag"><svg><use href="#i-spark"/></svg>Ask Mitra</span></div>
+                    <div class="ap-head"><button class="ap-back" type="button"><svg><use href="#i-back"/></svg>Help</button><span style="flex:1"></span><span class="ap-aitag"><svg><use href="#i-ai"/></svg>Ask Mitra</span></div>
                     <div class="ap-mic" aria-hidden="true"><svg><use href="#i-mic"/></svg></div>
                     <div class="ap-wave" aria-hidden="true"><i style="--h:10px;--d:0s"></i><i style="--h:20px;--d:.1s"></i><i style="--h:28px;--d:.2s"></i><i style="--h:16px;--d:.3s"></i><i style="--h:24px;--d:.15s"></i><i style="--h:12px;--d:.25s"></i><i style="--h:26px;--d:.05s"></i><i style="--h:18px;--d:.35s"></i><i style="--h:9px;--d:.2s"></i></div>
                     <div class="ap-bubble ap-bubble--me"><p class="ap-t pg-face--deva" style="font-size:13.5px">मेरी सरसों में फूल कब आएंगे?</p><p class="ap-s">&ldquo;When will my mustard flower?&rdquo;</p></div>
@@ -1057,7 +1059,7 @@
                   <div class="ap-body">
                     <div class="ap-head"><span class="ap-av" aria-hidden="true">R</span><p class="ap-hello">Home<small>North field</small></p><button class="ap-ib ap-ib--say" type="button" aria-label="Read aloud"><svg><use href="#i-say"/></svg></button></div>
                     <div class="ap-card ap-card--pollen">
-                      <span class="ap-aitag"><svg><use href="#i-spark"/></svg>Forecast changed</span>
+                      <span class="ap-aitag"><svg><use href="#i-ai"/></svg>Forecast changed</span>
                       <p class="ap-t" style="margin-top:8px">Flowers are coming 5 days early</p>
                       <p class="ap-s">A hot week is ahead. Now from 17 Dec.</p>
                       <div class="ap-heat" style="--wk:10" aria-label="Old and new flowering weeks"><b style="font-size:9px">was</b><i></i><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><b style="font-size:9px">now</b><i></i><i></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
@@ -1074,7 +1076,7 @@
                 <section class="ap" aria-label="Placement check by the field agent">
                   <div class="ap-status"><span>5:52</span><i aria-hidden="true"></i></div>
                   <div class="ap-body">
-                    <div class="ap-head"><button class="ap-back" type="button"><svg><use href="#i-back"/></svg>Today</button><span style="flex:1"></span><span class="ap-aitag"><svg><use href="#i-spark"/></svg>Frame check</span></div>
+                    <div class="ap-head"><button class="ap-back" type="button"><svg><use href="#i-back"/></svg>Today</button><span style="flex:1"></span><span class="ap-aitag"><svg><use href="#i-ai"/></svg>Frame check</span></div>
                     <p class="ap-h">North field &middot; box 3 of 5</p>
                     <div class="ap-photo" aria-hidden="true"><span style="left:8%;top:22%;width:30%;height:62%"><b>bees 92%</b></span><span style="left:42%;top:30%;width:33%;height:50%"><b>brood</b></span></div>
                     <div class="ap-card">
@@ -1145,6 +1147,83 @@
                 </section>
               </div></div><figcaption><b><i>06</i>Honey passport</b><span>What a buyer sees after scanning the jar: where, from whom, and how safely.</span><em>traceability</em></figcaption></figure>
 
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Track a booking: progress steps and the activity log -->
+        <div class="bx reveal" style="margin-top:6px">
+          <div class="p" style="--w:12">
+            <div class="pg-lab pg-lab--flip" data-track>
+              <div class="pg-phone pg-lab-phone">
+                <div class="pg-glass">
+                  <section class="ap ap--lab" aria-label="Farmer app, tracking a booking">
+                    <div class="ap-status"><span>9:41</span><i aria-hidden="true"></i></div>
+                    <div class="ap-body ap-track">
+                      <div class="ap-head"><button class="ap-back" type="button"><svg><use href="#i-back"/></svg>My bees</button><span style="flex:1"></span><button class="ap-ib ap-ib--say" type="button" aria-label="Read aloud"><svg><use href="#i-say"/></svg></button></div>
+                      <p class="ap-hello">Booking PR-2291<small>Gurnam Singh &middot; 5 boxes &middot; North field</small></p>
+
+                      <div class="ap-card ap-card--pollen ap-track-hero" aria-live="polite">
+                        <div class="ap-row"><p class="ap-k" data-track-k>Step 6 of 8 &middot; now</p><p class="ap-k" data-track-pc>69%</p></div>
+                        <p class="ap-t" data-track-now>Bees at work</p>
+                        <p class="ap-s" data-track-sub>The flowers are open and the bees are working your field.</p>
+                        <div class="ap-track-bar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                        <p class="ap-s" data-track-then>Next: bees leave, about 26 Jan</p>
+                      </div>
+
+                      <div class="ap-seg ap-seg--in" role="tablist" aria-label="Booking details">
+                        <button type="button" role="tab" id="trk-t-steps" aria-controls="trk-p-steps" aria-selected="true" data-track-tab="steps">Steps</button>
+                        <button type="button" role="tab" id="trk-t-log" aria-controls="trk-p-log" aria-selected="false" tabindex="-1" data-track-tab="log">Activity<small data-track-count>12</small></button>
+                      </div>
+
+                      <div role="tabpanel" id="trk-p-steps" aria-labelledby="trk-t-steps" data-track-pane="steps">
+                        <ol class="ap-tl ap-track-steps">
+                          <li class="done" data-step="1"><i><svg><use href="#i-list"/></svg></i><div><b>Booked</b><small>14 Nov &middot; 5 boxes with Gurnam Singh</small></div></li>
+                          <li class="done" data-step="2"><i><svg><use href="#i-coin"/></svg></i><div><b>Paid, held safely</b><small>14 Nov &middot; &#8377;7,000 in escrow, not yet paid out</small></div></li>
+                          <li class="done" data-step="3"><i><svg><use href="#i-ai"/></svg></i><div><b>Arrival date fixed</b><small>6 Dec &middot; flowers from 18 Dec, bees on 16 Dec</small></div></li>
+                          <li class="done" data-step="4"><i><svg><use href="#i-truck"/></svg></i><div><b>On the way</b><small>15 Dec, night &middot; 140 km from Sri Ganganagar</small></div></li>
+                          <li class="done" data-step="5"><i><svg><use href="#i-hive"/></svg></i><div><b>Placed and checked</b><small>16 Dec &middot; 5 strong boxes &middot; first 50% paid</small></div></li>
+                          <li class="now" data-step="6"><i><svg><use href="#i-flower"/></svg></i><div><b>Bees at work</b><small>18 Dec to 25 Jan &middot; flowers open</small></div></li>
+                          <li data-step="7"><i><svg><use href="#i-truck"/></svg></i><div><b>Bees leave</b><small>about 26 Jan &middot; Gurnam collects the boxes</small></div></li>
+                          <li data-step="8"><i><svg><use href="#i-check"/></svg></i><div><b>Settled</b><small>about 28 Jan &middot; last 50% paid, then rate</small></div></li>
+                        </ol>
+                      </div>
+
+                      <div role="tabpanel" id="trk-p-log" aria-labelledby="trk-t-log" data-track-pane="log" hidden>
+                        <ul class="ap-list ap-track-log">
+                          <li data-step="8" hidden><i><svg><use href="#i-check"/></svg></i><span><b>You rated Gurnam 5 stars</b><small>You</small></span><time>28 Jan</time></li>
+                          <li data-step="8" hidden><i><svg><use href="#i-coin"/></svg></i><span><b>&#8377;3,500 released to Gurnam</b><small>Escrow &middot; bloom ended</small></span><time>28 Jan</time></li>
+                          <li data-step="7" hidden><i><svg><use href="#i-truck"/></svg></i><span><b>5 boxes collected</b><small>Gurnam Singh</small></span><time>26 Jan</time></li>
+                          <li data-step="6"><i><svg><use href="#i-hive"/></svg></i><span><b>Boxes opened again</b><small>Gurnam Singh</small></span><time>11 Jan</time></li>
+                          <li data-step="6"><i class="alert"><svg><use href="#i-alert"/></svg></i><span><b>Spray logged 1.8 km away. Boxes closed for a day</b><small>Neighbour &middot; alert sent to Gurnam</small></span><time>10 Jan</time></li>
+                          <li data-step="6"><i><svg><use href="#i-flower"/></svg></i><span><b>First flowers open</b><small>Pooja, field agent</small></span><time>18 Dec</time></li>
+                          <li data-step="5"><i><svg><use href="#i-coin"/></svg></i><span><b>&#8377;3,500 released to Gurnam</b><small>Escrow &middot; placement confirmed</small></span><time>16 Dec</time></li>
+                          <li data-step="5"><i class="ai"><svg><use href="#i-ai"/></svg></i><span><b>Hive check: 72% comb, strong</b><small>Mitra AI &middot; Pooja confirmed</small></span><time>16 Dec</time></li>
+                          <li data-step="5"><i><svg><use href="#i-hive"/></svg></i><span><b>5 boxes placed on your field</b><small>Gurnam Singh &middot; Pooja checked</small></span><time>16 Dec</time></li>
+                          <li data-step="4"><i><svg><use href="#i-pin"/></svg></i><span><b>Truck reached your village</b><small>Location, automatic</small></span><time>16 Dec</time></li>
+                          <li data-step="4"><i><svg><use href="#i-truck"/></svg></i><span><b>Truck left with 5 boxes</b><small>Gurnam Singh</small></span><time>15 Dec</time></li>
+                          <li data-step="3"><i class="ai"><svg><use href="#i-ai"/></svg></i><span><b>Flowers 2 days early. You both said yes</b><small>Mitra AI &middot; 81% sure</small></span><time>6 Dec</time></li>
+                          <li data-step="2"><i><svg><use href="#i-check"/></svg></i><span><b>Gurnam accepted the booking</b><small>Gurnam Singh</small></span><time>14 Nov</time></li>
+                          <li data-step="2"><i><svg><use href="#i-coin"/></svg></i><span><b>Paid &#8377;7,000 by UPI, held in escrow</b><small>You</small></span><time>14 Nov</time></li>
+                          <li data-step="1"><i><svg><use href="#i-list"/></svg></i><span><b>Booked 5 boxes for North field</b><small>You</small></span><time>14 Nov</time></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              <div class="pg-lab-side">
+                <p class="p-k">tracking &middot; from booking to completion</p>
+                <h3 class="p-t">One booking, eight steps, every action logged</h3>
+                <p class="p-s">The farmer and the beekeeper see the same eight steps. The activity log says who did what and when, the AI&rsquo;s actions included, so a dispute starts from facts rather than memory. Money moves at two steps only: placement and the end of bloom.</p>
+                <dl class="pg-lab-dl"><div><dt>Who sees it</dt><dd>Farmer, beekeeper and field agent, each from their own side</dd></div><div><dt>Spoken</dt><dd>The read-aloud button says the current step and what happens next</dd></div></dl>
+                <div class="pg-nav pg-track-nav">
+                  <button type="button" data-track-prev aria-label="Earlier step"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14.5 6-6 6 6 6"/></svg></button>
+                  <button type="button" data-track-next aria-label="Next step"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9.5 6 6 6-6 6"/></svg></button>
+                  <p data-track-day>Step through the season: now 10 Jan</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1580,7 +1659,7 @@
                       </div>
                       <div class="ap-pair">
                         <button class="ap-pill ap-pill--ghost" type="button" data-plan-reset><span>Start over</span></button>
-                        <button class="ap-pill" type="button" data-plan-ai><svg><use href="#i-spark"/></svg><span>Suggest spots</span></button>
+                        <button class="ap-pill ap-pill--ai" type="button" data-plan-ai><svg><use href="#i-ai"/></svg><span>Suggest spots</span></button>
                       </div>
                     </div>
 
@@ -1588,7 +1667,7 @@
                     <div class="ap-body ap-lab-pane" role="tabpanel" id="lab-p-ask" aria-labelledby="lab-t-ask" data-lab-pane="ask">
                       <div class="ap-head"><p class="ap-hello">Ask Mitra<small>Answers from your booking PR-2291</small></p><span class="ap-ib" aria-hidden="true">हिं</span></div>
                       <div class="ap-ask-log" data-ask-log aria-live="polite">
-                        <div class="ap-bubble"><p class="ap-t" style="font-size:13px">Namaste Ramesh. Ask me about your bees, a spray or the weather.</p><span class="ap-hi">नमस्ते रमेश। मधुमक्खी, छिड़काव या मौसम के बारे में पूछें।</span></div>
+                        <div class="ap-bubble ap-bubble--ai"><span class="ap-bot" aria-hidden="true"><svg><use href="#i-ai"/></svg></span><p class="ap-t" style="font-size:13px">Namaste Ramesh. Ask me about your bees, a spray or the weather.</p><span class="ap-hi">नमस्ते रमेश। मधुमक्खी, छिड़काव या मौसम के बारे में पूछें।</span></div>
                       </div>
                       <div class="ap-chips" data-ask-chips>
                         <button type="button" data-ask="0">मधुमक्खियाँ कब आएँगी?<small>When do the bees come?</small></button>
@@ -1609,12 +1688,12 @@
                         <span class="ap-frame-box is-empty" style="left:58%;top:58%;width:34%;height:32%"><b>empty</b></span>
                       </div>
                       <div class="ap-card ap-check-read" data-check-read>
-                        <p class="ap-k"><span class="ap-aitag"><svg><use href="#i-spark"/></svg>Estimate</span></p>
+                        <p class="ap-k"><span class="ap-aitag"><svg><use href="#i-ai"/></svg>Estimate</span></p>
                         <div class="ap-row"><p class="ap-big" data-check-num>&ndash;</p><span class="ap-badge" data-check-badge>Not checked</span></div>
                         <div class="ap-conf"><span>Sure</span><i><b data-check-conf style="--v:0%"></b></i><span data-check-pc>&ndash;</span></div>
                         <p class="ap-s" data-check-msg>Point at one frame from the middle of the box.</p>
                       </div>
-                      <button class="ap-pill" type="button" data-check-go><svg><use href="#i-camera"/></svg><span>Check this frame</span></button>
+                      <button class="ap-pill ap-pill--ai" type="button" data-check-go><svg><use href="#i-ai"/></svg><span>Check this frame</span></button>
                     </div>
                   </section>
                 </div>
@@ -1661,33 +1740,6 @@
             <p class="p-s p-foot">If the app can&rsquo;t explain why in one spoken sentence, it doesn&rsquo;t suggest it.</p>
           </div>
 
-          <div class="p" style="--w:12">
-            <p class="p-k">anatomy of an AI suggestion</p>
-            <div class="pg-anat">
-              <div class="pg-anat-card ap-kit">
-                <div class="ap-card ap-card--pollen">
-                  <span class="ap-aitag"><svg><use href="#i-spark"/></svg>Forecast changed</span>
-                  <p class="ap-t" style="margin-top:8px">Flowers are coming 5 days early</p>
-                  <p class="ap-s">A hot week is ahead. Now from 17 Dec.</p>
-                  <div class="ap-conf"><span>Sure</span><i><b style="--v:78%"></b></i><span>78%</span></div>
-                  <div class="ap-pair" style="margin-top:6px"><button class="ap-pill ap-pill--dark" type="button">Keep 21 Dec</button><button class="ap-pill ap-pill--dark" type="button">Yes, move</button></div>
-                  <p class="ap-s" style="margin-top:6px">Gurnam has already said yes &middot; Undo until 14 Dec</p>
-                </div>
-                <span class="pg-pin" style="left:-0.6rem;top:0.4rem">1</span>
-                <span class="pg-pin" style="right:-0.6rem;top:2.6rem">2</span>
-                <span class="pg-pin" style="right:-0.6rem;top:5.7rem">3</span>
-                <span class="pg-pin" style="left:-0.6rem;bottom:3.4rem">4</span>
-                <span class="pg-pin" style="right:-0.6rem;bottom:0.5rem">5</span>
-              </div>
-              <ol class="pg-anat-list">
-                <li><b>Say it is AI, and what changed</b><span>People should know a model is talking.</span></li>
-                <li><b>The claim, in plain words</b><span>Five days early, not &ldquo;bloom onset revised&rdquo;.</span></li>
-                <li><b>How sure, shown as a bar</b><span>A length, for people who don&rsquo;t read percentages.</span></li>
-                <li><b>Two equal choices</b><span>Saying no is never the small grey link.</span></li>
-                <li><b>Who else agreed, and the way back</b><span>An undo window, so nothing feels final by accident.</span></li>
-              </ol>
-            </div>
-          </div>
         </div>
 
         <!-- 16 -->
@@ -1734,7 +1786,7 @@
     </div>
   </div>
 
-  <div class="db-ai"><svg><use href="#i-spark"/></svg><b>Copilot</b><span>19 placements are at risk this week. 12 arrivals should move earlier for the heat, and 4 apiaries sit inside a spray ring.</span><span class="go">Review 12 arrivals</span></div>
+  <div class="db-ai"><svg><use href="#i-ai"/></svg><b>Copilot</b><span>19 placements are at risk this week. 12 arrivals should move earlier for the heat, and 4 apiaries sit inside a spray ring.</span><span class="go">Review 12 arrivals</span></div>
 
   <div class="db-grid">
     <section class="db-card db-sched">
@@ -1798,6 +1850,8 @@
           <div class="section-intro"><p>The app shares the dashboard&rsquo;s look: comb cream, white cards, black ink and one Pollen yellow, with leaf-cut corners on what matters. Light surfaces read better in the sun, and black on yellow measures about 11:1. Every label has a Devanagari twin in the same type family.</p></div>
         </div>
 
+        <div class="ds-level-head pg-ds-head reveal" id="ds-found"><b>17.1 Foundations</b><span>Colour, type, icons and the leaf corner.</span></div>
+
         <div class="pal pal--parag reveal" role="list" aria-label="Paraga Mitra colour palette">
           <div class="pal-b" role="listitem" style="--c:#F6C10E;--t:#0d0d0e"><p class="pal-n">Pollen &middot; primary</p><dl class="pal-v"><div><dt>HEX</dt><dd>#F6C10E</dd></div><div><dt>Role</dt><dd>The one action, booked weeks, the mark</dd></div></dl></div>
           <div class="pal-b" role="listitem" style="--c:#0D0D0E;--t:#f7f5ef"><p class="pal-n">Hive &middot; ink</p><dl class="pal-v"><div><dt>HEX</dt><dd>#0D0D0E</dd></div><div><dt>Role</dt><dd>Text, quiet buttons, the AI tag</dd></div></dl></div>
@@ -1807,6 +1861,7 @@
           <div class="pal-b" role="listitem" style="--c:#FFF1B8;--t:#0d0d0e"><p class="pal-n">Cream &middot; done</p><dl class="pal-v"><div><dt>HEX</dt><dd>#FFF1B8</dd></div><div><dt>Role</dt><dd>Checked, paid, safe</dd></div></dl></div>
           <div class="pal-b" role="listitem" style="--c:#E0A800;--t:#0d0d0e"><p class="pal-n">Honey &middot; moves</p><dl class="pal-v"><div><dt>HEX</dt><dd>#E0A800</dd></div><div><dt>Role</dt><dd>Transit, waits, history</dd></div></dl></div>
           <div class="pal-b" role="listitem" style="--c:#6D675A;--t:#f7f5ef"><p class="pal-n">Dust</p><dl class="pal-v"><div><dt>HEX</dt><dd>#6D675A</dd></div><div><dt>Role</dt><dd>Second lines, 5:1 on Comb</dd></div></dl></div>
+          <div class="pal-b pal-b--ai" role="listitem" style="--c:#7B25FF;--t:#f7f5ef"><p class="pal-n">Electric purple &middot; AI</p><dl class="pal-v"><div><dt>HEX</dt><dd>#4F12E0 &rarr; #9D3BFF</dd></div><div><dt>Role</dt><dd>Only where a model acts</dd></div></dl></div>
         </div>
 
         <div class="bx reveal" style="margin-top:6px">
@@ -1834,7 +1889,7 @@
           <div class="p p--paper" style="--w:4;--wt:12"><p class="p-k">the leaf corner</p><svg viewBox="0 0 24 24" width="64" height="64" style="color:#0d0d0e" aria-hidden="true"><use href="#i-mark"/></svg><p class="p-s">Two round corners and two tight ones, taken from a petal. It marks the things to act on: the yellow button, the alert, the booked state. Ordinary cards stay evenly rounded.</p></div>
         </div>
 
-        <div class="ds-level-head reveal"><b>UI kit</b><span>Atoms to organisms, built from the same code as the screens above.</span></div>
+        <div class="ds-level-head pg-ds-head reveal" id="ds-comp"><b>17.2 Components</b><span>Atoms to organisms, built from the same code as the screens above.</span></div>
 
         <div class="bx pg-swipe reveal">
           <div class="p" style="--w:7;--wt:12">
@@ -1856,7 +1911,6 @@
                 <button class="ap-ib" type="button" aria-label="Language">हिं</button>
                 <button class="ap-ib" type="button" aria-label="Call"><svg><use href="#i-call"/></svg></button>
                 <button class="ap-back" type="button"><svg><use href="#i-back"/></svg>Home</button>
-                <span class="ap-aitag"><svg><use href="#i-spark"/></svg>AI tag</span>
               </div>
             </div>
           </div>
@@ -1918,6 +1972,121 @@
             <div class="ap-kit">
               <nav class="ap-tabbar" aria-hidden="true" style="border-radius:16px;padding-bottom:9px"><span class="on"><svg><use href="#i-home"/></svg>Home</span><span><svg><use href="#i-hive"/></svg>My bees</span><span><svg><use href="#i-call"/></svg>Help</span></nav>
               <p class="p-s" style="margin-top:.7rem">Three tabs, always visible, always labelled.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ds-level-head pg-ds-head reveal" id="ds-ai"><b>17.3 AI elements</b><span>Purple means a model is involved. Each part says what it is, how sure it is, and how to reach a person.</span></div>
+
+        <div class="bx reveal">
+          <div class="p" style="--w:5;--wt:12">
+            <p class="p-k">the mark and the AI button</p>
+            <div class="ap-kit pg-kit-cell">
+              <div class="pg-ai-marks">
+                <span class="pg-ai-mark pg-ai-mark--lg"><svg><use href="#i-ai"/></svg></span>
+                <span class="pg-ai-mark"><svg><use href="#i-ai"/></svg></span>
+                <span class="pg-ai-mark pg-ai-mark--sm"><svg><use href="#i-ai"/></svg></span>
+                <span class="pg-ai-mark pg-ai-mark--ink"><svg><use href="#i-ai"/></svg></span>
+                <span class="ap-aitag"><svg><use href="#i-ai"/></svg>AI tag</span>
+              </div>
+              <p class="pg-kit-note">A honeycomb of linked lobes, filled, so it never reads as one of the line icons.</p>
+              <div class="pg-kit-states">
+                <span class="pg-kit-cell"><small>default</small><button class="ap-pill ap-pill--ai" type="button"><svg><use href="#i-ai"/></svg><span>Suggest spots</span></button></span>
+                <span class="pg-kit-cell"><small>pressed</small><button class="ap-pill ap-pill--ai is-pressed" type="button"><svg><use href="#i-ai"/></svg><span>Suggest spots</span></button></span>
+                <span class="pg-kit-cell"><small>working</small><button class="ap-pill ap-pill--ai is-working" type="button" aria-label="Working"><span class="ap-dots" aria-hidden="true"><i></i><i></i><i></i></span><span>Working it out</span></button></span>
+                <span class="pg-kit-cell"><small>handed to a person</small><button class="ap-pill ap-pill--dark" type="button"><svg><use href="#i-user"/></svg><span>Agent confirms</span></button></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="p" style="--w:7;--wt:12">
+            <p class="p-k">chatbot &middot; Ask Mitra</p>
+            <div class="ap-kit pg-kit-cell pg-kit-chat">
+              <div class="ap-bubble ap-bubble--me"><p class="ap-t" style="font-size:13px">मधुमक्खियाँ कब आएँगी?</p><span class="ap-hi">When do the bees come?</span></div>
+              <div class="ap-bubble ap-bubble--ai">
+                <span class="ap-bot" aria-hidden="true"><svg><use href="#i-ai"/></svg></span>
+                <p class="ap-t" style="font-size:13px">Gurnam&rsquo;s truck reaches your field on 16 Dec, before sunrise.</p>
+                <span class="ap-src"><svg><use href="#i-list"/></svg>Booking PR-2291</span>
+                <div class="ap-conf"><span>Sure</span><i><b style="--v:92%"></b></i><span>92%</span></div>
+              </div>
+              <div class="ap-bubble ap-bubble--ai ap-bubble--wait"><span class="ap-bot" aria-hidden="true"><svg><use href="#i-ai"/></svg></span><span class="ap-typing" aria-label="Mitra is answering"><i></i><i></i><i></i></span></div>
+              <div class="pg-kit-row pg-kit-chat-bar">
+                <span class="ap-chip">कल छिड़काव कर सकता हूँ?</span>
+                <span class="ap-chip">कितने बक्से चाहिए?</span>
+                <button class="ap-mic ap-mic--sm ap-mic--xs" type="button" aria-label="Speak a question"><svg><use href="#i-mic"/></svg></button>
+              </div>
+            </div>
+            <p class="p-s">The user&rsquo;s turn is black, Mitra&rsquo;s is white with the mark. Every answer carries its source and a confidence bar, and suggested questions sit under the thumb.</p>
+          </div>
+
+          <div class="p" style="--w:6;--wt:12">
+            <p class="p-k">copilot &middot; the app and the dashboard</p>
+            <div class="ap-kit pg-kit-cell">
+              <div class="ap-copilot"><span class="ap-copilot-mark" aria-hidden="true"><svg><use href="#i-ai"/></svg></span><p><b>Mitra</b> 2 of your boxes are inside a spray zone.</p><button class="ap-copilot-go" type="button">Move them</button></div>
+              <div class="ap-copilot ap-copilot--card">
+                <div class="ap-row"><span class="ap-aitag"><svg><use href="#i-ai"/></svg>Copilot &middot; 3 suggestions</span><span class="ap-s" style="margin:0">Ops</span></div>
+                <ul class="ap-copilot-list">
+                  <li><b>Move 12 arrivals 2 days earlier</b><span>Heat in the IMD outlook &middot; 81% sure</span></li>
+                  <li><b>Call the Raisinghnagar dealer</b><span>4 apiaries inside a spray ring</span></li>
+                  <li><b>Hold PR-2340 payout</b><span>Count gap seen 3 seasons running</span></li>
+                </ul>
+                <div class="ap-pair"><button class="ap-pill ap-pill--ghost" type="button">Skip</button><button class="ap-pill ap-pill--dark" type="button">Review and approve</button></div>
+              </div>
+            </div>
+            <p class="p-s">The copilot drafts; a person approves. The bar is the dashboard&rsquo;s, at phone size.</p>
+          </div>
+
+          <div class="p" style="--w:6;--wt:12">
+            <p class="p-k">loading &middot; thinking, listening, scanning</p>
+            <div class="ap-kit pg-kit-cell">
+              <div class="ap-card ap-skel" aria-label="Working out your bloom window">
+                <span class="ap-aitag"><svg><use href="#i-ai"/></svg>Working out your bloom window</span>
+                <i class="ap-skel-line" style="width:82%"></i><i class="ap-skel-line" style="width:64%"></i>
+                <div class="ap-skel-cells" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <div class="pg-load-row">
+                <span class="pg-load"><small>thinking</small><span class="ap-typing ap-typing--ai"><i></i><i></i><i></i></span></span>
+                <span class="pg-load"><small>listening</small><span class="ap-wave ap-wave--sm" aria-hidden="true"><i style="--h:8px;--d:0s"></i><i style="--h:16px;--d:.1s"></i><i style="--h:22px;--d:.2s"></i><i style="--h:12px;--d:.3s"></i><i style="--h:18px;--d:.4s"></i><i style="--h:9px;--d:.5s"></i></span></span>
+                <span class="pg-load pg-load--wide"><small>scanning a frame</small><span class="ap-indet" aria-hidden="true"><i></i></span></span>
+              </div>
+            </div>
+            <p class="p-s">The shape of the answer appears first, so the wait feels short. Motion stops for anyone who prefers less.</p>
+          </div>
+
+          <div class="p" style="--w:5;--wt:12">
+            <p class="p-k">confidence &middot; and the way to a person</p>
+            <div class="ap-kit pg-kit-cell">
+              <div class="ap-card"><div class="ap-conf ap-conf--hi" style="margin:0"><span>Sure</span><i><b style="--v:92%"></b></i><span>92%</span></div><p class="ap-s">Above 80%: it suggests.</p></div>
+              <div class="ap-card"><div class="ap-conf ap-conf--mid" style="margin:0"><span>Sure</span><i><b style="--v:68%"></b></i><span>68%</span></div><p class="ap-s">60 to 80%: it suggests and says why it isn&rsquo;t sure.</p></div>
+              <div class="ap-card"><div class="ap-conf ap-conf--lo" style="margin:0"><span>Sure</span><i><b style="--v:40%"></b></i><span>40%</span></div><p class="ap-s">Below 60%: it asks a person instead.</p><button class="ap-pill ap-pill--dark" type="button" style="min-height:42px;font-size:12.5px"><svg><use href="#i-call"/></svg><span>Call Pooja</span></button></div>
+            </div>
+          </div>
+
+          <div class="p" style="--w:7;--wt:12">
+            <p class="p-k">anatomy of an AI suggestion</p>
+            <div class="pg-anat">
+              <div class="pg-anat-card ap-kit">
+                <div class="ap-card ap-card--pollen">
+                  <span class="ap-aitag"><svg><use href="#i-ai"/></svg>Forecast changed</span>
+                  <p class="ap-t" style="margin-top:8px">Flowers are coming 5 days early</p>
+                  <p class="ap-s">A hot week is ahead. Now from 17 Dec.</p>
+                  <div class="ap-conf"><span>Sure</span><i><b style="--v:78%"></b></i><span>78%</span></div>
+                  <div class="ap-pair" style="margin-top:6px"><button class="ap-pill ap-pill--dark" type="button">Keep 21 Dec</button><button class="ap-pill ap-pill--dark" type="button">Yes, move</button></div>
+                  <p class="ap-s" style="margin-top:6px">Gurnam has already said yes &middot; Undo until 14 Dec</p>
+                </div>
+                <span class="pg-pin" style="left:-0.6rem;top:0.4rem">1</span>
+                <span class="pg-pin" style="right:-0.6rem;top:2.6rem">2</span>
+                <span class="pg-pin" style="right:-0.6rem;top:5.7rem">3</span>
+                <span class="pg-pin" style="left:-0.6rem;bottom:3.4rem">4</span>
+                <span class="pg-pin" style="right:-0.6rem;bottom:0.5rem">5</span>
+              </div>
+              <ol class="pg-anat-list">
+                <li><b>Say it is AI, and what changed</b><span>The purple tag names the source.</span></li>
+                <li><b>The claim, in plain words</b><span>Five days early, not &ldquo;bloom onset revised&rdquo;.</span></li>
+                <li><b>How sure, shown as a bar</b><span>A length, for people who don&rsquo;t read percentages.</span></li>
+                <li><b>Two equal choices</b><span>Saying no is never the small grey link.</span></li>
+                <li><b>Who else agreed, and the way back</b><span>An undo window, so nothing feels final by accident.</span></li>
+              </ol>
             </div>
           </div>
         </div>
