@@ -1,14 +1,31 @@
 // Builds projects/easy-cms.html, the Easy CMS case study.
 // Shell (nav, footer, theme toggle) is lifted from paraga-mitra.html so the two pages stay in step.
-// Screens come from assets/easycms/*.webp, made by tools/easycms/capture.js from the running prototype.
-// Icons: Solar (480 Design, CC BY 4.0) via allsvgicons.com, stored in tools/easycms/solar.json.
+// Screens: assets/easycms/*.webp and the mockups (mock-*.jpg), made by tools/easycms/capture.js.
+// Diagrams: tools/easycms/infographics.js. Live prototype: prototypes/easy-cms (npm run build:portfolio
+// in "Actual Portfolio/CMS builder"). Icons: Solar (480 Design, CC BY 4.0) via allsvgicons.com.
 // Edit this file, not the HTML.
 const fs = require("fs");
 const path = require("path");
+const ig = require("./infographics.js");
 const SITE = path.resolve(__dirname, "../..");
 const A = "../assets/easycms/";
 const src = fs.readFileSync(SITE + "/projects/paraga-mitra.html", "utf8");
 const solar = JSON.parse(fs.readFileSync(__dirname + "/solar.json", "utf8"));
+// The assistant's faces come from the prototype's own drawing code, so the page can never drift from the app.
+const { faceSvg } = require(path.resolve(SITE, "../CMS builder/src/components/assistantFace.ts"));
+// [mood, name, when it appears in the prototype]
+const MOODS_CS = [
+  ["idle", "Ready", "Waiting in the top bar"],
+  ["happy", "Hello", "Greets you; nothing waiting"],
+  ["thinking", "Thinking", "A short beat before each answer"],
+  ["listening", "Listening", "Asks for your message"],
+  ["smart", "Smart", "Explains how, or what fails GIGW"],
+  ["idea", "Bright idea", "Drafted a notice from your text"],
+  ["celebrating", "Celebrating", "Nothing to fix"],
+  ["surprised", "Surprised", "Something leaves the site this week"],
+  ["sweaty", "Sweaty", "Something was sent back to you"],
+  ["sorry", "Sorry", "Could not find it in your text"],
+];
 
 // Text escape. Straight apostrophes become typographic ones.
 const e = (s) => String(s)
@@ -25,7 +42,7 @@ head = head
   .replace(/<title>[^<]*<\/title>/, "<title>Easy CMS — Website updates without code | Sthitapragna Kollepara</title>")
   .replace(/<meta name="description" content="[^"]*"/, '<meta name="description" content="Easy CMS: a simpler way for IIT Roorkee admin staff to update a department or centre website without HTML. Guided forms, a true preview, review before publishing, Hindi and English, GIGW checks and an AI helper with guardrails. Research plan, design and a working prototype."')
   .replace("family=Noto+Sans+Devanagari:wght@500;600;700&display=swap", "family=Noto+Sans+Devanagari:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap")
-  .replace('<link rel="stylesheet" href="../styles.css" />', '<link rel="stylesheet" href="../styles.css" />\n  <link rel="stylesheet" href="../assets/easycms/easycms.css" />');
+  .replace('<link rel="stylesheet" href="../styles.css" />', '<link rel="stylesheet" href="../styles.css" />\n  <link rel="stylesheet" href="../assets/easycms/easycms.css" />\n  <link rel="stylesheet" href="../assets/easycms/easycms-v2.css" />');
 let tail = src.slice(src.indexOf("  <!-- ===================== LIGHTBOX"));
 tail = tail.replace('<script src="../assets/parag/parag.js"></script>', '<script src="../assets/easycms/easycms.js"></script>');
 
@@ -37,7 +54,6 @@ ${Object.entries(solar.duo).map(([k, v]) => `    <symbol id="d-${k}" viewBox="0 
   </svg>`;
 const ico = (n) => `<svg class="ec-i" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 const duo = (n) => `<svg class="ec-i" aria-hidden="true"><use href="#d-${n}"/></svg>`;
-const ib = (n, d = true) => `<span class="ec-ib">${d ? duo(n) : ico(n)}</span>`;
 
 // ---------- image sizes, read from the webp headers ----------
 function size(file) {
@@ -54,18 +70,13 @@ const phone = (file, alt) => `<figure class="ec-phone">${img(file, alt)}</figure
 const cap = (t) => `<p class="ec-cap">${t}</p>`;
 
 // ---------- layout helpers ----------
+// Section head: the title on the left, the phase as ghost text on the right (no pill, no new typeface).
 const head2 = (id, phase, title, intro) => `
-        <div class="plate-head" id="${id}">
-          <h2 class="display section-title" data-phase="${phase}">${e(title)}</h2>
-          <div class="section-intro">${[].concat(intro).map((p) => `<p>${e(p)}</p>`).join("")}</div>
+        <div class="plate-head ec-head" id="${id}">
+          <h2 class="display section-title">${e(title)}</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">${e(phase)}</p>
+          ${intro ? `<div class="section-intro"><p>${e(intro)}</p></div>` : ""}
         </div>`;
-const bx = (panels, cls = "") => `\n        <div class="bx${cls ? " " + cls : ""} reveal">${panels.join("")}</div>`;
-const p = (w, inner, { tone = "", wt, wm, h } = {}) =>
-  `<div class="p${tone ? " p--" + tone : ""}" style="--w:${w}${wt ? `;--wt:${wt}` : ""}${wm ? `;--wm:${wm}` : ""}${h ? `;--h:${h}` : ""}">${inner}</div>`;
-const k = (t) => `<p class="p-k">${e(t)}</p>`;
-const t = (s) => `<h3 class="p-t">${e(s)}</h3>`;
-const s = (x) => `<p class="p-s">${e(x)}</p>`;
-const pills = (items) => `<ul class="p-pills">${items.map((i) => `<li>${e(i)}</li>`).join("")}</ul>`;
 const step = (n, label, title, text, why, shot, extra = "") => `
           <div class="ec-step reveal">
             <div class="ec-step-text">
@@ -79,15 +90,95 @@ const step = (n, label, title, text, why, shot, extra = "") => `
           </div>`;
 const callout = (tone, icon, text) => `<p class="ec-callout ec-callout--${tone}">${ico(icon)}<span>${e(text)}</span></p>`;
 const chip = (tone, icon, text) => `<span class="ec-chip ec-chip--${tone}">${ico(icon)}${e(text)}</span>`;
+const fig = (inner, caption, cls = "") => `<figure class="ec-ig${cls ? " " + cls : ""} reveal">${inner}${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+// A 1-5 scale drawn as dots, for proto-persona traits.
+const scale = (label, n, note) => `<div class="ec-scale"><span class="ec-scale-k">${e(label)}</span><span class="ec-dots" role="img" aria-label="${n} out of 5">${[1, 2, 3, 4, 5].map((i) => `<i${i <= n ? ' class="on"' : ""}></i>`).join("")}</span><span class="ec-scale-n">${e(note)}</span></div>`;
+
+// ---------- design system: the real components ----------
+// Every image is cropped from the running prototype by capture.js (group "kit"): from #/kit for loose
+// components, and from live screens for stateful ones. Shown at their real size, never larger.
+const comp = (file, name, rule, alt, cls = "") => {
+  const [w, h] = size(file);
+  return `<figure class="ec-comp${cls ? " " + cls : ""}"><div class="ec-comp-img"><img src="${A}${file}" alt="${e(alt)}" width="${w / 2}" height="${h / 2}" loading="lazy" decoding="async" /></div><figcaption><b>${e(name)}</b> ${e(rule)}</figcaption></figure>`;
+};
+const components = () => `
+        <div class="ec-comps reveal" aria-label="Components">
+          <p class="ec-kit-k">Components · cropped from the working prototype, at real size</p>
+          ${comp("k-buttons.webp", "Buttons", "44 px tall, and the label names the result. One primary per screen; amber only when the AI acts.", "Buttons: Send to the Coordinator for checking (primary), Check before sending (secondary), Save draft (ghost), Make Hindi version (amber AI), Use an example message (quiet), Discard draft (danger), a row of small buttons, a disabled Send and an icon-only arrow", "ec-comp--full")}
+          ${comp("k-actionbar.webp", "Action bar", "Pinned under the form: saved state, undo and history on the left, the next step on the right.", "The editor's action bar: Saved, undo, history, Save draft, Check before sending and Send to the Coordinator for checking", "ec-comp--full")}
+          <div class="ec-comp-pair">
+            ${comp("k-status.webp", "Status chips", "A word, a colour and an icon together, so status never depends on colour alone.", "Status chips in two sizes: Draft, Waiting for review, Sent back, Approved, Live and Expired")}
+            ${comp("k-tabs.webp", "Tabs and badges", "Counts read as badges: blue for a total, orange when you are needed, outlined at zero.", "Tabs with count badges, All 17, Drafts 1, Sent back 1 in orange, Waiting for review 1, Expiring soon 2 in orange and Expired 0 outlined; language and preview-size toggles; orange navigation badges")}
+          </div>
+          <div class="ec-comp-flow">
+            ${comp("k-field-ai.webp", "Filled by the helper", "Dashed amber until a person presses Looks right.", "A title field filled by the helper with a dashed amber border and Looks right and Clear buttons")}
+            ${comp("k-field-hindi.webp", "Machine-translated Hindi", "Labelled until someone has read it.", "The Hindi title field with a machine-translated title, labelled as such, and an I checked it button")}
+            ${comp("k-field-note.webp", "Note from the reviewer", "The note sits on the field it is about.", "A date field with the Coordinator's note above it explaining the correct last date")}
+            ${comp("k-file.webp", "File field", "Drop or choose. A picture also needs a description.", "The attachment field showing a PDF with Replace and Remove buttons")}
+            ${comp("k-controls.webp", "Settings controls", "A switch for on and off, a stepper for text size, a slider for contrast.", "Light and dark switches, Reduce movement and Helper switches, a text-size stepper with minus and plus, and a contrast slider set to More")}
+            ${comp("k-helper.webp", "Helper card", "Paste a message; it fills the form and says what it could not find.", "The helper card with a pasted call for applications and the result: fields filled by the helper, each marked")}
+            ${comp("k-check.webp", "Check before sending", "Plain words, each with a Go there link to the field.", "The check panel listing what to confirm before sending, each with Go there")}
+            ${comp("k-assistant.webp", "Assistant", "Its own amber. Each reply shows the face it was said in, after a short thinking beat.", "The assistant button and suggestion chips, a question bubble, a thinking face with typing dots, and a surprised face with a reply listing an item that leaves the site soon")}
+            ${comp("k-dialog.webp", "Dialog", "The only blocking surface, and the only place with a scrim.", "A dialog: Send with these notes? listing a machine-translated Hindi title, with Fix them first and Send anyway")}
+            ${comp("k-toast.webp", "Toast", "Says what happened, in the person's terms.", "A dark toast confirming the update was sent to the Coordinator")}
+            ${comp("k-people.webp", "People and empty states", "Initials only where a photo would be; an empty state says what will appear.", "Three initial avatars and an empty state reading Nothing is waiting for you")}
+            ${comp("k-health.webp", "Website health", "GIGW checks as a short to-do list, each with a count and Fix.", "The website health panel with counts for missing Hindi versions, scanned PDFs and stale pages, each with Fix")}
+            ${comp("k-rail.webp", "Navigation rail", "Midnight Surge, one white active pill, an orange badge for what came back.", "The navigation rail: Easy CMS logo, the website being updated, Home active, My updates with an orange badge, Website, Files, Team and Settings", "ec-comp--narrow")}
+          </div>
+          ${comp("k-tasks.webp", "Task cards", "The most used job leads in Futurewave; the rest are named in the users' own words.", "Home task cards: Post an announcement or circular as the large blue lead card, then Add an event, Add a workshop, Change people details and Change page text", "ec-comp--full")}
+          ${comp("k-table.webp", "Updates table", "Status, Hindi version, owner and last change on every row.", "The My updates table with tabs and rows showing status chips, Hindi version and last changed", "ec-comp--full")}
+        </div>`;
 
 // ---------- page ----------
+// Hero collage: [file, width, height, alt, position class]
+const HERO = [
+  ["mock-angled.jpg", 1472, 1962, "An angled monitor showing the Easy CMS home: Namaste, Ashish, five task cards with Post an announcement first, and the counts of drafts, waiting and live items", "angled"],
+  ["mock-desk.jpg", 2400, 1800, "Someone at a desk working in Easy CMS: the editor with a helper-filled announcement on the left and the live preview of the centre's Announcements page on the right", "desk"],
+  ["mock-phone.jpg", 1600, 1600, "A hand holding a phone with the reviewer's screen: a round table notice waiting for review, with Send back with a note and Approve and publish", "phone"],
+  ["mock-appicon.jpg", 1600, 1600, "Close-up of a phone's home screen with the Easy CMS app icon, a frosted tile and a pencil over a tilted blue tile, with an orange badge showing 2", "icon"],
+];
+
+const JOURNEY = [
+  ["Empathise", "#s-01", "Read a live site before asking anyone", "Audit, stakeholders, proto-personas, a research plan"],
+  ["Define", "#s-05", "Low digital literacy, not low literacy", "Other teams’ findings, eight principles"],
+  ["Ideate", "#s-07", "Nothing goes public without a person", "Brainstorm, roles, workflow, helper limits"],
+  ["Prototype", "#s-11", "Build it working, not just drawn", "A live prototype, setup, editor, review, system"],
+  ["Test", "#s-20", "Same tasks, Chakra against Easy CMS", "Targets, two rounds, what is next"],
+];
+
 const main = `<main id="top">
     <section class="section case-head" id="ec-top">
       <div class="wrap">
         <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
-        <p class="eyebrow reveal">Product design &middot; Enterprise workflow &middot; Inclusive UI</p>
-        <h1 class="display case-title reveal" data-delay="1">Easy CMS</h1>
-        <p class="case-sub reveal" data-delay="2">A simpler way to update a heavy-information website, for institute staff who never learned HTML</p>
+
+        <!-- Hero: every mockup composed into one scene with the title, before the case study begins. -->
+        <div class="ec-hero reveal">
+          <div class="ec-hero-glow" aria-hidden="true"></div>
+          <div class="ec-hero-text">
+            <div class="ec-hero-titles">
+              <p class="eyebrow">Product design &middot; Enterprise workflow &middot; Inclusive UI</p>
+              <h1 class="display case-title"><img class="ec-hero-logo" src="${A}logo.svg" alt="" width="40" height="40" />Easy CMS</h1>
+            </div>
+            <div class="ec-hero-copy">
+            <p class="case-sub">A simpler way to update a heavy-information website, for institute staff who never learned HTML</p>
+            <ul class="ec-hero-facts">
+              <li>${ico("Users")}<span><b>For</b> admin staff at IIT Roorkee</span></li>
+              <li>${ico("Globe")}<span><b>Demo</b> AMRUT Centre website</span></li>
+              <li>${ico("Code")}<span><b>Built</b> a working prototype</span></li>
+            </ul>
+            <div class="ec-hero-cta">
+              <a class="ec-hero-btn" href="#s-11">Try the prototype ${ico("ArrowRight")}</a>
+              <a class="ec-hero-link" href="#ec-journey-h">Read the journey</a>
+            </div>
+            </div>
+          </div>
+          <div class="ec-collage" role="group" aria-label="Easy CMS mockups. Select one to see it full size.">
+            ${HERO.map(([f, w, h, alt, cls]) => `<figure class="ec-col ec-col--${cls}"><img src="${A}${f}" alt="${e(alt)}" width="${w}" height="${h}" decoding="async" /></figure>`).join("\n            ")}
+            <span class="ec-float ec-float--ai" aria-hidden="true"><img src="${A}assistant.svg" alt="" width="22" height="22" />Helper filled 5 fields</span>
+            <span class="ec-float ec-float--alert" aria-hidden="true"><i></i>Last date soon</span>
+            <span class="ec-float ec-float--live" aria-hidden="true"><b>Live</b>Approved by the Coordinator</span>
+          </div>
+        </div>
 
         <div class="case-brief reveal" data-delay="3">
           <div class="case-brief-row">
@@ -125,131 +216,91 @@ const main = `<main id="top">
     <section class="section case-plates">
       <div class="wrap">
 
-        <section class="ec-carousel reveal" aria-roledescription="carousel" aria-label="Easy CMS in use">
-          <div class="ec-car-track" tabindex="0" aria-label="Mockups, scroll or use the arrows">
-            ${[
-              ["mock-desk.jpg", 2400, 1800, "Someone at a desk working in Easy CMS: the editor with a helper-filled announcement on the left and the live preview of the centre’s Announcements page on the right", "The editor", "A message becomes a form; the preview is the real page."],
-              ["mock-phone.jpg", 1600, 1600, "A hand holding a phone with the reviewer’s screen: a round table notice waiting for review, with Send back with a note and Approve and publish", "The reviewer", "Checked on a phone, approved in one tap."],
-              ["mock-angled.jpg", 1472, 1962, "An angled monitor showing the Easy CMS home: Namaste, Sunita, five task cards with Post an announcement first, and the counts of drafts, waiting and live items", "Home", "What do you want to update today?"],
-            ].map(([f, w, h, alt, k, cap], i) => `<figure class="ec-car-slide" aria-roledescription="slide" aria-label="${i + 1} of 3: ${e(k)}">
-              <img class="ec-car-bg" src="${A}${f}" alt="" aria-hidden="true" ${i ? 'loading="lazy" ' : ""}decoding="async" />
-              <img src="${A}${f}" alt="${e(alt)}" width="${w}" height="${h}" ${i ? 'loading="lazy" ' : ""}decoding="async" />
-              <figcaption><b>${e(k)}</b> ${e(cap)}</figcaption>
-            </figure>`).join("\n            ")}
+        <nav class="ec-journey reveal" aria-labelledby="ec-journey-h">
+          <div class="ec-journey-head">
+            <h2 class="ec-journey-title" id="ec-journey-h">The design and decision journey</h2>
+            <p class="ec-journey-tools">FigJam &middot; Figma &middot; React, Vite, TypeScript &middot; Motion</p>
           </div>
-          <div class="ec-car-ui">
-            <div class="ec-car-dots" role="group" aria-label="Choose a mockup">
-              ${[1, 2, 3].map((n) => `<button type="button" class="ec-car-dot" aria-label="Show mockup ${n} of 3"${n === 1 ? ' aria-current="true"' : ""}></button>`).join("")}
-            </div>
-            <p class="ec-car-count" aria-live="polite"><b>01</b> / 03</p>
-            <div class="ec-car-btns">
-              <button type="button" class="ec-car-btn" data-dir="-1" aria-label="Previous mockup">${ico("ArrowLeft")}</button>
-              <button type="button" class="ec-car-btn" data-dir="1" aria-label="Next mockup">${ico("ArrowRight")}</button>
-            </div>
-          </div>
-        </section>
-
-        <div class="pg-process reveal" aria-label="How the project ran">
-          <div class="pg-process-head">
-            <p class="pg-process-k">How the project ran</p>
-            <p class="pg-process-tools"><span>Tools</span>FigJam &middot; Figma &middot; React, Vite, TypeScript &middot; Motion</p>
-          </div>
-          <ol class="pg-process-steps">
-            <li data-phase="empathise"><a href="#s-01"><span class="pg-ph-n">1</span><b>Empathise</b><small>First-hand problem, an audit of a live site, the people, the research plan</small><em>4 sections</em></a></li>
-            <li data-phase="define"><a href="#s-05"><span class="pg-ph-n">2</span><b>Define</b><small>Secondary research, insights to principles</small><em>2 sections</em></a></li>
-            <li data-phase="ideate"><a href="#s-07"><span class="pg-ph-n">3</span><b>Ideate</b><small>Roles and places, the publishing workflow, an AI helper with limits</small><em>3 sections</em></a></li>
-            <li data-phase="prototype"><a href="#s-10"><span class="pg-ph-n">4</span><b>Prototype</b><small>Website setup, the editor step by step, review on a phone, preview, help, accessibility, the system</small><em>7 sections</em></a></li>
-            <li data-phase="test"><a href="#s-17"><span class="pg-ph-n">5</span><b>Test</b><small>What to measure against Chakra, and what comes next</small><em>2 sections</em></a></li>
+          <ol class="ec-journey-line">
+            ${JOURNEY.map(([phase, href, decision, what], i) => `<li>
+              <a href="${href}">
+                <span class="ec-j-node" aria-hidden="true">${i + 1}</span>
+                <span class="ec-j-phase">${e(phase)}</span>
+                <span class="ec-j-decision">${e(decision)}</span>
+                <span class="ec-j-what">${e(what)}</span>
+              </a>
+            </li>`).join("")}
           </ol>
-          <p class="pg-process-loop">The prototype came first on purpose: a working demo to test with real staff, and to put in front of the Computer Centre.</p>
+          <p class="ec-journey-loop">${ico("RotateCcw")} Test results go back to Define before anything ships.</p>
+        </nav>
+${head2("s-01", "Empathise", "The problem", "Chakra accepts only HTML. I have done this job myself and could not hand it over: every update came back to one desk.")}
+        <div class="ec-split reveal">
+          ${fig(ig.problemLoop(), "Today’s loop, from a message to a fix. The mistake is found by a reader, after it is public.")}
+          <dl class="ec-bignums">
+            <div><dt>1</dt><dd>format Chakra accepts in content fields: <b>HTML</b></dd></div>
+            <div><dt>5</dt><dd>kinds of update make up most of the work</dd></div>
+            <div><dt>88</dt><dd>mandatory guidelines in <b>GIGW 3.0</b></dd></div>
+            <div><dt>0</dt><dd>previews or reviews before an update is live</dd></div>
+          </dl>
         </div>
-${head2("s-01", "Empathise", "The problem", ["Chakra, the institute’s custom CMS, accepts only HTML in its content fields. So a one-line circular needs someone who can write markup.", "I have done this job myself, and I could not hand it over: the skill stayed with one person because the tool could not be taught quickly."])}
-${bx([
-  p(7, `<div class="ec-figs">
-      <div class="ec-fig"><b>1</b><span>format Chakra accepts in content fields: HTML</span><span class="ec-src">Computer Centre portal</span></div>
-      <div class="ec-fig"><b>5</b><span>kinds of update make up most of the work: notices, events, workshop links, faculty details, page text</span><span class="ec-src">From the brief</span></div>
-      <div class="ec-fig"><b>88</b><span>mandatory guidelines in GIGW 3.0 for Indian government websites</span><span class="ec-src">GIGW 3.0</span></div>
-    </div>`, { wt: 12 }),
-  p(5, `${ib("ShieldCheck")}${k("first-hand")}${t("The website duty never leaves one desk")}${s("When I tried to hand the work to an admin colleague, every update still came back to me: a stray tag broke a table, a PDF link pointed to the wrong file, and nobody could see the result before it went live.")}`, { tone: "blue", wt: 12 }),
-  p(4, `${ib("Code", false)}${t("Written in HTML")}${s("Staff who write fluent English in Word and email freeze at angle brackets.")}`, { wt: 6, wm: 12 }),
-  p(4, `${ib("Eye", false)}${t("Checked after it is live")}${s("Mistakes are found by readers, then fixed by phone call.")}`, { wt: 6, wm: 12 }),
-  p(4, `${ib("Users", false)}${t("Reviewed outside the tool")}${s("Faculty check screenshots on WhatsApp; the tool has no review step.")}`, { wt: 12 }),
-])}
-${head2("s-02", "Empathise", "What a live site shows", ["Before any interview, I read the public pages of one centre’s website, the AMRUT Centre of Urban Planning for Capacity Building. Small slips that hand-written HTML invites are visible from outside."])}
-${bx([
-  p(6, `${k("menu label versus page it opens")}<code class="ec-url">About Us → …/<mark>About MoHUA.html</mark><br>About IITR → …/<mark>About CUPCB.html</mark></code><span class="ec-flag">Labels and links out of step</span>${s("Two menu items open pages named for something else. Nobody notices until a reader does.")}`, { wt: 12 }),
-  p(6, `${k("folder and file names")}<code class="ec-url">/Centres/AMRUT Centre of Urban Planning for Capacity Building<mark>&nbsp;</mark>/<br>/Faculty<mark>&nbsp;</mark>.html</code><span class="ec-flag">Spaces inside web addresses</span>${s("A trailing space in the folder and in a file name. Links work by luck and break when copied.")}`, { wt: 12 }),
-  p(8, `${k("one centre, six menu groups, about 35 pages")}<ul class="ec-menu">
-      <li><b>About Us</b><small>About IITR, DAP, MoHUA, CUPCB, partners and MoUs, themes</small></li>
-      <li><b>Projects</b><small>Action research, consultancy, the Punjab GIS master plan, upcoming, completed</small></li>
-      <li><b>Events</b><small>Workshops and training, symposiums, special lectures, round tables</small></li>
-      <li><b>Announcements</b><small>Newsletter, stakeholder engagement, news, work with us</small></li>
-      <li><b>People</b><small>Faculty, non-teaching staff, research staff</small></li>
-      <li><b>Repository</b><small>Proceedings, minutes, documented cases, gallery, funding</small></li>
-    </ul>`, { wt: 12 }),
-  p(4, `${ib("Lightbulb")}${k("what this means")}${t("Most of these pages are lists")}${s("Announcements, lectures, workshops and people repeat the same shapes. They can be forms and cards, not free HTML.")}`, { tone: "violet", wt: 12 }),
-])}
-${head2("s-03", "Empathise", "Who it is for", ["Three roles, each with one job. The users have low digital literacy and low confidence, not low literacy: they read and write well, but code, jargon and the fear of breaking a public page slow them down."])}
-${bx([
-  p(4, `<div class="ec-person"><div class="ec-person-top"><span class="ec-avatar">SR</span><div>${t("The office assistant")}${s("Editor · admin staff")}</div></div><p class="ec-goal">Post today’s circular before the office closes, without calling anyone.</p><ul class="ec-tags"><li>Word, email, WhatsApp</li><li>Types in English</li><li>Prefers help in Hindi</li></ul></div>`, { tone: "paper", wt: 12 }),
-  p(4, `<div class="ec-person"><div class="ec-person-top"><span class="ec-avatar">AM</span><div>${t("The faculty coordinator")}${s("Reviewer · HoD or centre coordinator")}</div></div><p class="ec-goal">See the update as readers will, then approve it or say what to fix in one line.</p><ul class="ec-tags"><li>Checks between classes</li><li>On a phone</li><li>Wants one tap to approve</li></ul></div>`, { tone: "violet", wt: 12 }),
-  p(4, `<div class="ec-person"><div class="ec-person-top"><span class="ec-avatar">DK</span><div>${t("The new hand-over editor")}${s("Editor · first week on the job")}</div></div><p class="ec-goal">Finish a real update in the first session, and still remember how three weeks later.</p><ul class="ec-tags"><li>Never trained</li><li>Infrequent use</li><li>Memorability matters</li></ul></div>`, { tone: "lav", wt: 12 }),
-  p(12, `${k("and one more role")}<div class="p-split"><div>${t("The Computer Centre, as access admin")}${s("Registers each department or centre website, grants and removes editor and reviewer access, and never touches content.")}</div><div>${pills(["A simple people list", "Create a website in minutes", "No involvement in content"])}</div></div>`, { tone: "flat" }),
-])}
-${head2("s-04", "Empathise", "The research plan", ["Watch five or six admin staff do real updates in Chakra, measure a baseline, then test Easy CMS against the same three tasks. This research is planned, not yet run; the hypotheses below are what it sets out to confirm or reject."])}
-${bx([
-  p(5, `${k("methods")}<ul class="ec-why">
-      <li>${ico("Users")}<span>2 to 3 stakeholder talks: Computer Centre, HoDs</span></li>
-      <li>${ico("Eye")}<span>5 to 6 contextual inquiries at editors’ desks, thinking aloud</span></li>
-      <li>${ico("Stopwatch")}<span>Chakra baseline: three tasks, timed, with errors and help requests</span></li>
-      <li>${ico("Smartphone")}<span>2 to 3 reviewer interviews: how and where they check</span></li>
-      <li>${ico("Folder")}<span>Artefacts, with consent: cheat sheets, review messages</span></li>
-    </ul>`, { wt: 12 }),
-  p(7, `${k("the three baseline tasks")}<ol class="ec-why">
-      <li>${ico("FileText")}<span><b>Post a circular</b> with a PDF attachment</span></li>
-      <li>${ico("Presentation")}<span><b>Add a workshop</b> with date, venue, poster and registration link</span></li>
-      <li>${ico("UserRound")}<span><b>Change a faculty member’s</b> designation and photo</span></li>
-    </ol>${s("Measured per task: time, errors, help requests and a one-question ease rating; SUS at the end of the session.")}`, { tone: "blue", wt: 12 }),
-  p(12, `<div class="ec-table-wrap"><table class="ec-table">
-      <thead><tr><th>Hypothesis</th><th>What would confirm it</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td>Staff keep personal cheat sheets of HTML or old pages to copy from</td><td>Notebooks, text files, saved emails at their desk</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Content pasted from Word or email breaks formatting</td><td>Stray tags, broken tables, wrong fonts on live pages</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Errors are found by readers after publishing</td><td>Corrections requested by phone or WhatsApp after a notice goes live</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Faculty review happens outside the tool</td><td>Review messages with screenshots or printouts</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Old notices are rarely removed, so pages go stale</td><td>Expired events and past deadlines still listed</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>An English-only, jargon-heavy interface adds hesitation</td><td>Staff asking what a field or button means</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-      </tbody></table></div>`, { tone: "flat" }),
-])}
-${head2("s-05", "Define", "What other teams found", ["Secondary research shows the problem is common across government and university sites. Existing tools solve hosting and compliance, not the editing experience."])}
-${bx([
-  p(12, `<div class="ec-table-wrap"><table class="ec-table">
-      <thead><tr><th>Finding</th><th>What it means for Easy CMS</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td>Updates go through an IT division and content goes stale</td><td>Owners publish directly, with review</td><td><a href="https://dot.gov.in/sites/default/files/2014%2007%2003%20Minutes%20of%20DOT%20Website%20Meeting.pdf?download=1" target="_blank" rel="noopener">DoT minutes</a></td></tr>
-        <tr><td>Unclear page ownership keeps outdated information live</td><td>Owner and last-updated date on every page; nudge stale ones</td><td><a href="https://easycontent.io/resources/managing-multi-department-content-on-government-websites/" target="_blank" rel="noopener">EasyContent</a></td></tr>
-        <tr><td>Hard tools and untrained teams cause outdated sites</td><td>Ease of use and built-in teaching are the product</td><td><a href="https://cdn.adhoc.team/website-modernization" target="_blank" rel="noopener">Ad Hoc</a></td></tr>
-        <tr><td>GIGW 3.0 asks for tools that help creators make accessible content</td><td>Checks in the editor and a health view</td><td><a href="https://guidelines.india.gov.in/?p=10063" target="_blank" rel="noopener">GIGW 3.0</a></td></tr>
-        <tr><td>NIC’s S3WaaS generates compliant sites from templates</td><td>Be the editing layer people use daily, not a hosting rival</td><td><a href="https://egovernance.vikaspedia.in/viewcontent/e-governance/digital-india/s3waas-for-government-department-websites?lgn=en" target="_blank" rel="noopener">S3WaaS</a></td></tr>
-        <tr><td>The gap between draft, preview and live is editors’ biggest pain</td><td>The preview must be the real page</td><td><a href="https://groups.drupal.org/node/277458" target="_blank" rel="noopener">Drupal focus group</a></td></tr>
-        <tr><td>Infrequent editors need the tool to be easy to come back to</td><td>Design for memorability, not just learnability</td><td><a href="https://ucm.le.ac.uk/?p=162" target="_blank" rel="noopener">University of Leicester</a></td></tr>
-        <tr><td>Treating all low-literacy users as one group is risky</td><td>Design for semiliterate to fluent readers</td><td><a href="https://www.dgp.toronto.edu/public_user/ravin/papers/chi2009_literacy.pdf" target="_blank" rel="noopener">CHI 2009</a></td></tr>
-      </tbody></table></div>`, { tone: "flat" }),
-])}
-${head2("s-06", "Define", "Principles", ["Apple’s design principles, turned into rules for a nervous, infrequent editor."])}
-        <div class="ec-rules reveal">
+${head2("s-02", "Empathise", "What a live site shows", "Before any interview, I mapped the public menu of one centre’s website. The slips hand-written HTML invites are visible from outside.")}
+        <div class="ec-split ec-split--wide reveal">
+          <div class="ec-scroll">${fig(ig.sitemap(), "", "ec-ig--flush")}</div>
+          <div class="ec-flags">
+            <p class="ec-flags-k"><span class="ec-dot-org" aria-hidden="true"></span>Seen on the live site</p>
+            <div class="ec-flag-item"><b>Labels and links out of step</b><code class="ec-url">About Us → …/<mark>About MoHUA.html</mark><br>About IITR → …/<mark>About CUPCB.html</mark></code></div>
+            <div class="ec-flag-item"><b>Spaces inside web addresses</b><code class="ec-url">…/Capacity Building<mark>&nbsp;</mark>/Faculty<mark>&nbsp;</mark>.html</code></div>
+            <div class="ec-flag-item ec-flag-item--idea"><b>Most pages are lists</b><span>Announcements, lectures, workshops and people repeat the same shapes: they can be forms and cards, not free HTML.</span></div>
+          </div>
+        </div>
+${head2("s-03", "Empathise", "Who it touches", "From the people who press the buttons to the rules every government site must follow.")}
+        <div class="ec-scroll ec-scroll--narrow">${fig(ig.stakeholders(), "Stakeholder map. Editors and reviewers use it every week; the Computer Centre, faculty and a new hand-over editor work with it; students, applicants and city officials read it; GIGW, MoHUA, NIC and the Hindi Cell set the rules.", "ec-ig--center")}</div>
+        <div class="ec-personas reveal" aria-label="Proto-personas">
+          <p class="ec-personas-k">Proto-personas · assumptions the interviews will test</p>
           ${[
-            ["Purpose", "Do five jobs perfectly: notice, event, workshop link, faculty details, page text. Everything else sits a level deeper."],
-            ["Familiarity", "Feel like a form and a document they know: Word-like text, WhatsApp-like attach, a calendar for dates. No HTML, slug or taxonomy."],
-            ["Simplicity", "One task per screen. Plain verbs on buttons: Post notice, Send to the Coordinator for checking."],
-            ["Forgiveness", "Autosave, undo and version history. Nothing is public until a person approves it. Confirm only what cannot be undone."],
-            ["Responsibility", "The helper suggests, the person decides. Dates, names and numbers are only extracted, never invented."],
-            ["Flexibility", "Hindi and English, text size, high contrast, dark mode, reduced motion; office PC and the reviewer’s phone."],
-            ["Craft", "Feedback on press, a calm layout, springs that settle without bounce, nothing that jumps."],
-            ["Delight", "The feeling to aim for is calm confidence: I did it myself, and it is correct."],
-          ].map(([a, b], i) => `<div class="ec-rule"><span class="ec-n">0${i + 1}</span><b>${e(a)}</b><span>${e(b)}</span></div>`).join("")}
+            ["The office assistant", "Editor", "Post today’s circular before the office closes, without calling anyone.", [["Word, email, WhatsApp", 5, "fluent"], ["HTML", 0, "none"], ["Updates", 4, "most days"], ["Device", 2, "office PC"]]],
+            ["The faculty coordinator", "Reviewer", "See it as readers will, then approve or say what to fix in one line.", [["Time to check", 1, "between classes"], ["On a phone", 5, "mostly"], ["Updates", 2, "checks, never writes"], ["Patience for tools", 1, "very little"]]],
+            ["The new hand-over editor", "Editor, first week", "Finish a real update in the first session, and remember how in three weeks.", [["Training", 0, "none"], ["Confidence", 1, "low"], ["Updates", 1, "now and then"], ["Memorability", 5, "what matters"]]],
+          ].map(([name, role, goal, traits]) => `<article class="ec-persona">
+            <p class="ec-persona-role">${e(role)}</p>
+            <h3>${e(name)}</h3>
+            <p class="ec-persona-goal">${e(goal)}</p>
+            ${traits.map(([l, n, note]) => scale(l, n, note)).join("")}
+          </article>`).join("")}
         </div>
-${head2("s-07", "Ideate", "Roles and places", ["Editors see six places, one level deep. Reviewers and the Computer Centre each see only their one job."])}
+${head2("s-04", "Empathise", "The research plan", "Planned, not yet run: watch five or six admin staff do real updates in Chakra, then test Easy CMS on the same three tasks.")}
+        <div class="ec-plan reveal">
+          <div class="ec-bubbles" role="img" aria-label="Participants per method: 2 to 3 stakeholder talks, 5 to 6 contextual inquiries, 2 to 3 reviewer interviews, and a 3-task Chakra baseline">
+            ${[["3", "stakeholder talks", "Computer Centre, HoDs", 0.55], ["6", "contextual inquiries", "editors at their desks", 1], ["3", "reviewer interviews", "how they check today", 0.55], ["3", "baseline tasks", "timed in Chakra", 0.55]].map(([n, l, s2, sc]) => `<div class="ec-bubble" style="--s:${sc}"><b>${n}</b><span>${e(l)}</span><small>${e(s2)}</small></div>`).join("")}
+          </div>
+          <ol class="ec-tasks">
+            <li>${duo("FileText")}<b>Post a circular</b><span>with a PDF</span></li>
+            <li>${duo("Presentation")}<b>Add a workshop</b><span>date, venue, poster, link</span></li>
+            <li>${duo("UserRound")}<b>Change a faculty profile</b><span>designation and photo</span></li>
+          </ol>
+          <ul class="ec-hyps" aria-label="Hypotheses to test">
+            ${[["Notebook", "Book", "Staff keep cheat sheets of HTML"], ["Paste", "TextSq", "Pasting from Word breaks pages"], ["Too late", "Eye", "Readers find the errors"], ["Off-tool", "Chat", "Review happens on WhatsApp"], ["Stale", "Archive", "Old notices never come down"], ["Jargon", "Languages", "English-only words cause hesitation"]].map(([kk, icon, h]) => `<li>${ico(icon)}<span><b>${e(kk)}</b>${e(h)}</span><em>to test</em></li>`).join("")}
+          </ul>
+        </div>
+${head2("s-05", "Define", "What other teams found", "The problem is common across government and university sites. Tools solve hosting and compliance; nobody solved the editing.")}
+        <ol class="ec-findings reveal">
+          ${[
+            ["Updates wait in an IT queue", "Owners publish, with review", "DoT", "https://dot.gov.in/sites/default/files/2014%2007%2003%20Minutes%20of%20DOT%20Website%20Meeting.pdf?download=1"],
+            ["No owner, so pages go stale", "Owner and date on every page", "EasyContent", "https://easycontent.io/resources/managing-multi-department-content-on-government-websites/"],
+            ["Hard tools, untrained teams", "Teaching is the product", "Ad Hoc", "https://cdn.adhoc.team/website-modernization"],
+            ["GIGW asks for creator help", "Checks inside the editor", "GIGW 3.0", "https://guidelines.india.gov.in/?p=10063"],
+            ["S3WaaS solves hosting", "Be the editing layer", "NIC", "https://egovernance.vikaspedia.in/viewcontent/e-governance/digital-india/s3waas-for-government-department-websites?lgn=en"],
+            ["Draft ≠ live is the top pain", "Preview is the real page", "Drupal", "https://groups.drupal.org/node/277458"],
+            ["Infrequent editors forget", "Design for memorability", "Leicester", "https://ucm.le.ac.uk/?p=162"],
+            ["Literacy is not one group", "Low digital literacy, not low literacy", "CHI 2009", "https://www.dgp.toronto.edu/public_user/ravin/papers/chi2009_literacy.pdf"],
+          ].map(([a, b, srcName, href]) => `<li><span class="ec-f-a">${e(a)}</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">${e(b)}</span><a class="ec-f-src" href="${href}" target="_blank" rel="noopener">${e(srcName)}<span class="sr-only"> (opens a source)</span></a></li>`).join("")}
+        </ol>
+${head2("s-06", "Define", "Principles", "Apple’s design principles, turned into rules for a nervous, infrequent editor.")}
+        ${fig(ig.wheel(), "", "ec-ig--center ec-ig--wheel")}
+${head2("s-07", "Ideate", "Brainstorm", "Six directions from one idea. Filled ideas are in the prototype; dashed ones are parked for later.")}
+        <div class="ec-scroll reveal">${fig(ig.mindmap(), "", "ec-ig--flush ec-ig--mind")}</div>
+        <p class="ec-legend reveal"><span class="ec-lg-on"></span>In the prototype <span class="ec-lg-off"></span>Parked</p>
+${head2("s-08", "Ideate", "Roles and places", "Editors see six places, one level deep. Reviewers and the Computer Centre each see only their one job.")}
         <div class="ec-ia reveal">
           <div class="ec-ia-col ec-ia-col--editor">
             <p class="ec-ia-role">${ico("PenLine")} Editor</p>
@@ -280,146 +331,154 @@ ${head2("s-07", "Ideate", "Roles and places", ["Editors see six places, one leve
             </ul>
           </div>
         </div>
-${head2("s-08", "Ideate", "The publishing workflow", ["Every update moves through visible states, in words, colour and an icon. Only a reviewer’s approval makes it public, and editing something live never touches what readers see until the change is approved too."])}
+${head2("s-09", "Ideate", "The publishing workflow", "Every update shows its state in words, colour and an icon. Only a reviewer’s approval makes it public.")}
         <div class="ec-flow reveal" aria-label="Publishing workflow">
-          <div class="ec-state">${chip("draft", "PencilLine", "Draft")}<b>The editor works</b><span>Saves as they type. Only they can see it.</span></div>
-          <div class="ec-state">${chip("review", "Hourglass", "Waiting for review")}<b>Sent for checking</b><span>The form locks so the reviewer sees exactly what was sent.</span></div>
-          <div class="ec-state">${chip("returned", "Undo2", "Sent back")}<b>One-line note</b><span>The note sits beside the field it is about.</span></div>
-          <div class="ec-state">${chip("live", "CircleCheck", "Live")}<b>Approved, published</b><span>Readers see it, with owner and date in the footer.</span></div>
-          <div class="ec-state">${chip("expired", "Archive", "Expired")}<b>Leaves on its date</b><span>Notices and workshops archive themselves.</span></div>
+          <div class="ec-state">${chip("draft", "PencilLine", "Draft")}<b>The editor works</b><span>Saves as they type.</span></div>
+          <div class="ec-state">${chip("review", "Hourglass", "Waiting for review")}<b>Sent for checking</b><span>The form locks.</span></div>
+          <div class="ec-state">${chip("returned", "Undo2", "Sent back")}<b>One-line note</b><span>Beside the field it is about.</span></div>
+          <div class="ec-state">${chip("live", "CircleCheck", "Live")}<b>Approved, published</b><span>Owner and date in the footer.</span></div>
+          <div class="ec-state">${chip("expired", "Archive", "Expired")}<b>Leaves on its date</b><span>Archives itself.</span></div>
           <div class="ec-loop" aria-hidden="true"><span>fix and send again</span></div>
         </div>
-${head2("s-09", "Ideate", "An AI helper, with limits", ["The helper removes typing and checking work. Every suggestion waits for a person; it never publishes and never invents a fact."])}
-${bx([
-  p(7, `${k("what it does")}<dl class="ec-dl">
-      <div><dt>Fill from rough text</dt><dd>Paste an email, a WhatsApp message or a circular’s text; it fills title, dates, category, venue and link.</dd></div>
-      <div><dt>Make Hindi version</dt><dd>Drafts the Hindi title, labelled Machine translated until a person checks it. The reviewer sees the label too.</dd></div>
-      <div><dt>Check before sending</dt><dd>Missing or past dates, broken links, possible duplicates, scanned PDFs, missing Hindi.</dd></div>
-      <div><dt>Describe a picture</dt><dd>Suggests alt text for posters and photos, marked until confirmed.</dd></div>
-      <div><dt>Ask for help</dt><dd>Answers in Hindi or English, then highlights the control on screen.</dd></div>
-    </dl>`, { tone: "violet", wt: 12 }),
-  p(5, `${k("what it never does")}<ul class="ec-never">
-      <li>Publish, or send for review, by itself</li>
-      <li>Invent a date, a name, a number or a link</li>
-      <li>Leave a filled field unmarked: each waits for “Looks right”</li>
-      <li>Read staff records or other pages; only the update being edited</li>
-      <li>Stay on if a department switches it off</li>
-    </ul>`, { tone: "paper", wt: 12 }),
-])}
-${head2("s-10", "Prototype", "Setting up a website", ["On a new installation, no department or centre is registered. The Computer Centre sees one clear job: create the first website. Four short steps, and the editor and reviewer are invited."])}
+${head2("s-10", "Ideate", "An AI helper, with limits", "It removes typing and checking. It never publishes and never invents a fact.")}
+        <div class="ec-gate reveal">
+          <ol class="ec-gate-flow">
+            <li class="ec-g ec-g--in">${duo("Chat")}<b>Rough text</b><span>email, WhatsApp, circular</span></li>
+            <li class="ec-g ec-g--ai">${duo("Sparkles")}<b>Helper suggests</b><span>fields, Hindi, alt text, checks</span></li>
+            <li class="ec-g ec-g--gate">${duo("ShieldCheck")}<b>A person confirms</b><span>each marked field</span></li>
+            <li class="ec-g ec-g--out">${duo("CircleCheck")}<b>Reviewer approves</b><span>then it is public</span></li>
+          </ol>
+          <ul class="ec-never" aria-label="What the helper never does">
+            ${["Publish on its own", "Invent a date, name or link", "Leave a filled field unmarked", "Read staff records or other pages", "Stay on when switched off"].map((x) => `<li>${e(x)}</li>`).join("")}
+          </ul>
+        </div>
+${head2("s-11", "Prototype", "Try the prototype", "The working prototype, live on this page. Switch roles, post an update, approve it, then open the website to see it published.")}
+        <div class="ec-live reveal">
+          <div class="ec-live-bar" role="group" aria-label="Start the prototype as">
+            ${[["editor", "Editor", "PenLine"], ["reviewer", "Reviewer", "ClipboardCheck"], ["admin", "Computer Centre, new installation", "ShieldCheck"]].map(([r, l, icon], i) => `<button type="button" class="ec-live-role" data-role="${r}"${i ? "" : ' aria-pressed="true"'}${i ? ' aria-pressed="false"' : ""}>${ico(icon)}${e(l)}</button>`).join("")}
+            <a class="ec-live-open" href="../prototypes/easy-cms/index.html#/home" target="_blank" rel="noopener">${ico("ExternalLink")}Open full screen<span class="sr-only"> (new tab)</span></a>
+          </div>
+          <figure class="ec-browser ec-live-frame">
+            <div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div>
+            <iframe src="../prototypes/easy-cms/index.html#/home" title="Easy CMS prototype" loading="lazy"></iframe>
+          </figure>
+          <p class="ec-cap">Runs in your browser with sample content. Changes stay on this device; switching role starts the demo again.</p>
+        </div>
+${head2("s-12", "Prototype", "Setting up a website", "On a new installation, no department or centre is registered. The Computer Centre creates the first website in four short steps.")}
         <div class="ec-steps">
-${step(1, "Computer Centre", "Nothing registered yet", "The first screen says what is missing and what happens next, in three steps. Only the Computer Centre can see it.", ["One action on the page", "Editors and reviewers see a plain “not set up yet” screen instead"], browser("d-admin-empty.webp", "Easy CMS first-run screen for the Computer Centre: No department or centre has a website here yet, with a Create a new website button and three steps: name it, choose pages, invite people"))}
+${step(1, "Computer Centre", "Nothing registered yet", "The first screen says what is missing and what happens next. Only the Computer Centre sees it.", ["One action on the page", "Editors and reviewers see “not set up yet”"], browser("d-admin-empty.webp", "Easy CMS first-run screen for the Computer Centre: No department or centre has a website here yet, with a Create a new website button and three steps"))}
         </div>
-        <div class="ec-wiz reveal">
-          <figure>${browser("d-wiz-1-address.webp", "Wizard step 1: unit type, full name, short name, Hindi name and a web address that is cleaned automatically")}${cap("<b>1 · Whose website.</b> The address is made from the name; spaces and capitals are cleaned so links never break.")}</figure>
-          <figure>${browser("d-wiz-2.webp", "Wizard step 2: tiles for Announcements, Events and lectures, Workshops and training, People and About us, with one switched off")}${cap("<b>2 · Pages.</b> Start with what the unit already publishes. Labels follow the unit: a centre gets Announcements.")}</figure>
-          <figure>${browser("d-wiz-3.webp", "Wizard step 3: editor and reviewer names and emails")}${cap("<b>3 · People.</b> One editor and one reviewer to begin; the reviewer is the coordinator or the HoD.")}</figure>
-          <figure>${browser("d-wiz-4.webp", "Wizard step 4: a summary beside a live preview of the new, still empty website")}${cap("<b>4 · Check and create.</b> A first look at the empty site, built from the same components readers will see.")}</figure>
+        <div class="ec-wiz reveal" data-gallery="setup">
+          <figure>${browser("d-wiz-1-address.webp", "Wizard step 1: unit type, full name, short name, Hindi name and a web address that is cleaned automatically")}${cap("<b>1 · Whose website.</b> Spaces and capitals are cleaned so links never break.")}</figure>
+          <figure>${browser("d-wiz-2.webp", "Wizard step 2: tiles for Announcements, Events and lectures, Workshops and training, People and About us, with one switched off")}${cap("<b>2 · Pages.</b> Labels follow the unit: a centre gets Announcements.")}</figure>
+          <figure>${browser("d-wiz-3.webp", "Wizard step 3: editor and reviewer names and emails")}${cap("<b>3 · People.</b> One editor and one reviewer to begin.")}</figure>
+          <figure>${browser("d-wiz-4.webp", "Wizard step 4: a summary beside a live preview of the new, still empty website")}${cap("<b>4 · Check and create.</b> A first look at the empty site.")}</figure>
         </div>
-        <div class="ec-pair reveal" style="margin-top:2rem">
-          <div>${browser("d-admin-sites.webp", "The Websites list after creation, with the new Centre for Transportation Systems card waiting for its first update")}${cap("The new site waits for its first update. Invitations went to its editor and reviewer.")}</div>
-          <div>${browser("d-people.webp", "People screen: who can update which parts of each website, with section toggles per person")}${cap("People: access per website and per section, one tap each. No content here.")}</div>
+        <div class="ec-pair reveal" style="margin-top:1.5rem">
+          <div>${browser("d-admin-sites.webp", "The Websites list after creation, with the new Centre for Transportation Systems card waiting for its first update")}${cap("The new site waits for its first update.")}</div>
+          <div>${browser("d-people.webp", "People screen: who can update which parts of each website, with section toggles per person")}${cap("Access per website and per section. No content here.")}</div>
         </div>
-${head2("s-11", "Prototype", "The editor, step by step", ["The core flow: posting an announcement from a message that arrived on WhatsApp. Every screen here is from the working prototype."])}
+${head2("s-13", "Prototype", "The editor, step by step", "Posting an announcement from a message that arrived on WhatsApp.")}
         <div class="ec-steps">
-${step(1, "Home", "What do you want to update?", "Five large task cards in the users’ own words, the most used one first. Anything sent back waits on the right with the reviewer’s note.", ["Status in words, colour and icon", "Website health from GIGW checks"], browser("d-home.webp", "Editor home: greeting, five task cards with Post an announcement first, a Needs your attention panel with a sent-back item, counts and website health"))}
+${step(1, "Home", "What do you want to update?", "Five task cards in the users’ own words, the most used first. Anything sent back waits on the right.", ["Status in words, colour and icon", "Website health from GIGW checks"], browser("d-home.webp", "Editor home: greeting, five task cards with Post an announcement first, a Needs your attention panel with a sent-back item, counts and website health"))}
 ${step(2, "Helper", "Paste the message", "Most updates already exist as an email or a WhatsApp forward. The editor pastes it instead of retyping.", [], browser("d-editor-paste.webp", "Editor with the Have the message already panel open and an example call for applications pasted in"), callout("ai", "Sparkles", "The helper only copies dates, names and links from the text. It never invents them and never posts anything."))}
-${step(3, "Helper", "Every filled field is marked", "Title, category, dates and description fill in, each with a dashed violet outline and a Looks right button. The preview on the right is the real page, updating as they type.", ["Violet means suggested, not settled", "One click to confirm or clear"], browser("d-editor-filled.webp", "Editor after the helper filled the form: dashed violet fields with Looks right buttons, and the live preview of the centre's Announcements page with the new item highlighted"))}
-${step(4, "Check", "It will not send unconfirmed work", "Pressing send runs the check first. Anything that would mislead readers must be fixed; notes like a missing Hindi title can be sent anyway.", ["Plain words, no blame", "Go there jumps to the field"], browser("d-editor-check.webp", "The check panel listing five things to fix: each field the helper filled still needs a person to confirm it"), callout("alert", "TriangleAlert", "Must-fix items block sending. Notes do not; the reviewer sees the same notes."))}
-${step(5, "Hindi", "Make Hindi version", "One press drafts the Hindi title. It stays labelled Machine translated until a person ticks I checked it.", ["GIGW asks for both languages", "The label follows the update to the reviewer"], browser("d-editor-hindi.webp", "The Title in Hindi field with a machine-drafted translation and a Machine translated, check before publishing label"))}
-${step(6, "Send", "Send to the Coordinator for checking", "The button names the person. A short dialog lists any notes, then the update goes to the review queue.", [], browser("d-editor-send-dialog.webp", "Send with these notes dialog listing one note about the machine-translated Hindi title, with Fix them first and Send anyway"))}
-${step(7, "My updates", "Where everything stands", "Tabs for drafts, sent back, waiting, live and expiring soon. Search by any word in the title.", ["Hindi version shown per row", "Owner and last change on every item"], browser("d-updates-review.webp", "My updates board filtered to Waiting for review, showing the new call for applications and a round table notice"))}
+${step(3, "Helper", "Every filled field is marked", "Each filled field gets a dashed amber outline and a Looks right button. The preview beside it is the real page.", ["Amber means suggested, not settled", "One click to confirm or clear"], browser("d-editor-filled.webp", "Editor after the helper filled the form: dashed amber fields with Looks right buttons, and the live preview of the centre's Announcements page with the new item highlighted"))}
+${step(4, "Check", "It will not send unconfirmed work", "Sending runs the check first. Must-fix items block it; notes like a missing Hindi title can be sent anyway.", ["Plain words, no blame", "Go there jumps to the field"], browser("d-editor-check.webp", "The check panel listing five things to fix: each field the helper filled still needs a person to confirm it"), callout("alert", "TriangleAlert", "Must-fix items block sending. The reviewer sees the same notes."))}
+${step(5, "Hindi", "Make Hindi version", "One press drafts the Hindi title. It stays labelled Machine translated until a person ticks I checked it.", ["GIGW asks for both languages", "The label travels to the reviewer"], browser("d-editor-hindi.webp", "The Title in Hindi field with a machine-drafted translation and a Machine translated, check before publishing label"))}
+${step(6, "Send", "Send to the Coordinator for checking", "The button names the person. A short dialog lists any notes.", [], browser("d-editor-send-dialog.webp", "Send with these notes dialog listing one note about the machine-translated Hindi title, with Fix them first and Send anyway"))}
+${step(7, "My updates", "Where everything stands", "Drafts, sent back, waiting, live and expiring soon. Search by any word in the title.", ["Hindi version shown per row", "Owner and last change on every item"], browser("d-updates-review.webp", "My updates board filtered to Waiting for review, showing the new call for applications and a round table notice"))}
         </div>
-${head2("s-12", "Prototype", "Review, mostly on a phone", ["Reviewers check between classes. They see what changed from the live version, the notes the editor saw, and the page as readers will see it. One tap approves; one line sends it back."])}
-        <div class="ec-trio reveal">
-          <div>${phone("p-review.webp", "Reviewer queue on a phone: one announcement waiting, with a Check button and recently checked items below")}${cap("<b>Queue.</b> Only what needs a decision.")}</div>
-          <div>${phone("p-review-preview.webp", "Reviewer on a phone looking at the phone preview of the announcement, with Send back with a note and Approve and publish buttons fixed at the bottom")}${cap("<b>Decide.</b> The real page, then two big buttons.")}</div>
-          <div>${phone("p-site.webp", "The centre's Announcements page on a phone after approval")}${cap("<b>Published.</b> Live on the site at once.")}</div>
+${head2("s-14", "Prototype", "Review, mostly on a phone", "What changed, the notes the editor saw, and the page as readers will see it. One tap approves; one line sends it back.")}
+        <div class="ec-trio reveal" data-gallery="review">
+          <div>${phone("p-review.webp", "Reviewer on a phone: a round table notice waiting for review, with Send back with a note and Approve and publish")}${cap("<b>Decide.</b> Two big buttons.")}</div>
+          <div>${phone("p-review-preview.webp", "Reviewer on a phone looking at the phone preview of the announcement")}${cap("<b>Preview.</b> The real page.")}</div>
+          <div>${phone("p-site.webp", "The centre's Announcements page on a phone after approval")}${cap("<b>Published.</b> Live at once.")}</div>
         </div>
-        <div class="ec-pair reveal" style="margin-top:2rem">
-          <div>${browser("d-review-detail.webp", "Reviewer desktop view: a What changed panel with the old and new removal dates and description, beside the preview")}${cap("<b>What changed.</b> Old value struck through, new value highlighted, for an edit to a live notice.")}</div>
-          <div>${browser("d-returned-field.webp", "The editor's form with the reviewer's note shown beside the removal date field it refers to")}${cap("<b>Sent back.</b> The note lands beside the field it is about, not in an email thread.")}</div>
+        <div class="ec-pair reveal" style="margin-top:1.5rem">
+          <div>${browser("d-review-detail.webp", "Reviewer desktop view: a What changed panel with the old and new values, beside the preview")}${cap("<b>What changed.</b> Old struck through, new highlighted.")}</div>
+          <div>${browser("d-returned-field.webp", "The editor's form with the reviewer's note shown beside the removal date field it refers to")}${cap("<b>Sent back.</b> The note lands beside its field.")}</div>
         </div>
-${head2("s-13", "Prototype", "The preview is the real page", ["The preview and the public site are rendered by the same components from the same data, so what the reviewer approves is exactly what readers get. The centre’s site itself was redesigned in the same blue, with orange only for alerts."])}
+${head2("s-15", "Prototype", "The preview is the real page", "Preview and public site are drawn by the same components from the same data. The centre’s site was redesigned too: blue, purple accents, orange only for alerts.")}
         <div class="ec-mix reveal">
-          <div>${browser("d-site-home.webp", "The AMRUT Centre home page: floating menu, a blue hero with a Next up lecture card and an orange Last date soon workshop card, an at-a-glance band with counts, and announcement, event and workshop panels", "iitr.ac.in/centres/amrut-centre-urban-planning", "ec-site")}${cap("Readers’ view: floating menu, hero with the next lecture and the closest deadline, at-a-glance counts, then the lists editors fill.")}</div>
-          <div>${phone("p-editor-preview.webp", "Editor on a phone switched to the Preview tab, showing the new announcement highlighted on the centre's site")}${cap("On a phone, form and preview are two tabs.")}</div>
+          <div>${browser("d-site-home.webp", "The AMRUT Centre home page: floating menu, a blue hero with a Next up lecture card and an orange Last date soon workshop card, an at-a-glance band with counts, and announcement, event and workshop panels", "iitr.ac.in/centres/amrut-centre-urban-planning", "ec-site")}</div>
+          <div>${phone("p-editor-preview.webp", "Editor on a phone switched to the Preview tab, showing the new announcement highlighted on the centre's site")}${cap("Form and preview are two tabs on a phone.")}</div>
         </div>
-${head2("s-14", "Prototype", "Help in the same place", ["One Help button, always top right. Each screen lists its steps with Show me, which scrolls to the control and outlines it. Questions can be typed in Hindi or English."])}
+${head2("s-16", "Prototype", "Help and an assistant, in the same place", "Both sit top right on every screen. Help shows where things are; the assistant answers from the website itself.")}
         <div class="ec-steps">
-${step("?", "Help", "Show me, not tell me", "Asked “how do I add a poster?”, help answers in steps and outlines the Poster field on the form.", ["Same place on every screen", "Answers point at real controls"], browser("d-help.webp", "Help panel open beside an event form, answering how to add a poster, with the Poster field outlined on the page"))}
+${step("?", "Help", "Show me, not tell me", "Asked “how do I add a poster?”, help answers in steps and outlines the Poster field.", ["Same place on every screen", "Answers point at real controls"], browser("d-help.webp", "Help panel open beside an event form, answering how to add a poster, with the Poster field outlined on the page"))}
+${step("AI", "Assistant", "An assistant that reads before it speaks", "It wears glasses because its job is to read carefully: what was sent back, what leaves the site this week, what fails a GIGW check. Paste a message and it drafts a notice, then hands it to the form for a person to confirm.", ["Answers come from the website’s own data", "Drafts open in the form, never straight to review", "Amber, like every other suggestion"], browser("d-assistant.webp", "The Easy CMS assistant panel open over the home page: an amber face with round glasses, a reply listing what was sent back and the open drafts, and a notice drafted from a pasted message with an Open it in the notice form button"), callout("ai", "ShieldCheck", "It only suggests. A person checks every field, and the Coordinator approves before anything goes live."))}
         </div>
-${head2("s-15", "Prototype", "Accessibility and GIGW", ["Accessibility works on two sides: the interface itself (WCAG 2.1 AA as the target), and the content it publishes, which is GIGW-ready by default."])}
+${fig(`<ul class="ec-moods">${MOODS_CS.map(([m, name, when], i) => `<li>${faceSvg(m, "cm" + i, 72)}<b>${e(name)}</b><span>${e(when)}</span></li>`).join("")}</ul>`, "<b>Moods.</b> Like a cartoon, only the eyes, the brows and one small extra change, so it is always the same character. Each reply carries the face it was said in; the header shows the latest.", "ec-moods-fig")}
+${head2("s-17", "Prototype", "Accessibility and GIGW", "The interface aims for WCAG 2.1 AA; what it publishes is GIGW-ready by default.")}
         <div class="ec-pair reveal">
-          <div>${browser("d-home-hi.webp", "The editor home in Hindi")}${cap("<b>हिन्दी.</b> The whole interface, help included. Content keeps its own language.")}</div>
-          <div>${browser("d-home-dark.webp", "The editor home in dark mode, deep navy rather than black")}${cap("<b>Dark.</b> Deep navy, never pure black; status colours keep their meaning.")}</div>
+          <div>${browser("d-home-hi.webp", "The editor home in Hindi")}${cap("<b>हिन्दी.</b> The whole interface, help included.")}</div>
+          <div>${browser("d-home-dark.webp", "The editor home in dark mode, deep navy rather than black")}${cap("<b>Dark.</b> Deep navy; status colours keep their meaning.")}</div>
         </div>
-${bx([
-  p(5, `${browser("d-settings.webp", "Settings: language, text size, light or dark, contrast, movement and the helper switch")}`, { tone: "flat", wt: 12 }),
-  p(7, `${k("built into the content side")}<div class="ec-table-wrap"><table class="ec-table" style="min-width:0">
-      <tbody>
-        <tr><td>Text alternatives</td><td>Picture description is required, with a suggestion</td></tr>
-        <tr><td>Bilingual content</td><td>Hindi status on every row; one press drafts it</td></tr>
-        <tr><td>Current, dated content</td><td>Removal dates; items archive themselves; stale pages flagged</td></tr>
-        <tr><td>Accessible documents</td><td>Scanned PDFs without a text layer are flagged</td></tr>
-        <tr><td>Meaningful links</td><td>“Click here” and broken links flagged before review</td></tr>
-        <tr><td>Ownership</td><td>Every page shows its owner and last update</td></tr>
-      </tbody></table></div>${pills(["Keyboard throughout", "Labels for screen readers", "44 px targets", "Text size that reflows", "High contrast", "Reduced motion", "Nothing by colour alone"])}`, { wt: 12 }),
-])}
-${head2("s-16", "Prototype", "The design system", ["Tokens, type, icons and components, shared by the editor and, through locked tokens, by every website it publishes. Editors fill content; they never choose colours."])}
+        <ul class="ec-checks reveal" aria-label="Accessibility and GIGW checks">
+          ${[["Image", "Picture descriptions required"], ["Languages", "Hindi status on every item"], ["CalendarClock", "Removal dates, auto archive"], ["FileWarning", "Scanned PDFs flagged"], ["Paperclip", "Vague and broken links flagged"], ["UserRound", "Owner and date on every page"], ["Keyboard", "Keyboard throughout"], ["Eye", "High contrast and dark"], ["TextSq", "Text size that reflows"], ["Smartphone", "44 px touch targets"], ["RotateCcw", "Reduced motion"], ["Palette", "Never colour alone"]].map(([icon, l]) => `<li>${ico(solar.linear[icon] ? icon : "CircleCheck")}<span>${e(l)}</span></li>`).join("")}
+        </ul>
+${head2("s-18", "Prototype", "The design system", "Tokens, type, icons and components, shared by the editor and, locked, by every website it publishes.")}
         <div class="ec-swatches reveal" aria-label="Colour palette">
-          <div class="ec-sw ec-sw--tall" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
-          <div class="ec-sw ec-sw--dark-ink" style="background:#2277ff"><b>Azure</b><span>#2277FF</span></div>
+          <div class="ec-sw ec-sw--wide" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
+          <div class="ec-sw" style="background:#2277ff;color:#000"><b>Azure</b><span>#2277FF · hover, links</span></div>
           <div class="ec-sw ec-sw--dark-ink" style="background:#e3e7fc"><b>Soft Lavender</b><span>#E3E7FC · tints</span></div>
-          <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · the helper</span></div>
-          <div class="ec-sw ec-sw--dark-ink" style="background:#d1cdff"><b>Pale Blue</b><span>#D1CDFF</span></div>
-          <div class="ec-sw ec-sw--tall" style="background:#f75c03;color:#1d0a00"><b>Vivid Orange</b><span>#F75C03 · alerts only</span></div>
+          <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · waiting for review</span></div>
+          <div class="ec-sw ec-sw--dark-ink" style="background:#ddf5ea;color:#0d4a31"><b>Mint</b><span>#DDF5EA · live</span></div>
+          <div class="ec-sw ec-sw--dark-ink" style="background:linear-gradient(135deg,#ffd84d,#ffb020);color:#2a1800"><b>Sunlit Amber</b><span>#FFC233 · the helper and assistant</span></div>
+          <div class="ec-sw" style="background:#f75c03;color:#1d0a00"><b>Vivid Orange</b><span>#F75C03 · alerts only</span></div>
           <div class="ec-sw ec-sw--wide" style="background:linear-gradient(160deg,#020a2b,#001a6e 58%,#0046e0 135%)"><b>Midnight Surge</b><span>rail, panels of attention</span></div>
-          <div class="ec-sw ec-sw--wide" style="background:linear-gradient(135deg,#0056ff,#2277ff 52%,#8db4ff 120%)"><b>Futurewave</b><span>the one lead card</span></div>
+          <div class="ec-sw ec-sw--wide ec-sw--pill" style="background:linear-gradient(90deg,#0056ff 0%,#2277ff 55%,#8db4ff 100%)"><b>Futurewave</b><span>the one lead card</span></div>
         </div>
-${bx([
-  p(6, `${k("type")}<div class="ec-type">
-      <div class="ec-type-row"><small>Display 48</small><span style="font-size:2.6rem;font-weight:750;letter-spacing:-0.035em;line-height:1.05">Namaste, Sunita</span></div>
-      <div class="ec-type-row"><small>Title 26</small><span style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Post an announcement</span></div>
-      <div class="ec-type-row"><small>Body 17</small><span style="font-size:1.06rem;line-height:1.5">Body text is 17 px with 1.5 line height, in rem so text size scales the layout.</span></div>
-      <div class="ec-type-row"><small>Hindi</small><span class="ec-hi" style="font-size:1.25rem;font-weight:600">आज आप क्या अपडेट करना चाहते हैं?</span></div>
-    </div>${s("Plus Jakarta Sans for Latin, Noto Sans Devanagari for Hindi.")}`, { wt: 12 }),
-  p(6, `${k("icons · Solar, linear for controls, duotone for tiles")}<div class="ec-icons">${["Megaphone", "CalendarDays", "Presentation", "UserRound", "FileText", "Sparkles", "Languages", "ShieldCheck"].map((n) => `<span class="duo">${duo(n)}</span>`).join("")}${["House", "ListChecks", "Globe", "Paperclip", "Users", "Settings", "Send", "Undo2", "History", "Eye", "ClipboardCheck", "LifeBuoy", "CircleCheck", "Hourglass", "Archive", "TriangleAlert"].map((n) => `<span>${ico(n)}</span>`).join("")}</div>${s("One family, one weight. Every icon sits beside a word.")}`, { wt: 12 }),
-  p(12, `<div class="ec-kit">
-      <div><p class="ec-kit-k">Status, always word, colour and icon</p><div class="ec-kit-row">${chip("draft", "PencilLine", "Draft")}${chip("review", "Hourglass", "Waiting for review")}${chip("returned", "Undo2", "Sent back")}${chip("approved", "CalendarClock", "Approved")}${chip("live", "CircleCheck", "Live")}${chip("expired", "Archive", "Expired")}<span class="ec-badge-o">1</span></div></div>
-      <div><p class="ec-kit-k">Buttons, 44 px, plain verbs</p><div class="ec-kit-row"><span class="ec-btn ec-btn--primary">${ico("Send")}Send to the Coordinator for checking</span><span class="ec-btn ec-btn--secondary">${ico("ListChecks")}Check before sending</span><span class="ec-btn ec-btn--quiet">${ico("Languages")}Make Hindi version</span><span class="ec-btn ec-btn--ghost">${ico("Undo2")}Undo</span></div></div>
-      <div><p class="ec-kit-k">Field states</p><div class="ec-kit-row" style="align-items:start">
-        <div class="ec-field ec-field--focus"><label>Title</label><small>Say what it is in a few words</small><span class="ec-input">Winter internship 2026</span></div>
-        <div class="ec-field ec-field--ai"><label>Category</label><small>Readers use this to find it</small><span class="ec-input">Internships</span><em>Filled by the helper · Looks right?</em></div>
-        <div class="ec-field ec-field--error"><label>Remove from the website on</label><small>After this date it archives itself</small><span class="ec-input">05-11-2026</span><em>This date has already passed.</em></div>
-        <div class="ec-field ec-field--note"><label>Last date to apply</label><small>Shown as Last date soon in the final week</small><em>Note from the Coordinator: it is 15 November.</em><span class="ec-input">15-11-2026</span></div>
-      </div></div>
-    </div>`, { tone: "paper" }),
-  p(5, `${k("motion")}<div class="ec-spring"><svg viewBox="0 0 240 90" aria-hidden="true"><path d="M8 82 C 60 82, 70 12, 120 10 S 200 10, 232 10" fill="none" stroke="#8db0ff" stroke-width="3" stroke-linecap="round"/><path d="M8 82 C 50 82, 60 -2, 105 6 S 150 24, 175 12 S 215 8, 232 10" fill="none" stroke="rgba(247,92,3,0.6)" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div>${t("Springs that settle, never bounce")}${s("Solid line: the critically damped spring used everywhere, about 0.4 s for panels and 0.28 s for small changes. Dashed: the bounce it avoids. Sheets leave the way they came; reduced motion becomes a fade.")}`, { wt: 12 }),
-  p(7, `${k("tokens")}${pills(["Colour: surfaces, ink, Royal Blue, six status pairs", "Helper: Vivid Blue line and tint", "Attention: orange dot only", "Radius 12 / 16 / 24 / 28", "Space on a 4 px grid, in rem", "Light, dark and high contrast", "Text size 100 / 112.5 / 125 %"])}${s("Every value lives in one tokens file. The websites inherit them locked: editors can show or hide parts of a card, never restyle it.")}`, { tone: "blue", wt: 12 }),
-])}
-${head2("s-17", "Test", "What to measure", ["The case study’s evidence will be a before-and-after test: the same three tasks, the same kind of users, Chakra against Easy CMS. These are design targets to validate, not results."])}
+        <div class="ec-marks reveal" aria-label="Identity">
+          <figure><img src="${A}logo.svg" alt="The Easy CMS logo: a frosted tile with a white pencil over a tilted blue tile, and a small amber spark" width="96" height="96" /><figcaption><b>Logo</b> A frosted page over a tilted one: an edit about to land.</figcaption></figure>
+          <figure><img src="${A}app-icon.svg" alt="The Easy CMS app icon: the two tiles on a Royal Blue squircle" width="96" height="96" /><figcaption><b>App icon</b> The same tiles on Royal Blue for the home screen.</figcaption></figure>
+          <figure><img src="${A}assistant.svg" alt="The assistant's face: an amber squircle wearing round glasses, with glowing eyes behind dark lenses" width="96" height="96" /><figcaption><b>Assistant</b> Glasses because it reads before it answers.</figcaption></figure>
+        </div>
+        <div class="ec-ds reveal">
+          <div class="ec-ds-type">
+            <p class="ec-kit-k">Type</p>
+            <div class="ec-type">
+              <div class="ec-type-row"><small>Display 48</small><span style="font-size:2.6rem;font-weight:750;letter-spacing:-0.035em;line-height:1.05">Namaste, Ashish</span></div>
+              <div class="ec-type-row"><small>Heading 36</small><span style="font-size:2.1rem;font-weight:750;letter-spacing:-0.025em;line-height:1.1">My updates</span></div>
+              <div class="ec-type-row"><small>Title 26</small><span style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Post an announcement</span></div>
+              <div class="ec-type-row"><small>Body 17</small><span style="font-size:1.06rem;line-height:1.5">17 px at 1.5 line height, in rem, so text size scales the layout.</span></div>
+              <div class="ec-type-row"><small>Small 13</small><span style="font-size:0.81rem;line-height:1.45">Hints under each field: Say what it is in a few words.</span></div>
+              <div class="ec-type-row"><small>Hindi</small><span class="ec-hi" style="font-size:1.25rem;font-weight:600">आज आप क्या अपडेट करना चाहते हैं?</span></div>
+            </div>
+          </div>
+          <div class="ec-ds-icons">
+            <p class="ec-kit-k">Icons · Solar, duotone for tiles, linear for controls</p>
+            <div class="ec-icons">${["Megaphone", "CalendarDays", "Presentation", "UserRound", "FileText", "Sparkles", "Languages", "ShieldCheck"].map((n) => `<span class="duo">${duo(n)}</span>`).join("")}${["House", "ListChecks", "Globe", "Paperclip", "Users", "Settings", "Send", "Undo2", "History", "Eye", "ClipboardCheck", "LifeBuoy", "CircleCheck", "Hourglass", "Archive", "TriangleAlert"].map((n) => `<span>${ico(n)}</span>`).join("")}</div>
+          </div>
+          <div class="ec-ds-motion">
+            <p class="ec-kit-k">Motion</p>
+            <svg viewBox="0 0 240 90" aria-hidden="true" class="ec-spring-svg"><path d="M8 82 C 60 82, 70 12, 120 10 S 200 10, 232 10" fill="none" class="spring-on" stroke-width="3" stroke-linecap="round"/><path d="M8 82 C 50 82, 60 -2, 105 6 S 150 24, 175 12 S 215 8, 232 10" fill="none" class="spring-off" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg>
+            <p class="ec-ds-note"><b>Springs that settle, never bounce.</b> Solid: the critically damped spring, 0.4 s for panels. Dashed: the bounce it avoids.</p>
+          </div>
+        </div>
+${components()}
+${head2("s-19", "Test", "What to measure", "Before and after: the same three tasks, the same kind of users, Chakra against Easy CMS. Targets to validate, not results.")}
         <div class="ec-metrics reveal">
           ${[
-            ["Task success", "9 in 10", "Three core tasks completed unaided"],
-            ["Time on task", "½ of Chakra", "Median, stopwatch per task"],
-            ["Errors reaching live", "≈ 0", "Wrong or missing details after the pre-review check"],
-            ["Help requests", "≤ 1", "Times the participant asks the moderator, per session"],
-            ["Ease", "SUS 80+", "One question per task, SUS at the end"],
-            ["Memorability", "Same success", "Repeat one task after two weeks, no refresher"],
-            ["Handover", "Every new editor", "A first real update in the first session"],
-          ].map(([a, b, c]) => `<div class="ec-metric"><small>${e(a)}</small><b>${e(b)}</b><span>${e(c)}</span></div>`).join("")}
+            ["Task success", "9/10", "tasks done unaided", 90],
+            ["Time on task", "½", "of the Chakra time", 50],
+            ["Errors reaching live", "≈ 0", "after the pre-review check", 4],
+            ["Help requests", "≤ 1", "per session", 20],
+            ["Ease", "80+", "SUS score", 80],
+            ["Memorability", "=", "same success after two weeks", 90],
+            ["Handover", "100%", "new editors finish a first update", 100],
+          ].map(([a, b, c, pct]) => `<div class="ec-metric"><small>${e(a)}</small><b>${e(b)}</b><span>${e(c)}</span><i class="ec-meter" style="--p:${pct}%" aria-hidden="true"></i></div>`).join("")}
         </div>
-${bx([
-  p(6, `${ib("Users")}${k("round 1")}${t("Figma flows with 3 editors")}${s("Paper and Figma versions of the notice, event and faculty tasks, to fix the words and the order of fields.")}`, { wt: 12 }),
-  p(6, `${ib("Monitor")}${k("round 2")}${t("The coded prototype with 5 editors and 2 reviewers")}${s("Against the Chakra baseline from the research plan, on office PCs and reviewers’ phones.")}`, { tone: "blue", wt: 12 }),
-])}
-${head2("s-18", "Test", "Where it stands, and next", ["A working prototype with sample content. What it is honest about:"])}
-${bx([
-  p(4, `${k("built")}${pills(["Five content types", "Live preview, computer and phone", "Review loop with notes", "Version history and restore", "Helper: fill, translate, check, alt text", "Hindi and English", "Website setup and access", "Text size, contrast, dark, motion"])}`, { tone: "lav", wt: 12 }),
-  p(4, `${k("not yet")}${pills(["Real file storage", "Real translation and model calls (scripted for the demo)", "Block and template library", "Photo crop with focal point", "Single sign-on", "Chakra integration"])}`, { wt: 12 }),
-  p(4, `${k("next")}${t("Run the research, then test")}${s("Chakra baseline with five or six admin staff, Round 1 in Figma, Round 2 on the prototype. Then a pilot with one centre, with the Computer Centre’s blessing.")}`, { tone: "orange", wt: 12 }),
-])}
+        <ol class="ec-rounds reveal">
+          <li><b>Round 1</b><span>Figma flows · 3 editors · fix the words and field order</span></li>
+          <li><b>Round 2</b><span>Coded prototype · 5 editors and 2 reviewers · against the Chakra baseline</span></li>
+        </ol>
+${head2("s-20", "Test", "Where it stands, and next", "")}
+        <div class="ec-status reveal">
+          <div class="ec-status-col ec-status-col--done"><p class="ec-kit-k">${ico("CircleCheck")} Built</p><ul>${["Five content types", "Live preview, computer and phone", "Review loop with notes", "Version history", "Helper: fill, translate, check, describe", "Hindi and English", "Website setup and access", "Size, contrast, dark, motion"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
+          <div class="ec-status-col"><p class="ec-kit-k">${ico("Hourglass")} Not yet</p><ul>${["Real file storage", "Real translation and model calls", "Block and template library", "Photo crop with focal point", "Single sign-on", "Chakra integration"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
+          <div class="ec-status-col ec-status-col--next"><p class="ec-kit-k">${ico("ArrowRight")} Next</p><p class="ec-next-big">Run the Chakra baseline, test twice, then pilot with one centre.</p></div>
+        </div>
 
       </div>
     </section>

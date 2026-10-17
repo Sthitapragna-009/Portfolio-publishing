@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Easy CMS app icon</title>
+<style>
+  /* Close-up of a phone's top-left corner with the Easy CMS icon on the home screen.
+     Captured by capture.js (group "cover") to assets/easycms/mock-appicon.jpg at 1600 x 1600. */
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1600px; height: 1600px; overflow: hidden; }
+  body {
+    position: relative;
+    font-family: -apple-system, "SF Pro Display", "Segoe UI Variable Display", "Segoe UI", system-ui, sans-serif;
+    background:
+      radial-gradient(1200px 900px at 0% 100%, #2a6bff 0%, rgba(42,107,255,0) 60%),
+      radial-gradient(900px 700px at 100% 0%, #1c3fd9 0%, rgba(28,63,217,0) 65%),
+      linear-gradient(160deg, #0a2bbf 0%, #0638d8 45%, #0d55ff 100%);
+  }
+
+  /* The phone: titanium frame, black bezel, screen. Only the top-left corner is in shot. */
+  .phone { position: absolute; left: 255px; top: 175px; width: 2200px; height: 2600px; border-radius: 250px; padding: 30px;
+    background: linear-gradient(135deg, #5c7dff 0%, #1f3fd6 22%, #13289e 50%, #2747e0 78%, #6f8cff 100%);
+    box-shadow: 0 60px 140px rgba(0, 6, 60, .55), inset 0 2px 0 rgba(255,255,255,.35), inset 0 -2px 0 rgba(0,0,40,.4); }
+  .phone::before { /* polished edge highlight along the curve */
+    content: ""; position: absolute; inset: 6px; border-radius: 244px; border: 3px solid rgba(190, 205, 255, .55);
+    -webkit-mask-image: linear-gradient(135deg, #000 0%, transparent 35%); mask-image: linear-gradient(135deg, #000 0%, transparent 35%); }
+  .bezel { width: 100%; height: 100%; border-radius: 220px; background: #02030a; padding: 20px; }
+  .screen { position: relative; width: 100%; height: 100%; border-radius: 200px; overflow: hidden;
+    background:
+      radial-gradient(1000px 1100px at 95% 75%, #1a4dff 0%, rgba(26,77,255,0) 72%), radial-gradient(700px 500px at 40% 110%, rgba(40,90,255,.6) 0%, rgba(40,90,255,0) 70%),
+      linear-gradient(155deg, #02040f 0%, #040b33 38%, #07208f 75%, #0d3bff 100%); }
+  /* vertical light streaks on the right, as on a glass wallpaper */
+  .streaks { position: absolute; left: 700px; right: 0; top: 0; bottom: 0;
+    background: repeating-linear-gradient(90deg, rgba(90,140,255,0) 0 34px, rgba(110,160,255,.20) 34px 38px, rgba(90,140,255,0) 38px 58px, rgba(140,180,255,.12) 58px 60px);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 45%), linear-gradient(180deg, #000 0%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 45%); opacity: .9; }
+
+  .time { position: absolute; left: 150px; top: 92px; color: #fff; font-size: 72px; font-weight: 600; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
+  .island { position: absolute; left: 540px; top: 72px; width: 480px; height: 132px; border-radius: 80px; background: #000;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,.03); }
+  .island::after { content: ""; position: absolute; right: 52px; top: 46px; width: 40px; height: 40px; border-radius: 50%;
+    background: radial-gradient(circle at 35% 35%, #2b3a6a, #070b1c 60%); }
+
+  .app { position: absolute; left: 112px; top: 300px; width: 270px; display: grid; justify-items: center; gap: 26px; }
+  .icon { position: relative; width: 270px; height: 270px; border-radius: 62px; filter: drop-shadow(0 26px 40px rgba(0, 20, 120, .55)); }
+  .icon img { width: 100%; height: 100%; display: block; }
+  .badge { position: absolute; right: -22px; top: -22px; min-width: 88px; height: 88px; padding: 0 22px; border-radius: 44px; background: #f75c03; color: #fff;
+    display: grid; place-items: center; font-size: 50px; font-weight: 700; box-shadow: 0 0 0 7px #030716; }
+  .label { color: #fff; font-size: 54px; font-weight: 500; letter-spacing: -.005em; text-shadow: 0 2px 10px rgba(0,0,0,.35); }
+
+  /* side buttons on the frame's left edge */
+  .btn { position: absolute; left: 238px; width: 26px; border-radius: 14px 0 0 14px;
+    background: linear-gradient(90deg, #3d5df0, #1a36c4 60%, #2b4be6); box-shadow: inset 2px 0 0 rgba(255,255,255,.3); }
+  .b1 { top: 880px; height: 150px; }
+  .b2 { top: 1110px; height: 260px; }
+  .b3 { top: 1430px; height: 260px; }
+</style>
+</head>
+<body>
+  <div class="btn b1"></div><div class="btn b2"></div><div class="btn b3"></div>
+  <div class="phone"><div class="bezel"><div class="screen">
+    <div class="streaks"></div>
+    <div class="time">9:41</div>
+    <div class="island"></div>
+    <div class="app">
+      <div class="icon"><img src="../../../assets/easycms/app-icon.svg" alt="" /><span class="badge">2</span></div>
+      <span class="label">Easy CMS</span>
+    </div>
+  </div></div></div>
+</body>
+</html>

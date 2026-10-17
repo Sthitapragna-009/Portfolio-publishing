@@ -27,6 +27,7 @@
 
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../assets/easycms/easycms.css" />
+  <link rel="stylesheet" href="../assets/easycms/easycms-v2.css" />
 </head>
 <body>
 
@@ -177,15 +178,45 @@
     <symbol id="d-Search" viewBox="0 0 24 24"><path fill="currentColor" d="M20.313 11.157a9.157 9.157 0 1 1-18.313 0a9.157 9.157 0 0 1 18.313 0" opacity=".5"/><path fill="currentColor" d="m17.1 18.122l3.666 3.666a.723.723 0 0 0 1.023-1.022L18.122 17.1a9 9 0 0 1-1.022 1.022"/></symbol>
     <symbol id="d-Send" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="m16.245 7.76l5.172-5.171l-.003-.003c-1.187-1.187-3.436-.438-7.935 1.062L8.33 5.364C4.7 6.574 2.885 7.18 2.37 8.067a2.72 2.72 0 0 0 0 2.73c.515.888 2.33 1.493 5.96 2.704c.45.15.957.042 1.294-.291l5.506-5.455a.79.79 0 0 1 1.116.005" clip-rule="evenodd"/><path fill="currentColor" d="m18.635 15.67l1.717-5.15c1.498-4.495 2.248-6.744 1.064-7.932l-5.172 5.171a.79.79 0 0 1-.005 1.117l-5.416 5.367a1.4 1.4 0 0 0-.324 1.426c1.21 3.631 1.815 5.446 2.703 5.962a2.71 2.71 0 0 0 2.73 0c.888-.516 1.493-2.33 2.703-5.962" opacity=".5"/></symbol>
     <symbol id="d-Upload" viewBox="0 0 24 24"><g fill="currentColor"><path d="M22 15.9998V14.9998C22 12.1714 21.9998 10.7576 21.1211 9.87891C20.2424 9.00023 18.8282 9.00023 15.9998 9.00023H7.99977C5.17135 9.00023 3.75713 9.00023 2.87845 9.87891C2 10.7574 2 12.1706 2 14.9976V14.9998V15.9998C2 18.8282 2 20.2424 2.87868 21.1211C3.75736 21.9998 5.17157 21.9998 8 21.9998H16H16C18.8284 21.9998 20.2426 21.9998 21.1213 21.1211C22 20.2424 22 18.8282 22 15.9998Z" opacity=".5"/><path fill-rule="evenodd" d="M12 15.75C12.4142 15.75 12.75 15.4142 12.75 15L12.75 4.02744L14.4306 5.98809C14.7001 6.30259 15.1736 6.33901 15.4881 6.06944C15.8026 5.79988 15.839 5.3264 15.5695 5.01191L12.5695 1.51191C12.427 1.34567 12.219 1.25 12 1.25C11.7811 1.25 11.5731 1.34567 11.4306 1.51191L8.43057 5.01191C8.161 5.3264 8.19743 5.79988 8.51192 6.06944C8.82641 6.33901 9.29989 6.30259 9.56946 5.98809L11.25 4.02744L11.25 15C11.25 15.4142 11.5858 15.75 12 15.75Z" clip-rule="evenodd"/></g></symbol>
+    <symbol id="d-Chat" viewBox="0 0 24 24"><g fill="currentColor"><path d="M12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 13.7596 1.41318 15.4228 2.14781 16.8977C2.34303 17.2897 2.40801 17.7377 2.29483 18.1607L1.63966 20.6093C1.35525 21.6723 2.32772 22.6447 3.39068 22.3603L5.83932 21.7052C6.26233 21.592 6.71033 21.657 7.10228 21.8522C8.5772 22.5868 10.2404 23 12 23Z" opacity=".5"/><path d="M10.9 12.0004C10.9 12.6079 11.3925 13.1004 12 13.1004C12.6075 13.1004 13.1 12.6079 13.1 12.0004C13.1 11.3929 12.6075 10.9004 12 10.9004C11.3925 10.9004 10.9 11.3929 10.9 12.0004Z"/><path d="M6.5 12.0004C6.5 12.6079 6.99249 13.1004 7.6 13.1004C8.20751 13.1004 8.7 12.6079 8.7 12.0004C8.7 11.3929 8.20751 10.9004 7.6 10.9004C6.99249 10.9004 6.5 11.3929 6.5 12.0004Z"/><path d="M15.3 12.0004C15.3 12.6079 15.7925 13.1004 16.4 13.1004C17.0075 13.1004 17.5 12.6079 17.5 12.0004C17.5 11.3929 17.0075 10.9004 16.4 10.9004C15.7925 10.9004 15.3 11.3929 15.3 12.0004Z"/></g></symbol>
   </svg>
 
   <main id="top">
     <section class="section case-head" id="ec-top">
       <div class="wrap">
         <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
-        <p class="eyebrow reveal">Product design &middot; Enterprise workflow &middot; Inclusive UI</p>
-        <h1 class="display case-title reveal" data-delay="1">Easy CMS</h1>
-        <p class="case-sub reveal" data-delay="2">A simpler way to update a heavy-information website, for institute staff who never learned HTML</p>
+
+        <!-- Hero: every mockup composed into one scene with the title, before the case study begins. -->
+        <div class="ec-hero reveal">
+          <div class="ec-hero-glow" aria-hidden="true"></div>
+          <div class="ec-hero-text">
+            <div class="ec-hero-titles">
+              <p class="eyebrow">Product design &middot; Enterprise workflow &middot; Inclusive UI</p>
+              <h1 class="display case-title"><img class="ec-hero-logo" src="../assets/easycms/logo.svg" alt="" width="40" height="40" />Easy CMS</h1>
+            </div>
+            <div class="ec-hero-copy">
+            <p class="case-sub">A simpler way to update a heavy-information website, for institute staff who never learned HTML</p>
+            <ul class="ec-hero-facts">
+              <li><svg class="ec-i" aria-hidden="true"><use href="#i-Users"/></svg><span><b>For</b> admin staff at IIT Roorkee</span></li>
+              <li><svg class="ec-i" aria-hidden="true"><use href="#i-Globe"/></svg><span><b>Demo</b> AMRUT Centre website</span></li>
+              <li><svg class="ec-i" aria-hidden="true"><use href="#i-Code"/></svg><span><b>Built</b> a working prototype</span></li>
+            </ul>
+            <div class="ec-hero-cta">
+              <a class="ec-hero-btn" href="#s-11">Try the prototype <svg class="ec-i" aria-hidden="true"><use href="#i-ArrowRight"/></svg></a>
+              <a class="ec-hero-link" href="#ec-journey-h">Read the journey</a>
+            </div>
+            </div>
+          </div>
+          <div class="ec-collage" role="group" aria-label="Easy CMS mockups. Select one to see it full size.">
+            <figure class="ec-col ec-col--angled"><img src="../assets/easycms/mock-angled.jpg" alt="An angled monitor showing the Easy CMS home: Namaste, Ashish, five task cards with Post an announcement first, and the counts of drafts, waiting and live items" width="1472" height="1962" decoding="async" /></figure>
+            <figure class="ec-col ec-col--desk"><img src="../assets/easycms/mock-desk.jpg" alt="Someone at a desk working in Easy CMS: the editor with a helper-filled announcement on the left and the live preview of the centre’s Announcements page on the right" width="2400" height="1800" decoding="async" /></figure>
+            <figure class="ec-col ec-col--phone"><img src="../assets/easycms/mock-phone.jpg" alt="A hand holding a phone with the reviewer’s screen: a round table notice waiting for review, with Send back with a note and Approve and publish" width="1600" height="1600" decoding="async" /></figure>
+            <figure class="ec-col ec-col--icon"><img src="../assets/easycms/mock-appicon.jpg" alt="Close-up of a phone’s home screen with the Easy CMS app icon, a frosted tile and a pencil over a tilted blue tile, with an orange badge showing 2" width="1600" height="1600" decoding="async" /></figure>
+            <span class="ec-float ec-float--ai" aria-hidden="true"><img src="../assets/easycms/assistant.svg" alt="" width="22" height="22" />Helper filled 5 fields</span>
+            <span class="ec-float ec-float--alert" aria-hidden="true"><i></i>Last date soon</span>
+            <span class="ec-float ec-float--live" aria-hidden="true"><b>Live</b>Approved by the Coordinator</span>
+          </div>
+        </div>
 
         <div class="case-brief reveal" data-delay="3">
           <div class="case-brief-row">
@@ -223,137 +254,220 @@
     <section class="section case-plates">
       <div class="wrap">
 
-        <section class="ec-carousel reveal" aria-roledescription="carousel" aria-label="Easy CMS in use">
-          <div class="ec-car-track" tabindex="0" aria-label="Mockups, scroll or use the arrows">
-            <figure class="ec-car-slide" aria-roledescription="slide" aria-label="1 of 3: The editor">
-              <img class="ec-car-bg" src="../assets/easycms/mock-desk.jpg" alt="" aria-hidden="true" decoding="async" />
-              <img src="../assets/easycms/mock-desk.jpg" alt="Someone at a desk working in Easy CMS: the editor with a helper-filled announcement on the left and the live preview of the centre’s Announcements page on the right" width="2400" height="1800" decoding="async" />
-              <figcaption><b>The editor</b> A message becomes a form; the preview is the real page.</figcaption>
-            </figure>
-            <figure class="ec-car-slide" aria-roledescription="slide" aria-label="2 of 3: The reviewer">
-              <img class="ec-car-bg" src="../assets/easycms/mock-phone.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-              <img src="../assets/easycms/mock-phone.jpg" alt="A hand holding a phone with the reviewer’s screen: a round table notice waiting for review, with Send back with a note and Approve and publish" width="1600" height="1600" loading="lazy" decoding="async" />
-              <figcaption><b>The reviewer</b> Checked on a phone, approved in one tap.</figcaption>
-            </figure>
-            <figure class="ec-car-slide" aria-roledescription="slide" aria-label="3 of 3: Home">
-              <img class="ec-car-bg" src="../assets/easycms/mock-angled.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
-              <img src="../assets/easycms/mock-angled.jpg" alt="An angled monitor showing the Easy CMS home: Namaste, Sunita, five task cards with Post an announcement first, and the counts of drafts, waiting and live items" width="1472" height="1962" loading="lazy" decoding="async" />
-              <figcaption><b>Home</b> What do you want to update today?</figcaption>
-            </figure>
+        <nav class="ec-journey reveal" aria-labelledby="ec-journey-h">
+          <div class="ec-journey-head">
+            <h2 class="ec-journey-title" id="ec-journey-h">The design and decision journey</h2>
+            <p class="ec-journey-tools">FigJam &middot; Figma &middot; React, Vite, TypeScript &middot; Motion</p>
           </div>
-          <div class="ec-car-ui">
-            <div class="ec-car-dots" role="group" aria-label="Choose a mockup">
-              <button type="button" class="ec-car-dot" aria-label="Show mockup 1 of 3" aria-current="true"></button><button type="button" class="ec-car-dot" aria-label="Show mockup 2 of 3"></button><button type="button" class="ec-car-dot" aria-label="Show mockup 3 of 3"></button>
-            </div>
-            <p class="ec-car-count" aria-live="polite"><b>01</b> / 03</p>
-            <div class="ec-car-btns">
-              <button type="button" class="ec-car-btn" data-dir="-1" aria-label="Previous mockup"><svg class="ec-i" aria-hidden="true"><use href="#i-ArrowLeft"/></svg></button>
-              <button type="button" class="ec-car-btn" data-dir="1" aria-label="Next mockup"><svg class="ec-i" aria-hidden="true"><use href="#i-ArrowRight"/></svg></button>
-            </div>
-          </div>
-        </section>
-
-        <div class="pg-process reveal" aria-label="How the project ran">
-          <div class="pg-process-head">
-            <p class="pg-process-k">How the project ran</p>
-            <p class="pg-process-tools"><span>Tools</span>FigJam &middot; Figma &middot; React, Vite, TypeScript &middot; Motion</p>
-          </div>
-          <ol class="pg-process-steps">
-            <li data-phase="empathise"><a href="#s-01"><span class="pg-ph-n">1</span><b>Empathise</b><small>First-hand problem, an audit of a live site, the people, the research plan</small><em>4 sections</em></a></li>
-            <li data-phase="define"><a href="#s-05"><span class="pg-ph-n">2</span><b>Define</b><small>Secondary research, insights to principles</small><em>2 sections</em></a></li>
-            <li data-phase="ideate"><a href="#s-07"><span class="pg-ph-n">3</span><b>Ideate</b><small>Roles and places, the publishing workflow, an AI helper with limits</small><em>3 sections</em></a></li>
-            <li data-phase="prototype"><a href="#s-10"><span class="pg-ph-n">4</span><b>Prototype</b><small>Website setup, the editor step by step, review on a phone, preview, help, accessibility, the system</small><em>7 sections</em></a></li>
-            <li data-phase="test"><a href="#s-17"><span class="pg-ph-n">5</span><b>Test</b><small>What to measure against Chakra, and what comes next</small><em>2 sections</em></a></li>
+          <ol class="ec-journey-line">
+            <li>
+              <a href="#s-01">
+                <span class="ec-j-node" aria-hidden="true">1</span>
+                <span class="ec-j-phase">Empathise</span>
+                <span class="ec-j-decision">Read a live site before asking anyone</span>
+                <span class="ec-j-what">Audit, stakeholders, proto-personas, a research plan</span>
+              </a>
+            </li><li>
+              <a href="#s-05">
+                <span class="ec-j-node" aria-hidden="true">2</span>
+                <span class="ec-j-phase">Define</span>
+                <span class="ec-j-decision">Low digital literacy, not low literacy</span>
+                <span class="ec-j-what">Other teams’ findings, eight principles</span>
+              </a>
+            </li><li>
+              <a href="#s-07">
+                <span class="ec-j-node" aria-hidden="true">3</span>
+                <span class="ec-j-phase">Ideate</span>
+                <span class="ec-j-decision">Nothing goes public without a person</span>
+                <span class="ec-j-what">Brainstorm, roles, workflow, helper limits</span>
+              </a>
+            </li><li>
+              <a href="#s-11">
+                <span class="ec-j-node" aria-hidden="true">4</span>
+                <span class="ec-j-phase">Prototype</span>
+                <span class="ec-j-decision">Build it working, not just drawn</span>
+                <span class="ec-j-what">A live prototype, setup, editor, review, system</span>
+              </a>
+            </li><li>
+              <a href="#s-20">
+                <span class="ec-j-node" aria-hidden="true">5</span>
+                <span class="ec-j-phase">Test</span>
+                <span class="ec-j-decision">Same tasks, Chakra against Easy CMS</span>
+                <span class="ec-j-what">Targets, two rounds, what is next</span>
+              </a>
+            </li>
           </ol>
-          <p class="pg-process-loop">The prototype came first on purpose: a working demo to test with real staff, and to put in front of the Computer Centre.</p>
+          <p class="ec-journey-loop"><svg class="ec-i" aria-hidden="true"><use href="#i-RotateCcw"/></svg> Test results go back to Define before anything ships.</p>
+        </nav>
+
+        <div class="plate-head ec-head" id="s-01">
+          <h2 class="display section-title">The problem</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Empathise</p>
+          <div class="section-intro"><p>Chakra accepts only HTML. I have done this job myself and could not hand it over: every update came back to one desk.</p></div>
+        </div>
+        <div class="ec-split reveal">
+          <figure class="ec-ig reveal"><svg class="ig ig-loop" viewBox="-170 0 980 640" role="img" aria-labelledby="ig-loop-t">
+  <title id="ig-loop-t">Today's update loop: a message arrives, one person rewrites it as HTML, it goes live with no preview, a reader spots the mistake, a phone call asks for a fix, and the same person fixes it again.</title>
+  <circle cx="320" cy="320" r="214" class="ln ln-dash" fill="none"/><g transform="translate(427 134.7) rotate(30)"><path d="M-7 -6 L4 0 L-7 6" class="arrow" fill="none"/></g><g transform="translate(534 320) rotate(90)"><path d="M-7 -6 L4 0 L-7 6" class="arrow" fill="none"/></g><g transform="translate(427 505.3) rotate(150)"><path d="M-7 -6 L4 0 L-7 6" class="arrow" fill="none"/></g><g transform="translate(213 505.3) rotate(210)"><path d="M-7 -6 L4 0 L-7 6" class="arrow" fill="none"/></g><g transform="translate(106 320) rotate(270)"><path d="M-7 -6 L4 0 L-7 6" class="arrow" fill="none"/></g><g transform="translate(213 134.7) rotate(330)"><path d="M-7 -6 L4 0 L-7 6" class="arrow" fill="none"/></g><circle cx="320" cy="106" r="34" class="node-acc"/><use href="#i-Chat" x="306" y="92" width="28" height="28" class="ico-on"/><text x="320" y="36" text-anchor="middle" class="t-ink" font-size="17"><tspan x="320" dy="0">A message arrives</tspan><tspan x="320" dy="21.25">on WhatsApp or email</tspan></text><circle cx="505.3" cy="213" r="34" class="node"/><use href="#i-Code" x="491.3" y="199" width="28" height="28" class="ico"/><text x="553.8" y="177" text-anchor="start" class="t-ink" font-size="17"><tspan x="553.8" dy="0">One person rewrites</tspan><tspan x="553.8" dy="21.25">it as HTML</tspan></text><circle cx="505.3" cy="427" r="34" class="node"/><use href="#i-Globe" x="491.3" y="413" width="28" height="28" class="ico"/><text x="553.8" y="447" text-anchor="start" class="t-ink" font-size="17"><tspan x="553.8" dy="0">It goes live at once,</tspan><tspan x="553.8" dy="21.25">with no preview</tspan></text><circle cx="320" cy="534" r="34" class="node-alert"/><use href="#i-Eye" x="306" y="520" width="28" height="28" class="ico-on"/><text x="320" y="596" text-anchor="middle" class="t-org" font-size="17"><tspan x="320" dy="0">A reader spots</tspan><tspan x="320" dy="21.25">the mistake</tspan></text><circle cx="134.7" cy="427" r="34" class="node"/><use href="#i-Phone2" x="120.7" y="413" width="28" height="28" class="ico"/><text x="86.2" y="447" text-anchor="end" class="t-ink" font-size="17"><tspan x="86.2" dy="0">A phone call</tspan><tspan x="86.2" dy="21.25">asks for a fix</tspan></text><circle cx="134.7" cy="213" r="34" class="node"/><use href="#i-PencilLine" x="120.7" y="199" width="28" height="28" class="ico"/><text x="86.2" y="177" text-anchor="end" class="t-ink" font-size="17"><tspan x="86.2" dy="0">The same person</tspan><tspan x="86.2" dy="21.25">fixes it again</tspan></text><text x="320" y="314" text-anchor="middle" class="t-ink t-big" font-size="44">1 person</text>
+  <text x="320" y="346" text-anchor="middle" class="t-dim" font-size="18">for every update</text></svg><figcaption>Today’s loop, from a message to a fix. The mistake is found by a reader, after it is public.</figcaption></figure>
+          <dl class="ec-bignums">
+            <div><dt>1</dt><dd>format Chakra accepts in content fields: <b>HTML</b></dd></div>
+            <div><dt>5</dt><dd>kinds of update make up most of the work</dd></div>
+            <div><dt>88</dt><dd>mandatory guidelines in <b>GIGW 3.0</b></dd></div>
+            <div><dt>0</dt><dd>previews or reviews before an update is live</dd></div>
+          </dl>
         </div>
 
-        <div class="plate-head" id="s-01">
-          <h2 class="display section-title" data-phase="Empathise">The problem</h2>
-          <div class="section-intro"><p>Chakra, the institute’s custom CMS, accepts only HTML in its content fields. So a one-line circular needs someone who can write markup.</p><p>I have done this job myself, and I could not hand it over: the skill stayed with one person because the tool could not be taught quickly.</p></div>
+        <div class="plate-head ec-head" id="s-02">
+          <h2 class="display section-title">What a live site shows</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Empathise</p>
+          <div class="section-intro"><p>Before any interview, I mapped the public menu of one centre’s website. The slips hand-written HTML invites are visible from outside.</p></div>
+        </div>
+        <div class="ec-split ec-split--wide reveal">
+          <div class="ec-scroll"><figure class="ec-ig ec-ig--flush reveal"><svg class="ig ig-sitemap" viewBox="-90 -90 1180 1180" role="img" aria-labelledby="ig-map-t">
+  <title id="ig-map-t">The centre's live menu: six groups and 32 pages. Orange marks slips seen on the live site: the About Us menu opens About MoHUA.html, About IITR opens About CUPCB.html, and the Faculty page's file name contains a space.</title>
+  <line x1="500" y1="408" x2="500" y2="295" class="ln"/><path d="M500 295 Q381.7 260.1 354 204" class="ln ln-org" fill="none"/><path d="M500 295 Q427.4 242.5 410.4 182.4" class="ln" fill="none"/><path d="M500 295 Q475.5 233.6 469.8 171.4" class="ln" fill="none"/><path d="M500 295 Q524.5 233.6 530.2 171.4" class="ln" fill="none"/><path d="M500 295 Q572.6 242.5 589.6 182.4" class="ln" fill="none"/><path d="M500 295 Q618.3 260.1 646 204" class="ln" fill="none"/><line x1="581" y1="456.5" x2="680.6" y2="403" class="ln"/><path d="M680.6 403 Q674.6 297.4 715.4 250" class="ln" fill="none"/><path d="M680.6 403 Q708.6 332.6 757.4 293.4" class="ln" fill="none"/><path d="M680.6 403 Q735.6 373.4 790.7 343.8" class="ln" fill="none"/><path d="M680.6 403 Q754.8 418.4 814.3 399.4" class="ln" fill="none"/><path d="M680.6 403 Q765.4 466.2 827.4 458.4" class="ln" fill="none"/><line x1="581" y1="543.5" x2="680.6" y2="597" class="ln"/><path d="M680.6 597 Q765.4 533.8 827.4 541.6" class="ln" fill="none"/><path d="M680.6 597 Q754.8 581.6 814.3 600.6" class="ln" fill="none"/><path d="M680.6 597 Q735.6 626.6 790.7 656.2" class="ln" fill="none"/><path d="M680.6 597 Q708.6 667.4 757.4 706.6" class="ln" fill="none"/><path d="M680.6 597 Q674.6 702.6 715.4 750" class="ln" fill="none"/><line x1="500" y1="592" x2="500" y2="705" class="ln"/><path d="M500 705 Q618.3 739.9 646 796" class="ln" fill="none"/><path d="M500 705 Q572.6 757.5 589.6 817.6" class="ln" fill="none"/><path d="M500 705 Q524.5 766.4 530.2 828.6" class="ln" fill="none"/><path d="M500 705 Q475.5 766.4 469.8 828.6" class="ln" fill="none"/><path d="M500 705 Q427.4 757.5 410.4 817.6" class="ln" fill="none"/><path d="M500 705 Q381.7 739.9 354 796" class="ln" fill="none"/><line x1="428.3" y1="557.6" x2="340.1" y2="628.3" class="ln"/><path d="M340.1 628.3 Q325.4 702.6 284.6 750" class="ln ln-org" fill="none"/><path d="M340.1 628.3 Q291.4 667.4 242.6 706.6" class="ln" fill="none"/><path d="M340.1 628.3 Q264.4 626.6 209.3 656.2" class="ln" fill="none"/><line x1="412.4" y1="472" x2="304.8" y2="437.5" class="ln"/><path d="M304.8 437.5 Q240.2 563.6 179.5 578.4" class="ln" fill="none"/><path d="M304.8 437.5 Q232.9 515.2 170.5 518.7" class="ln" fill="none"/><path d="M304.8 437.5 Q234.6 466.2 172.6 458.4" class="ln" fill="none"/><path d="M304.8 437.5 Q245.2 418.4 185.7 399.4" class="ln" fill="none"/><path d="M304.8 437.5 Q264.4 373.4 209.3 343.8" class="ln" fill="none"/><path d="M304.8 437.5 Q291.4 332.6 242.6 293.4" class="ln" fill="none"/><path d="M304.8 437.5 Q325.4 297.4 284.6 250" class="ln" fill="none"/><circle cx="500" cy="500" r="92" class="node-hub"/>
+  <text x="500" y="492" text-anchor="middle" font-size="22" class="t-on t-b">ACUPCB</text>
+  <text x="500" y="518" text-anchor="middle" font-size="16" class="t-on-dim">website menu</text>
+  <circle cx="354" cy="204" r="8" class="dot-org"/><circle cx="410.4" cy="182.4" r="5.5" class="dot"/><circle cx="469.8" cy="171.4" r="5.5" class="dot"/><circle cx="530.2" cy="171.4" r="5.5" class="dot"/><circle cx="589.6" cy="182.4" r="5.5" class="dot"/><circle cx="646" cy="204" r="5.5" class="dot"/><circle cx="500" cy="295" r="46" class="node-alert-ring"/>
+      <text x="500" y="291" text-anchor="middle" font-size="15.5" class="t-on t-b">About Us</text>
+      <text x="500" y="311" text-anchor="middle" font-size="14" class="t-on-dim">6 pages</text><circle cx="715.4" cy="250" r="5.5" class="dot"/><circle cx="757.4" cy="293.4" r="5.5" class="dot"/><circle cx="790.7" cy="343.8" r="5.5" class="dot"/><circle cx="814.3" cy="399.4" r="5.5" class="dot"/><circle cx="827.4" cy="458.4" r="5.5" class="dot"/><circle cx="680.6" cy="403" r="46" class="node-acc"/>
+      <text x="680.6" y="399" text-anchor="middle" font-size="15.5" class="t-on t-b">Projects</text>
+      <text x="680.6" y="419" text-anchor="middle" font-size="14" class="t-on-dim">5 pages</text><circle cx="827.4" cy="541.6" r="5.5" class="dot"/><circle cx="814.3" cy="600.6" r="5.5" class="dot"/><circle cx="790.7" cy="656.2" r="5.5" class="dot"/><circle cx="757.4" cy="706.6" r="5.5" class="dot"/><circle cx="715.4" cy="750" r="5.5" class="dot"/><circle cx="680.6" cy="597" r="46" class="node-acc"/>
+      <text x="680.6" y="593" text-anchor="middle" font-size="15.5" class="t-on t-b">Events</text>
+      <text x="680.6" y="613" text-anchor="middle" font-size="14" class="t-on-dim">5 pages</text><circle cx="646" cy="796" r="5.5" class="dot"/><circle cx="589.6" cy="817.6" r="5.5" class="dot"/><circle cx="530.2" cy="828.6" r="5.5" class="dot"/><circle cx="469.8" cy="828.6" r="5.5" class="dot"/><circle cx="410.4" cy="817.6" r="5.5" class="dot"/><circle cx="354" cy="796" r="5.5" class="dot"/><circle cx="500" cy="705" r="46" class="node-acc"/>
+      <text x="500" y="701" text-anchor="middle" font-size="15.5" class="t-on t-b">Announce…</text>
+      <text x="500" y="721" text-anchor="middle" font-size="14" class="t-on-dim">6 pages</text><circle cx="284.6" cy="750" r="8" class="dot-org"/><circle cx="242.6" cy="706.6" r="5.5" class="dot"/><circle cx="209.3" cy="656.2" r="5.5" class="dot"/><circle cx="340.1" cy="628.3" r="46" class="node-acc"/>
+      <text x="340.1" y="624.3" text-anchor="middle" font-size="15.5" class="t-on t-b">People</text>
+      <text x="340.1" y="644.3" text-anchor="middle" font-size="14" class="t-on-dim">3 pages</text><circle cx="179.5" cy="578.4" r="5.5" class="dot"/><circle cx="170.5" cy="518.7" r="5.5" class="dot"/><circle cx="172.6" cy="458.4" r="5.5" class="dot"/><circle cx="185.7" cy="399.4" r="5.5" class="dot"/><circle cx="209.3" cy="343.8" r="5.5" class="dot"/><circle cx="242.6" cy="293.4" r="5.5" class="dot"/><circle cx="284.6" cy="250" r="5.5" class="dot"/><circle cx="304.8" cy="437.5" r="46" class="node-acc"/>
+      <text x="304.8" y="433.5" text-anchor="middle" font-size="15.5" class="t-on t-b">Repository</text>
+      <text x="304.8" y="453.5" text-anchor="middle" font-size="14" class="t-on-dim">7 pages</text><text x="347" y="189.7" transform="rotate(423.8 347 189.7)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-org t-b">About IITR</text><text x="406.1" y="167" transform="rotate(434.3 406.1 167)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">About DAP</text><text x="468.3" y="155.5" transform="rotate(444.8 468.3 155.5)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">About MoHUA</text><text x="531.7" y="155.5" transform="rotate(-84.7 531.7 155.5)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Partners &amp; MoUs</text><text x="593.9" y="167" transform="rotate(-74.2 593.9 167)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">About CUPCB</text><text x="653" y="189.7" transform="rotate(-63.7 653 189.7)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Themes</text><text x="500" y="365" text-anchor="middle" font-size="15" class="t-org t-b">opens About MoHUA.html</text><text x="725.9" y="237.9" transform="rotate(-49.2 725.9 237.9)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Action research</text><text x="769.8" y="283.4" transform="rotate(-38.7 769.8 283.4)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Consultancy</text><text x="804.8" y="336.2" transform="rotate(-28.2 804.8 336.2)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Punjab GIS master plan</text><text x="829.5" y="394.5" transform="rotate(-17.7 829.5 394.5)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Upcoming</text><text x="843.2" y="456.3" transform="rotate(-7.2 843.2 456.3)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Completed</text><text x="843.2" y="543.7" transform="rotate(7.3 843.2 543.7)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Workshops &amp; training</text><text x="829.5" y="605.5" transform="rotate(17.8 829.5 605.5)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Student engagement</text><text x="804.8" y="663.8" transform="rotate(28.3 804.8 663.8)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Symposiums</text><text x="769.8" y="716.6" transform="rotate(38.8 769.8 716.6)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Special lectures</text><text x="725.9" y="762.1" transform="rotate(49.3 725.9 762.1)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Round tables</text><text x="653" y="810.3" transform="rotate(63.8 653 810.3)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Newsletter</text><text x="593.9" y="833" transform="rotate(74.3 593.9 833)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">Stakeholder engagement</text><text x="531.7" y="844.5" transform="rotate(84.8 531.7 844.5)" text-anchor="start" dominant-baseline="middle" font-size="17" class="t-dim">News</text><text x="468.3" y="844.5" transform="rotate(275.3 468.3 844.5)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Staff</text><text x="406.1" y="833" transform="rotate(285.8 406.1 833)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Interns</text><text x="347" y="810.3" transform="rotate(296.3 347 810.3)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Advisory</text><text x="274.1" y="762.1" transform="rotate(310.8 274.1 762.1)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-org t-b">Faculty</text><text x="230.2" y="716.6" transform="rotate(321.3 230.2 716.6)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Non-teaching staff</text><text x="195.2" y="663.8" transform="rotate(331.8 195.2 663.8)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Research staff</text><text x="163.9" y="582.2" transform="rotate(346.3 163.9 582.2)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Infrastructure</text><text x="154.6" y="519.6" transform="rotate(356.8 154.6 519.6)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Proceedings</text><text x="156.8" y="456.3" transform="rotate(367.3 156.8 456.3)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Minutes</text><text x="170.5" y="394.5" transform="rotate(377.8 170.5 394.5)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Documented cases</text><text x="195.2" y="336.2" transform="rotate(388.3 195.2 336.2)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Photo gallery</text><text x="230.2" y="283.4" transform="rotate(398.8 230.2 283.4)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Related links</text><text x="274.1" y="237.9" transform="rotate(409.3 274.1 237.9)" text-anchor="end" dominant-baseline="middle" font-size="17" class="t-dim">Funding support</text></svg></figure></div>
+          <div class="ec-flags">
+            <p class="ec-flags-k"><span class="ec-dot-org" aria-hidden="true"></span>Seen on the live site</p>
+            <div class="ec-flag-item"><b>Labels and links out of step</b><code class="ec-url">About Us → …/<mark>About MoHUA.html</mark><br>About IITR → …/<mark>About CUPCB.html</mark></code></div>
+            <div class="ec-flag-item"><b>Spaces inside web addresses</b><code class="ec-url">…/Capacity Building<mark>&nbsp;</mark>/Faculty<mark>&nbsp;</mark>.html</code></div>
+            <div class="ec-flag-item ec-flag-item--idea"><b>Most pages are lists</b><span>Announcements, lectures, workshops and people repeat the same shapes: they can be forms and cards, not free HTML.</span></div>
+          </div>
         </div>
 
-        <div class="bx reveal"><div class="p" style="--w:7;--wt:12"><div class="ec-figs">
-      <div class="ec-fig"><b>1</b><span>format Chakra accepts in content fields: HTML</span><span class="ec-src">Computer Centre portal</span></div>
-      <div class="ec-fig"><b>5</b><span>kinds of update make up most of the work: notices, events, workshop links, faculty details, page text</span><span class="ec-src">From the brief</span></div>
-      <div class="ec-fig"><b>88</b><span>mandatory guidelines in GIGW 3.0 for Indian government websites</span><span class="ec-src">GIGW 3.0</span></div>
-    </div></div><div class="p p--blue" style="--w:5;--wt:12"><span class="ec-ib"><svg class="ec-i" aria-hidden="true"><use href="#d-ShieldCheck"/></svg></span><p class="p-k">first-hand</p><h3 class="p-t">The website duty never leaves one desk</h3><p class="p-s">When I tried to hand the work to an admin colleague, every update still came back to me: a stray tag broke a table, a PDF link pointed to the wrong file, and nobody could see the result before it went live.</p></div><div class="p" style="--w:4;--wt:6;--wm:12"><span class="ec-ib"><svg class="ec-i" aria-hidden="true"><use href="#i-Code"/></svg></span><h3 class="p-t">Written in HTML</h3><p class="p-s">Staff who write fluent English in Word and email freeze at angle brackets.</p></div><div class="p" style="--w:4;--wt:6;--wm:12"><span class="ec-ib"><svg class="ec-i" aria-hidden="true"><use href="#i-Eye"/></svg></span><h3 class="p-t">Checked after it is live</h3><p class="p-s">Mistakes are found by readers, then fixed by phone call.</p></div><div class="p" style="--w:4;--wt:12"><span class="ec-ib"><svg class="ec-i" aria-hidden="true"><use href="#i-Users"/></svg></span><h3 class="p-t">Reviewed outside the tool</h3><p class="p-s">Faculty check screenshots on WhatsApp; the tool has no review step.</p></div></div>
-
-        <div class="plate-head" id="s-02">
-          <h2 class="display section-title" data-phase="Empathise">What a live site shows</h2>
-          <div class="section-intro"><p>Before any interview, I read the public pages of one centre’s website, the AMRUT Centre of Urban Planning for Capacity Building. Small slips that hand-written HTML invites are visible from outside.</p></div>
+        <div class="plate-head ec-head" id="s-03">
+          <h2 class="display section-title">Who it touches</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Empathise</p>
+          <div class="section-intro"><p>From the people who press the buttons to the rules every government site must follow.</p></div>
+        </div>
+        <div class="ec-scroll ec-scroll--narrow"><figure class="ec-ig ec-ig--center reveal"><svg class="ig ig-stake" viewBox="0 0 1000 1000" role="img" aria-labelledby="ig-stake-t">
+  <title id="ig-stake-t">Stakeholder map. At the centre, a website update. Inner ring, using it every week: the editor and the reviewer. Next, working with it: the Computer Centre, a new editor, faculty and the centre office. Then reading it: students, applicants, city officials, researchers, the public and partners. Outer ring, setting the rules: GIGW 3.0, MoHUA, NIC S3WaaS, the Hindi Cell and IMG.</title><circle cx="500" cy="500" r="440" class="ring-a"/><circle cx="500" cy="500" r="340" class="ring-b"/><circle cx="500" cy="500" r="230" class="ring-a"/><circle cx="500" cy="500" r="120" class="ring-b"/><text x="500" y="402" text-anchor="middle" font-size="14" class="t-faint t-caps">Use it every week</text><text x="500" y="292" text-anchor="middle" font-size="14" class="t-faint t-caps">Work with it</text><text x="500" y="182" text-anchor="middle" font-size="14" class="t-faint t-caps">Read it</text><text x="500" y="82" text-anchor="middle" font-size="14" class="t-faint t-caps">Set the rules</text><circle cx="500" cy="500" r="62" class="node-hub"/>
+  <text x="500" y="496" text-anchor="middle" font-size="18" class="t-on t-b">A website</text>
+  <text x="500" y="518" text-anchor="middle" font-size="18" class="t-on t-b">update</text><circle cx="387.2" cy="541" r="15" class="node-acc"/><text x="359" y="551.3" text-anchor="end" font-size="21" class="t-ink t-b">Editor</text><text x="359" y="572.3" text-anchor="end" font-size="16" class="t-dim">office staff</text><circle cx="612.8" cy="459" r="15" class="node-acc"/><text x="641" y="448.7" text-anchor="start" font-size="21" class="t-ink t-b">Reviewer</text><text x="641" y="469.7" text-anchor="start" font-size="16" class="t-dim">coordinator or HoD</text><circle cx="729.1" cy="520" r="10" class="node-vio"/><text x="751" y="522" text-anchor="start" font-size="17" class="t-ink t-b">Computer Centre</text><text x="751" y="540" text-anchor="start" font-size="14" class="t-dim">gives access</text><circle cx="597.2" cy="708.5" r="10" class="node-vio"/><text x="606.5" y="728.4" text-anchor="start" font-size="17" class="t-ink t-b">New editor</text><text x="606.5" y="746.4" text-anchor="start" font-size="14" class="t-dim">takes the duty over</text><circle cx="368.1" cy="688.4" r="10" class="node-vio"/><text x="355.5" y="706.4" text-anchor="end" font-size="17" class="t-ink t-b">Faculty</text><text x="355.5" y="724.4" text-anchor="end" font-size="14" class="t-dim">own the content</text><circle cx="323.8" cy="352.2" r="10" class="node-vio"/><text x="307" y="338" text-anchor="end" font-size="17" class="t-ink t-b">Centre office</text><text x="307" y="356" text-anchor="end" font-size="14" class="t-dim">sends the circulars</text><circle cx="740.4" cy="259.6" r="10" class="node-ink"/><text x="756" y="244" text-anchor="start" font-size="17" class="t-ink t-b">Students</text><circle cx="778.5" cy="695" r="10" class="node-ink"/><text x="796.5" y="707.6" text-anchor="start" font-size="17" class="t-ink t-b">Applicants</text><text x="796.5" y="725.6" text-anchor="start" font-size="14" class="t-dim">jobs, internships</text><circle cx="616.3" cy="819.5" r="10" class="node-ink"/><text x="623.8" y="840.2" text-anchor="start" font-size="17" class="t-ink t-b">City officials</text><text x="623.8" y="858.2" text-anchor="start" font-size="14" class="t-dim">ULB trainees</text><circle cx="281.5" cy="760.5" r="10" class="node-ink"/><text x="267.3" y="777.3" text-anchor="end" font-size="17" class="t-ink t-b">Researchers</text><text x="267.3" y="795.3" text-anchor="end" font-size="14" class="t-dim">and peers</text><circle cx="161.3" cy="470.4" r="10" class="node-ink"/><text x="139.4" y="468.4" text-anchor="end" font-size="17" class="t-ink t-b">The public</text><circle cx="305" cy="221.5" r="10" class="node-ink"/><text x="292.4" y="203.5" text-anchor="end" font-size="17" class="t-ink t-b">Partners</text><text x="292.4" y="221.5" text-anchor="end" font-size="14" class="t-dim">MoUs, institutes</text><circle cx="500" cy="60" r="10" class="node-faint"/><text x="500" y="28" text-anchor="middle" font-size="17" class="t-ink t-b">GIGW 3.0</text><text x="500" y="46" text-anchor="middle" font-size="14" class="t-dim">88 guidelines</text><circle cx="918.5" cy="364" r="10" class="node-faint"/><text x="939.4" y="357.2" text-anchor="start" font-size="17" class="t-ink t-b">MoHUA</text><text x="939.4" y="375.2" text-anchor="start" font-size="14" class="t-dim">AMRUT 2.0</text><circle cx="758.6" cy="856" r="10" class="node-faint"/><text x="771.6" y="873.8" text-anchor="start" font-size="17" class="t-ink t-b">NIC S3WaaS</text><text x="771.6" y="891.8" text-anchor="start" font-size="14" class="t-dim">government sites</text><circle cx="241.4" cy="856" r="10" class="node-faint"/><text x="228.4" y="873.8" text-anchor="end" font-size="17" class="t-ink t-b">Hindi Cell</text><text x="228.4" y="891.8" text-anchor="end" font-size="14" class="t-dim">both languages</text><circle cx="81.5" cy="364" r="10" class="node-faint"/><text x="60.6" y="357.2" text-anchor="end" font-size="17" class="t-ink t-b">IMG, IITR</text><text x="60.6" y="375.2" text-anchor="end" font-size="14" class="t-dim">site templates</text></svg><figcaption>Stakeholder map. Editors and reviewers use it every week; the Computer Centre, faculty and a new hand-over editor work with it; students, applicants and city officials read it; GIGW, MoHUA, NIC and the Hindi Cell set the rules.</figcaption></figure></div>
+        <div class="ec-personas reveal" aria-label="Proto-personas">
+          <p class="ec-personas-k">Proto-personas · assumptions the interviews will test</p>
+          <article class="ec-persona">
+            <p class="ec-persona-role">Editor</p>
+            <h3>The office assistant</h3>
+            <p class="ec-persona-goal">Post today’s circular before the office closes, without calling anyone.</p>
+            <div class="ec-scale"><span class="ec-scale-k">Word, email, WhatsApp</span><span class="ec-dots" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="ec-scale-n">fluent</span></div><div class="ec-scale"><span class="ec-scale-k">HTML</span><span class="ec-dots" role="img" aria-label="0 out of 5"><i></i><i></i><i></i><i></i><i></i></span><span class="ec-scale-n">none</span></div><div class="ec-scale"><span class="ec-scale-k">Updates</span><span class="ec-dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="ec-scale-n">most days</span></div><div class="ec-scale"><span class="ec-scale-k">Device</span><span class="ec-dots" role="img" aria-label="2 out of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="ec-scale-n">office PC</span></div>
+          </article><article class="ec-persona">
+            <p class="ec-persona-role">Reviewer</p>
+            <h3>The faculty coordinator</h3>
+            <p class="ec-persona-goal">See it as readers will, then approve or say what to fix in one line.</p>
+            <div class="ec-scale"><span class="ec-scale-k">Time to check</span><span class="ec-dots" role="img" aria-label="1 out of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="ec-scale-n">between classes</span></div><div class="ec-scale"><span class="ec-scale-k">On a phone</span><span class="ec-dots" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="ec-scale-n">mostly</span></div><div class="ec-scale"><span class="ec-scale-k">Updates</span><span class="ec-dots" role="img" aria-label="2 out of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="ec-scale-n">checks, never writes</span></div><div class="ec-scale"><span class="ec-scale-k">Patience for tools</span><span class="ec-dots" role="img" aria-label="1 out of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="ec-scale-n">very little</span></div>
+          </article><article class="ec-persona">
+            <p class="ec-persona-role">Editor, first week</p>
+            <h3>The new hand-over editor</h3>
+            <p class="ec-persona-goal">Finish a real update in the first session, and remember how in three weeks.</p>
+            <div class="ec-scale"><span class="ec-scale-k">Training</span><span class="ec-dots" role="img" aria-label="0 out of 5"><i></i><i></i><i></i><i></i><i></i></span><span class="ec-scale-n">none</span></div><div class="ec-scale"><span class="ec-scale-k">Confidence</span><span class="ec-dots" role="img" aria-label="1 out of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="ec-scale-n">low</span></div><div class="ec-scale"><span class="ec-scale-k">Updates</span><span class="ec-dots" role="img" aria-label="1 out of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="ec-scale-n">now and then</span></div><div class="ec-scale"><span class="ec-scale-k">Memorability</span><span class="ec-dots" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="ec-scale-n">what matters</span></div>
+          </article>
         </div>
 
-        <div class="bx reveal"><div class="p" style="--w:6;--wt:12"><p class="p-k">menu label versus page it opens</p><code class="ec-url">About Us → …/<mark>About MoHUA.html</mark><br>About IITR → …/<mark>About CUPCB.html</mark></code><span class="ec-flag">Labels and links out of step</span><p class="p-s">Two menu items open pages named for something else. Nobody notices until a reader does.</p></div><div class="p" style="--w:6;--wt:12"><p class="p-k">folder and file names</p><code class="ec-url">/Centres/AMRUT Centre of Urban Planning for Capacity Building<mark>&nbsp;</mark>/<br>/Faculty<mark>&nbsp;</mark>.html</code><span class="ec-flag">Spaces inside web addresses</span><p class="p-s">A trailing space in the folder and in a file name. Links work by luck and break when copied.</p></div><div class="p" style="--w:8;--wt:12"><p class="p-k">one centre, six menu groups, about 35 pages</p><ul class="ec-menu">
-      <li><b>About Us</b><small>About IITR, DAP, MoHUA, CUPCB, partners and MoUs, themes</small></li>
-      <li><b>Projects</b><small>Action research, consultancy, the Punjab GIS master plan, upcoming, completed</small></li>
-      <li><b>Events</b><small>Workshops and training, symposiums, special lectures, round tables</small></li>
-      <li><b>Announcements</b><small>Newsletter, stakeholder engagement, news, work with us</small></li>
-      <li><b>People</b><small>Faculty, non-teaching staff, research staff</small></li>
-      <li><b>Repository</b><small>Proceedings, minutes, documented cases, gallery, funding</small></li>
-    </ul></div><div class="p p--violet" style="--w:4;--wt:12"><span class="ec-ib"><svg class="ec-i" aria-hidden="true"><use href="#d-Lightbulb"/></svg></span><p class="p-k">what this means</p><h3 class="p-t">Most of these pages are lists</h3><p class="p-s">Announcements, lectures, workshops and people repeat the same shapes. They can be forms and cards, not free HTML.</p></div></div>
-
-        <div class="plate-head" id="s-03">
-          <h2 class="display section-title" data-phase="Empathise">Who it is for</h2>
-          <div class="section-intro"><p>Three roles, each with one job. The users have low digital literacy and low confidence, not low literacy: they read and write well, but code, jargon and the fear of breaking a public page slow them down.</p></div>
+        <div class="plate-head ec-head" id="s-04">
+          <h2 class="display section-title">The research plan</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Empathise</p>
+          <div class="section-intro"><p>Planned, not yet run: watch five or six admin staff do real updates in Chakra, then test Easy CMS on the same three tasks.</p></div>
+        </div>
+        <div class="ec-plan reveal">
+          <div class="ec-bubbles" role="img" aria-label="Participants per method: 2 to 3 stakeholder talks, 5 to 6 contextual inquiries, 2 to 3 reviewer interviews, and a 3-task Chakra baseline">
+            <div class="ec-bubble" style="--s:0.55"><b>3</b><span>stakeholder talks</span><small>Computer Centre, HoDs</small></div><div class="ec-bubble" style="--s:1"><b>6</b><span>contextual inquiries</span><small>editors at their desks</small></div><div class="ec-bubble" style="--s:0.55"><b>3</b><span>reviewer interviews</span><small>how they check today</small></div><div class="ec-bubble" style="--s:0.55"><b>3</b><span>baseline tasks</span><small>timed in Chakra</small></div>
+          </div>
+          <ol class="ec-tasks">
+            <li><svg class="ec-i" aria-hidden="true"><use href="#d-FileText"/></svg><b>Post a circular</b><span>with a PDF</span></li>
+            <li><svg class="ec-i" aria-hidden="true"><use href="#d-Presentation"/></svg><b>Add a workshop</b><span>date, venue, poster, link</span></li>
+            <li><svg class="ec-i" aria-hidden="true"><use href="#d-UserRound"/></svg><b>Change a faculty profile</b><span>designation and photo</span></li>
+          </ol>
+          <ul class="ec-hyps" aria-label="Hypotheses to test">
+            <li><svg class="ec-i" aria-hidden="true"><use href="#i-Book"/></svg><span><b>Notebook</b>Staff keep cheat sheets of HTML</span><em>to test</em></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-TextSq"/></svg><span><b>Paste</b>Pasting from Word breaks pages</span><em>to test</em></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Eye"/></svg><span><b>Too late</b>Readers find the errors</span><em>to test</em></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Chat"/></svg><span><b>Off-tool</b>Review happens on WhatsApp</span><em>to test</em></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Archive"/></svg><span><b>Stale</b>Old notices never come down</span><em>to test</em></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Languages"/></svg><span><b>Jargon</b>English-only words cause hesitation</span><em>to test</em></li>
+          </ul>
         </div>
 
-        <div class="bx reveal"><div class="p p--paper" style="--w:4;--wt:12"><div class="ec-person"><div class="ec-person-top"><span class="ec-avatar">SR</span><div><h3 class="p-t">The office assistant</h3><p class="p-s">Editor · admin staff</p></div></div><p class="ec-goal">Post today’s circular before the office closes, without calling anyone.</p><ul class="ec-tags"><li>Word, email, WhatsApp</li><li>Types in English</li><li>Prefers help in Hindi</li></ul></div></div><div class="p p--violet" style="--w:4;--wt:12"><div class="ec-person"><div class="ec-person-top"><span class="ec-avatar">AM</span><div><h3 class="p-t">The faculty coordinator</h3><p class="p-s">Reviewer · HoD or centre coordinator</p></div></div><p class="ec-goal">See the update as readers will, then approve it or say what to fix in one line.</p><ul class="ec-tags"><li>Checks between classes</li><li>On a phone</li><li>Wants one tap to approve</li></ul></div></div><div class="p p--lav" style="--w:4;--wt:12"><div class="ec-person"><div class="ec-person-top"><span class="ec-avatar">DK</span><div><h3 class="p-t">The new hand-over editor</h3><p class="p-s">Editor · first week on the job</p></div></div><p class="ec-goal">Finish a real update in the first session, and still remember how three weeks later.</p><ul class="ec-tags"><li>Never trained</li><li>Infrequent use</li><li>Memorability matters</li></ul></div></div><div class="p p--flat" style="--w:12"><p class="p-k">and one more role</p><div class="p-split"><div><h3 class="p-t">The Computer Centre, as access admin</h3><p class="p-s">Registers each department or centre website, grants and removes editor and reviewer access, and never touches content.</p></div><div><ul class="p-pills"><li>A simple people list</li><li>Create a website in minutes</li><li>No involvement in content</li></ul></div></div></div></div>
-
-        <div class="plate-head" id="s-04">
-          <h2 class="display section-title" data-phase="Empathise">The research plan</h2>
-          <div class="section-intro"><p>Watch five or six admin staff do real updates in Chakra, measure a baseline, then test Easy CMS against the same three tasks. This research is planned, not yet run; the hypotheses below are what it sets out to confirm or reject.</p></div>
+        <div class="plate-head ec-head" id="s-05">
+          <h2 class="display section-title">What other teams found</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Define</p>
+          <div class="section-intro"><p>The problem is common across government and university sites. Tools solve hosting and compliance; nobody solved the editing.</p></div>
         </div>
+        <ol class="ec-findings reveal">
+          <li><span class="ec-f-a">Updates wait in an IT queue</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Owners publish, with review</span><a class="ec-f-src" href="https://dot.gov.in/sites/default/files/2014%2007%2003%20Minutes%20of%20DOT%20Website%20Meeting.pdf?download=1" target="_blank" rel="noopener">DoT<span class="sr-only"> (opens a source)</span></a></li><li><span class="ec-f-a">No owner, so pages go stale</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Owner and date on every page</span><a class="ec-f-src" href="https://easycontent.io/resources/managing-multi-department-content-on-government-websites/" target="_blank" rel="noopener">EasyContent<span class="sr-only"> (opens a source)</span></a></li><li><span class="ec-f-a">Hard tools, untrained teams</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Teaching is the product</span><a class="ec-f-src" href="https://cdn.adhoc.team/website-modernization" target="_blank" rel="noopener">Ad Hoc<span class="sr-only"> (opens a source)</span></a></li><li><span class="ec-f-a">GIGW asks for creator help</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Checks inside the editor</span><a class="ec-f-src" href="https://guidelines.india.gov.in/?p=10063" target="_blank" rel="noopener">GIGW 3.0<span class="sr-only"> (opens a source)</span></a></li><li><span class="ec-f-a">S3WaaS solves hosting</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Be the editing layer</span><a class="ec-f-src" href="https://egovernance.vikaspedia.in/viewcontent/e-governance/digital-india/s3waas-for-government-department-websites?lgn=en" target="_blank" rel="noopener">NIC<span class="sr-only"> (opens a source)</span></a></li><li><span class="ec-f-a">Draft ≠ live is the top pain</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Preview is the real page</span><a class="ec-f-src" href="https://groups.drupal.org/node/277458" target="_blank" rel="noopener">Drupal<span class="sr-only"> (opens a source)</span></a></li><li><span class="ec-f-a">Infrequent editors forget</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Design for memorability</span><a class="ec-f-src" href="https://ucm.le.ac.uk/?p=162" target="_blank" rel="noopener">Leicester<span class="sr-only"> (opens a source)</span></a></li><li><span class="ec-f-a">Literacy is not one group</span><span class="ec-f-arrow" aria-hidden="true"></span><span class="ec-f-b">Low digital literacy, not low literacy</span><a class="ec-f-src" href="https://www.dgp.toronto.edu/public_user/ravin/papers/chi2009_literacy.pdf" target="_blank" rel="noopener">CHI 2009<span class="sr-only"> (opens a source)</span></a></li>
+        </ol>
 
-        <div class="bx reveal"><div class="p" style="--w:5;--wt:12"><p class="p-k">methods</p><ul class="ec-why">
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-Users"/></svg><span>2 to 3 stakeholder talks: Computer Centre, HoDs</span></li>
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-Eye"/></svg><span>5 to 6 contextual inquiries at editors’ desks, thinking aloud</span></li>
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-Stopwatch"/></svg><span>Chakra baseline: three tasks, timed, with errors and help requests</span></li>
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-Smartphone"/></svg><span>2 to 3 reviewer interviews: how and where they check</span></li>
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-Folder"/></svg><span>Artefacts, with consent: cheat sheets, review messages</span></li>
-    </ul></div><div class="p p--blue" style="--w:7;--wt:12"><p class="p-k">the three baseline tasks</p><ol class="ec-why">
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-FileText"/></svg><span><b>Post a circular</b> with a PDF attachment</span></li>
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-Presentation"/></svg><span><b>Add a workshop</b> with date, venue, poster and registration link</span></li>
-      <li><svg class="ec-i" aria-hidden="true"><use href="#i-UserRound"/></svg><span><b>Change a faculty member’s</b> designation and photo</span></li>
-    </ol><p class="p-s">Measured per task: time, errors, help requests and a one-question ease rating; SUS at the end of the session.</p></div><div class="p p--flat" style="--w:12"><div class="ec-table-wrap"><table class="ec-table">
-      <thead><tr><th>Hypothesis</th><th>What would confirm it</th><th>Status</th></tr></thead>
-      <tbody>
-        <tr><td>Staff keep personal cheat sheets of HTML or old pages to copy from</td><td>Notebooks, text files, saved emails at their desk</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Content pasted from Word or email breaks formatting</td><td>Stray tags, broken tables, wrong fonts on live pages</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Errors are found by readers after publishing</td><td>Corrections requested by phone or WhatsApp after a notice goes live</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Faculty review happens outside the tool</td><td>Review messages with screenshots or printouts</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>Old notices are rarely removed, so pages go stale</td><td>Expired events and past deadlines still listed</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-        <tr><td>An English-only, jargon-heavy interface adds hesitation</td><td>Staff asking what a field or button means</td><td><span class="ec-pill ec-pill--plan">to test</span></td></tr>
-      </tbody></table></div></div></div>
-
-        <div class="plate-head" id="s-05">
-          <h2 class="display section-title" data-phase="Define">What other teams found</h2>
-          <div class="section-intro"><p>Secondary research shows the problem is common across government and university sites. Existing tools solve hosting and compliance, not the editing experience.</p></div>
-        </div>
-
-        <div class="bx reveal"><div class="p p--flat" style="--w:12"><div class="ec-table-wrap"><table class="ec-table">
-      <thead><tr><th>Finding</th><th>What it means for Easy CMS</th><th>Source</th></tr></thead>
-      <tbody>
-        <tr><td>Updates go through an IT division and content goes stale</td><td>Owners publish directly, with review</td><td><a href="https://dot.gov.in/sites/default/files/2014%2007%2003%20Minutes%20of%20DOT%20Website%20Meeting.pdf?download=1" target="_blank" rel="noopener">DoT minutes</a></td></tr>
-        <tr><td>Unclear page ownership keeps outdated information live</td><td>Owner and last-updated date on every page; nudge stale ones</td><td><a href="https://easycontent.io/resources/managing-multi-department-content-on-government-websites/" target="_blank" rel="noopener">EasyContent</a></td></tr>
-        <tr><td>Hard tools and untrained teams cause outdated sites</td><td>Ease of use and built-in teaching are the product</td><td><a href="https://cdn.adhoc.team/website-modernization" target="_blank" rel="noopener">Ad Hoc</a></td></tr>
-        <tr><td>GIGW 3.0 asks for tools that help creators make accessible content</td><td>Checks in the editor and a health view</td><td><a href="https://guidelines.india.gov.in/?p=10063" target="_blank" rel="noopener">GIGW 3.0</a></td></tr>
-        <tr><td>NIC’s S3WaaS generates compliant sites from templates</td><td>Be the editing layer people use daily, not a hosting rival</td><td><a href="https://egovernance.vikaspedia.in/viewcontent/e-governance/digital-india/s3waas-for-government-department-websites?lgn=en" target="_blank" rel="noopener">S3WaaS</a></td></tr>
-        <tr><td>The gap between draft, preview and live is editors’ biggest pain</td><td>The preview must be the real page</td><td><a href="https://groups.drupal.org/node/277458" target="_blank" rel="noopener">Drupal focus group</a></td></tr>
-        <tr><td>Infrequent editors need the tool to be easy to come back to</td><td>Design for memorability, not just learnability</td><td><a href="https://ucm.le.ac.uk/?p=162" target="_blank" rel="noopener">University of Leicester</a></td></tr>
-        <tr><td>Treating all low-literacy users as one group is risky</td><td>Design for semiliterate to fluent readers</td><td><a href="https://www.dgp.toronto.edu/public_user/ravin/papers/chi2009_literacy.pdf" target="_blank" rel="noopener">CHI 2009</a></td></tr>
-      </tbody></table></div></div></div>
-
-        <div class="plate-head" id="s-06">
-          <h2 class="display section-title" data-phase="Define">Principles</h2>
+        <div class="plate-head ec-head" id="s-06">
+          <h2 class="display section-title">Principles</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Define</p>
           <div class="section-intro"><p>Apple’s design principles, turned into rules for a nervous, infrequent editor.</p></div>
         </div>
-        <div class="ec-rules reveal">
-          <div class="ec-rule"><span class="ec-n">01</span><b>Purpose</b><span>Do five jobs perfectly: notice, event, workshop link, faculty details, page text. Everything else sits a level deeper.</span></div><div class="ec-rule"><span class="ec-n">02</span><b>Familiarity</b><span>Feel like a form and a document they know: Word-like text, WhatsApp-like attach, a calendar for dates. No HTML, slug or taxonomy.</span></div><div class="ec-rule"><span class="ec-n">03</span><b>Simplicity</b><span>One task per screen. Plain verbs on buttons: Post notice, Send to the Coordinator for checking.</span></div><div class="ec-rule"><span class="ec-n">04</span><b>Forgiveness</b><span>Autosave, undo and version history. Nothing is public until a person approves it. Confirm only what cannot be undone.</span></div><div class="ec-rule"><span class="ec-n">05</span><b>Responsibility</b><span>The helper suggests, the person decides. Dates, names and numbers are only extracted, never invented.</span></div><div class="ec-rule"><span class="ec-n">06</span><b>Flexibility</b><span>Hindi and English, text size, high contrast, dark mode, reduced motion; office PC and the reviewer’s phone.</span></div><div class="ec-rule"><span class="ec-n">07</span><b>Craft</b><span>Feedback on press, a calm layout, springs that settle without bounce, nothing that jumps.</span></div><div class="ec-rule"><span class="ec-n">08</span><b>Delight</b><span>The feeling to aim for is calm confidence: I did it myself, and it is correct.</span></div>
-        </div>
+        <figure class="ec-ig ec-ig--center ec-ig--wheel reveal"><svg class="ig ig-wheel" viewBox="-60 0 1120 1000" role="img" aria-labelledby="ig-wheel-t">
+  <title id="ig-wheel-t">Design principles around one feeling, calm confidence: Purpose, Five jobs, done perfectly; Familiarity, Forms and files they know; Simplicity, One task, plain verbs; Forgiveness, Nothing public without a person; Responsibility, Helper suggests, person decides; Flexibility, Hindi, text size, contrast, phone; Craft, Calm, nothing jumps; Delight, I did it, and it is right.</title><path d="M391 220.5 A300 300 0 0 1 609 220.5 L554.5 360.2 A150 150 0 0 0 445.5 360.2 Z" class="seg-a"/><text x="500" y="269" text-anchor="middle" font-size="15" class="t-on-dim t-mono">01</text>
+      <text x="500" y="291" text-anchor="middle" font-size="20" class="t-on t-b">Purpose</text><text x="500" y="144" text-anchor="middle" class="t-ink" font-size="19"><tspan x="500" dy="0">Five jobs,</tspan><tspan x="500" dy="23.75">done perfectly</tspan></text><path d="M620.6 225.3 A300 300 0 0 1 774.7 379.4 L637.3 439.7 A150 150 0 0 0 560.3 362.7 Z" class="seg-b"/><text x="659.1" y="334.9" text-anchor="middle" font-size="15" class="t-on-dim t-mono">02</text>
+      <text x="659.1" y="356.9" text-anchor="middle" font-size="20" class="t-on t-b">Familiarity</text><text x="736.2" y="259.8" text-anchor="start" class="t-ink" font-size="19"><tspan x="736.2" dy="0">Forms and files</tspan><tspan x="736.2" dy="23.75">they know</tspan></text><path d="M779.5 391 A300 300 0 0 1 779.5 609 L639.8 554.5 A150 150 0 0 0 639.8 445.5 Z" class="seg-a"/><text x="725" y="494" text-anchor="middle" font-size="15" class="t-on-dim t-mono">03</text>
+      <text x="725" y="516" text-anchor="middle" font-size="20" class="t-on t-b">Simplicity</text><text x="834" y="496" text-anchor="start" class="t-ink" font-size="19"><tspan x="834" dy="0">One task,</tspan><tspan x="834" dy="23.75">plain verbs</tspan></text><path d="M774.7 620.6 A300 300 0 0 1 620.6 774.7 L560.3 637.3 A150 150 0 0 0 637.3 560.3 Z" class="seg-b"/><text x="659.1" y="653.1" text-anchor="middle" font-size="15" class="t-on-dim t-mono">04</text>
+      <text x="659.1" y="675.1" text-anchor="middle" font-size="20" class="t-on t-b">Forgiveness</text><text x="736.2" y="732.2" text-anchor="start" class="t-ink" font-size="19"><tspan x="736.2" dy="0">Nothing public without</tspan><tspan x="736.2" dy="23.75">a person</tspan></text><path d="M609 779.5 A300 300 0 0 1 391 779.5 L445.5 639.8 A150 150 0 0 0 554.5 639.8 Z" class="seg-a"/><text x="500" y="719" text-anchor="middle" font-size="15" class="t-on-dim t-mono">05</text>
+      <text x="500" y="741" text-anchor="middle" font-size="17" class="t-on t-b">Responsibility</text><text x="500" y="844" text-anchor="middle" class="t-ink" font-size="19"><tspan x="500" dy="0">Helper suggests,</tspan><tspan x="500" dy="23.75">person decides</tspan></text><path d="M379.4 774.7 A300 300 0 0 1 225.3 620.6 L362.7 560.3 A150 150 0 0 0 439.7 637.3 Z" class="seg-b"/><text x="340.9" y="653.1" text-anchor="middle" font-size="15" class="t-on-dim t-mono">06</text>
+      <text x="340.9" y="675.1" text-anchor="middle" font-size="20" class="t-on t-b">Flexibility</text><text x="263.8" y="732.2" text-anchor="end" class="t-ink" font-size="19"><tspan x="263.8" dy="0">Hindi, text size,</tspan><tspan x="263.8" dy="23.75">contrast, phone</tspan></text><path d="M220.5 609 A300 300 0 0 1 220.5 391 L360.2 445.5 A150 150 0 0 0 360.2 554.5 Z" class="seg-a"/><text x="275" y="494" text-anchor="middle" font-size="15" class="t-on-dim t-mono">07</text>
+      <text x="275" y="516" text-anchor="middle" font-size="20" class="t-on t-b">Craft</text><text x="166" y="496" text-anchor="end" class="t-ink" font-size="19"><tspan x="166" dy="0">Calm, nothing jumps</tspan></text><path d="M225.3 379.4 A300 300 0 0 1 379.4 225.3 L439.7 362.7 A150 150 0 0 0 362.7 439.7 Z" class="seg-b"/><text x="340.9" y="334.9" text-anchor="middle" font-size="15" class="t-on-dim t-mono">08</text>
+      <text x="340.9" y="356.9" text-anchor="middle" font-size="20" class="t-on t-b">Delight</text><text x="263.8" y="259.8" text-anchor="end" class="t-ink" font-size="19"><tspan x="263.8" dy="0">I did it, and</tspan><tspan x="263.8" dy="23.75">it is right</tspan></text><circle cx="500" cy="500" r="136" class="node-hub"/>
+  <text x="500" y="492" text-anchor="middle" font-size="27" class="t-on t-b">Calm</text>
+  <text x="500" y="524" text-anchor="middle" font-size="27" class="t-on t-b">confidence</text></svg></figure>
 
-        <div class="plate-head" id="s-07">
-          <h2 class="display section-title" data-phase="Ideate">Roles and places</h2>
+        <div class="plate-head ec-head" id="s-07">
+          <h2 class="display section-title">Brainstorm</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Ideate</p>
+          <div class="section-intro"><p>Six directions from one idea. Filled ideas are in the prototype; dashed ones are parked for later.</p></div>
+        </div>
+        <div class="ec-scroll reveal"><figure class="ec-ig ec-ig--flush ec-ig--mind reveal"><svg class="ig ig-mind" viewBox="-50 105 1340 650" role="img" aria-labelledby="ig-mind-t">
+  <title id="ig-mind-t">Brainstorm around one idea, updating feels like filling a form. Input: Paste a message, Attach like WhatsApp, Speak it (parked), Scan a printed circular (parked). Trust: True preview, Review before live, Version history, Autosave. Language: Hindi interface, Machine-translated label, Plain verbs. Rules: GIGW checks, Picture descriptions, Removal dates, Free page builder (parked). Handover: Show me help, Guided first task, Video tutorials (parked). Admin: Website setup wizard, Access per section, Theme editor (parked).</title>
+  <path d="M620 430 C490.1 430 490.1 312.5 360.2 312.5" class="ln-strong" fill="none"/><path d="M298.2 312.5 C269.2 312.5 269.2 237.5 240.2 237.5" class="ln" fill="none"/><path d="M298.2 312.5 C269.2 312.5 269.2 287.5 240.2 287.5" class="ln" fill="none"/><path d="M298.2 312.5 C269.2 312.5 269.2 337.5 240.2 337.5" class="ln" fill="none"/><path d="M298.2 312.5 C269.2 312.5 269.2 387.5 240.2 387.5" class="ln" fill="none"/><path d="M620 430 C620 430 620 195 620 195" class="ln-strong" fill="none"/><path d="M558 195 C529 195 529 195 500 195" class="ln" fill="none"/><path d="M682 195 C711 195 711 195 740 195" class="ln" fill="none"/><path d="M558 195 C529 195 529 145 500 145" class="ln" fill="none"/><path d="M682 195 C711 195 711 145 740 145" class="ln" fill="none"/><path d="M620 430 C749.9 430 749.9 312.5 879.8 312.5" class="ln-strong" fill="none"/><path d="M941.8 312.5 C970.8 312.5 970.8 262.5 999.8 262.5" class="ln" fill="none"/><path d="M941.8 312.5 C970.8 312.5 970.8 312.5 999.8 312.5" class="ln" fill="none"/><path d="M941.8 312.5 C970.8 312.5 970.8 362.5 999.8 362.5" class="ln" fill="none"/><path d="M620 430 C749.9 430 749.9 547.5 879.8 547.5" class="ln-strong" fill="none"/><path d="M941.8 547.5 C970.8 547.5 970.8 472.5 999.8 472.5" class="ln" fill="none"/><path d="M941.8 547.5 C970.8 547.5 970.8 522.5 999.8 522.5" class="ln" fill="none"/><path d="M941.8 547.5 C970.8 547.5 970.8 572.5 999.8 572.5" class="ln" fill="none"/><path d="M941.8 547.5 C970.8 547.5 970.8 622.5 999.8 622.5" class="ln" fill="none"/><path d="M620 430 C620 430 620 665 620 665" class="ln-strong" fill="none"/><path d="M558 665 C529 665 529 665 500 665" class="ln" fill="none"/><path d="M682 665 C711 665 711 665 740 665" class="ln" fill="none"/><path d="M558 665 C529 665 529 715 500 715" class="ln" fill="none"/><path d="M620 430 C490.1 430 490.1 547.5 360.2 547.5" class="ln-strong" fill="none"/><path d="M298.2 547.5 C269.2 547.5 269.2 497.5 240.2 497.5" class="ln" fill="none"/><path d="M298.2 547.5 C269.2 547.5 269.2 547.5 240.2 547.5" class="ln" fill="none"/><path d="M298.2 547.5 C269.2 547.5 269.2 597.5 240.2 597.5" class="ln" fill="none"/><rect x="470" y="384" width="300" height="92" rx="46" class="node-hub"/>
+  <text x="620" y="424" text-anchor="middle" font-size="21" class="t-on t-b">Updating feels like</text>
+  <text x="620" y="452" text-anchor="middle" font-size="21" class="t-on t-b">filling a form</text>
+  <rect x="298.2" y="290.5" width="124" height="44" rx="22" class="node-acc"/>
+      <text x="360.2" y="318.5" text-anchor="middle" font-size="18" class="t-on t-b">Input</text><rect x="69.2" y="219.5" width="171" height="36" rx="18" class="pill-on"/>
+        <text x="154.7" y="243.5" text-anchor="middle" font-size="16" class="t-ink">Paste a message</text><rect x="22.2" y="269.5" width="218" height="36" rx="18" class="pill-on"/>
+        <text x="131.2" y="293.5" text-anchor="middle" font-size="16" class="t-ink">Attach like WhatsApp</text><rect x="135" y="319.5" width="105.2" height="36" rx="18" class="pill-off"/>
+        <text x="187.6" y="343.5" text-anchor="middle" font-size="16" class="t-faint">Speak it</text><rect x="-6" y="369.5" width="246.2" height="36" rx="18" class="pill-off"/>
+        <text x="117.1" y="393.5" text-anchor="middle" font-size="16" class="t-faint">Scan a printed circular</text><rect x="558" y="173" width="124" height="44" rx="22" class="node-acc"/>
+      <text x="620" y="201" text-anchor="middle" font-size="18" class="t-on t-b">Trust</text><rect x="357.2" y="177" width="142.8" height="36" rx="18" class="pill-on"/>
+        <text x="428.6" y="201" text-anchor="middle" font-size="16" class="t-ink">True preview</text><rect x="740" y="177" width="199.2" height="36" rx="18" class="pill-on"/>
+        <text x="839.6" y="201" text-anchor="middle" font-size="16" class="t-ink">Review before live</text><rect x="329" y="127" width="171" height="36" rx="18" class="pill-on"/>
+        <text x="414.5" y="151" text-anchor="middle" font-size="16" class="t-ink">Version history</text><rect x="740" y="127" width="105.2" height="36" rx="18" class="pill-on"/>
+        <text x="792.6" y="151" text-anchor="middle" font-size="16" class="t-ink">Autosave</text><rect x="817.8" y="290.5" width="124" height="44" rx="22" class="node-acc"/>
+      <text x="879.8" y="318.5" text-anchor="middle" font-size="18" class="t-on t-b">Language</text><rect x="999.8" y="244.5" width="171" height="36" rx="18" class="pill-on"/>
+        <text x="1085.3" y="268.5" text-anchor="middle" font-size="16" class="t-ink">Hindi interface</text><rect x="999.8" y="294.5" width="255.6" height="36" rx="18" class="pill-on"/>
+        <text x="1127.6" y="318.5" text-anchor="middle" font-size="16" class="t-ink">Machine-translated label</text><rect x="999.8" y="344.5" width="133.4" height="36" rx="18" class="pill-on"/>
+        <text x="1066.5" y="368.5" text-anchor="middle" font-size="16" class="t-ink">Plain verbs</text><rect x="817.8" y="525.5" width="124" height="44" rx="22" class="node-acc"/>
+      <text x="879.8" y="553.5" text-anchor="middle" font-size="18" class="t-on t-b">Rules</text><rect x="999.8" y="454.5" width="133.4" height="36" rx="18" class="pill-on"/>
+        <text x="1066.5" y="478.5" text-anchor="middle" font-size="16" class="t-ink">GIGW checks</text><rect x="999.8" y="504.5" width="218" height="36" rx="18" class="pill-on"/>
+        <text x="1108.8" y="528.5" text-anchor="middle" font-size="16" class="t-ink">Picture descriptions</text><rect x="999.8" y="554.5" width="152.2" height="36" rx="18" class="pill-on"/>
+        <text x="1075.9" y="578.5" text-anchor="middle" font-size="16" class="t-ink">Removal dates</text><rect x="999.8" y="604.5" width="189.8" height="36" rx="18" class="pill-off"/>
+        <text x="1094.7" y="628.5" text-anchor="middle" font-size="16" class="t-faint">Free page builder</text><rect x="558" y="643" width="124" height="44" rx="22" class="node-acc"/>
+      <text x="620" y="671" text-anchor="middle" font-size="18" class="t-on t-b">Handover</text><rect x="357.2" y="647" width="142.8" height="36" rx="18" class="pill-on"/>
+        <text x="428.6" y="671" text-anchor="middle" font-size="16" class="t-ink">Show me help</text><rect x="740" y="647" width="189.8" height="36" rx="18" class="pill-on"/>
+        <text x="834.9" y="671" text-anchor="middle" font-size="16" class="t-ink">Guided first task</text><rect x="329" y="697" width="171" height="36" rx="18" class="pill-off"/>
+        <text x="414.5" y="721" text-anchor="middle" font-size="16" class="t-faint">Video tutorials</text><rect x="298.2" y="525.5" width="124" height="44" rx="22" class="node-acc"/>
+      <text x="360.2" y="553.5" text-anchor="middle" font-size="18" class="t-on t-b">Admin</text><rect x="22.2" y="479.5" width="218" height="36" rx="18" class="pill-on"/>
+        <text x="131.2" y="503.5" text-anchor="middle" font-size="16" class="t-ink">Website setup wizard</text><rect x="41" y="529.5" width="199.2" height="36" rx="18" class="pill-on"/>
+        <text x="140.6" y="553.5" text-anchor="middle" font-size="16" class="t-ink">Access per section</text><rect x="97.4" y="579.5" width="142.8" height="36" rx="18" class="pill-off"/>
+        <text x="168.8" y="603.5" text-anchor="middle" font-size="16" class="t-faint">Theme editor</text></svg></figure></div>
+        <p class="ec-legend reveal"><span class="ec-lg-on"></span>In the prototype <span class="ec-lg-off"></span>Parked</p>
+
+        <div class="plate-head ec-head" id="s-08">
+          <h2 class="display section-title">Roles and places</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Ideate</p>
           <div class="section-intro"><p>Editors see six places, one level deep. Reviewers and the Computer Centre each see only their one job.</p></div>
         </div>
         <div class="ec-ia reveal">
@@ -387,41 +501,58 @@
           </div>
         </div>
 
-        <div class="plate-head" id="s-08">
-          <h2 class="display section-title" data-phase="Ideate">The publishing workflow</h2>
-          <div class="section-intro"><p>Every update moves through visible states, in words, colour and an icon. Only a reviewer’s approval makes it public, and editing something live never touches what readers see until the change is approved too.</p></div>
+        <div class="plate-head ec-head" id="s-09">
+          <h2 class="display section-title">The publishing workflow</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Ideate</p>
+          <div class="section-intro"><p>Every update shows its state in words, colour and an icon. Only a reviewer’s approval makes it public.</p></div>
         </div>
         <div class="ec-flow reveal" aria-label="Publishing workflow">
-          <div class="ec-state"><span class="ec-chip ec-chip--draft"><svg class="ec-i" aria-hidden="true"><use href="#i-PencilLine"/></svg>Draft</span><b>The editor works</b><span>Saves as they type. Only they can see it.</span></div>
-          <div class="ec-state"><span class="ec-chip ec-chip--review"><svg class="ec-i" aria-hidden="true"><use href="#i-Hourglass"/></svg>Waiting for review</span><b>Sent for checking</b><span>The form locks so the reviewer sees exactly what was sent.</span></div>
-          <div class="ec-state"><span class="ec-chip ec-chip--returned"><svg class="ec-i" aria-hidden="true"><use href="#i-Undo2"/></svg>Sent back</span><b>One-line note</b><span>The note sits beside the field it is about.</span></div>
-          <div class="ec-state"><span class="ec-chip ec-chip--live"><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg>Live</span><b>Approved, published</b><span>Readers see it, with owner and date in the footer.</span></div>
-          <div class="ec-state"><span class="ec-chip ec-chip--expired"><svg class="ec-i" aria-hidden="true"><use href="#i-Archive"/></svg>Expired</span><b>Leaves on its date</b><span>Notices and workshops archive themselves.</span></div>
+          <div class="ec-state"><span class="ec-chip ec-chip--draft"><svg class="ec-i" aria-hidden="true"><use href="#i-PencilLine"/></svg>Draft</span><b>The editor works</b><span>Saves as they type.</span></div>
+          <div class="ec-state"><span class="ec-chip ec-chip--review"><svg class="ec-i" aria-hidden="true"><use href="#i-Hourglass"/></svg>Waiting for review</span><b>Sent for checking</b><span>The form locks.</span></div>
+          <div class="ec-state"><span class="ec-chip ec-chip--returned"><svg class="ec-i" aria-hidden="true"><use href="#i-Undo2"/></svg>Sent back</span><b>One-line note</b><span>Beside the field it is about.</span></div>
+          <div class="ec-state"><span class="ec-chip ec-chip--live"><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg>Live</span><b>Approved, published</b><span>Owner and date in the footer.</span></div>
+          <div class="ec-state"><span class="ec-chip ec-chip--expired"><svg class="ec-i" aria-hidden="true"><use href="#i-Archive"/></svg>Expired</span><b>Leaves on its date</b><span>Archives itself.</span></div>
           <div class="ec-loop" aria-hidden="true"><span>fix and send again</span></div>
         </div>
 
-        <div class="plate-head" id="s-09">
-          <h2 class="display section-title" data-phase="Ideate">An AI helper, with limits</h2>
-          <div class="section-intro"><p>The helper removes typing and checking work. Every suggestion waits for a person; it never publishes and never invents a fact.</p></div>
+        <div class="plate-head ec-head" id="s-10">
+          <h2 class="display section-title">An AI helper, with limits</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Ideate</p>
+          <div class="section-intro"><p>It removes typing and checking. It never publishes and never invents a fact.</p></div>
+        </div>
+        <div class="ec-gate reveal">
+          <ol class="ec-gate-flow">
+            <li class="ec-g ec-g--in"><svg class="ec-i" aria-hidden="true"><use href="#d-Chat"/></svg><b>Rough text</b><span>email, WhatsApp, circular</span></li>
+            <li class="ec-g ec-g--ai"><svg class="ec-i" aria-hidden="true"><use href="#d-Sparkles"/></svg><b>Helper suggests</b><span>fields, Hindi, alt text, checks</span></li>
+            <li class="ec-g ec-g--gate"><svg class="ec-i" aria-hidden="true"><use href="#d-ShieldCheck"/></svg><b>A person confirms</b><span>each marked field</span></li>
+            <li class="ec-g ec-g--out"><svg class="ec-i" aria-hidden="true"><use href="#d-CircleCheck"/></svg><b>Reviewer approves</b><span>then it is public</span></li>
+          </ol>
+          <ul class="ec-never" aria-label="What the helper never does">
+            <li>Publish on its own</li><li>Invent a date, name or link</li><li>Leave a filled field unmarked</li><li>Read staff records or other pages</li><li>Stay on when switched off</li>
+          </ul>
         </div>
 
-        <div class="bx reveal"><div class="p p--violet" style="--w:7;--wt:12"><p class="p-k">what it does</p><dl class="ec-dl">
-      <div><dt>Fill from rough text</dt><dd>Paste an email, a WhatsApp message or a circular’s text; it fills title, dates, category, venue and link.</dd></div>
-      <div><dt>Make Hindi version</dt><dd>Drafts the Hindi title, labelled Machine translated until a person checks it. The reviewer sees the label too.</dd></div>
-      <div><dt>Check before sending</dt><dd>Missing or past dates, broken links, possible duplicates, scanned PDFs, missing Hindi.</dd></div>
-      <div><dt>Describe a picture</dt><dd>Suggests alt text for posters and photos, marked until confirmed.</dd></div>
-      <div><dt>Ask for help</dt><dd>Answers in Hindi or English, then highlights the control on screen.</dd></div>
-    </dl></div><div class="p p--paper" style="--w:5;--wt:12"><p class="p-k">what it never does</p><ul class="ec-never">
-      <li>Publish, or send for review, by itself</li>
-      <li>Invent a date, a name, a number or a link</li>
-      <li>Leave a filled field unmarked: each waits for “Looks right”</li>
-      <li>Read staff records or other pages; only the update being edited</li>
-      <li>Stay on if a department switches it off</li>
-    </ul></div></div>
+        <div class="plate-head ec-head" id="s-11">
+          <h2 class="display section-title">Try the prototype</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>The working prototype, live on this page. Switch roles, post an update, approve it, then open the website to see it published.</p></div>
+        </div>
+        <div class="ec-live reveal">
+          <div class="ec-live-bar" role="group" aria-label="Start the prototype as">
+            <button type="button" class="ec-live-role" data-role="editor" aria-pressed="true"><svg class="ec-i" aria-hidden="true"><use href="#i-PenLine"/></svg>Editor</button><button type="button" class="ec-live-role" data-role="reviewer" aria-pressed="false"><svg class="ec-i" aria-hidden="true"><use href="#i-ClipboardCheck"/></svg>Reviewer</button><button type="button" class="ec-live-role" data-role="admin" aria-pressed="false"><svg class="ec-i" aria-hidden="true"><use href="#i-ShieldCheck"/></svg>Computer Centre, new installation</button>
+            <a class="ec-live-open" href="../prototypes/easy-cms/index.html#/home" target="_blank" rel="noopener"><svg class="ec-i" aria-hidden="true"><use href="#i-ExternalLink"/></svg>Open full screen<span class="sr-only"> (new tab)</span></a>
+          </div>
+          <figure class="ec-browser ec-live-frame">
+            <div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div>
+            <iframe src="../prototypes/easy-cms/index.html#/home" title="Easy CMS prototype" loading="lazy"></iframe>
+          </figure>
+          <p class="ec-cap">Runs in your browser with sample content. Changes stay on this device; switching role starts the demo again.</p>
+        </div>
 
-        <div class="plate-head" id="s-10">
-          <h2 class="display section-title" data-phase="Prototype">Setting up a website</h2>
-          <div class="section-intro"><p>On a new installation, no department or centre is registered. The Computer Centre sees one clear job: create the first website. Four short steps, and the editor and reviewer are invited.</p></div>
+        <div class="plate-head ec-head" id="s-12">
+          <h2 class="display section-title">Setting up a website</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>On a new installation, no department or centre is registered. The Computer Centre creates the first website in four short steps.</p></div>
         </div>
         <div class="ec-steps">
 
@@ -429,27 +560,28 @@
             <div class="ec-step-text">
               <p class="ec-step-n"><b>1</b>Computer Centre</p>
               <h3>Nothing registered yet</h3>
-              <p>The first screen says what is missing and what happens next, in three steps. Only the Computer Centre can see it.</p>
-              <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>One action on the page</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Editors and reviewers see a plain “not set up yet” screen instead</span></li></ul>
+              <p>The first screen says what is missing and what happens next. Only the Computer Centre sees it.</p>
+              <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>One action on the page</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Editors and reviewers see “not set up yet”</span></li></ul>
               
             </div>
-            <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-admin-empty.webp" alt="Easy CMS first-run screen for the Computer Centre: No department or centre has a website here yet, with a Create a new website button and three steps: name it, choose pages, invite people" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
+            <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-admin-empty.webp" alt="Easy CMS first-run screen for the Computer Centre: No department or centre has a website here yet, with a Create a new website button and three steps" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
           </div>
         </div>
-        <div class="ec-wiz reveal">
-          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-1-address.webp" alt="Wizard step 1: unit type, full name, short name, Hindi name and a web address that is cleaned automatically" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>1 · Whose website.</b> The address is made from the name; spaces and capitals are cleaned so links never break.</p></figure>
-          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-2.webp" alt="Wizard step 2: tiles for Announcements, Events and lectures, Workshops and training, People and About us, with one switched off" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>2 · Pages.</b> Start with what the unit already publishes. Labels follow the unit: a centre gets Announcements.</p></figure>
-          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-3.webp" alt="Wizard step 3: editor and reviewer names and emails" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>3 · People.</b> One editor and one reviewer to begin; the reviewer is the coordinator or the HoD.</p></figure>
-          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-4.webp" alt="Wizard step 4: a summary beside a live preview of the new, still empty website" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>4 · Check and create.</b> A first look at the empty site, built from the same components readers will see.</p></figure>
+        <div class="ec-wiz reveal" data-gallery="setup">
+          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-1-address.webp" alt="Wizard step 1: unit type, full name, short name, Hindi name and a web address that is cleaned automatically" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>1 · Whose website.</b> Spaces and capitals are cleaned so links never break.</p></figure>
+          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-2.webp" alt="Wizard step 2: tiles for Announcements, Events and lectures, Workshops and training, People and About us, with one switched off" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>2 · Pages.</b> Labels follow the unit: a centre gets Announcements.</p></figure>
+          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-3.webp" alt="Wizard step 3: editor and reviewer names and emails" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>3 · People.</b> One editor and one reviewer to begin.</p></figure>
+          <figure><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-wiz-4.webp" alt="Wizard step 4: a summary beside a live preview of the new, still empty website" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>4 · Check and create.</b> A first look at the empty site.</p></figure>
         </div>
-        <div class="ec-pair reveal" style="margin-top:2rem">
-          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-admin-sites.webp" alt="The Websites list after creation, with the new Centre for Transportation Systems card waiting for its first update" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap">The new site waits for its first update. Invitations went to its editor and reviewer.</p></div>
-          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-people.webp" alt="People screen: who can update which parts of each website, with section toggles per person" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap">People: access per website and per section, one tap each. No content here.</p></div>
+        <div class="ec-pair reveal" style="margin-top:1.5rem">
+          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-admin-sites.webp" alt="The Websites list after creation, with the new Centre for Transportation Systems card waiting for its first update" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap">The new site waits for its first update.</p></div>
+          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-people.webp" alt="People screen: who can update which parts of each website, with section toggles per person" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap">Access per website and per section. No content here.</p></div>
         </div>
 
-        <div class="plate-head" id="s-11">
-          <h2 class="display section-title" data-phase="Prototype">The editor, step by step</h2>
-          <div class="section-intro"><p>The core flow: posting an announcement from a message that arrived on WhatsApp. Every screen here is from the working prototype.</p></div>
+        <div class="plate-head ec-head" id="s-13">
+          <h2 class="display section-title">The editor, step by step</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>Posting an announcement from a message that arrived on WhatsApp.</p></div>
         </div>
         <div class="ec-steps">
 
@@ -457,7 +589,7 @@
             <div class="ec-step-text">
               <p class="ec-step-n"><b>1</b>Home</p>
               <h3>What do you want to update?</h3>
-              <p>Five large task cards in the users’ own words, the most used one first. Anything sent back waits on the right with the reviewer’s note.</p>
+              <p>Five task cards in the users’ own words, the most used first. Anything sent back waits on the right.</p>
               <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Status in words, colour and icon</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Website health from GIGW checks</span></li></ul>
               
             </div>
@@ -479,20 +611,20 @@
             <div class="ec-step-text">
               <p class="ec-step-n"><b>3</b>Helper</p>
               <h3>Every filled field is marked</h3>
-              <p>Title, category, dates and description fill in, each with a dashed violet outline and a Looks right button. The preview on the right is the real page, updating as they type.</p>
-              <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Violet means suggested, not settled</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>One click to confirm or clear</span></li></ul>
+              <p>Each filled field gets a dashed amber outline and a Looks right button. The preview beside it is the real page.</p>
+              <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Amber means suggested, not settled</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>One click to confirm or clear</span></li></ul>
               
             </div>
-            <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-editor-filled.webp" alt="Editor after the helper filled the form: dashed violet fields with Looks right buttons, and the live preview of the centre’s Announcements page with the new item highlighted" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
+            <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-editor-filled.webp" alt="Editor after the helper filled the form: dashed amber fields with Looks right buttons, and the live preview of the centre’s Announcements page with the new item highlighted" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
           </div>
 
           <div class="ec-step reveal">
             <div class="ec-step-text">
               <p class="ec-step-n"><b>4</b>Check</p>
               <h3>It will not send unconfirmed work</h3>
-              <p>Pressing send runs the check first. Anything that would mislead readers must be fixed; notes like a missing Hindi title can be sent anyway.</p>
+              <p>Sending runs the check first. Must-fix items block it; notes like a missing Hindi title can be sent anyway.</p>
               <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Plain words, no blame</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Go there jumps to the field</span></li></ul>
-              <p class="ec-callout ec-callout--alert"><svg class="ec-i" aria-hidden="true"><use href="#i-TriangleAlert"/></svg><span>Must-fix items block sending. Notes do not; the reviewer sees the same notes.</span></p>
+              <p class="ec-callout ec-callout--alert"><svg class="ec-i" aria-hidden="true"><use href="#i-TriangleAlert"/></svg><span>Must-fix items block sending. The reviewer sees the same notes.</span></p>
             </div>
             <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-editor-check.webp" alt="The check panel listing five things to fix: each field the helper filled still needs a person to confirm it" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
           </div>
@@ -502,7 +634,7 @@
               <p class="ec-step-n"><b>5</b>Hindi</p>
               <h3>Make Hindi version</h3>
               <p>One press drafts the Hindi title. It stays labelled Machine translated until a person ticks I checked it.</p>
-              <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>GIGW asks for both languages</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>The label follows the update to the reviewer</span></li></ul>
+              <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>GIGW asks for both languages</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>The label travels to the reviewer</span></li></ul>
               
             </div>
             <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-editor-hindi.webp" alt="The Title in Hindi field with a machine-drafted translation and a Machine translated, check before publishing label" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
@@ -512,7 +644,7 @@
             <div class="ec-step-text">
               <p class="ec-step-n"><b>6</b>Send</p>
               <h3>Send to the Coordinator for checking</h3>
-              <p>The button names the person. A short dialog lists any notes, then the update goes to the review queue.</p>
+              <p>The button names the person. A short dialog lists any notes.</p>
               
               
             </div>
@@ -523,7 +655,7 @@
             <div class="ec-step-text">
               <p class="ec-step-n"><b>7</b>My updates</p>
               <h3>Where everything stands</h3>
-              <p>Tabs for drafts, sent back, waiting, live and expiring soon. Search by any word in the title.</p>
+              <p>Drafts, sent back, waiting, live and expiring soon. Search by any word in the title.</p>
               <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Hindi version shown per row</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Owner and last change on every item</span></li></ul>
               
             </div>
@@ -531,32 +663,35 @@
           </div>
         </div>
 
-        <div class="plate-head" id="s-12">
-          <h2 class="display section-title" data-phase="Prototype">Review, mostly on a phone</h2>
-          <div class="section-intro"><p>Reviewers check between classes. They see what changed from the live version, the notes the editor saw, and the page as readers will see it. One tap approves; one line sends it back.</p></div>
+        <div class="plate-head ec-head" id="s-14">
+          <h2 class="display section-title">Review, mostly on a phone</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>What changed, the notes the editor saw, and the page as readers will see it. One tap approves; one line sends it back.</p></div>
         </div>
-        <div class="ec-trio reveal">
-          <div><figure class="ec-phone"><img src="../assets/easycms/p-review.webp" alt="Reviewer queue on a phone: one announcement waiting, with a Check button and recently checked items below" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Queue.</b> Only what needs a decision.</p></div>
-          <div><figure class="ec-phone"><img src="../assets/easycms/p-review-preview.webp" alt="Reviewer on a phone looking at the phone preview of the announcement, with Send back with a note and Approve and publish buttons fixed at the bottom" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Decide.</b> The real page, then two big buttons.</p></div>
-          <div><figure class="ec-phone"><img src="../assets/easycms/p-site.webp" alt="The centre’s Announcements page on a phone after approval" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Published.</b> Live on the site at once.</p></div>
+        <div class="ec-trio reveal" data-gallery="review">
+          <div><figure class="ec-phone"><img src="../assets/easycms/p-review.webp" alt="Reviewer on a phone: a round table notice waiting for review, with Send back with a note and Approve and publish" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Decide.</b> Two big buttons.</p></div>
+          <div><figure class="ec-phone"><img src="../assets/easycms/p-review-preview.webp" alt="Reviewer on a phone looking at the phone preview of the announcement" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Preview.</b> The real page.</p></div>
+          <div><figure class="ec-phone"><img src="../assets/easycms/p-site.webp" alt="The centre’s Announcements page on a phone after approval" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Published.</b> Live at once.</p></div>
         </div>
-        <div class="ec-pair reveal" style="margin-top:2rem">
-          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-review-detail.webp" alt="Reviewer desktop view: a What changed panel with the old and new removal dates and description, beside the preview" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>What changed.</b> Old value struck through, new value highlighted, for an edit to a live notice.</p></div>
-          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-returned-field.webp" alt="The editor’s form with the reviewer’s note shown beside the removal date field it refers to" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Sent back.</b> The note lands beside the field it is about, not in an email thread.</p></div>
+        <div class="ec-pair reveal" style="margin-top:1.5rem">
+          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-review-detail.webp" alt="Reviewer desktop view: a What changed panel with the old and new values, beside the preview" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>What changed.</b> Old struck through, new highlighted.</p></div>
+          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-returned-field.webp" alt="The editor’s form with the reviewer’s note shown beside the removal date field it refers to" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Sent back.</b> The note lands beside its field.</p></div>
         </div>
 
-        <div class="plate-head" id="s-13">
-          <h2 class="display section-title" data-phase="Prototype">The preview is the real page</h2>
-          <div class="section-intro"><p>The preview and the public site are rendered by the same components from the same data, so what the reviewer approves is exactly what readers get. The centre’s site itself was redesigned in the same blue, with orange only for alerts.</p></div>
+        <div class="plate-head ec-head" id="s-15">
+          <h2 class="display section-title">The preview is the real page</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>Preview and public site are drawn by the same components from the same data. The centre’s site was redesigned too: blue, purple accents, orange only for alerts.</p></div>
         </div>
         <div class="ec-mix reveal">
-          <div><figure class="ec-browser ec-site"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>iitr.ac.in/centres/amrut-centre-urban-planning</span></div><img src="../assets/easycms/d-site-home.webp" alt="The AMRUT Centre home page: floating menu, a blue hero with a Next up lecture card and an orange Last date soon workshop card, an at-a-glance band with counts, and announcement, event and workshop panels" width="2880" height="3330" loading="lazy" decoding="async" /></figure><p class="ec-cap">Readers’ view: floating menu, hero with the next lecture and the closest deadline, at-a-glance counts, then the lists editors fill.</p></div>
-          <div><figure class="ec-phone"><img src="../assets/easycms/p-editor-preview.webp" alt="Editor on a phone switched to the Preview tab, showing the new announcement highlighted on the centre’s site" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap">On a phone, form and preview are two tabs.</p></div>
+          <div><figure class="ec-browser ec-site"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>iitr.ac.in/centres/amrut-centre-urban-planning</span></div><img src="../assets/easycms/d-site-home.webp" alt="The AMRUT Centre home page: floating menu, a blue hero with a Next up lecture card and an orange Last date soon workshop card, an at-a-glance band with counts, and announcement, event and workshop panels" width="2880" height="3330" loading="lazy" decoding="async" /></figure></div>
+          <div><figure class="ec-phone"><img src="../assets/easycms/p-editor-preview.webp" alt="Editor on a phone switched to the Preview tab, showing the new announcement highlighted on the centre’s site" width="1170" height="2532" loading="lazy" decoding="async" /></figure><p class="ec-cap">Form and preview are two tabs on a phone.</p></div>
         </div>
 
-        <div class="plate-head" id="s-14">
-          <h2 class="display section-title" data-phase="Prototype">Help in the same place</h2>
-          <div class="section-intro"><p>One Help button, always top right. Each screen lists its steps with Show me, which scrolls to the control and outlines it. Questions can be typed in Hindi or English.</p></div>
+        <div class="plate-head ec-head" id="s-16">
+          <h2 class="display section-title">Help and an assistant, in the same place</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>Both sit top right on every screen. Help shows where things are; the assistant answers from the website itself.</p></div>
         </div>
         <div class="ec-steps">
 
@@ -564,80 +699,313 @@
             <div class="ec-step-text">
               <p class="ec-step-n"><b>?</b>Help</p>
               <h3>Show me, not tell me</h3>
-              <p>Asked “how do I add a poster?”, help answers in steps and outlines the Poster field on the form.</p>
+              <p>Asked “how do I add a poster?”, help answers in steps and outlines the Poster field.</p>
               <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Same place on every screen</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Answers point at real controls</span></li></ul>
               
             </div>
             <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-help.webp" alt="Help panel open beside an event form, answering how to add a poster, with the Poster field outlined on the page" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
           </div>
-        </div>
 
-        <div class="plate-head" id="s-15">
-          <h2 class="display section-title" data-phase="Prototype">Accessibility and GIGW</h2>
-          <div class="section-intro"><p>Accessibility works on two sides: the interface itself (WCAG 2.1 AA as the target), and the content it publishes, which is GIGW-ready by default.</p></div>
+          <div class="ec-step reveal">
+            <div class="ec-step-text">
+              <p class="ec-step-n"><b>AI</b>Assistant</p>
+              <h3>An assistant that reads before it speaks</h3>
+              <p>It wears glasses because its job is to read carefully: what was sent back, what leaves the site this week, what fails a GIGW check. Paste a message and it drafts a notice, then hands it to the form for a person to confirm.</p>
+              <ul class="ec-why"><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Answers come from the website’s own data</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Drafts open in the form, never straight to review</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg><span>Amber, like every other suggestion</span></li></ul>
+              <p class="ec-callout ec-callout--ai"><svg class="ec-i" aria-hidden="true"><use href="#i-ShieldCheck"/></svg><span>It only suggests. A person checks every field, and the Coordinator approves before anything goes live.</span></p>
+            </div>
+            <div class="ec-step-shot"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-assistant.webp" alt="The Easy CMS assistant panel open over the home page: an amber face with round glasses, a reply listing what was sent back and the open drafts, and a notice drafted from a pasted message with an Open it in the notice form button" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div>
+          </div>
+        </div>
+<figure class="ec-ig ec-moods-fig reveal"><ul class="ec-moods"><li><svg class="as-face as-face--idle" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm0b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm0h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm0c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm0g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm0b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm0h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm0c)"/>
+<path d="M9.4 11.4Q12.4 11.4 15.4 11.4" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11.4Q27.6 11.4 30.6 11.4" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes as-eyes--blink" filter="url(#cm0g)"><rect x="11.200000000000001" y="17.599999999999998" width="2.4" height="5.2" rx="1.2" fill="#fff"/><rect x="26.400000000000002" y="17.599999999999998" width="2.4" height="5.2" rx="1.2" fill="#fff"/></g>
+
+</svg><b>Ready</b><span>Waiting in the top bar</span></li><li><svg class="as-face as-face--happy" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm1b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm1h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm1c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm1g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm1b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm1h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm1c)"/>
+<path d="M9.4 11.2Q12.4 10 15.4 11.2" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11.2Q27.6 10 30.6 11.2" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm1g)"><path d="M10.100000000000001 21.599999999999998Q12.4 17 14.7 21.599999999999998" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path d="M25.3 21.599999999999998Q27.6 17 29.900000000000002 21.599999999999998" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></g>
+
+</svg><b>Hello</b><span>Greets you; nothing waiting</span></li><li><svg class="as-face as-face--thinking" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm2b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm2h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm2c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm2g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm2b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm2h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm2c)"/>
+<path d="M9.4 11.6Q12.4 11.6 15.4 11.6" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11Q27.6 9.799999999999999 30.6 10.2" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm2g)"><rect x="12.200000000000001" y="16.799999999999997" width="2.4" height="4.2" rx="1.2" fill="#fff"/><rect x="27.400000000000002" y="16.799999999999997" width="2.4" height="4.2" rx="1.2" fill="#fff"/></g>
+
+</svg><b>Thinking</b><span>A short beat before each answer</span></li><li><svg class="as-face as-face--listening" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm3b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm3h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm3c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm3g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm3b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm3h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm3c)"/>
+<path d="M9.4 11Q12.4 10 15.4 11" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11Q27.6 10 30.6 11" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes as-eyes--blink" filter="url(#cm3g)"><rect x="11.200000000000001" y="17.599999999999998" width="2.4" height="5.2" rx="1.2" fill="#fff"/><rect x="26.400000000000002" y="17.599999999999998" width="2.4" height="5.2" rx="1.2" fill="#fff"/></g>
+
+</svg><b>Listening</b><span>Asks for your message</span></li><li><svg class="as-face as-face--smart" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm4b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm4h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm4c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm4g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm4b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm4h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm4c)"/>
+<path d="M9.4 12.6Q12.4 12.6 15.4 12.6" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11Q27.6 9.7 30.6 10.4" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm4g)"><rect x="11.200000000000001" y="19.499999999999996" width="2.4" height="3.2" rx="1.2" fill="#fff"/><rect x="26.400000000000002" y="19.499999999999996" width="2.4" height="3.2" rx="1.2" fill="#fff"/></g>
+
+</svg><b>Smart</b><span>Explains how, or what fails GIGW</span></li><li><svg class="as-face as-face--idea" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm5b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm5h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm5c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm5g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm5b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm5h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm5c)"/>
+<path d="M9.4 11Q12.4 9.6 15.4 11" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11Q27.6 9.6 30.6 11" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm5g)"><path d="M10.100000000000001 21.599999999999998Q12.4 17 14.7 21.599999999999998" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path d="M25.3 21.599999999999998Q27.6 17 29.900000000000002 21.599999999999998" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></g>
+<path d="M20 3.2v2.6M14.6 4.6l1.1 2M25.4 4.6l-1.1 2" stroke="#2a1800" stroke-width="1.5" stroke-linecap="round"/>
+</svg><b>Bright idea</b><span>Drafted a notice from your text</span></li><li><svg class="as-face as-face--celebrating" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm6b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm6h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm6c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm6g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm6b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm6h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm6c)"/>
+<path d="M9.4 10.8Q12.4 9.200000000000001 15.4 10.8" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 10.8Q27.6 9.200000000000001 30.6 10.8" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm6g)"><path d="M10.100000000000001 21.599999999999998Q12.4 17 14.7 21.599999999999998" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/><path d="M25.3 21.599999999999998Q27.6 17 29.900000000000002 21.599999999999998" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/></g>
+<circle cx="4" cy="5" r="1.3" fill="#2277ff"/><rect x="33" y="2.6" width="2.6" height="1.3" rx=".65" fill="#f75c03" transform="rotate(30 34.3 3.3)"/><circle cx="37.6" cy="10" r="1" fill="#2277ff"/><rect x="0.6" y="11" width="2.4" height="1.2" rx=".6" fill="#f75c03" transform="rotate(-25 1.8 11.6)"/><circle cx="20" cy="0.6" r=".9" fill="#2277ff"/>
+</svg><b>Celebrating</b><span>Nothing to fix</span></li><li><svg class="as-face as-face--surprised" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm7b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm7h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm7c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm7g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm7b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm7h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm7c)"/>
+<path d="M9.4 9.8Q12.4 8 15.4 9.8" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 9.8Q27.6 8 30.6 9.8" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm7g)"><circle cx="12.4" cy="20.5" r="2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="27.6" cy="20.5" r="2" fill="none" stroke="#fff" stroke-width="1.5"/></g>
+
+</svg><b>Surprised</b><span>Something leaves the site this week</span></li><li><svg class="as-face as-face--sweaty" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm8b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm8h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm8c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm8g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm8b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm8h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm8c)"/>
+<path d="M9.4 12.4Q12.4 11.7 15.4 11" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11Q27.6 11.7 30.6 12.4" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm8g)"><circle cx="12.4" cy="20.5" r="2" fill="none" stroke="#fff" stroke-width="1.5"/><circle cx="27.6" cy="20.5" r="2" fill="none" stroke="#fff" stroke-width="1.5"/></g>
+<path d="M35.4 6.4c1.3 1.8 2 2.9 2 3.9a2 2 0 0 1-4 0c0-1 .7-2.1 2-3.9Z" fill="#4fb8ff" stroke="#fff" stroke-width=".6"/>
+</svg><b>Sweaty</b><span>Something was sent back to you</span></li><li><svg class="as-face as-face--sorry" width="72" height="72" viewBox="0 0 40 40" overflow="visible" aria-hidden="true" focusable="false">
+<defs>
+<linearGradient id="cm9b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="cm9h" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="cm9c" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="cm9g" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm9b)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm9h)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#cm9c)"/>
+<path d="M9.4 12.6Q12.4 11.6 15.4 10.6" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 10.6Q27.6 11.6 30.6 12.6" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g class="as-eyes" filter="url(#cm9g)"><rect x="11.200000000000001" y="18.4" width="2.4" height="4.4" rx="1.2" fill="#fff"/><rect x="26.400000000000002" y="18.4" width="2.4" height="4.4" rx="1.2" fill="#fff"/></g>
+
+</svg><b>Sorry</b><span>Could not find it in your text</span></li></ul><figcaption><b>Moods.</b> Like a cartoon, only the eyes, the brows and one small extra change, so it is always the same character. Each reply carries the face it was said in; the header shows the latest.</figcaption></figure>
+
+        <div class="plate-head ec-head" id="s-17">
+          <h2 class="display section-title">Accessibility and GIGW</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>The interface aims for WCAG 2.1 AA; what it publishes is GIGW-ready by default.</p></div>
         </div>
         <div class="ec-pair reveal">
-          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-home-hi.webp" alt="The editor home in Hindi" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>हिन्दी.</b> The whole interface, help included. Content keeps its own language.</p></div>
-          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-home-dark.webp" alt="The editor home in dark mode, deep navy rather than black" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Dark.</b> Deep navy, never pure black; status colours keep their meaning.</p></div>
+          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-home-hi.webp" alt="The editor home in Hindi" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>हिन्दी.</b> The whole interface, help included.</p></div>
+          <div><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-home-dark.webp" alt="The editor home in dark mode, deep navy rather than black" width="2880" height="1800" loading="lazy" decoding="async" /></figure><p class="ec-cap"><b>Dark.</b> Deep navy; status colours keep their meaning.</p></div>
         </div>
+        <ul class="ec-checks reveal" aria-label="Accessibility and GIGW checks">
+          <li><svg class="ec-i" aria-hidden="true"><use href="#i-Image"/></svg><span>Picture descriptions required</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Languages"/></svg><span>Hindi status on every item</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-CalendarClock"/></svg><span>Removal dates, auto archive</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-FileWarning"/></svg><span>Scanned PDFs flagged</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Paperclip"/></svg><span>Vague and broken links flagged</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-UserRound"/></svg><span>Owner and date on every page</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Keyboard"/></svg><span>Keyboard throughout</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Eye"/></svg><span>High contrast and dark</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-TextSq"/></svg><span>Text size that reflows</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Smartphone"/></svg><span>44 px touch targets</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-RotateCcw"/></svg><span>Reduced motion</span></li><li><svg class="ec-i" aria-hidden="true"><use href="#i-Palette"/></svg><span>Never colour alone</span></li>
+        </ul>
 
-        <div class="bx reveal"><div class="p p--flat" style="--w:5;--wt:12"><figure class="ec-browser"><div class="ec-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>easycms.iitr.ac.in</span></div><img src="../assets/easycms/d-settings.webp" alt="Settings: language, text size, light or dark, contrast, movement and the helper switch" width="2880" height="1800" loading="lazy" decoding="async" /></figure></div><div class="p" style="--w:7;--wt:12"><p class="p-k">built into the content side</p><div class="ec-table-wrap"><table class="ec-table" style="min-width:0">
-      <tbody>
-        <tr><td>Text alternatives</td><td>Picture description is required, with a suggestion</td></tr>
-        <tr><td>Bilingual content</td><td>Hindi status on every row; one press drafts it</td></tr>
-        <tr><td>Current, dated content</td><td>Removal dates; items archive themselves; stale pages flagged</td></tr>
-        <tr><td>Accessible documents</td><td>Scanned PDFs without a text layer are flagged</td></tr>
-        <tr><td>Meaningful links</td><td>“Click here” and broken links flagged before review</td></tr>
-        <tr><td>Ownership</td><td>Every page shows its owner and last update</td></tr>
-      </tbody></table></div><ul class="p-pills"><li>Keyboard throughout</li><li>Labels for screen readers</li><li>44 px targets</li><li>Text size that reflows</li><li>High contrast</li><li>Reduced motion</li><li>Nothing by colour alone</li></ul></div></div>
-
-        <div class="plate-head" id="s-16">
-          <h2 class="display section-title" data-phase="Prototype">The design system</h2>
-          <div class="section-intro"><p>Tokens, type, icons and components, shared by the editor and, through locked tokens, by every website it publishes. Editors fill content; they never choose colours.</p></div>
+        <div class="plate-head ec-head" id="s-18">
+          <h2 class="display section-title">The design system</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Prototype</p>
+          <div class="section-intro"><p>Tokens, type, icons and components, shared by the editor and, locked, by every website it publishes.</p></div>
         </div>
         <div class="ec-swatches reveal" aria-label="Colour palette">
-          <div class="ec-sw ec-sw--tall" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
-          <div class="ec-sw ec-sw--dark-ink" style="background:#2277ff"><b>Azure</b><span>#2277FF</span></div>
+          <div class="ec-sw ec-sw--wide" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
+          <div class="ec-sw" style="background:#2277ff;color:#000"><b>Azure</b><span>#2277FF · hover, links</span></div>
           <div class="ec-sw ec-sw--dark-ink" style="background:#e3e7fc"><b>Soft Lavender</b><span>#E3E7FC · tints</span></div>
-          <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · the helper</span></div>
-          <div class="ec-sw ec-sw--dark-ink" style="background:#d1cdff"><b>Pale Blue</b><span>#D1CDFF</span></div>
-          <div class="ec-sw ec-sw--tall" style="background:#f75c03;color:#1d0a00"><b>Vivid Orange</b><span>#F75C03 · alerts only</span></div>
+          <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · waiting for review</span></div>
+          <div class="ec-sw ec-sw--dark-ink" style="background:#ddf5ea;color:#0d4a31"><b>Mint</b><span>#DDF5EA · live</span></div>
+          <div class="ec-sw ec-sw--dark-ink" style="background:linear-gradient(135deg,#ffd84d,#ffb020);color:#2a1800"><b>Sunlit Amber</b><span>#FFC233 · the helper and assistant</span></div>
+          <div class="ec-sw" style="background:#f75c03;color:#1d0a00"><b>Vivid Orange</b><span>#F75C03 · alerts only</span></div>
           <div class="ec-sw ec-sw--wide" style="background:linear-gradient(160deg,#020a2b,#001a6e 58%,#0046e0 135%)"><b>Midnight Surge</b><span>rail, panels of attention</span></div>
-          <div class="ec-sw ec-sw--wide" style="background:linear-gradient(135deg,#0056ff,#2277ff 52%,#8db4ff 120%)"><b>Futurewave</b><span>the one lead card</span></div>
+          <div class="ec-sw ec-sw--wide ec-sw--pill" style="background:linear-gradient(90deg,#0056ff 0%,#2277ff 55%,#8db4ff 100%)"><b>Futurewave</b><span>the one lead card</span></div>
+        </div>
+        <div class="ec-marks reveal" aria-label="Identity">
+          <figure><img src="../assets/easycms/logo.svg" alt="The Easy CMS logo: a frosted tile with a white pencil over a tilted blue tile, and a small amber spark" width="96" height="96" /><figcaption><b>Logo</b> A frosted page over a tilted one: an edit about to land.</figcaption></figure>
+          <figure><img src="../assets/easycms/app-icon.svg" alt="The Easy CMS app icon: the two tiles on a Royal Blue squircle" width="96" height="96" /><figcaption><b>App icon</b> The same tiles on Royal Blue for the home screen.</figcaption></figure>
+          <figure><img src="../assets/easycms/assistant.svg" alt="The assistant's face: an amber squircle wearing round glasses, with glowing eyes behind dark lenses" width="96" height="96" /><figcaption><b>Assistant</b> Glasses because it reads before it answers.</figcaption></figure>
+        </div>
+        <div class="ec-ds reveal">
+          <div class="ec-ds-type">
+            <p class="ec-kit-k">Type</p>
+            <div class="ec-type">
+              <div class="ec-type-row"><small>Display 48</small><span style="font-size:2.6rem;font-weight:750;letter-spacing:-0.035em;line-height:1.05">Namaste, Ashish</span></div>
+              <div class="ec-type-row"><small>Heading 36</small><span style="font-size:2.1rem;font-weight:750;letter-spacing:-0.025em;line-height:1.1">My updates</span></div>
+              <div class="ec-type-row"><small>Title 26</small><span style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Post an announcement</span></div>
+              <div class="ec-type-row"><small>Body 17</small><span style="font-size:1.06rem;line-height:1.5">17 px at 1.5 line height, in rem, so text size scales the layout.</span></div>
+              <div class="ec-type-row"><small>Small 13</small><span style="font-size:0.81rem;line-height:1.45">Hints under each field: Say what it is in a few words.</span></div>
+              <div class="ec-type-row"><small>Hindi</small><span class="ec-hi" style="font-size:1.25rem;font-weight:600">आज आप क्या अपडेट करना चाहते हैं?</span></div>
+            </div>
+          </div>
+          <div class="ec-ds-icons">
+            <p class="ec-kit-k">Icons · Solar, duotone for tiles, linear for controls</p>
+            <div class="ec-icons"><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Megaphone"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-CalendarDays"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Presentation"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-UserRound"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-FileText"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Sparkles"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Languages"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-ShieldCheck"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-House"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-ListChecks"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Globe"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Paperclip"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Users"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Settings"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Send"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Undo2"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-History"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Eye"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-ClipboardCheck"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-LifeBuoy"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Hourglass"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Archive"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-TriangleAlert"/></svg></span></div>
+          </div>
+          <div class="ec-ds-motion">
+            <p class="ec-kit-k">Motion</p>
+            <svg viewBox="0 0 240 90" aria-hidden="true" class="ec-spring-svg"><path d="M8 82 C 60 82, 70 12, 120 10 S 200 10, 232 10" fill="none" class="spring-on" stroke-width="3" stroke-linecap="round"/><path d="M8 82 C 50 82, 60 -2, 105 6 S 150 24, 175 12 S 215 8, 232 10" fill="none" class="spring-off" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg>
+            <p class="ec-ds-note"><b>Springs that settle, never bounce.</b> Solid: the critically damped spring, 0.4 s for panels. Dashed: the bounce it avoids.</p>
+          </div>
         </div>
 
-        <div class="bx reveal"><div class="p" style="--w:6;--wt:12"><p class="p-k">type</p><div class="ec-type">
-      <div class="ec-type-row"><small>Display 48</small><span style="font-size:2.6rem;font-weight:750;letter-spacing:-0.035em;line-height:1.05">Namaste, Sunita</span></div>
-      <div class="ec-type-row"><small>Title 26</small><span style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Post an announcement</span></div>
-      <div class="ec-type-row"><small>Body 17</small><span style="font-size:1.06rem;line-height:1.5">Body text is 17 px with 1.5 line height, in rem so text size scales the layout.</span></div>
-      <div class="ec-type-row"><small>Hindi</small><span class="ec-hi" style="font-size:1.25rem;font-weight:600">आज आप क्या अपडेट करना चाहते हैं?</span></div>
-    </div><p class="p-s">Plus Jakarta Sans for Latin, Noto Sans Devanagari for Hindi.</p></div><div class="p" style="--w:6;--wt:12"><p class="p-k">icons · Solar, linear for controls, duotone for tiles</p><div class="ec-icons"><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Megaphone"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-CalendarDays"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Presentation"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-UserRound"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-FileText"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Sparkles"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-Languages"/></svg></span><span class="duo"><svg class="ec-i" aria-hidden="true"><use href="#d-ShieldCheck"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-House"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-ListChecks"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Globe"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Paperclip"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Users"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Settings"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Send"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Undo2"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-History"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Eye"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-ClipboardCheck"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-LifeBuoy"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Hourglass"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-Archive"/></svg></span><span><svg class="ec-i" aria-hidden="true"><use href="#i-TriangleAlert"/></svg></span></div><p class="p-s">One family, one weight. Every icon sits beside a word.</p></div><div class="p p--paper" style="--w:12"><div class="ec-kit">
-      <div><p class="ec-kit-k">Status, always word, colour and icon</p><div class="ec-kit-row"><span class="ec-chip ec-chip--draft"><svg class="ec-i" aria-hidden="true"><use href="#i-PencilLine"/></svg>Draft</span><span class="ec-chip ec-chip--review"><svg class="ec-i" aria-hidden="true"><use href="#i-Hourglass"/></svg>Waiting for review</span><span class="ec-chip ec-chip--returned"><svg class="ec-i" aria-hidden="true"><use href="#i-Undo2"/></svg>Sent back</span><span class="ec-chip ec-chip--approved"><svg class="ec-i" aria-hidden="true"><use href="#i-CalendarClock"/></svg>Approved</span><span class="ec-chip ec-chip--live"><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg>Live</span><span class="ec-chip ec-chip--expired"><svg class="ec-i" aria-hidden="true"><use href="#i-Archive"/></svg>Expired</span><span class="ec-badge-o">1</span></div></div>
-      <div><p class="ec-kit-k">Buttons, 44 px, plain verbs</p><div class="ec-kit-row"><span class="ec-btn ec-btn--primary"><svg class="ec-i" aria-hidden="true"><use href="#i-Send"/></svg>Send to the Coordinator for checking</span><span class="ec-btn ec-btn--secondary"><svg class="ec-i" aria-hidden="true"><use href="#i-ListChecks"/></svg>Check before sending</span><span class="ec-btn ec-btn--quiet"><svg class="ec-i" aria-hidden="true"><use href="#i-Languages"/></svg>Make Hindi version</span><span class="ec-btn ec-btn--ghost"><svg class="ec-i" aria-hidden="true"><use href="#i-Undo2"/></svg>Undo</span></div></div>
-      <div><p class="ec-kit-k">Field states</p><div class="ec-kit-row" style="align-items:start">
-        <div class="ec-field ec-field--focus"><label>Title</label><small>Say what it is in a few words</small><span class="ec-input">Winter internship 2026</span></div>
-        <div class="ec-field ec-field--ai"><label>Category</label><small>Readers use this to find it</small><span class="ec-input">Internships</span><em>Filled by the helper · Looks right?</em></div>
-        <div class="ec-field ec-field--error"><label>Remove from the website on</label><small>After this date it archives itself</small><span class="ec-input">05-11-2026</span><em>This date has already passed.</em></div>
-        <div class="ec-field ec-field--note"><label>Last date to apply</label><small>Shown as Last date soon in the final week</small><em>Note from the Coordinator: it is 15 November.</em><span class="ec-input">15-11-2026</span></div>
-      </div></div>
-    </div></div><div class="p" style="--w:5;--wt:12"><p class="p-k">motion</p><div class="ec-spring"><svg viewBox="0 0 240 90" aria-hidden="true"><path d="M8 82 C 60 82, 70 12, 120 10 S 200 10, 232 10" fill="none" stroke="#8db0ff" stroke-width="3" stroke-linecap="round"/><path d="M8 82 C 50 82, 60 -2, 105 6 S 150 24, 175 12 S 215 8, 232 10" fill="none" stroke="rgba(247,92,3,0.6)" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg></div><h3 class="p-t">Springs that settle, never bounce</h3><p class="p-s">Solid line: the critically damped spring used everywhere, about 0.4 s for panels and 0.28 s for small changes. Dashed: the bounce it avoids. Sheets leave the way they came; reduced motion becomes a fade.</p></div><div class="p p--blue" style="--w:7;--wt:12"><p class="p-k">tokens</p><ul class="p-pills"><li>Colour: surfaces, ink, Royal Blue, six status pairs</li><li>Helper: Vivid Blue line and tint</li><li>Attention: orange dot only</li><li>Radius 12 / 16 / 24 / 28</li><li>Space on a 4 px grid, in rem</li><li>Light, dark and high contrast</li><li>Text size 100 / 112.5 / 125 %</li></ul><p class="p-s">Every value lives in one tokens file. The websites inherit them locked: editors can show or hide parts of a card, never restyle it.</p></div></div>
+        <div class="ec-comps reveal" aria-label="Components">
+          <p class="ec-kit-k">Components · cropped from the working prototype, at real size</p>
+          <figure class="ec-comp ec-comp--full"><div class="ec-comp-img"><img src="../assets/easycms/k-buttons.webp" alt="Buttons: Send to the Coordinator for checking (primary), Check before sending (secondary), Save draft (ghost), Make Hindi version (amber AI), Use an example message (quiet), Discard draft (danger), a row of small buttons, a disabled Send and an icon-only arrow" width="958" height="220" loading="lazy" decoding="async" /></div><figcaption><b>Buttons</b> 44 px tall, and the label names the result. One primary per screen; amber only when the AI acts.</figcaption></figure>
+          <figure class="ec-comp ec-comp--full"><div class="ec-comp-img"><img src="../assets/easycms/k-actionbar.webp" alt="The editor’s action bar: Saved, undo, history, Save draft, Check before sending and Send to the Coordinator for checking" width="1120" height="62" loading="lazy" decoding="async" /></div><figcaption><b>Action bar</b> Pinned under the form: saved state, undo and history on the left, the next step on the right.</figcaption></figure>
+          <div class="ec-comp-pair">
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-status.webp" alt="Status chips in two sizes: Draft, Waiting for review, Sent back, Approved, Live and Expired" width="771" height="128" loading="lazy" decoding="async" /></div><figcaption><b>Status chips</b> A word, a colour and an icon together, so status never depends on colour alone.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-tabs.webp" alt="Tabs with count badges, All 17, Drafts 1, Sent back 1 in orange, Waiting for review 1, Expiring soon 2 in orange and Expired 0 outlined; language and preview-size toggles; orange navigation badges" width="859" height="172" loading="lazy" decoding="async" /></div><figcaption><b>Tabs and badges</b> Counts read as badges: blue for a total, orange when you are needed, outlined at zero.</figcaption></figure>
+          </div>
+          <div class="ec-comp-flow">
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-field-ai.webp" alt="A title field filled by the helper with a dashed amber border and Looks right and Clear buttons" width="502" height="269" loading="lazy" decoding="async" /></div><figcaption><b>Filled by the helper</b> Dashed amber until a person presses Looks right.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-field-hindi.webp" alt="The Hindi title field with a machine-translated title, labelled as such, and an I checked it button" width="502" height="298" loading="lazy" decoding="async" /></div><figcaption><b>Machine-translated Hindi</b> Labelled until someone has read it.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-field-note.webp" alt="A date field with the Coordinator’s note above it explaining the correct last date" width="502" height="237" loading="lazy" decoding="async" /></div><figcaption><b>Note from the reviewer</b> The note sits on the field it is about.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-file.webp" alt="The attachment field showing a PDF with Replace and Remove buttons" width="502" height="244" loading="lazy" decoding="async" /></div><figcaption><b>File field</b> Drop or choose. A picture also needs a description.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-controls.webp" alt="Light and dark switches, Reduce movement and Helper switches, a text-size stepper with minus and plus, and a contrast slider set to More" width="533" height="257" loading="lazy" decoding="async" /></div><figcaption><b>Settings controls</b> A switch for on and off, a stepper for text size, a slider for contrast.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-helper.webp" alt="The helper card with a pasted call for applications and the result: fields filled by the helper, each marked" width="518" height="629" loading="lazy" decoding="async" /></div><figcaption><b>Helper card</b> Paste a message; it fills the form and says what it could not find.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-check.webp" alt="The check panel listing what to confirm before sending, each with Go there" width="518" height="596" loading="lazy" decoding="async" /></div><figcaption><b>Check before sending</b> Plain words, each with a Go there link to the field.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-assistant.webp" alt="The assistant button and suggestion chips, a question bubble, a thinking face with typing dots, and a surprised face with a reply listing an item that leaves the site soon" width="612" height="390" loading="lazy" decoding="async" /></div><figcaption><b>Assistant</b> Its own amber. Each reply shows the face it was said in, after a short thinking beat.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-dialog.webp" alt="A dialog: Send with these notes? listing a machine-translated Hindi title, with Fix them first and Send anyway" width="600" height="321" loading="lazy" decoding="async" /></div><figcaption><b>Dialog</b> The only blocking surface, and the only place with a scrim.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-toast.webp" alt="A dark toast confirming the update was sent to the Coordinator" width="572" height="97" loading="lazy" decoding="async" /></div><figcaption><b>Toast</b> Says what happened, in the person’s terms.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-people.webp" alt="Three initial avatars and an empty state reading Nothing is waiting for you" width="472" height="401" loading="lazy" decoding="async" /></div><figcaption><b>People and empty states</b> Initials only where a photo would be; an empty state says what will appear.</figcaption></figure>
+            <figure class="ec-comp"><div class="ec-comp-img"><img src="../assets/easycms/k-health.webp" alt="The website health panel with counts for missing Hindi versions, scanned PDFs and stale pages, each with Fix" width="457" height="430" loading="lazy" decoding="async" /></div><figcaption><b>Website health</b> GIGW checks as a short to-do list, each with a count and Fix.</figcaption></figure>
+            <figure class="ec-comp ec-comp--narrow"><div class="ec-comp-img"><img src="../assets/easycms/k-rail.webp" alt="The navigation rail: Easy CMS logo, the website being updated, Home active, My updates with an orange badge, Website, Files, Team and Settings" width="260" height="560" loading="lazy" decoding="async" /></div><figcaption><b>Navigation rail</b> Midnight Surge, one white active pill, an orange badge for what came back.</figcaption></figure>
+          </div>
+          <figure class="ec-comp ec-comp--full"><div class="ec-comp-img"><img src="../assets/easycms/k-tasks.webp" alt="Home task cards: Post an announcement or circular as the large blue lead card, then Add an event, Add a workshop, Change people details and Change page text" width="741" height="489" loading="lazy" decoding="async" /></div><figcaption><b>Task cards</b> The most used job leads in Futurewave; the rest are named in the users’ own words.</figcaption></figure>
+          <figure class="ec-comp ec-comp--full"><div class="ec-comp-img"><img src="../assets/easycms/k-table.webp" alt="The My updates table with tabs and rows showing status chips, Hindi version and last changed" width="1120" height="360" loading="lazy" decoding="async" /></div><figcaption><b>Updates table</b> Status, Hindi version, owner and last change on every row.</figcaption></figure>
+        </div>
 
-        <div class="plate-head" id="s-17">
-          <h2 class="display section-title" data-phase="Test">What to measure</h2>
-          <div class="section-intro"><p>The case study’s evidence will be a before-and-after test: the same three tasks, the same kind of users, Chakra against Easy CMS. These are design targets to validate, not results.</p></div>
+        <div class="plate-head ec-head" id="s-19">
+          <h2 class="display section-title">What to measure</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Test</p>
+          <div class="section-intro"><p>Before and after: the same three tasks, the same kind of users, Chakra against Easy CMS. Targets to validate, not results.</p></div>
         </div>
         <div class="ec-metrics reveal">
-          <div class="ec-metric"><small>Task success</small><b>9 in 10</b><span>Three core tasks completed unaided</span></div><div class="ec-metric"><small>Time on task</small><b>½ of Chakra</b><span>Median, stopwatch per task</span></div><div class="ec-metric"><small>Errors reaching live</small><b>≈ 0</b><span>Wrong or missing details after the pre-review check</span></div><div class="ec-metric"><small>Help requests</small><b>≤ 1</b><span>Times the participant asks the moderator, per session</span></div><div class="ec-metric"><small>Ease</small><b>SUS 80+</b><span>One question per task, SUS at the end</span></div><div class="ec-metric"><small>Memorability</small><b>Same success</b><span>Repeat one task after two weeks, no refresher</span></div><div class="ec-metric"><small>Handover</small><b>Every new editor</b><span>A first real update in the first session</span></div>
+          <div class="ec-metric"><small>Task success</small><b>9/10</b><span>tasks done unaided</span><i class="ec-meter" style="--p:90%" aria-hidden="true"></i></div><div class="ec-metric"><small>Time on task</small><b>½</b><span>of the Chakra time</span><i class="ec-meter" style="--p:50%" aria-hidden="true"></i></div><div class="ec-metric"><small>Errors reaching live</small><b>≈ 0</b><span>after the pre-review check</span><i class="ec-meter" style="--p:4%" aria-hidden="true"></i></div><div class="ec-metric"><small>Help requests</small><b>≤ 1</b><span>per session</span><i class="ec-meter" style="--p:20%" aria-hidden="true"></i></div><div class="ec-metric"><small>Ease</small><b>80+</b><span>SUS score</span><i class="ec-meter" style="--p:80%" aria-hidden="true"></i></div><div class="ec-metric"><small>Memorability</small><b>=</b><span>same success after two weeks</span><i class="ec-meter" style="--p:90%" aria-hidden="true"></i></div><div class="ec-metric"><small>Handover</small><b>100%</b><span>new editors finish a first update</span><i class="ec-meter" style="--p:100%" aria-hidden="true"></i></div>
         </div>
+        <ol class="ec-rounds reveal">
+          <li><b>Round 1</b><span>Figma flows · 3 editors · fix the words and field order</span></li>
+          <li><b>Round 2</b><span>Coded prototype · 5 editors and 2 reviewers · against the Chakra baseline</span></li>
+        </ol>
 
-        <div class="bx reveal"><div class="p" style="--w:6;--wt:12"><span class="ec-ib"><svg class="ec-i" aria-hidden="true"><use href="#d-Users"/></svg></span><p class="p-k">round 1</p><h3 class="p-t">Figma flows with 3 editors</h3><p class="p-s">Paper and Figma versions of the notice, event and faculty tasks, to fix the words and the order of fields.</p></div><div class="p p--blue" style="--w:6;--wt:12"><span class="ec-ib"><svg class="ec-i" aria-hidden="true"><use href="#d-Monitor"/></svg></span><p class="p-k">round 2</p><h3 class="p-t">The coded prototype with 5 editors and 2 reviewers</h3><p class="p-s">Against the Chakra baseline from the research plan, on office PCs and reviewers’ phones.</p></div></div>
-
-        <div class="plate-head" id="s-18">
-          <h2 class="display section-title" data-phase="Test">Where it stands, and next</h2>
-          <div class="section-intro"><p>A working prototype with sample content. What it is honest about:</p></div>
+        <div class="plate-head ec-head" id="s-20">
+          <h2 class="display section-title">Where it stands, and next</h2>
+          <p class="ghost ec-ghost" aria-hidden="true">Test</p>
+          
         </div>
-
-        <div class="bx reveal"><div class="p p--lav" style="--w:4;--wt:12"><p class="p-k">built</p><ul class="p-pills"><li>Five content types</li><li>Live preview, computer and phone</li><li>Review loop with notes</li><li>Version history and restore</li><li>Helper: fill, translate, check, alt text</li><li>Hindi and English</li><li>Website setup and access</li><li>Text size, contrast, dark, motion</li></ul></div><div class="p" style="--w:4;--wt:12"><p class="p-k">not yet</p><ul class="p-pills"><li>Real file storage</li><li>Real translation and model calls (scripted for the demo)</li><li>Block and template library</li><li>Photo crop with focal point</li><li>Single sign-on</li><li>Chakra integration</li></ul></div><div class="p p--orange" style="--w:4;--wt:12"><p class="p-k">next</p><h3 class="p-t">Run the research, then test</h3><p class="p-s">Chakra baseline with five or six admin staff, Round 1 in Figma, Round 2 on the prototype. Then a pilot with one centre, with the Computer Centre’s blessing.</p></div></div>
+        <div class="ec-status reveal">
+          <div class="ec-status-col ec-status-col--done"><p class="ec-kit-k"><svg class="ec-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg> Built</p><ul><li>Five content types</li><li>Live preview, computer and phone</li><li>Review loop with notes</li><li>Version history</li><li>Helper: fill, translate, check, describe</li><li>Hindi and English</li><li>Website setup and access</li><li>Size, contrast, dark, motion</li></ul></div>
+          <div class="ec-status-col"><p class="ec-kit-k"><svg class="ec-i" aria-hidden="true"><use href="#i-Hourglass"/></svg> Not yet</p><ul><li>Real file storage</li><li>Real translation and model calls</li><li>Block and template library</li><li>Photo crop with focal point</li><li>Single sign-on</li><li>Chakra integration</li></ul></div>
+          <div class="ec-status-col ec-status-col--next"><p class="ec-kit-k"><svg class="ec-i" aria-hidden="true"><use href="#i-ArrowRight"/></svg> Next</p><p class="ec-next-big">Run the Chakra baseline, test twice, then pilot with one centre.</p></div>
+        </div>
 
       </div>
     </section>

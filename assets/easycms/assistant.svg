@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" overflow="visible">
+<defs>
+<linearGradient id="ab" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe066"/><stop offset=".55" stop-color="#ffb52e"/><stop offset="1" stop-color="#ff8a1f"/></linearGradient>
+<radialGradient id="ah" cx=".22" cy=".18" r=".6"><stop offset="0" stop-color="#fff8c9" stop-opacity=".95"/><stop offset="1" stop-color="#fff8c9" stop-opacity="0"/></radialGradient>
+<radialGradient id="ac" cx=".9" cy=".12" r=".5"><stop offset="0" stop-color="#ff8f6b" stop-opacity=".75"/><stop offset="1" stop-color="#ff8f6b" stop-opacity="0"/></radialGradient>
+<filter id="ag" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation=".8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#ab)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#ah)"/>
+<rect x="2" y="2" width="36" height="36" rx="13" fill="url(#ac)"/>
+<path d="M9.4 11.4Q12.4 11.4 15.4 11.4" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/><path d="M24.6 11.4Q27.6 11.4 30.6 11.4" fill="none" stroke="#2a1800" stroke-width="1.6" stroke-linecap="round"/>
+<path d="M3.5 19.2h3.4M33.1 19.2h3.4" stroke="#2a1800" stroke-width="1.9" stroke-linecap="round"/>
+<path d="M17.3 18.4q2.7-1.9 5.4 0" fill="none" stroke="#2a1800" stroke-width="1.8" stroke-linecap="round"/>
+<circle cx="12.4" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<circle cx="27.6" cy="20.2" r="5.6" fill="#2a1800" fill-opacity=".74" stroke="#2a1800" stroke-width="1.6"/>
+<path d="M9.600000000000001 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4M24.8 17.599999999999998a3.6 3.6 0 0 1 2.6-1.4" stroke="#fff" stroke-opacity=".4" stroke-width=".9" stroke-linecap="round" fill="none"/>
+<g filter="url(#ag)"><rect x="11.200000000000001" y="17.599999999999998" width="2.4" height="5.2" rx="1.2" fill="#fff"/><rect x="26.400000000000002" y="17.599999999999998" width="2.4" height="5.2" rx="1.2" fill="#fff"/></g>
+
+</svg>

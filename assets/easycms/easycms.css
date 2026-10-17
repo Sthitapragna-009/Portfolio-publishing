@@ -1,5 +1,5 @@
 /* Easy CMS case study (projects/easy-cms.html). Loaded after ../styles.css.
-   Page theme: Royal Blue #0056FF, Vivid Blue #4737FF (the helper), Vivid Orange #F75C03 (alerts only),
+   Page theme: Royal Blue #0056FF, Sunlit Amber #FFC233 (the helper and assistant), Vivid Blue #4737FF (review), Vivid Orange #F75C03 (alerts only),
    Midnight Surge and Futurewave gradients. Components are prefixed ec-. */
 
 [data-page="easycms"] {
@@ -13,7 +13,7 @@
   --blue-ink: #8db0ff;
   --focus: #8db0ff;
   --blue-gradient: linear-gradient(135deg, #0056ff 0%, #2277ff 55%, #8db4ff 125%);
-  --ember-gradient: linear-gradient(180deg, #0039b8 0%, #0056ff 30%, #4d86ff 55%, #0056ff 78%, #0039b8 100%);
+  --ember-gradient: linear-gradient(180deg, #002f96 0%, #0047d6 30%, #0056ff 55%, #0047d6 78%, #002f96 100%);
   --brand-gradient: linear-gradient(100deg, #050a1f 0%, #001a6e 35%, #0056ff 70%, #d1cdff 100%);
   --bg: #050a1f;
   --bg-deep: #050a1f;
@@ -160,7 +160,7 @@
 /* ---------- People ---------- */
 .ec-person { display: grid; gap: 0.5rem; }
 .ec-person-top { display: flex; align-items: center; gap: 0.75rem; }
-.ec-avatar { width: 3rem; height: 3rem; border-radius: 16px; display: grid; place-items: center; background: var(--ec-future); color: #fff; font: 700 1rem/1 var(--ec-ui); flex-shrink: 0; }
+.ec-avatar { width: 3rem; height: 3rem; border-radius: 16px; display: grid; place-items: center; background: linear-gradient(140deg, #0047d6, #4737ff); color: #fff; font: 700 1rem/1 var(--ec-ui); flex-shrink: 0; }
 .p--violet .ec-avatar { background: rgba(255, 255, 255, 0.2); }
 .ec-goal { margin: 0; padding: 0.7rem 0.85rem; border-radius: 12px; background: rgba(255, 255, 255, 0.07); font-size: 0.875rem; line-height: 1.5; color: var(--ink); }
 .p--paper .ec-goal, .p--lav .ec-goal { background: rgba(11, 18, 48, 0.05); }
@@ -206,7 +206,7 @@
 .ec-chip { display: inline-flex; align-items: center; gap: 0.35rem; width: fit-content; padding: 0.25rem 0.65rem 0.25rem 0.5rem; border-radius: 999px; font: 600 0.75rem/1.2 var(--ec-ui); }
 .ec-chip .ec-i { width: 0.95rem; height: 0.95rem; }
 .ec-chip--draft { background: #edf0f7; color: #4b5370; }
-.ec-chip--review { background: #fff0dc; color: #8a4b00; }
+.ec-chip--review { background: #efedff; color: #3a2be0; }
 .ec-chip--returned { background: #fde9e6; color: #b4231b; }
 .ec-chip--approved { background: #e3e7fc; color: #004be0; }
 .ec-chip--live { background: #ddf5ea; color: #0d6b45; }
@@ -245,9 +245,9 @@
 .ec-why li { display: flex; gap: 0.6rem; font-size: 0.9rem; line-height: 1.45; color: var(--ink-dim); }
 .ec-why li .ec-i { margin-top: 0.1rem; color: var(--accent-text); }
 .ec-callout { display: flex; align-items: flex-start; gap: 0.6rem; padding: 0.75rem 0.9rem; border-radius: 14px; font-size: 0.86rem; line-height: 1.45; }
-.ec-callout--ai { background: rgba(71, 55, 255, 0.16); color: #d1cdff; }
+.ec-callout--ai { background: rgba(255, 194, 51, 0.14); color: #ffd27a; }
 .ec-callout--alert { background: rgba(247, 92, 3, 0.14); color: #ffc19c; }
-[data-theme="light"] .ec-callout--ai { background: #efedff; color: #3a2be0; }
+[data-theme="light"] .ec-callout--ai { background: #fff6dc; color: #6b4100; }
 [data-theme="light"] .ec-callout--alert { background: #fff0e6; color: #a83c00; }
 
 .ec-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1rem, 2.5vw, 1.75rem); align-items: start; }
@@ -297,8 +297,8 @@
 .ec-field--focus .ec-input { border-color: #0056ff; box-shadow: 0 0 0 3px #e3e7fc; }
 .ec-field--error .ec-input { border-color: #b4231b; }
 .ec-field--error em { font-style: normal; font-size: 0.75rem; color: #b4231b; font-weight: 600; }
-.ec-field--ai .ec-input { border-style: dashed; border-color: #4737ff; background: #efedff; }
-.ec-field--ai em { font-style: normal; font-size: 0.75rem; color: #3a2be0; font-weight: 600; }
+.ec-field--ai .ec-input { border-style: dashed; border-color: #c77700; background: #fff6dc; }
+.ec-field--ai em { font-style: normal; font-size: 0.75rem; color: #6b4100; font-weight: 600; }
 .ec-field--note .ec-input { border-color: #c3cbe6; }
 .ec-field--note em { font-style: normal; padding: 0.4rem 0.6rem; border-radius: 10px; background: #fde9e6; font-size: 0.75rem; color: #0b1230; }
 .ec-badge-o { display: inline-flex; min-width: 1.5rem; height: 1.5rem; padding: 0 0.4rem; align-items: center; justify-content: center; border-radius: 999px; background: #f75c03; color: #1d0a00; font: 700 0.75rem/1 var(--ec-ui); }
@@ -340,3 +340,29 @@
 
 /* Contrast fixes (axe colour-contrast) */
 [data-page="easycms"] .p--orange .p-k { color: #1d0a00; }
+
+/* Dark surfaces keep light text in both themes. In light theme the page's --ink turns dark,
+   which made the standalone navy cards (principles, roles, workflow, metrics) unreadable. */
+:is(.ec-rule, .ec-ia-col, .ec-state, .ec-metric) {
+  --ink: #eef1ff;
+  --ink-dim: #c3cae6;
+  --ink-faint: #a3add2;
+  --accent-text: #8db0ff;
+  color: var(--ink);
+}
+/* Links and accents inside the bento frame sit on navy in both themes too. */
+[data-page="easycms"] .bx { --accent-text: #8db0ff; }
+[data-page="easycms"] .bx :is(.p--paper, .p--lav) { --accent-text: #004be0; }
+
+/* White text on blue panels: a deeper Futurewave that ends at Royal Blue, so 94% white stays above 4.5:1. */
+[data-page="easycms"] .p--blue,
+.ec-ia-col--editor { background: linear-gradient(135deg, #002f96 0%, #0047d6 50%, #0056ff 100%); --ink: #fff; --ink-dim: rgba(255, 255, 255, 0.94); }
+[data-page="easycms"] .p--blue .p-k { color: rgba(255, 255, 255, 0.94); }
+.ec-ia-col--editor .ec-ia-list li small { color: rgba(255, 255, 255, 0.94); }
+[data-page="easycms"] .p--violet { --ink-dim: rgba(255, 255, 255, 0.9); }
+
+/* Text on blue and violet panels: worked out against each gradient's lightest stop.
+   84% white on Royal Blue is 4.3:1 and 62% white on Vivid Blue is 3.4:1, so both go to 94%. */
+[data-page="easycms"] .bx :is(.p--blue, .p--violet) :is(.p-s, .p-k) { color: rgba(255, 255, 255, 0.94); }
+/* Swatch labels that sit on the light end of a gradient get a dark backing. */
+.ec-sw--pill b, .ec-sw--pill span { width: fit-content; padding: 2px 8px; border-radius: 8px; background: rgba(5, 13, 51, 0.55); opacity: 1; }

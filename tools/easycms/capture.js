@@ -87,17 +87,22 @@ async function main() {
   }
 
   /** Fresh demo state with the given prefs, then open a route.
-      Storage is written from a non-app page on the same origin, so a still-running app
-      can never write its old prefs back over the new ones. */
+      The storage is seeded by a script that runs before the app's own code on that one load,
+      so nothing left over from the previous scene can reach the app. The previous app is unloaded
+      first: while it unloads it can still write its own prefs over the seed. */
   async function open(route, prefs = {}, { empty = false } = {}) {
-    await send('Page.navigate', { url: `${APP}@vite/client` });
-    await sleep(400);
+    await send('Page.navigate', { url: 'about:blank' });
+    await sleep(300);
     const p = JSON.stringify(Object.assign({ lang: 'en', theme: 'system', contrast: 'normal', textsize: 1, motion: 'reduce', helper: true, role: 'editor' }, prefs));
-    await js(`localStorage.clear(); localStorage.setItem('easycms:prefs:v1', ${JSON.stringify(p)}); ${empty ? `localStorage.setItem('easycms:data:v2', ${JSON.stringify(EMPTY_DATA)});` : ''}`);
-    // A new query string forces a full load, so the app starts with these prefs and this route.
-    await send('Page.navigate', { url: `${APP}?r=${Date.now()}#/${route}` });
+    const stamp = String(Date.now());
+    const seed = `if (location.search === '?r=${stamp}') { localStorage.clear(); sessionStorage.clear(); localStorage.setItem('easycms:prefs:v1', ${JSON.stringify(p)}); ${empty ? `localStorage.setItem('easycms:data:v2', ${JSON.stringify(EMPTY_DATA)});` : ''} }`;
+    const { identifier } = await send('Page.addScriptToEvaluateOnNewDocument', { source: seed });
+    await send('Page.navigate', { url: `${APP}?r=${stamp}#/${route}` });
     await sleep(1300);
+    await send('Page.removeScriptToEvaluateOnNewDocument', { identifier });
     await js('await document.fonts.ready; await wait(300);');
+    const got = await js(`return { role: JSON.parse(localStorage.getItem('easycms:prefs:v1') || '{}').role, url: location.href };`);
+    if (got.role !== JSON.parse(p).role) console.log(`  WARNING ${route}: role is ${got.role} at ${got.url}`);
   }
 
   async function shot(name, { full = false } = {}) {
@@ -110,6 +115,19 @@ async function main() {
     const { data } = await send('Page.captureScreenshot', params);
     fs.writeFileSync(path.join(OUT, `${name}.webp`), Buffer.from(data, 'base64'));
     console.log('  saved', name);
+  }
+
+  /** One element, cropped with a margin of the page around it: the design system's component images. */
+  async function crop(name, sel, { pad = 20, maxH = 0, nth = 0 } = {}) {
+    const r = await js(`const el = document.querySelectorAll(${JSON.stringify(sel)})[${nth}]; if (!el) return null;
+      el.scrollIntoView({ block: 'center' }); await wait(350); const b = el.getBoundingClientRect();
+      return { x: b.left + scrollX, y: b.top + scrollY, w: b.width, h: b.height };`);
+    if (!r) { console.log('  MISSING', name, sel); return; }
+    const h = maxH ? Math.min(maxH, r.h) : r.h;
+    const clip = { x: Math.max(0, r.x - pad), y: Math.max(0, r.y - pad), width: r.w + pad * 2, height: h + pad * 2, scale: 1 };
+    const { data } = await send('Page.captureScreenshot', { format: 'webp', quality: 92, clip, captureBeyondViewport: true });
+    fs.writeFileSync(path.join(OUT, `${name}.webp`), Buffer.from(data, 'base64'));
+    console.log('  cropped', name);
   }
 
   const desktop = { w: 1440, h: 900, dpr: 2 };
@@ -175,6 +193,10 @@ async function main() {
       const input = document.getElementById('help-q'); setVal(input, 'how do I add a poster?'); input.form.requestSubmit(); await wait(400);
       document.querySelector('.help-answer button')?.click(); await wait(1400);`);
     await shot('d-help');
+    await open('home');
+    await js(`document.querySelector('.ai-btn').click(); await wait(700); click('What needs my attention?'); await wait(500);
+      click('Draft a notice from a message'); await wait(500); click('Use an example message'); await wait(900);`);
+    await shot('d-assistant');
     await open('website');
     await shot('d-website');
     await open('settings');
@@ -265,6 +287,39 @@ async function main() {
     await viewport(desktop);
   }
 
+  if (run('kit')) {
+    // The design system's components: the real ones, never redrawn.
+    console.log('kit: components');
+    await viewport(desktop);
+    await open('kit');
+    for (const k of ['buttons', 'status', 'tabs', 'controls', 'assistant', 'people']) await crop(`k-${k}`, `[data-kit="${k}"]`, { pad: 0 });
+
+    // Stateful pieces, cropped where they live.
+    await open('home');
+    await crop('k-tasks', '.panel.tasks', { pad: 0 });
+    await crop('k-health', '.panel.health', { pad: 0 });
+    await crop('k-rail', '.rail', { pad: 0, maxH: 560 });
+    await open('updates');
+    await crop('k-table', '.panel.table-panel', { pad: 0, maxH: 360 });
+    await open('new/notice');
+    await js(`click('Paste a message'); await wait(500); click('Use an example message'); await wait(300); click('Fill the form'); await wait(1200);`);
+    await crop('k-helper', '.helper-card', { pad: 0 });
+    await crop('k-field-ai', '.field.is-ai', { pad: 16 });
+    await crop('k-actionbar', '.action-bar', { pad: 0 });
+    await js(`click('Check before sending'); await wait(900);`);
+    await crop('k-check', '.check-card', { pad: 0 });
+    await js(`for (let i = 0; i < 6; i++) { if (!click('Looks right')) break; await wait(150); }
+      click('Use a sample file'); await wait(250); click('Make Hindi version'); await wait(500);`);
+    await crop('k-field-hindi', '[data-help="titleHi"]', { pad: 16 });
+    await crop('k-file', '[data-help="attachment"]', { pad: 16 });
+    await js(`click('Send to the Coordinator for checking'); await wait(700);`);
+    await crop('k-dialog', '.dialog', { pad: 28 });
+    await js(`click('Send anyway'); await wait(900);`);
+    await crop('k-toast', '.toast', { pad: 14 });
+    await open('edit/n-fellows');
+    await crop('k-field-note', '.field.has-note', { pad: 16 });
+  }
+
   if (run('cover')) {
     console.log('cover card');
     await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });
@@ -274,6 +329,12 @@ async function main() {
     const { data } = await send('Page.captureScreenshot', { format: 'jpeg', quality: 88 });
     fs.writeFileSync(path.join(OUT, 'card.jpg'), Buffer.from(data, 'base64'));
     console.log('  saved card.jpg');
+    await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: 1600, deviceScaleFactor: 1, mobile: false });
+    await send('Page.navigate', { url: 'file:///' + path.join(__dirname, 'mockups', 'appicon.html').split(path.sep).join('/') });
+    await sleep(1200);
+    const icon = await send('Page.captureScreenshot', { format: 'jpeg', quality: 88 });
+    fs.writeFileSync(path.join(OUT, 'mock-appicon.jpg'), Buffer.from(icon.data, 'base64'));
+    console.log('  saved mock-appicon.jpg');
   }
 
   ws.close();
