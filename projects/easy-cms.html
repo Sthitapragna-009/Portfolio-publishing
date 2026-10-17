@@ -223,9 +223,35 @@
     <section class="section case-plates">
       <div class="wrap">
 
-        <figure class="plate ec-cover reveal">
-          <img src="../assets/easycms/card.jpg" alt="Easy CMS title board: the editor with a helper-filled announcement and its live preview, a phone showing the reviewer's approval screen, and chips reading Helper filled 5 fields and Last date soon" width="1600" height="1000" decoding="async" />
-        </figure>
+        <section class="ec-carousel reveal" aria-roledescription="carousel" aria-label="Easy CMS in use">
+          <div class="ec-car-track" tabindex="0" aria-label="Mockups, scroll or use the arrows">
+            <figure class="ec-car-slide" aria-roledescription="slide" aria-label="1 of 3: The editor">
+              <img class="ec-car-bg" src="../assets/easycms/mock-desk.jpg" alt="" aria-hidden="true" decoding="async" />
+              <img src="../assets/easycms/mock-desk.jpg" alt="Someone at a desk working in Easy CMS: the editor with a helper-filled announcement on the left and the live preview of the centre’s Announcements page on the right" width="2400" height="1800" decoding="async" />
+              <figcaption><b>The editor</b> A message becomes a form; the preview is the real page.</figcaption>
+            </figure>
+            <figure class="ec-car-slide" aria-roledescription="slide" aria-label="2 of 3: The reviewer">
+              <img class="ec-car-bg" src="../assets/easycms/mock-phone.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              <img src="../assets/easycms/mock-phone.jpg" alt="A hand holding a phone with the reviewer’s screen: a round table notice waiting for review, with Send back with a note and Approve and publish" width="1600" height="1600" loading="lazy" decoding="async" />
+              <figcaption><b>The reviewer</b> Checked on a phone, approved in one tap.</figcaption>
+            </figure>
+            <figure class="ec-car-slide" aria-roledescription="slide" aria-label="3 of 3: Home">
+              <img class="ec-car-bg" src="../assets/easycms/mock-angled.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" />
+              <img src="../assets/easycms/mock-angled.jpg" alt="An angled monitor showing the Easy CMS home: Namaste, Sunita, five task cards with Post an announcement first, and the counts of drafts, waiting and live items" width="1472" height="1962" loading="lazy" decoding="async" />
+              <figcaption><b>Home</b> What do you want to update today?</figcaption>
+            </figure>
+          </div>
+          <div class="ec-car-ui">
+            <div class="ec-car-dots" role="group" aria-label="Choose a mockup">
+              <button type="button" class="ec-car-dot" aria-label="Show mockup 1 of 3" aria-current="true"></button><button type="button" class="ec-car-dot" aria-label="Show mockup 2 of 3"></button><button type="button" class="ec-car-dot" aria-label="Show mockup 3 of 3"></button>
+            </div>
+            <p class="ec-car-count" aria-live="polite"><b>01</b> / 03</p>
+            <div class="ec-car-btns">
+              <button type="button" class="ec-car-btn" data-dir="-1" aria-label="Previous mockup"><svg class="ec-i" aria-hidden="true"><use href="#i-ArrowLeft"/></svg></button>
+              <button type="button" class="ec-car-btn" data-dir="1" aria-label="Next mockup"><svg class="ec-i" aria-hidden="true"><use href="#i-ArrowRight"/></svg></button>
+            </div>
+          </div>
+        </section>
 
         <div class="pg-process reveal" aria-label="How the project ran">
           <div class="pg-process-head">
@@ -571,7 +597,7 @@
         </div>
         <div class="ec-swatches reveal" aria-label="Colour palette">
           <div class="ec-sw ec-sw--tall" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
-          <div class="ec-sw" style="background:#2277ff"><b>Azure</b><span>#2277FF</span></div>
+          <div class="ec-sw ec-sw--dark-ink" style="background:#2277ff"><b>Azure</b><span>#2277FF</span></div>
           <div class="ec-sw ec-sw--dark-ink" style="background:#e3e7fc"><b>Soft Lavender</b><span>#E3E7FC · tints</span></div>
           <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · the helper</span></div>
           <div class="ec-sw ec-sw--dark-ink" style="background:#d1cdff"><b>Pale Blue</b><span>#D1CDFF</span></div>

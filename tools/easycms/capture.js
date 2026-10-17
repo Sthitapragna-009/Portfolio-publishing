@@ -237,6 +237,34 @@ async function main() {
     await shot('p-admin-empty');
   }
 
+  if (run('mock')) {
+    // Screens for the mockup photos: 16:9 for the monitors, a 390 x 790 phone (the composer adds a status bar).
+    console.log('mockup screens');
+    await viewport({ w: 1600, h: 900, dpr: 2 });
+    await open('home');
+    await shot('m-home');
+    await open('new/notice');
+    await js(`click('Paste a message'); await wait(500); click('Use an example message'); await wait(300); click('Fill the form'); await wait(1200);
+      document.querySelector('[data-help="title"]').scrollIntoView({ block: 'center' }); window.scrollBy(0, 140); await wait(400);`);
+    await shot('m-editor');
+    await viewport({ w: 390, h: 790, dpr: 3, mobile: true });
+    await open('review/n-roundtable', { role: 'reviewer' });
+    await shot('m-phone');
+
+    // Compose them into the photos. Served over http so the composer's canvas can read the photo's pixels.
+    const PORTFOLIO = process.env.PORTFOLIO_URL || 'http://localhost:5190/';
+    for (const [m, w, h] of [['angled', 736, 981], ['desk', 1200, 900], ['phone', 800, 800]]) {
+      await send('Emulation.setDeviceMetricsOverride', { width: w, height: h, deviceScaleFactor: 2, mobile: false });
+      await send('Page.navigate', { url: `${PORTFOLIO}tools/easycms/mockups/compose.html?m=${m}&r=${Date.now()}` });
+      for (let i = 0; i < 40; i++) { await sleep(250); if (await js('return document.body.dataset.ready === "1";')) break; }
+      await sleep(400);
+      const { data } = await send('Page.captureScreenshot', { format: 'jpeg', quality: 88 });
+      fs.writeFileSync(path.join(OUT, `mock-${m}.jpg`), Buffer.from(data, 'base64'));
+      console.log('  saved', `mock-${m}.jpg`);
+    }
+    await viewport(desktop);
+  }
+
   if (run('cover')) {
     console.log('cover card');
     await send('Emulation.setDeviceMetricsOverride', { width: 1600, height: 1000, deviceScaleFactor: 1, mobile: false });

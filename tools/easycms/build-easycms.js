@@ -125,9 +125,29 @@ const main = `<main id="top">
     <section class="section case-plates">
       <div class="wrap">
 
-        <figure class="plate ec-cover reveal">
-          <img src="${A}card.jpg" alt="Easy CMS title board: the editor with a helper-filled announcement and its live preview, a phone showing the reviewer's approval screen, and chips reading Helper filled 5 fields and Last date soon" width="1600" height="1000" decoding="async" />
-        </figure>
+        <section class="ec-carousel reveal" aria-roledescription="carousel" aria-label="Easy CMS in use">
+          <div class="ec-car-track" tabindex="0" aria-label="Mockups, scroll or use the arrows">
+            ${[
+              ["mock-desk.jpg", 2400, 1800, "Someone at a desk working in Easy CMS: the editor with a helper-filled announcement on the left and the live preview of the centre’s Announcements page on the right", "The editor", "A message becomes a form; the preview is the real page."],
+              ["mock-phone.jpg", 1600, 1600, "A hand holding a phone with the reviewer’s screen: a round table notice waiting for review, with Send back with a note and Approve and publish", "The reviewer", "Checked on a phone, approved in one tap."],
+              ["mock-angled.jpg", 1472, 1962, "An angled monitor showing the Easy CMS home: Namaste, Sunita, five task cards with Post an announcement first, and the counts of drafts, waiting and live items", "Home", "What do you want to update today?"],
+            ].map(([f, w, h, alt, k, cap], i) => `<figure class="ec-car-slide" aria-roledescription="slide" aria-label="${i + 1} of 3: ${e(k)}">
+              <img class="ec-car-bg" src="${A}${f}" alt="" aria-hidden="true" ${i ? 'loading="lazy" ' : ""}decoding="async" />
+              <img src="${A}${f}" alt="${e(alt)}" width="${w}" height="${h}" ${i ? 'loading="lazy" ' : ""}decoding="async" />
+              <figcaption><b>${e(k)}</b> ${e(cap)}</figcaption>
+            </figure>`).join("\n            ")}
+          </div>
+          <div class="ec-car-ui">
+            <div class="ec-car-dots" role="group" aria-label="Choose a mockup">
+              ${[1, 2, 3].map((n) => `<button type="button" class="ec-car-dot" aria-label="Show mockup ${n} of 3"${n === 1 ? ' aria-current="true"' : ""}></button>`).join("")}
+            </div>
+            <p class="ec-car-count" aria-live="polite"><b>01</b> / 03</p>
+            <div class="ec-car-btns">
+              <button type="button" class="ec-car-btn" data-dir="-1" aria-label="Previous mockup">${ico("ArrowLeft")}</button>
+              <button type="button" class="ec-car-btn" data-dir="1" aria-label="Next mockup">${ico("ArrowRight")}</button>
+            </div>
+          </div>
+        </section>
 
         <div class="pg-process reveal" aria-label="How the project ran">
           <div class="pg-process-head">
@@ -349,7 +369,7 @@ ${bx([
 ${head2("s-16", "Prototype", "The design system", ["Tokens, type, icons and components, shared by the editor and, through locked tokens, by every website it publishes. Editors fill content; they never choose colours."])}
         <div class="ec-swatches reveal" aria-label="Colour palette">
           <div class="ec-sw ec-sw--tall" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
-          <div class="ec-sw" style="background:#2277ff"><b>Azure</b><span>#2277FF</span></div>
+          <div class="ec-sw ec-sw--dark-ink" style="background:#2277ff"><b>Azure</b><span>#2277FF</span></div>
           <div class="ec-sw ec-sw--dark-ink" style="background:#e3e7fc"><b>Soft Lavender</b><span>#E3E7FC · tints</span></div>
           <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · the helper</span></div>
           <div class="ec-sw ec-sw--dark-ink" style="background:#d1cdff"><b>Pale Blue</b><span>#D1CDFF</span></div>
