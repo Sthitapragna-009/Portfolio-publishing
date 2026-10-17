@@ -1417,6 +1417,18 @@ ul { margin: 0; padding: 0; list-style: none; }
   --card-arrow:  #f6c10e;                    /* Paraga yellow             */
 }
 
+/* Easy CMS: Midnight Surge into Royal Blue, with the helper's violet. */
+.project[data-accent="easycms"] {
+  --glass-near:  rgba(0, 86, 255, 0.78);
+  --glass-far:   rgba(71, 55, 255, 0.5);
+  --glass-mid:   rgba(0, 26, 110, 0.86);
+  --glass-deep:  rgba(2, 10, 43, 0.93);
+  --glass-body:  rgba(0, 26, 110, 0.9);
+  --glass-base:  rgba(0, 70, 224, 0.92);
+  --glass-spark: rgba(209, 205, 255, 0.4);
+  --card-arrow:  #d1cdff;
+}
+
 /* AeroForm 009: walnut body with the orange control dial's glow. */
 .project[data-accent="aeroform"] {
   --glass-near:  rgba(212, 128, 49, 0.55);

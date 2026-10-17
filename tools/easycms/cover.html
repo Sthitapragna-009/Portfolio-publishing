@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Easy CMS cover</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  /* Composed once and captured to assets/easycms/card.jpg (1600 x 1000) by capture.js */
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1600px; height: 1000px; overflow: hidden; }
+  body {
+    position: relative; font-family: "Plus Jakarta Sans", system-ui, sans-serif; color: #fff;
+    background: linear-gradient(155deg, #020a2b 0%, #001a6e 52%, #0046e0 120%);
+  }
+  .glow { position: absolute; border-radius: 50%; }
+  .g1 { width: 900px; height: 900px; right: -260px; top: -420px; background: radial-gradient(circle, rgba(71,55,255,.85), rgba(71,55,255,0) 62%); }
+  .g2 { width: 700px; height: 700px; left: -260px; bottom: -420px; background: radial-gradient(circle, rgba(34,119,255,.55), rgba(34,119,255,0) 62%); }
+  .dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.12) 1.2px, transparent 1.2px); background-size: 26px 26px; -webkit-mask-image: linear-gradient(90deg, #000 0%, transparent 55%); }
+  .text { position: absolute; left: 96px; top: 120px; width: 520px; display: grid; gap: 26px; }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 800; font-size: 30px; letter-spacing: -.02em; }
+  .mark { width: 56px; height: 56px; border-radius: 16px; background: #fff; display: grid; place-items: center; }
+  .kicker { justify-self: start; padding: 8px 16px; border-radius: 999px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); font-size: 17px; font-weight: 600; }
+  h1 { font-size: 66px; line-height: 1.02; letter-spacing: -.045em; font-weight: 700; }
+  h1 em { font-style: normal; background: linear-gradient(90deg, #8db4ff, #d1cdff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .sub { font-size: 21px; line-height: 1.5; color: rgba(255,255,255,.78); }
+  .laptop { position: absolute; left: 660px; top: 150px; width: 1060px; border-radius: 22px; background: #0b1230; padding: 12px; box-shadow: 0 50px 120px rgba(0,8,40,.6); }
+  .laptop img { display: block; width: 100%; border-radius: 12px; }
+  .phone { position: absolute; left: 600px; top: 470px; width: 250px; border-radius: 40px; background: #0b1230; padding: 9px; box-shadow: 0 40px 90px rgba(0,8,40,.65); }
+  .phone img { display: block; width: 100%; border-radius: 32px; }
+  .chip { position: absolute; display: flex; align-items: center; gap: 10px; padding: 14px 20px; border-radius: 18px; font-size: 18px; font-weight: 700; box-shadow: 0 24px 50px rgba(0,8,40,.45); }
+  .chip-ai { left: 880px; top: 96px; background: #4737ff; color: #fff; }
+  .chip-alert { right: 64px; bottom: 70px; background: #fff; color: #0b1230; }
+  .chip-alert i { width: 12px; height: 12px; border-radius: 50%; background: #f75c03; box-shadow: 0 0 0 6px rgba(247,92,3,.18); }
+  .chip-live { left: 96px; bottom: 96px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; font-weight: 600; font-size: 17px; }
+  .chip-live b { padding: 4px 12px; border-radius: 999px; background: #ddf5ea; color: #0d6b45; font-size: 15px; }
+</style>
+</head>
+<body>
+  <div class="glow g1"></div><div class="glow g2"></div><div class="dots"></div>
+  <div class="text">
+    <div class="brand"><span class="mark"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="9" fill="#0056ff"/><path d="M10 10h12M10 16h12M10 22h7" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></span>Easy CMS</div>
+    <span class="kicker">IIT Roorkee · AMRUT Centre</span>
+    <h1>Update the website like <em>filling a form.</em></h1>
+    <p class="sub">For admin staff who never learned HTML. A true preview, a review before anything goes live, Hindi and English.</p>
+  </div>
+  <div class="laptop"><img src="../../assets/easycms/d-editor-filled.webp" alt="" /></div>
+  <div class="phone"><img src="../../assets/easycms/p-review.webp" alt="" /></div>
+  <div class="chip chip-ai"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><path d="M3 21 15 9M14.5 3.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8ZM19 9l.5 1.2 1.2.5-1.2.5L19 12.4l-.5-1.2-1.2-.5 1.2-.5L19 9Z"/></svg>Helper filled 5 fields · check each one</div>
+  <div class="chip chip-alert"><i></i>Last date soon · GIS workshop</div>
+  <div class="chip chip-live"><b>Live</b> Approved by the Coordinator</div>
+</body>
+</html>
