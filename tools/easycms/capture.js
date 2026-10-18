@@ -289,35 +289,40 @@ async function main() {
 
   if (run('kit')) {
     // The design system's components: the real ones, never redrawn.
-    console.log('kit: components');
-    await viewport(desktop);
-    await open('kit');
-    for (const k of ['buttons', 'status', 'tabs', 'controls', 'assistant', 'people']) await crop(`k-${k}`, `[data-kit="${k}"]`, { pad: 0 });
+    for (const dark of [false, true]) {
+    const sfx = dark ? '-d' : '';
+    const th = { theme: dark ? 'dark' : 'light' };
+    console.log('kit: components', dark ? 'dark' : 'light');
+    await viewport({ ...desktop, dark });
+    await open('kit', th);
+    for (const k of ['buttons', 'status', 'tabs', 'controls', 'assistant', 'people']) await crop(`k-${k}${sfx}`, `[data-kit="${k}"]`, { pad: 0 });
 
     // Stateful pieces, cropped where they live.
-    await open('home');
-    await crop('k-tasks', '.panel.tasks', { pad: 0 });
-    await crop('k-health', '.panel.health', { pad: 0 });
-    await crop('k-rail', '.rail', { pad: 0, maxH: 560 });
-    await open('updates');
-    await crop('k-table', '.panel.table-panel', { pad: 0, maxH: 360 });
-    await open('new/notice');
+    await open('home', th);
+    await crop('k-tasks' + sfx, '.panel.tasks', { pad: 0 });
+    await crop('k-health' + sfx, '.panel.health', { pad: 0 });
+    await crop('k-rail' + sfx, '.rail', { pad: 0, maxH: 560 });
+    await open('updates', th);
+    await crop('k-table' + sfx, '.panel.table-panel', { pad: 0, maxH: 360 });
+    await open('new/notice', th);
     await js(`click('Paste a message'); await wait(500); click('Use an example message'); await wait(300); click('Fill the form'); await wait(1200);`);
-    await crop('k-helper', '.helper-card', { pad: 0 });
-    await crop('k-field-ai', '.field.is-ai', { pad: 16 });
-    await crop('k-actionbar', '.action-bar', { pad: 0 });
+    await crop('k-helper' + sfx, '.helper-card', { pad: 0 });
+    await crop('k-field-ai' + sfx, '.field.is-ai', { pad: 16 });
+    await crop('k-actionbar' + sfx, '.action-bar', { pad: 0 });
     await js(`click('Check before sending'); await wait(900);`);
-    await crop('k-check', '.check-card', { pad: 0 });
+    await crop('k-check' + sfx, '.check-card', { pad: 0 });
     await js(`for (let i = 0; i < 6; i++) { if (!click('Looks right')) break; await wait(150); }
       click('Use a sample file'); await wait(250); click('Make Hindi version'); await wait(500);`);
-    await crop('k-field-hindi', '[data-help="titleHi"]', { pad: 16 });
-    await crop('k-file', '[data-help="attachment"]', { pad: 16 });
+    await crop('k-field-hindi' + sfx, '[data-help="titleHi"]', { pad: 16 });
+    await crop('k-file' + sfx, '[data-help="attachment"]', { pad: 16 });
     await js(`click('Send to the Coordinator for checking'); await wait(700);`);
-    await crop('k-dialog', '.dialog', { pad: 28 });
+    await crop('k-dialog' + sfx, '.dialog', { pad: 28 });
     await js(`click('Send anyway'); await wait(900);`);
-    await crop('k-toast', '.toast', { pad: 14 });
-    await open('edit/n-fellows');
-    await crop('k-field-note', '.field.has-note', { pad: 16 });
+    await crop('k-toast' + sfx, '.toast', { pad: 14 });
+    await open('edit/n-fellows', th);
+    await crop('k-field-note' + sfx, '.field.has-note', { pad: 16 });
+    }
+    await viewport(desktop);
   }
 
   if (run('cover')) {

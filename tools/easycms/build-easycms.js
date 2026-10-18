@@ -97,36 +97,93 @@ const scale = (label, n, note) => `<div class="ec-scale"><span class="ec-scale-k
 // ---------- design system: the real components ----------
 // Every image is cropped from the running prototype by capture.js (group "kit"): from #/kit for loose
 // components, and from live screens for stateful ones. Shown at their real size, never larger.
-const comp = (file, name, rule, alt, cls = "") => {
+const comp = (file, name, rule, alt, span) => {
   const [w, h] = size(file);
-  return `<figure class="ec-comp${cls ? " " + cls : ""}"><div class="ec-comp-img"><img src="${A}${file}" alt="${e(alt)}" width="${w / 2}" height="${h / 2}" loading="lazy" decoding="async" /></div><figcaption><b>${e(name)}</b> ${e(rule)}</figcaption></figure>`;
+  const dark = file.replace(".webp", "-d.webp");
+  const hasDark = fs.existsSync(SITE + "/assets/easycms/" + dark);
+  const [dw, dh] = hasDark ? size(dark) : [w, h];
+  return `<figure class="ec-tile ec-span-${span} ec-comp">
+            <figcaption class="ec-tile-k">${e(name)}</figcaption>
+            <div class="ec-comp-stage"><img class="ec-l" src="${A}${file}" alt="${e(alt)}" width="${w / 2}" height="${h / 2}" loading="lazy" decoding="async" />${hasDark ? `<img class="ec-d" src="${A}${dark}" alt="${e(alt)}, dark mode" width="${dw / 2}" height="${dh / 2}" loading="lazy" decoding="async" />` : ""}</div>
+            <p class="ec-tile-note">${e(rule)}</p>
+          </figure>`;
 };
-const components = () => `
-        <div class="ec-comps reveal" aria-label="Components">
-          <p class="ec-kit-k">Components · cropped from the working prototype, at real size</p>
-          ${comp("k-buttons.webp", "Buttons", "44 px tall, and the label names the result. One primary per screen; amber only when the AI acts.", "Buttons: Send to the Coordinator for checking (primary), Check before sending (secondary), Save draft (ghost), Make Hindi version (amber AI), Use an example message (quiet), Discard draft (danger), a row of small buttons, a disabled Send and an icon-only arrow", "ec-comp--full")}
-          ${comp("k-actionbar.webp", "Action bar", "Pinned under the form: saved state, undo and history on the left, the next step on the right.", "The editor's action bar: Saved, undo, history, Save draft, Check before sending and Send to the Coordinator for checking", "ec-comp--full")}
-          <div class="ec-comp-pair">
-            ${comp("k-status.webp", "Status chips", "A word, a colour and an icon together, so status never depends on colour alone.", "Status chips in two sizes: Draft, Waiting for review, Sent back, Approved, Live and Expired")}
-            ${comp("k-tabs.webp", "Tabs and badges", "Counts read as badges: blue for a total, orange when you are needed, outlined at zero.", "Tabs with count badges, All 17, Drafts 1, Sent back 1 in orange, Waiting for review 1, Expiring soon 2 in orange and Expired 0 outlined; language and preview-size toggles; orange navigation badges")}
-          </div>
-          <div class="ec-comp-flow">
-            ${comp("k-field-ai.webp", "Filled by the helper", "Dashed amber until a person presses Looks right.", "A title field filled by the helper with a dashed amber border and Looks right and Clear buttons")}
-            ${comp("k-field-hindi.webp", "Machine-translated Hindi", "Labelled until someone has read it.", "The Hindi title field with a machine-translated title, labelled as such, and an I checked it button")}
-            ${comp("k-field-note.webp", "Note from the reviewer", "The note sits on the field it is about.", "A date field with the Coordinator's note above it explaining the correct last date")}
-            ${comp("k-file.webp", "File field", "Drop or choose. A picture also needs a description.", "The attachment field showing a PDF with Replace and Remove buttons")}
-            ${comp("k-controls.webp", "Settings controls", "A switch for on and off, a stepper for text size, a slider for contrast.", "Light and dark switches, Reduce movement and Helper switches, a text-size stepper with minus and plus, and a contrast slider set to More")}
-            ${comp("k-helper.webp", "Helper card", "Paste a message; it fills the form and says what it could not find.", "The helper card with a pasted call for applications and the result: fields filled by the helper, each marked")}
-            ${comp("k-check.webp", "Check before sending", "Plain words, each with a Go there link to the field.", "The check panel listing what to confirm before sending, each with Go there")}
-            ${comp("k-assistant.webp", "Assistant", "Its own amber. Each reply shows the face it was said in, after a short thinking beat.", "The assistant button and suggestion chips, a question bubble, a thinking face with typing dots, and a surprised face with a reply listing an item that leaves the site soon")}
-            ${comp("k-dialog.webp", "Dialog", "The only blocking surface, and the only place with a scrim.", "A dialog: Send with these notes? listing a machine-translated Hindi title, with Fix them first and Send anyway")}
-            ${comp("k-toast.webp", "Toast", "Says what happened, in the person's terms.", "A dark toast confirming the update was sent to the Coordinator")}
-            ${comp("k-people.webp", "People and empty states", "Initials only where a photo would be; an empty state says what will appear.", "Three initial avatars and an empty state reading Nothing is waiting for you")}
-            ${comp("k-health.webp", "Website health", "GIGW checks as a short to-do list, each with a count and Fix.", "The website health panel with counts for missing Hindi versions, scanned PDFs and stale pages, each with Fix")}
-            ${comp("k-rail.webp", "Navigation rail", "Midnight Surge, one white active pill, an orange badge for what came back.", "The navigation rail: Easy CMS logo, the website being updated, Home active, My updates with an orange badge, Website, Files, Team and Settings", "ec-comp--narrow")}
-          </div>
-          ${comp("k-tasks.webp", "Task cards", "The most used job leads in Futurewave; the rest are named in the users' own words.", "Home task cards: Post an announcement or circular as the large blue lead card, then Add an event, Add a workshop, Change people details and Change page text", "ec-comp--full")}
-          ${comp("k-table.webp", "Updates table", "Status, Hindi version, owner and last change on every row.", "The My updates table with tabs and rows showing status chips, Hindi version and last changed", "ec-comp--full")}
+
+// The design system as one bento grid: foundations first, then the real components, each a tile of the same kind.
+const designSystem = () => `
+        <div class="ec-bento reveal">
+          <section class="ec-tile ec-span-12" aria-label="Colour palette">
+            <p class="ec-tile-k">Colour · one blue for actions, amber only for AI, orange only for alerts</p>
+            <div class="ec-swatches">
+              <div class="ec-sw ec-sw--wide" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
+              <div class="ec-sw" style="background:#2277ff;color:#000"><b>Azure</b><span>#2277FF · hover, links</span></div>
+              <div class="ec-sw ec-sw--dark-ink" style="background:#e3e7fc"><b>Soft Lavender</b><span>#E3E7FC · tints</span></div>
+              <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · waiting for review</span></div>
+              <div class="ec-sw ec-sw--dark-ink" style="background:#ddf5ea;color:#0d4a31"><b>Mint</b><span>#DDF5EA · live</span></div>
+              <div class="ec-sw ec-sw--dark-ink" style="background:linear-gradient(135deg,#ffd84d,#ffb020);color:#2a1800"><b>Sunlit Amber</b><span>#FFC233 · the helper and assistant</span></div>
+              <div class="ec-sw" style="background:#f75c03;color:#1d0a00"><b>Vivid Orange</b><span>#F75C03 · alerts only</span></div>
+              <div class="ec-sw ec-sw--wide" style="background:linear-gradient(160deg,#020a2b,#001a6e 58%,#0046e0 135%)"><b>Midnight Surge</b><span>rail, panels of attention</span></div>
+              <div class="ec-sw ec-sw--wide ec-sw--pill" style="background:linear-gradient(90deg,#0056ff 0%,#2277ff 55%,#8db4ff 100%)"><b>Futurewave</b><span>the one lead card</span></div>
+            </div>
+          </section>
+
+          <figure class="ec-tile ec-span-4 ec-mark"><figcaption class="ec-tile-k">Logo</figcaption><img src="${A}logo.svg" alt="The Easy CMS logo: a frosted tile with a white pencil over a tilted blue tile, and a small amber spark" width="96" height="96" /><p class="ec-tile-note">A frosted page over a tilted one: an edit about to land.</p></figure>
+          <figure class="ec-tile ec-span-4 ec-mark"><figcaption class="ec-tile-k">App icon</figcaption><img src="${A}app-icon.svg" alt="The Easy CMS app icon: the two tiles on a Royal Blue squircle" width="96" height="96" /><p class="ec-tile-note">The same tiles on Royal Blue for the home screen.</p></figure>
+          <figure class="ec-tile ec-span-4 ec-mark"><figcaption class="ec-tile-k">Assistant</figcaption><img src="${A}assistant.svg" alt="The assistant's face: an amber squircle wearing round glasses, with glowing eyes behind dark lenses" width="96" height="96" /><p class="ec-tile-note">Glasses, because it reads before it answers.</p></figure>
+
+          <section class="ec-tile ec-span-7 ec-row2" aria-label="Type">
+            <p class="ec-tile-k">Type · Plus Jakarta Sans and Noto Sans Devanagari</p>
+            <div class="ec-type">
+              <div class="ec-type-row"><small>Display 48</small><span style="font-size:2.6rem;font-weight:750;letter-spacing:-0.035em;line-height:1.05">Namaste, Ashish</span></div>
+              <div class="ec-type-row"><small>Heading 36</small><span style="font-size:2.1rem;font-weight:750;letter-spacing:-0.025em;line-height:1.1">My updates</span></div>
+              <div class="ec-type-row"><small>Title 26</small><span style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Post an announcement</span></div>
+              <div class="ec-type-row"><small>Body 17</small><span style="font-size:1.06rem;line-height:1.5">17 px at 1.5 line height, in rem, so text size scales the layout.</span></div>
+              <div class="ec-type-row"><small>Small 13</small><span style="font-size:0.81rem;line-height:1.45">Hints under each field: Say what it is in a few words.</span></div>
+              <div class="ec-type-row"><small>Hindi</small><span class="ec-hi" style="font-size:1.25rem;font-weight:600">आज आप क्या अपडेट करना चाहते हैं?</span></div>
+            </div>
+          </section>
+          <section class="ec-tile ec-span-5" aria-label="Icons">
+            <p class="ec-tile-k">Icons · Solar, duotone for tiles, linear for controls</p>
+            <div class="ec-icons">${["Megaphone", "CalendarDays", "Presentation", "UserRound", "FileText", "Sparkles", "Languages", "ShieldCheck"].map((n) => `<span class="duo">${duo(n)}</span>`).join("")}${["House", "ListChecks", "Globe", "Paperclip", "Users", "Settings", "Send", "Undo2", "History", "Eye", "ClipboardCheck", "LifeBuoy", "CircleCheck", "Hourglass", "Archive", "TriangleAlert"].map((n) => `<span>${ico(n)}</span>`).join("")}</div>
+          </section>
+
+          <section class="ec-tile ec-span-5" aria-label="Motion">
+            <p class="ec-tile-k">Motion · springs that settle, never bounce</p>
+            <svg viewBox="0 0 240 90" aria-hidden="true" class="ec-spring-svg"><path d="M8 82 C 60 82, 70 12, 120 10 S 200 10, 232 10" fill="none" class="spring-on" stroke-width="3" stroke-linecap="round"/><path d="M8 82 C 50 82, 60 -2, 105 6 S 150 24, 175 12 S 215 8, 232 10" fill="none" class="spring-off" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg>
+            <p class="ec-tile-note">Solid: the critically damped spring, 0.4 s for panels. Dashed: the bounce it avoids. With reduced motion, panels simply appear.</p>
+          </section>
+          <section class="ec-tile ec-span-12 ec-tile--strip" aria-label="Shape and spacing">
+            <p class="ec-tile-k">Shape and spacing · rem, so everything grows with text size</p>
+            <div class="ec-shape">
+              <span style="border-radius:12px"><b>12</b>chips</span>
+              <span style="border-radius:16px"><b>16</b>fields</span>
+              <span style="border-radius:24px"><b>24</b>panels</span>
+              <span style="border-radius:999px"><b>pill</b>buttons</span>
+            </div>
+            <div class="ec-space" aria-hidden="true">${[4, 8, 12, 16, 20, 24, 32, 48].map((n) => `<i style="width:${n}px"></i>`).join("")}</div>
+            <p class="ec-tile-note"><b>44 px</b> minimum target. Spacing steps of 4 px.</p>
+          </section>
+
+          <p class="ec-bento-k ec-span-12">Components · cropped from the working prototype at real size, in the page's theme</p>
+          ${comp("k-buttons.webp", "Buttons", "44 px tall; the label names the result. One primary per screen, amber only when the AI acts.", "Buttons: Send to the Coordinator for checking, Check before sending, Save draft, Make Hindi version in amber, Use an example message, Discard draft, small buttons, a disabled Send and an icon-only arrow", 7)}
+          ${comp("k-status.webp", "Status chips", "Word, colour and icon together, so status never depends on colour alone.", "Status chips in two sizes: Draft, Waiting for review, Sent back, Approved, Live and Expired", 5)}
+          ${comp("k-tabs.webp", "Tabs and badges", "Counts read as badges: blue for a total, orange when you are needed, outlined at zero.", "Tabs with count badges, language and preview-size toggles, and orange navigation badges", 7)}
+          ${comp("k-controls.webp", "Settings controls", "A switch for on and off, a stepper for text size, a slider for contrast.", "Theme, movement and helper switches, a text-size stepper and a contrast slider", 5)}
+          ${comp("k-actionbar.webp", "Action bar", "Pinned under the form: saved state, undo and history on the left, the next step on the right.", "The editor's action bar: Saved, undo, history, Save draft, Check before sending and Send to the Coordinator for checking", 12)}
+          ${comp("k-field-ai.webp", "Filled by the helper", "Dashed amber until a person presses Looks right.", "A title field filled by the helper with a dashed amber border and Looks right and Clear", 4)}
+          ${comp("k-field-hindi.webp", "Machine-translated Hindi", "Labelled until someone has read it.", "The Hindi title field labelled machine translated, with I checked it", 4)}
+          ${comp("k-field-note.webp", "Note from the reviewer", "The note sits on the field it is about.", "A date field with the Coordinator's note above it", 4)}
+          ${comp("k-helper.webp", "Helper card", "Paste a message; it fills the form and says what it could not find.", "The helper card with a pasted call for applications and the fields it filled", 4)}
+          ${comp("k-check.webp", "Check before sending", "Plain words, each with a Go there link to the field.", "The check panel listing what to confirm before sending", 4)}
+          ${comp("k-rail.webp", "Navigation rail", "One active pill, an orange badge for what came back.", "The navigation rail with Home active and an orange badge on My updates", 4)}
+          ${comp("k-assistant.webp", "Assistant", "Its own amber; each reply shows the face it was said in.", "The assistant button, suggestion chips and a short conversation with thinking and surprised faces", 6)}
+          ${comp("k-dialog.webp", "Dialog", "The only blocking surface, and the only place with a scrim.", "A dialog: Send with these notes? with Fix them first and Send anyway", 6)}
+          ${comp("k-tasks.webp", "Task cards", "The most used job leads in Futurewave; the rest are in the users' own words.", "Home task cards with Post an announcement or circular as the large blue lead", 7)}
+          ${comp("k-health.webp", "Website health", "GIGW checks as a short to-do list, each with a count and Fix.", "The website health panel with counts and Fix links", 5)}
+          ${comp("k-file.webp", "File field", "Drop or choose. A picture also needs a description.", "The attachment field showing a PDF with Replace and Remove", 4)}
+          ${comp("k-toast.webp", "Toast", "Says what happened, in the person's terms.", "A toast confirming the update was sent to the Coordinator", 4)}
+          ${comp("k-people.webp", "People and empty states", "Initials where a photo would be; an empty state says what will appear.", "Three initial avatars and an empty state", 4)}
+          ${comp("k-table.webp", "Updates table", "Status, Hindi version, owner and last change on every row.", "The My updates table with status chips and Hindi version", 12)}
         </div>`;
 
 // ---------- page ----------
@@ -174,9 +231,7 @@ const main = `<main id="top">
           </div>
           <div class="ec-collage" role="group" aria-label="Easy CMS mockups. Select one to see it full size.">
             ${HERO.map(([f, w, h, alt, cls]) => `<figure class="ec-col ec-col--${cls}"><img src="${A}${f}" alt="${e(alt)}" width="${w}" height="${h}" decoding="async" /></figure>`).join("\n            ")}
-            <span class="ec-float ec-float--ai" aria-hidden="true"><img src="${A}assistant.svg" alt="" width="22" height="22" />Helper filled 5 fields</span>
-            <span class="ec-float ec-float--alert" aria-hidden="true"><i></i>Last date soon</span>
-            <span class="ec-float ec-float--live" aria-hidden="true"><b>Live</b>Approved by the Coordinator</span>
+            <span class="ec-hero-face" aria-hidden="true">${["happy", "idea", "celebrating"].map((m, i) => `<span class="ec-face ec-face--${i}">${faceSvg(m, "hf" + i, 96)}</span>`).join("")}</span>
           </div>
         </div>
 
@@ -418,45 +473,7 @@ ${head2("s-17", "Prototype", "Accessibility and GIGW", "The interface aims for W
           ${[["Image", "Picture descriptions required"], ["Languages", "Hindi status on every item"], ["CalendarClock", "Removal dates, auto archive"], ["FileWarning", "Scanned PDFs flagged"], ["Paperclip", "Vague and broken links flagged"], ["UserRound", "Owner and date on every page"], ["Keyboard", "Keyboard throughout"], ["Eye", "High contrast and dark"], ["TextSq", "Text size that reflows"], ["Smartphone", "44 px touch targets"], ["RotateCcw", "Reduced motion"], ["Palette", "Never colour alone"]].map(([icon, l]) => `<li>${ico(solar.linear[icon] ? icon : "CircleCheck")}<span>${e(l)}</span></li>`).join("")}
         </ul>
 ${head2("s-18", "Prototype", "The design system", "Tokens, type, icons and components, shared by the editor and, locked, by every website it publishes.")}
-        <div class="ec-swatches reveal" aria-label="Colour palette">
-          <div class="ec-sw ec-sw--wide" style="background:#0056ff"><b>Royal Blue</b><span>#0056FF · actions, focus</span></div>
-          <div class="ec-sw" style="background:#2277ff;color:#000"><b>Azure</b><span>#2277FF · hover, links</span></div>
-          <div class="ec-sw ec-sw--dark-ink" style="background:#e3e7fc"><b>Soft Lavender</b><span>#E3E7FC · tints</span></div>
-          <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · waiting for review</span></div>
-          <div class="ec-sw ec-sw--dark-ink" style="background:#ddf5ea;color:#0d4a31"><b>Mint</b><span>#DDF5EA · live</span></div>
-          <div class="ec-sw ec-sw--dark-ink" style="background:linear-gradient(135deg,#ffd84d,#ffb020);color:#2a1800"><b>Sunlit Amber</b><span>#FFC233 · the helper and assistant</span></div>
-          <div class="ec-sw" style="background:#f75c03;color:#1d0a00"><b>Vivid Orange</b><span>#F75C03 · alerts only</span></div>
-          <div class="ec-sw ec-sw--wide" style="background:linear-gradient(160deg,#020a2b,#001a6e 58%,#0046e0 135%)"><b>Midnight Surge</b><span>rail, panels of attention</span></div>
-          <div class="ec-sw ec-sw--wide ec-sw--pill" style="background:linear-gradient(90deg,#0056ff 0%,#2277ff 55%,#8db4ff 100%)"><b>Futurewave</b><span>the one lead card</span></div>
-        </div>
-        <div class="ec-marks reveal" aria-label="Identity">
-          <figure><img src="${A}logo.svg" alt="The Easy CMS logo: a frosted tile with a white pencil over a tilted blue tile, and a small amber spark" width="96" height="96" /><figcaption><b>Logo</b> A frosted page over a tilted one: an edit about to land.</figcaption></figure>
-          <figure><img src="${A}app-icon.svg" alt="The Easy CMS app icon: the two tiles on a Royal Blue squircle" width="96" height="96" /><figcaption><b>App icon</b> The same tiles on Royal Blue for the home screen.</figcaption></figure>
-          <figure><img src="${A}assistant.svg" alt="The assistant's face: an amber squircle wearing round glasses, with glowing eyes behind dark lenses" width="96" height="96" /><figcaption><b>Assistant</b> Glasses because it reads before it answers.</figcaption></figure>
-        </div>
-        <div class="ec-ds reveal">
-          <div class="ec-ds-type">
-            <p class="ec-kit-k">Type</p>
-            <div class="ec-type">
-              <div class="ec-type-row"><small>Display 48</small><span style="font-size:2.6rem;font-weight:750;letter-spacing:-0.035em;line-height:1.05">Namaste, Ashish</span></div>
-              <div class="ec-type-row"><small>Heading 36</small><span style="font-size:2.1rem;font-weight:750;letter-spacing:-0.025em;line-height:1.1">My updates</span></div>
-              <div class="ec-type-row"><small>Title 26</small><span style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Post an announcement</span></div>
-              <div class="ec-type-row"><small>Body 17</small><span style="font-size:1.06rem;line-height:1.5">17 px at 1.5 line height, in rem, so text size scales the layout.</span></div>
-              <div class="ec-type-row"><small>Small 13</small><span style="font-size:0.81rem;line-height:1.45">Hints under each field: Say what it is in a few words.</span></div>
-              <div class="ec-type-row"><small>Hindi</small><span class="ec-hi" style="font-size:1.25rem;font-weight:600">आज आप क्या अपडेट करना चाहते हैं?</span></div>
-            </div>
-          </div>
-          <div class="ec-ds-icons">
-            <p class="ec-kit-k">Icons · Solar, duotone for tiles, linear for controls</p>
-            <div class="ec-icons">${["Megaphone", "CalendarDays", "Presentation", "UserRound", "FileText", "Sparkles", "Languages", "ShieldCheck"].map((n) => `<span class="duo">${duo(n)}</span>`).join("")}${["House", "ListChecks", "Globe", "Paperclip", "Users", "Settings", "Send", "Undo2", "History", "Eye", "ClipboardCheck", "LifeBuoy", "CircleCheck", "Hourglass", "Archive", "TriangleAlert"].map((n) => `<span>${ico(n)}</span>`).join("")}</div>
-          </div>
-          <div class="ec-ds-motion">
-            <p class="ec-kit-k">Motion</p>
-            <svg viewBox="0 0 240 90" aria-hidden="true" class="ec-spring-svg"><path d="M8 82 C 60 82, 70 12, 120 10 S 200 10, 232 10" fill="none" class="spring-on" stroke-width="3" stroke-linecap="round"/><path d="M8 82 C 50 82, 60 -2, 105 6 S 150 24, 175 12 S 215 8, 232 10" fill="none" class="spring-off" stroke-width="2" stroke-dasharray="4 5" stroke-linecap="round"/></svg>
-            <p class="ec-ds-note"><b>Springs that settle, never bounce.</b> Solid: the critically damped spring, 0.4 s for panels. Dashed: the bounce it avoids.</p>
-          </div>
-        </div>
-${components()}
+${designSystem()}
 ${head2("s-19", "Test", "What to measure", "Before and after: the same three tasks, the same kind of users, Chakra against Easy CMS. Targets to validate, not results.")}
         <div class="ec-metrics reveal">
           ${[

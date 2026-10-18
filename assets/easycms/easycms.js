@@ -94,7 +94,8 @@
   }
   function open(img) {
     opener = img;
-    list = groups[img.dataset.group] || [img];
+    // Only images that are showing: the design system carries a light and a dark copy of each component.
+    list = (groups[img.dataset.group] || [img]).filter(function (i) { return i.offsetParent !== null; });
     box = document.createElement("div");
     box.className = "ec-zoom";
     box.setAttribute("role", "dialog");
