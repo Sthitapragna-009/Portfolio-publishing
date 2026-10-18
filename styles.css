@@ -3272,9 +3272,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   to   { transform: translate3d(-50%, 0, 0); }
 }
 
-/* Reading a frame is intent enough; hold the row still. */
-.reel-viewport:hover .reel-track,
-.reel-viewport:focus-within .reel-track { animation-play-state: paused; }
+/* Hovering a row slows it to a drift rather than stopping it; script.js
+   eases the playback rate (a CSS change of duration would jump the frame). */
 
 /* No animation: the row becomes an ordinary horizontal scroller, and the
    duplicate group would just be the same photographs twice. */
@@ -3450,8 +3449,17 @@ ul { margin: 0; padding: 0; list-style: none; }
   box-shadow: 0 40px 120px rgba(0, 0, 0, 0.6);
 }
 
-.lightbox-stage img.is-swapping { opacity: 0; }
-.lightbox-stage img { transition: opacity 0.22s var(--ease); }
+/* Moving between photographs: the outgoing and incoming frames share one grid
+   cell and cross-fade, each drifting a little in the direction of travel, so
+   a change of shape (portrait to landscape) dissolves instead of jumping. */
+.lightbox-stage img {
+  grid-area: 1 / 1;
+  transition: opacity 0.5s var(--ease), transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.lightbox-stage img.is-entering,
+.lightbox-stage img.is-leaving { opacity: 0; }
+.lightbox-stage img.is-entering { transform: translate3d(calc(var(--dir, 0) * 28px), 0, 0) scale(0.985); }
+.lightbox-stage img.is-leaving  { transform: translate3d(calc(var(--dir, 0) * -28px), 0, 0) scale(0.985); pointer-events: none; }
 
 /* The orange chevrons, one on each side. */
 .lightbox-nav {

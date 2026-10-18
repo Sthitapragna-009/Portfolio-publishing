@@ -853,6 +853,43 @@
       clearTimeout(paceTimer);
       paceTimer = setTimeout(pace, 150);
     });
+
+    /* Hover slows a row to a drift instead of stopping it. Changing the CSS
+       duration would jump the frame, so this eases the running animation's
+       playback rate, which carries on from wherever the row is. */
+    const HOVER_RATE = 0.22;
+    const EASE_MS = 600;
+
+    reels.forEach((track) => {
+      const viewport = track.closest(".reel-viewport") || track;
+      let rate = 1;
+      let target = 1;
+      let raf = 0;
+      let last = 0;
+
+      const tick = (now) => {
+        const anim = track.getAnimations()[0];
+        // Reduced motion: the row is a plain scroller with no animation.
+        if (!anim) { raf = 0; return; }
+        const dt = last ? now - last : 16;
+        last = now;
+        // Exponential approach: quick to respond, soft to settle.
+        rate += (target - rate) * Math.min(1, dt / (EASE_MS / 4));
+        if (Math.abs(target - rate) < 0.005) rate = target;
+        anim.playbackRate = rate;
+        raf = rate === target ? 0 : requestAnimationFrame(tick);
+      };
+
+      const ease = (to) => {
+        target = to;
+        if (!raf) { last = 0; raf = requestAnimationFrame(tick); }
+      };
+
+      viewport.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse") ease(HOVER_RATE);
+      });
+      viewport.addEventListener("pointerleave", () => ease(1));
+    });
   }
 
   /* ---------- Photograph lightbox ---------- */
@@ -911,25 +948,60 @@
       }));
     };
 
-    const render = () => {
+    /* Each change brings in a fresh <img> on top of the current one and
+       cross-fades them in the same grid cell. The new frame is decoded before
+       it appears, so it never pops in half-drawn; dir is -1 / 1 for the
+       chevrons (a small drift that way) and 0 for a slideshow (fade only). */
+    const figure = stage.parentElement;
+    let current = stage;
+    let renderToken = 0;
+
+    const render = (dir = 0, instant = false) => {
       const item = items[index];
       if (!item) return;
-      stage.classList.add("is-swapping");
-      const next = new Image();
-      next.onload = next.onerror = () => {
-        stage.src = item.src;
-        stage.alt = item.alt;
-        stage.classList.remove("is-swapping");
-      };
-      next.src = item.src;
       counter.textContent = (index + 1) + " / " + items.length;
       if (caption) caption.textContent = item.alt;
+
+      const token = ++renderToken;
+      const next = new Image();
+      next.decoding = "async";
+      next.alt = item.alt;
+      next.src = item.src;
+
+      const swap = () => {
+        // A newer step started while this one was loading; let it win.
+        if (token !== renderToken) return;
+        const prev = current;
+        figure.style.setProperty("--dir", String(dir));
+        current = next;
+        // Opening the viewer shows the frame outright; the panel's own fade
+        // is the entrance, and last visit's photograph must not show through.
+        if (instant) {
+          figure.querySelectorAll("img").forEach((img) => img.remove());
+          figure.appendChild(next);
+          return;
+        }
+        next.classList.add("is-entering");
+        figure.appendChild(next);
+        // Commit the starting state before releasing it, or nothing animates.
+        void next.offsetWidth;
+        next.classList.remove("is-entering");
+
+        if (prev && prev.parentNode) {
+          prev.classList.add("is-leaving");
+          const drop = () => prev.remove();
+          prev.addEventListener("transitionend", drop, { once: true });
+          setTimeout(drop, 700);
+        }
+      };
+
+      (next.decode ? next.decode() : Promise.resolve()).then(swap, swap);
     };
 
-    const go = (step) => {
+    const go = (step, dir = 0) => {
       if (!items.length) return;
       index = (index + step + items.length) % items.length;
-      render();
+      render(dir);
     };
 
     const setPlaying = (on) => {
@@ -957,7 +1029,7 @@
       lastFocus = document.activeElement;
       lightbox.hidden = false;
       document.body.classList.add("is-locked");
-      render();
+      render(0, true);
       // One frame before the class, or the opacity transition has nothing to
       // move from and the panel snaps in.
       requestAnimationFrame(() => lightbox.classList.add("is-open"));
@@ -1047,7 +1119,7 @@
       } else {
         setPlaying(false);
       }
-      go(dir);
+      go(dir, dir);
     };
 
     lightbox.querySelector(".lightbox-nav--prev").addEventListener("click", () => step(-1));
