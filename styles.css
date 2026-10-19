@@ -1429,6 +1429,18 @@ ul { margin: 0; padding: 0; list-style: none; }
   --card-arrow:  #d1cdff;
 }
 
+/* Saaf Safar: Carbon, with the gate-sign yellow and the Electric blue of its actions. */
+.project[data-accent="saafsafar"] {
+  --glass-near:  rgba(37, 71, 232, 0.62);
+  --glass-far:   rgba(253, 233, 52, 0.28);
+  --glass-mid:   rgba(22, 24, 28, 0.88);
+  --glass-deep:  rgba(10, 11, 13, 0.94);
+  --glass-body:  rgba(22, 24, 28, 0.9);
+  --glass-base:  rgba(29, 32, 37, 0.94);
+  --glass-spark: rgba(253, 233, 52, 0.36);
+  --card-arrow:  #fde934;
+}
+
 /* AeroForm 009: walnut body with the orange control dial's glow. */
 .project[data-accent="aeroform"] {
   --glass-near:  rgba(212, 128, 49, 0.55);

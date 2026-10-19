@@ -1,0 +1,365 @@
+/* Saaf Safar case study: transit wayfinding skin.
+   Loaded after saafsafar.css and saafsafar-v2.css and only restyles them; the
+   content and markup order stay as the build script writes them.
+   References: Underground station signage, Vignelli's subway map, Helvetica
+   metro posters and high-contrast vertical sign cards. Each design phase is a
+   line with its own colour; every section head is the sign for its stop. */
+
+[data-page="saafsafar"] {
+  /* lines */
+  --l-empathise: #ffd329;  --l-empathise-ink: #000;
+  --l-define: #2a52e0;     --l-define-ink: #fff;
+  --l-ideate: #dc241f;     --l-ideate-ink: #fff;
+  --l-prototype: #00a0e2;  --l-prototype-ink: #000;
+  --l-test: #a0602f;       --l-test-ink: #fff;
+  --sign-black: #0b0b0b;
+  --sign-yellow: #ffd329;
+  --sign-red: #dc241f;
+  --sign-navy: #0019a8;
+  --sign-blue: #00a0e2;
+  --sign-brown: #894e24;
+  --sign-white: #f7f5ee;
+
+  /* page */
+  --bg: #1c1c1a;
+  --bg-deep: #1c1c1a;
+  --bg-card: #262624;
+  --ink: #f5f3ec;
+  --ink-dim: #d2cfc5;
+  --ink-faint: #a29f95;
+  --accent: #ffd329;
+  --accent-text: #ffd329;
+  --blue-ink: #ffd329;
+  --focus: #ffd329;
+  --hairline: rgba(245, 243, 236, 0.14);
+  --surface: #232321;
+  --surface-hi: #282826;
+  --surface-edge: rgba(245, 243, 236, 0.28);
+  --ghost-ink: rgba(245, 243, 236, 0.08);
+  --nav-bg: rgba(28, 28, 26, 0.84);
+  --nav-bg-solid: rgba(28, 28, 26, 0.97);
+  --outline-soft: rgba(245, 243, 236, 0.32);
+  --dot-rgb: 255, 211, 41;
+  --dot-strength: 0.28;
+  --ss-royal: #ffd329;
+
+  --ig-node: #262624;
+  --ig-line: rgba(245, 243, 236, 0.3);
+  --ig-pill: #33332f;
+  --ig-ring-a: rgba(255, 211, 41, 0.04);
+  --ig-ring-b: rgba(255, 211, 41, 0.08);
+  --ig-hub: #0b0b0b;
+  --station: #f7f5ee;
+  --station-ink: #0b0b0b;
+  --org-text: #ff7366;
+  --sign-font: "Inter Tight", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+[data-page="saafsafar"][data-theme="light"] {
+  --l-define: #0019a8;
+  --l-test: #894e24;
+  --bg: #f4f0e2;
+  --bg-deep: #f4f0e2;
+  --bg-card: #fffdf6;
+  --ink: #121212;
+  --ink-dim: #3a3833;
+  --ink-faint: #5f5c54;
+  --accent: #0019a8;
+  --accent-text: #0019a8;
+  --blue-ink: #0019a8;
+  --focus: #0019a8;
+  --hairline: rgba(18, 18, 18, 0.14);
+  --surface: #ebe6d4;
+  --surface-hi: #fffdf6;
+  --surface-edge: rgba(18, 18, 18, 0.24);
+  --ghost-ink: rgba(18, 18, 18, 0.06);
+  --nav-bg: rgba(244, 240, 226, 0.86);
+  --nav-bg-solid: rgba(244, 240, 226, 0.97);
+  --outline-soft: rgba(18, 18, 18, 0.3);
+  --dot-rgb: 0, 25, 168;
+  --dot-strength: 0.2;
+  --ss-royal: #0019a8;
+  --ig-node: #fffdf6;
+  --ig-line: rgba(18, 18, 18, 0.3);
+  --ig-pill: #e6e0ca;
+  --ig-hub: #0b0b0b;
+  --org-text: #c01a14;
+}
+[data-page="saafsafar"] body { background: var(--bg); }
+
+/* Line colour for whatever carries a phase class */
+.ss-line--empathise { --line: var(--l-empathise); --line-ink: var(--l-empathise-ink); }
+.ss-line--define    { --line: var(--l-define);    --line-ink: var(--l-define-ink); }
+.ss-line--ideate    { --line: var(--l-ideate);    --line-ink: var(--l-ideate-ink); }
+.ss-line--prototype { --line: var(--l-prototype); --line-ink: var(--l-prototype-ink); }
+.ss-line--test      { --line: var(--l-test);      --line-ink: var(--l-test-ink); }
+
+.ss-arrow { width: 1.1em; height: 1.1em; flex: none; fill: currentColor; }
+.ss-arrow--left { transform: rotate(180deg); }
+.ss-arrow--up { transform: rotate(-90deg); }
+
+/* Type: signage sans, heavy and tight */
+[data-page="saafsafar"] .section-title,
+[data-page="saafsafar"] .case-title,
+[data-page="saafsafar"] .ss-metro-title,
+[data-page="saafsafar"] .next-project-title,
+[data-page="saafsafar"] .contact-title {
+  font-family: var(--sign-font);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  text-transform: none;
+}
+[data-page="saafsafar"] .section-title { font-size: clamp(2rem, 4.4vw, 3.6rem); line-height: 1.02; }
+
+/* ---------- Section head: the sign for each stop ---------- */
+.ss-head { grid-template-columns: minmax(0, 1fr); row-gap: clamp(0.9rem, 2vw, 1.4rem); }
+.ss-head .section-title, .ss-head .section-intro { grid-column: 1; grid-row: auto; }
+.ss-sign {
+  display: flex; align-items: stretch; min-height: 3.1rem;
+  font: 700 clamp(1rem, 1.5vw, 1.2rem)/1 var(--sign-font); letter-spacing: -0.01em;
+  background: var(--sign-black); color: #fff;
+  border-radius: 4px; overflow: hidden;
+}
+.ss-sign-line {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  padding: 0 1.4rem 0 1rem;
+  background: var(--line); color: var(--line-ink);
+}
+.ss-sign-line .ss-arrow { width: 1.35em; height: 1.35em; }
+.ss-sign-stop {
+  margin-left: auto; display: inline-flex; align-items: center; gap: 0.55rem;
+  padding: 0 1rem; color: rgba(255, 255, 255, 0.72); font-weight: 600;
+}
+.ss-sign-stop b {
+  display: inline-grid; place-items: center; min-width: 2.1rem; height: 2.1rem; padding: 0 0.35rem;
+  border-radius: 50%; background: #fff; color: #000; font-weight: 700; font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Hero ---------- */
+.ss-hero-sign {
+  grid-column: 1 / -1;
+  display: flex; align-items: stretch; flex-wrap: wrap;
+  min-height: 3.4rem; border-radius: 4px; overflow: hidden;
+  background: var(--sign-black); color: #fff;
+  font: 700 clamp(1rem, 1.6vw, 1.3rem)/1 var(--sign-font); letter-spacing: -0.01em;
+}
+.ss-hs-cell { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.2rem; }
+.ss-hs-way { background: var(--sign-yellow); color: #000; }
+.ss-hs-way .ss-arrow, .ss-hs-gate .ss-arrow { width: 1.4em; height: 1.4em; }
+.ss-hs-name { flex: 1 1 auto; }
+.ss-hs-name [lang="hi"] { font-family: "Noto Sans Devanagari", sans-serif; font-weight: 600; color: rgba(255, 255, 255, 0.7); font-size: 0.92em; }
+.ss-hs-picto { width: 1.9rem; height: 1.9rem; padding: 0.2rem; border-radius: 3px; background: #fff; color: #000; }
+.ss-hs-gate { border-left: 2px solid rgba(255, 255, 255, 0.2); }
+.ss-hero .eyebrow { color: var(--ink-dim); }
+.ss-hero-btn { background: var(--sign-yellow) !important; color: #000 !important; border-radius: 4px !important; font-family: var(--sign-font); font-weight: 700; }
+.ss-hero-link { color: var(--ink) !important; text-decoration-color: var(--accent-text) !important; }
+.ss-hero-facts .ss-i { color: var(--accent-text); }
+@media (max-width: 640px) {
+  .ss-hs-gate { display: none; }
+  .ss-hs-name [lang="hi"] { display: none; }
+}
+
+/* ---------- Journey: a metro line ---------- */
+.ss-metro { display: grid; gap: 1.6rem; padding: clamp(1.25rem, 3vw, 2.25rem); border-radius: 6px; background: var(--surface); }
+.ss-metro-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1.5rem; }
+.ss-metro-title { margin: 0; font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.05; color: var(--ink); }
+.ss-metro-tools { margin: 0; font-size: 0.85rem; color: var(--ink-dim); }
+.ss-metro-line { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; }
+.ss-stop { position: relative; }
+/* the track: each stop draws its own coloured segment to the next */
+.ss-stop::before {
+  content: ""; position: absolute; z-index: 0; top: calc(1.6rem - 6px); left: 1.6rem; right: -1px; height: 12px;
+  background: var(--line);
+}
+.ss-stop:last-child::before { right: auto; width: 0; }
+.ss-stop a { position: relative; z-index: 1; display: grid; gap: 0.45rem; padding-right: 1.1rem; color: inherit; text-decoration: none; }
+.ss-stop-dot {
+  width: 3.2rem; height: 3.2rem; display: grid; place-items: center; border-radius: 50%;
+  background: var(--station); color: var(--station-ink); box-shadow: 0 0 0 6px var(--line) inset, 0 0 0 4px var(--surface);
+  font: 700 1.25rem/1 var(--sign-font);
+  transition: background 0.18s ease, color 0.18s ease;
+}
+.ss-stop a:hover .ss-stop-dot, .ss-stop a:focus-visible .ss-stop-dot { background: var(--line); color: var(--line-ink); }
+.ss-stop-phase {
+  justify-self: start; margin-top: 0.4rem; padding: 0.3rem 0.55rem 0.32rem; border-radius: 3px;
+  background: var(--line); color: var(--line-ink); font: 600 0.8rem/1 var(--sign-font); letter-spacing: 0.01em;
+}
+.ss-stop-decision { font: 700 1.1rem/1.15 var(--sign-font); letter-spacing: -0.02em; color: var(--ink); }
+.ss-stop-what { font-size: 0.86rem; line-height: 1.45; color: var(--ink-dim); }
+.ss-metro-loop { display: flex; align-items: center; gap: 0.5rem; margin: 0; font-size: 0.85rem; color: var(--ink-dim); }
+.ss-metro-loop .ss-i { color: var(--accent-text); }
+@media (max-width: 860px) {
+  .ss-metro-line { grid-template-columns: minmax(0, 1fr); gap: 1.4rem; }
+  .ss-stop::before { top: 1.6rem; bottom: calc(-1.4rem - 1px); left: calc(1.6rem - 6px); right: auto; width: 12px; height: auto; }
+  .ss-stop:last-child::before { height: 0; bottom: auto; }
+  .ss-stop a { grid-template-columns: 3.2rem minmax(0, 1fr); column-gap: 1rem; padding-right: 0; }
+  .ss-stop a > :not(.ss-stop-dot) { grid-column: 2; }
+  .ss-stop-dot { grid-row: 1 / span 3; }
+  .ss-stop-phase { margin-top: 0; }
+}
+
+/* ---------- Big numbers: platform signs ---------- */
+.ss-platforms { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.6rem; margin: 0; }
+.ss-plat { display: grid; align-content: space-between; gap: 1.6rem; padding: 1.1rem 1.15rem 1.2rem; min-height: 12rem; border-radius: 4px; background: var(--sign-black); color: #fff; }
+.ss-plat dt { font: 700 clamp(3rem, 5.4vw, 4.8rem)/0.9 var(--sign-font); letter-spacing: -0.05em; }
+.ss-plat dd { margin: 0; font-size: 0.92rem; line-height: 1.42; color: rgba(255, 255, 255, 0.82); }
+.ss-plat dd b { color: #fff; }
+.ss-plat--way { background: var(--sign-yellow); color: #000; }
+.ss-plat--way dd, .ss-plat--way dd b { color: #000; }
+.ss-plat--navy { background: var(--sign-navy); }
+.ss-plat--red { background: var(--sign-red); }
+.ss-plat--red dd { color: #fff; }
+@media (max-width: 420px) { .ss-plat { min-height: 10rem; } }
+
+/* ---------- Principles: vertical contrast cards ---------- */
+.ss-vcards { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.6rem; margin: 0; padding: 0; list-style: none; }
+.ss-vcard { display: grid; grid-template-rows: 21rem auto; border-radius: 4px; overflow: hidden; background: var(--a); color: var(--a-ink); }
+.ss-vcard-top { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto minmax(0, 1fr); padding: 1rem; }
+.ss-vcard-word {
+  grid-column: 1; grid-row: 1 / span 2; align-self: end; justify-self: start;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font: 700 clamp(2.4rem, 3.7vw, 3.5rem)/0.86 var(--sign-font); letter-spacing: -0.045em; white-space: nowrap;
+}
+.ss-vcard-top .ss-p { grid-column: 2; grid-row: 1; width: 2.6rem; height: 2.6rem; color: var(--a-ink); }
+.ss-vcard-top .ss-arrow { grid-column: 2; grid-row: 2; align-self: end; justify-self: end; width: 2.2rem; height: 2.2rem; }
+.ss-vcard-band { display: grid; gap: 0.35rem; padding: 0.95rem 1rem 1.05rem; background: var(--b); color: var(--b-ink); }
+.ss-vcard-band b { font: 700 1.05rem/1.15 var(--sign-font); letter-spacing: -0.015em; }
+.ss-vcard-band span { font-size: 0.86rem; line-height: 1.42; }
+.ss-vcard--1 { --a: var(--sign-yellow); --a-ink: #000; --b: var(--sign-black); --b-ink: #fff; }
+.ss-vcard--2 { --a: var(--sign-black); --a-ink: #fff; --b: var(--sign-white); --b-ink: #000; }
+.ss-vcard--3 { --a: var(--sign-navy); --a-ink: var(--sign-yellow); --b: var(--sign-yellow); --b-ink: #000; }
+.ss-vcard--4 { --a: var(--sign-red); --a-ink: #fff; --b: var(--sign-white); --b-ink: #000; }
+.ss-vcard--5 { --a: var(--sign-white); --a-ink: #000; --b: var(--sign-black); --b-ink: #fff; }
+.ss-vcard--6 { --a: var(--sign-blue); --a-ink: #000; --b: var(--sign-black); --b-ink: #fff; }
+.ss-vcard--7 { --a: var(--sign-brown); --a-ink: #fff; --b: var(--sign-yellow); --b-ink: #000; }
+.ss-vcard--8 { --a: var(--sign-black); --a-ink: var(--sign-yellow); --b: var(--sign-yellow); --b-ink: #000; }
+/* on the cream page the white card needs an edge */
+[data-theme="light"] .ss-vcard--5, [data-theme="light"] .ss-vcard--2 { box-shadow: inset 0 0 0 2px var(--sign-black); }
+@media (max-width: 1000px) { .ss-vcards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .ss-vcard { grid-template-rows: 15rem auto; } .ss-vcard-word { font-size: 2.3rem; } }
+
+/* ---------- Touchpoints: one sign per touchpoint ---------- */
+.ss-touch { gap: 0.5rem; }
+.ss-tp-card {
+  display: flex; flex-direction: column; gap: 0.4rem; padding: 0.9rem 0.9rem 1rem; min-height: 15rem;
+  border-radius: 4px; background: var(--a); color: var(--a-ink);
+}
+.ss-tp-card .ss-tp-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.4rem; }
+.ss-tp-card .ss-tp-row .ss-arrow { width: 1.6rem; height: 1.6rem; }
+.ss-tp-card .ss-p { width: 2.2rem; height: 2.2rem; margin: 0; color: var(--a-ink); }
+.ss-tp-card small { color: inherit; opacity: 1; font: 700 0.74rem/1.3 var(--sign-font); letter-spacing: 0.02em; text-transform: uppercase; }
+.ss-tp-card .ss-tp-job { color: inherit; font-size: 0.84rem; line-height: 1.38; }
+.ss-tp-card b { margin-top: auto; padding-top: 0.6rem; border-top: 2px solid currentColor; font: 700 1.12rem/1.1 var(--sign-font); letter-spacing: -0.02em; }
+.ss-tp-card--1 { --a: var(--sign-yellow); --a-ink: #000; }
+.ss-tp-card--2 { --a: var(--sign-black); --a-ink: #fff; }
+.ss-tp-card--3 { --a: var(--sign-navy); --a-ink: #fff; }
+.ss-tp-card--4 { --a: var(--sign-red); --a-ink: #fff; }
+.ss-tp-card--5 { --a: var(--sign-blue); --a-ink: #000; }
+.ss-tp-card--6 { --a: var(--sign-brown); --a-ink: #fff; }
+.ss-tp-card--7 { --a: var(--sign-white); --a-ink: #000; }
+[data-theme="light"] .ss-tp-card--7 { box-shadow: inset 0 0 0 2px var(--sign-black); }
+
+/* ---------- Panels: square sign plates instead of soft cards ---------- */
+.ss-tile, .ss-tp, .ss-metric, .ss-callout, .ss-rung, .ss-live, .ss-live-frame, .ss-story, .ss-comp-stage { border-radius: 6px !important; }
+.ss-tile { background: var(--surface); box-shadow: none; }
+.ss-tile-k, .ss-bento-k, .ss-tile .ss-tile-k, .ss-comp .ss-tile-k {
+  font: 600 0.78rem/1.3 var(--sign-font); letter-spacing: 0.01em; text-transform: none; color: var(--ink);
+}
+.ss-metric { background: var(--sign-black); color: #fff; }
+.ss-metric * { --ink: #fff; --ink-dim: rgba(255, 255, 255, 0.78); }
+.ss-persona { border-top: 6px solid var(--accent-text); }
+.ss-step-n b { background: var(--sign-black) !important; color: #fff !important; border-radius: 50% !important; }
+[data-theme="light"] .ss-step-n b { box-shadow: none; }
+.case-back { font-family: var(--sign-font); font-weight: 600; }
+
+/* ---------- Escalation ladder: a line with stops ---------- */
+.ss-ladder { position: relative; gap: 0; }
+.ss-ladder::before { content: ""; position: absolute; left: calc(1rem + 1.5rem - 6px); top: 1.8rem; bottom: 1.8rem; width: 12px; background: var(--sign-red); }
+.ss-rung { position: relative; background: none; padding: 0.85rem 1rem; }
+.ss-rung-ic { position: relative; z-index: 1; border-radius: 50%; background: var(--station); color: var(--station-ink); box-shadow: 0 0 0 5px var(--sign-red) inset; }
+.ss-rung-ic svg { width: 1.5rem; height: 1.5rem; }
+.ss-rung--now .ss-rung-ic { background: var(--sign-red); color: #fff; box-shadow: 0 0 0 4px var(--bg); }
+.ss-rung--ok .ss-rung-ic { background: var(--sign-black); color: #fff; box-shadow: 0 0 0 5px var(--sign-red) inset, 0 0 0 3px var(--station) inset; }
+[data-theme="light"] .ss-rung--ok .ss-rung-ic { background: var(--sign-black); }
+.ss-rung b { font-family: var(--sign-font); }
+
+/* ---------- Diagrams: thick lines, white stations ---------- */
+.ig { font-family: var(--sign-font); }
+.ig .ln { stroke-width: 2; }
+.ig .ln-strong { stroke: var(--ink); opacity: 1; stroke-width: 3; }
+.ig .ln-org { stroke: var(--sign-red); stroke-width: 6; stroke-linecap: round; }
+.ig .ss-arr-head { fill: var(--sign-red); }
+.ig .node-acc { fill: var(--sign-black); }
+.ig .node-alert { fill: var(--sign-red); }
+.ig .t-org { fill: var(--org-text); font-weight: 700; }
+.ig .ss-bar { fill: var(--accent-text); }
+.ig .ss-shift-on { fill: var(--sign-black); }
+[data-theme="light"] .ig .ss-shift-on { fill: var(--sign-navy); }
+.ig .ss-hand { stroke: var(--sign-red); stroke-width: 3; }
+
+/* lifecycle: the main flow is a line, escalation the red branch */
+.ss-ig-life .ln-strong { stroke: var(--l-prototype); stroke-width: 10; stroke-linecap: round; }
+.ss-ig-life .ln-strong[marker-end] { marker-end: none; }
+.ss-ig-life .node, .ss-ig-life .ss-node-done { fill: var(--station); stroke: var(--sign-black); stroke-width: 5; }
+.ss-ig-life .ss-node-done { fill: var(--sign-black); stroke: var(--station); stroke-width: 4; }
+.ss-ig-life use.ico { color: var(--station-ink); }
+.ss-ig-life use.ss-ico-done { color: #fff; }
+.ss-ig-life .node-acc { fill: var(--l-prototype); stroke: var(--sign-black); stroke-width: 5; }
+.ss-ig-life .node-acc + use.ico-on { color: #000; }
+.ss-ig-life .node-alert { stroke: var(--station); stroke-width: 4; }
+
+/* brainstorm: six lines out of one interchange */
+.ss-ig-mind .mm-1 { --mm: var(--l-empathise); }
+.ss-ig-mind .mm-2 { --mm: var(--l-define); }
+.ss-ig-mind .mm-3 { --mm: var(--l-ideate); }
+.ss-ig-mind .mm-4 { --mm: var(--l-prototype); }
+.ss-ig-mind .mm-5 { --mm: var(--l-test); }
+.ss-ig-mind .mm-6 { --mm: #199e70; }
+.ss-ig-mind .mm-line { stroke: var(--mm); stroke-width: 12; }
+.ss-ig-mind .mm-twig { stroke: var(--mm); stroke-width: 3; opacity: 0.9; }
+.ss-ig-mind .mm-stn { fill: var(--station); stroke: var(--mm); stroke-width: 8; }
+.ss-ig-mind .mm-stn + text { fill: var(--station-ink); }
+.ss-ig-mind .node-acc { fill: var(--sign-black); stroke: var(--station); stroke-width: 6; }
+
+/* ---------- Old Electric accents remapped to the sign palette ----------
+   The design-system tiles keep the app's own palette on purpose: they document
+   the product, not this page. */
+.ss-persona:nth-of-type(1) { border-top-color: var(--sign-yellow); }
+.ss-persona:nth-of-type(2) { border-top-color: var(--sign-red); }
+.ss-persona:nth-of-type(3) { border-top-color: var(--l-prototype); }
+.ss-persona-role { color: var(--ink) !important; font-family: var(--sign-font); font-weight: 700; letter-spacing: 0.04em; }
+.ss-bubble { background: var(--surface); border: 3px solid var(--ink-faint); }
+.ss-bubble:nth-child(2) { background: var(--sign-yellow); border-color: transparent; color: #000; --ink: #000; --ink-dim: #000; }
+.ss-bubble:nth-child(2) * { color: #000 !important; }
+.ss-hyps em { border-radius: 3px; background: var(--sign-black); color: var(--sign-yellow); }
+[data-theme="light"] .ss-hyps em { background: var(--sign-navy); color: #fff; }
+.ss-g--out .ss-i { background: var(--sign-navy); }
+.ss-meter::after { background: var(--accent-text); border-radius: 2px; }
+.ss-rounds li + li { border-top-color: var(--sign-red); }
+.ss-zoom .ss-zoom-nav { color: #000; }
+.ss-zoom .ss-zoom-nav:hover { background: var(--sign-yellow); color: #000; }
+.ig .ss-tp--dash { fill: rgba(0, 160, 226, 0.14); stroke: var(--l-prototype); }
+.ig .ss-bp-sys { fill: var(--sign-navy); }
+[data-theme="light"] .ig .ss-bp-sys { fill: var(--sign-navy); }
+.ig .ss-node-done { fill: var(--sign-black); }
+.ig .seg-a { fill: var(--sign-navy); }
+.ig .node-alert-ring { fill: var(--sign-black); stroke: var(--sign-red); }
+[data-page="saafsafar"] .contact-card { background: var(--sign-black); color: #fff; box-shadow: none; border-radius: 6px; }
+[data-page="saafsafar"] .contact-card .contact-ghost { color: rgba(255, 211, 41, 0.12); }
+.ss-tp-card .ss-tp-row { color: inherit; }
+[data-theme="dark"] .ss-comp-stage { background: #111110; box-shadow: inset 0 0 0 1px rgba(245, 243, 236, 0.1); }
+.ss-comp-stage { background: #e8e3d0; }
+.ss-story-tiles div { border-radius: 4px; background: var(--sign-black); color: #fff; }
+.ss-story-tiles div span { color: rgba(255, 255, 255, 0.8); }
+.ss-story-tiles div:first-child { background: var(--sign-yellow); }
+.ss-story-tiles b { font-family: var(--sign-font); letter-spacing: -0.045em; }
+.ig .ss-bp-front { stroke: var(--sign-yellow); stroke-width: 3; }
+[data-theme="light"] .ig .ss-bp-front { fill: #fff6c9; stroke: var(--sign-black); stroke-width: 2; }
+
+/* ---------- Buttons: one size, one weight, square sign corners ---------- */
+.ss-hero-btn { min-height: 3rem; padding: 0 1.5rem; gap: 0.6rem; box-shadow: none !important; }
+.ss-hero-btn:hover { transform: none; filter: brightness(1.05); }
+.ss-kit-link a { min-height: 3rem; padding: 0 1.25rem; border-radius: 4px; font-family: var(--sign-font); font-weight: 600; }
+.ss-live-role, .ss-live-open { font-family: var(--sign-font); font-weight: 600; }
+.ss-live-role { min-height: 2.75rem; padding: 0 1rem; border-radius: 4px; }
+.ss-live-role[aria-pressed="true"] { background: var(--sign-yellow); color: #000; }
+[data-theme="light"] .ss-live-role[aria-pressed="true"] { background: var(--sign-black); color: #fff; }
