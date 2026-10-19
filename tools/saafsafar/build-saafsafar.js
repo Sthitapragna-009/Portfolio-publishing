@@ -70,6 +70,11 @@ function size(file) {
 const img = (file, alt, half = true) => { const [w, h2] = size(file); return `<img src="${A}${file}" alt="${e(alt)}" width="${half ? Math.round(w / 2) : w}" height="${half ? Math.round(h2 / 2) : h2}" loading="lazy" decoding="async" />`; };
 // Devices are captured with their own frames on a transparent background.
 const dev = (file, alt, kind = "ipad") => `<figure class="ss-dev ss-dev--${kind}">${img(file, alt)}</figure>`;
+// Screens are presented English first. The Hindi-first copy (file-hi.webp) rides along as a small
+// preview that opens full size in the gallery.
+const hiFile = (file) => file.replace(/\.webp$/, "-hi.webp");
+const peek = (file, alt) => `<figure class="ss-hi-peek">${img(hiFile(file), alt + ", Hindi first")}<figcaption><span class="ss-hi" lang="hi">हिंदी</span>As attendants see it</figcaption></figure>`;
+const devHi = (file, alt, kind = "ipad") => `<div class="ss-dev-pair ss-dev-pair--${kind}">${dev(file, alt, kind)}${peek(file, alt)}</div>`;
 const cap = (t) => `<p class="ss-cap">${t}</p>`;
 
 // ---------- layout helpers (as in the Easy CMS case study) ----------
@@ -101,11 +106,19 @@ const fig = (inner, caption, cls = "") => `<figure class="ss-ig${cls ? " " + cls
 const scale = (label, n, note) => `<div class="ss-scale"><span class="ss-scale-k">${e(label)}</span><span class="ss-dots" role="img" aria-label="${n} out of 5">${[1, 2, 3, 4, 5].map((i) => `<i${i <= n ? ' class="on"' : ""}></i>`).join("")}</span><span class="ss-scale-n">${e(note)}</span></div>`;
 
 // ---------- design system: foundations, then the real components ----------
+const compImg = (file, alt) => { const [w, h2] = size(file); return `<img src="${A}${file}" alt="${e(alt)}" width="${Math.round(w / 2)}" height="${Math.round(h2 / 2)}" loading="lazy" decoding="async" />`; };
+// Components with words come in both language orders, side by side; they stack when the tile is narrow.
 const comp = (file, name, rule, alt, span) => {
-  const [w, h2] = size(file);
-  return `<figure class="ss-tile ss-span-${span} ss-comp">
+  const both = fs.existsSync(SITE + "/assets/saafsafar/" + hiFile(file));
+  const stage = both
+    ? `<div class="ss-comp-stage ss-comp-langs">
+              <figure><span class="ss-comp-lang">English first</span>${compImg(file, alt + ", English first")}</figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span>${compImg(hiFile(file), alt + ", Hindi first")}</figure>
+            </div>`
+    : `<div class="ss-comp-stage">${compImg(file, alt)}</div>`;
+  return `<figure class="ss-tile ss-span-${span} ss-comp${both ? " ss-comp--pair" : ""}">
             <figcaption class="ss-tile-k">${e(name)}</figcaption>
-            <div class="ss-comp-stage"><img src="${A}${file}" alt="${e(alt)}" width="${Math.round(w / 2)}" height="${Math.round(h2 / 2)}" loading="lazy" decoding="async" /></div>
+            ${stage}
             <p class="ss-tile-note">${e(rule)}</p>
           </figure>`;
 };
@@ -162,16 +175,16 @@ const designSystem = () => `
 
           <p class="ss-bento-k ss-span-12">Components · cropped from the working prototype at real size</p>
           ${comp("k-offer.webp", "Task card", "One task at a time: urgency, the gate sign, jobs in pictures with counts, what to fetch, and three big answers.", "The Go now task card: Gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first for tissue, with Listen, I'm going and Can't go", 12)}
-          ${comp("k-urgency.webp", "Urgency", "Colour, icon and word together, in three sizes; Hindi first on the cart.", "Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English", 6)}
-          ${comp("k-jobs.webp", "Job tiles", "Picture first, Hindi then English, the count where it matters.", "Job tiles for empty the bin, refill tissue ×4 and mop the floor", 6)}
-          ${comp("k-stock.webp", "On my cart", "Counts, not percentages. Blue: needed for this task. Red: not enough.", "The On my cart panel with tissue short by 2, liners and cleaner needed", 5)}
-          ${comp("k-cleaning.webp", "Cleaning", "Each job fills as it is done; the sensor confirms, nobody taps done.", "The cleaning card with jobs filling in and a note that the sensor confirms it", 7)}
+          ${comp("k-urgency.webp", "Urgency", "Colour, icon and word together, in three sizes; the airport’s language first.", "Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English", 6)}
+          ${comp("k-jobs.webp", "Job tiles", "Picture first, then both languages in the airport’s order, the count where it matters.", "Job tiles for empty the bin, refill tissue ×4 and mop the floor", 6)}
+          ${comp("k-stock.webp", "On my cart", "Counts, not percentages. Blue: needed for this task. Red: not enough.", "The On my cart panel with tissue short by 2, liners and cleaner needed", 12)}
+          ${comp("k-cleaning.webp", "Cleaning", "Each job fills as it is done; the sensor confirms, nobody taps done.", "The cleaning card with jobs filling in and a note that the sensor confirms it", 12)}
           ${comp("k-signin.webp", "Sign in by photo", "Carts change hands between shifts: tap your face, no passwords.", "Four drawn crew portraits for the evening shift, Imran on cart B3 highlighted", 12)}
-          ${comp("k-radio.webp", "Radio prompt", "Only when a Go now task has sat for 5 minutes: who to call, how far.", "The red radio prompt: nobody took W-14G in 5 min, call Sanjay on cart B1, with a Called button", 4)}
-          ${comp("k-queue.webp", "Queue rows", "State bar, gate sign, jobs, age and who has it, in one line.", "Queue rows for washrooms near gates 14 and 11 with their status", 4)}
-          ${comp("k-notif.webp", "Lock-screen alert", "Time Sensitive only for Go now; answer without unlocking.", "A Time Sensitive notification on a lock screen with the gate sign, jobs, I'm going and Can't go", 4)}
-          ${comp("k-chips.webp", "Zone chips and crew", "Counts that matter to a supervisor, and what each cart is doing.", "Zone chips for Go now, Soon, being handled and free carts, with four crew cards", 6)}
+          ${comp("k-radio.webp", "Radio prompt", "Only when a Go now task has sat for 5 minutes: who to call, how far.", "The red radio prompt: nobody took W-14G in 5 min, call Sanjay on cart B1, with a Called button", 6)}
+          ${comp("k-queue.webp", "Queue rows", "State bar, gate sign, jobs, age and who has it, in one line.", "Queue rows for washrooms near gates 14 and 11 with their status", 6)}
+          ${comp("k-notif.webp", "Lock-screen alert", "Time Sensitive only for Go now; answer without unlocking.", "A Time Sensitive notification on a lock screen with the gate sign, jobs, I'm going and Can't go", 6)}
           ${comp("k-watch.webp", "Watch and wrist taps", "A distinct tap per urgency; gate number and one button.", "A watch face with Go now, gate 14 and an I'm going button, beside the wrist-tap patterns", 6)}
+          ${comp("k-chips.webp", "Zone chips and crew", "Counts that matter to a supervisor, and what each cart is doing.", "Zone chips for Go now, Soon, being handled and free carts, with four crew cards", 12)}
           ${comp("k-faces.webp", "Four-face rating", "The passengers' check on the sensors, at the door.", "Four big rating buttons from very clean to dirty, in English and Hindi", 6)}
           ${comp("k-kpi.webp", "Ops tiles", "One number each, with what it means underneath.", "Three tiles: Go now waiting, alert to arrival median, passengers rating it clean", 6)}
         </div>`;
@@ -384,28 +397,29 @@ ${head2("s-12", "Prototype", "Try the prototype", "The whole terminal runs live 
         <div class="ss-live reveal">
           <div class="ss-live-bar" role="group" aria-label="Open the prototype as">
             ${[["attendant", "Attendant", "Smartphone"], ["supervisor", "Zone supervisor", "Phone"], ["manager", "Shift manager", "Monitor"], ["ops", "Ops and DIAL", "Graph"], ["passenger", "Passengers", "Users"]].map(([r, l, icon], i) => `<button type="button" class="ss-live-role" data-role="${r}" aria-pressed="${i ? "false" : "true"}">${ico(icon)}${e(l)}</button>`).join("")}
-            <a class="ss-live-open" href="../prototypes/saaf-safar/index.html#/attendant" target="_blank" rel="noopener">${ico("ExternalLink")}Open full screen<span class="sr-only"> (new tab)</span></a>
+            <a class="ss-live-open" href="../prototypes/saaf-safar/index.html?lang=en#/attendant" target="_blank" rel="noopener">${ico("ExternalLink")}Open full screen<span class="sr-only"> (new tab)</span></a>
           </div>
           <figure class="ss-browser ss-live-frame">
             <div class="ss-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>saafsafar · delhi-t3</span></div>
-            <iframe src="../prototypes/saaf-safar/index.html?embed#/attendant" title="Saaf Safar prototype" loading="lazy"></iframe>
+            <iframe src="../prototypes/saaf-safar/index.html?embed&amp;lang=en#/attendant" title="Saaf Safar prototype" loading="lazy"></iframe>
           </figure>
           <p class="ss-cap">Runs in your browser on simulated data. The dock controls time: play, 1×, 10× or 60×, drag across the day, or trigger the Gate 14 incident.</p>
         </div>
 ${head2("s-13", "Prototype", "The cart iPad, step by step", "Imran’s evening shift, Cart B3, Zone B. Light on purpose: terminal glare washes out dark screens.")}
+        <p class="ss-lang-note reveal">${ico("Languages")}<span>Shown in English for this page. The cart opens in Hindi, so each screen has a small <span class="ss-hi" lang="hi">हिंदी</span> preview beside it; click it to see it full size.</span></p>
         <div class="ss-steps">
-${step(1, "Start of shift", "Tap your photo", "The cart shows the zone’s crew for this shift. No password, no typing; the supervisor still sees who took which task.", ["Faces are drawn; every person is fictional"], dev("c-signin.webp", "Cart iPad sign-in: tap your photo, with four crew portraits and Imran on cart B3 highlighted"))}
-${step(2, "Alert", "Go now, in pictures", "A chime, the Go now pill and the gate sign workers already know. Jobs are pictures with counts; the cart checks its own stock and says to stop at the store only when short.", ["2 minutes to answer before it moves on", "Listen reads it out in Hindi"], dev("c-offer.webp", "The Go now task on the cart iPad: gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first, with Listen, I'm going and Can't go"), callout("alert", "TriangleAlert", "If nobody answers in 2 minutes the task moves to the next cart; at 5 minutes the supervisor is asked to radio."))}
-${step(3, "On the way", "Store, then the washroom", "A strip of the pier with the route in blue: the store first if needed, then the door. While there, it adds anything nearly empty.", ["Fewer trips: refills come with the first one", "It knows when you reach the door"], dev("c-going.webp", "On the way: a map strip of Zone B with the route from the cart to gate 14 and the steps store, then gents gate 14"))}
-${step(4, "Cleaning", "The sensor closes it", "Each job fills as time passes. When the levels reset, the sensor closes the task; nobody has to tap done.", [], dev("c-cleaning.webp", "Cleaning: job tiles filling in, with the note that the sensor confirms it"))}
-${step(5, "Done", "Done, and on to the next", "A short confirmation with the time from alert to clean, then back to all clear.", [], dev("c-done.webp", "Done: a lime check with the sensor confirmed message and the time from alert to clean"))}
-${step(6, "Language", "Hindi first, configurable", "Hindi and English, either one first. Other languages are switched on per airport by the admin: Telugu for Hyderabad, Konkani for Goa, Bahasa for Medan.", ["Pictures, signs and colours stay the same everywhere"], dev("c-lang.webp", "The language sheet: Hindi selected, English, and greyed languages set per airport"))}
+${step(1, "Start of shift", "Tap your photo", "The cart shows the zone’s crew for this shift. No password, no typing; the supervisor still sees who took which task.", ["Faces are drawn; every person is fictional"], devHi("c-signin.webp", "Cart iPad sign-in: tap your photo, with four crew portraits and Imran on cart B3 highlighted"))}
+${step(2, "Alert", "Go now, in pictures", "A chime, the Go now pill and the gate sign workers already know. Jobs are pictures with counts; the cart checks its own stock and says to stop at the store only when short.", ["2 minutes to answer before it moves on", "Listen reads it out in Hindi"], devHi("c-offer.webp", "The Go now task on the cart iPad: gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first, with Listen, I'm going and Can't go"), callout("alert", "TriangleAlert", "If nobody answers in 2 minutes the task moves to the next cart; at 5 minutes the supervisor is asked to radio."))}
+${step(3, "On the way", "Store, then the washroom", "A strip of the pier with the route in blue: the store first if needed, then the door. While there, it adds anything nearly empty.", ["Fewer trips: refills come with the first one", "It knows when you reach the door"], devHi("c-going.webp", "On the way: a map strip of Zone B with the route from the cart to gate 14 and the steps store, then gents gate 14"))}
+${step(4, "Cleaning", "The sensor closes it", "Each job fills as time passes. When the levels reset, the sensor closes the task; nobody has to tap done.", [], devHi("c-cleaning.webp", "Cleaning: job tiles filling in, with the note that the sensor confirms it"))}
+${step(5, "Done", "Done, and on to the next", "A short confirmation with the time from alert to clean, then back to all clear.", [], devHi("c-done.webp", "Done: a lime check with the sensor confirmed message and the time from alert to clean"))}
+${step(6, "Language", "Hindi first, configurable", "Hindi and English, either one first. Other languages are switched on per airport by the admin: Telugu for Hyderabad, Konkani for Goa, Bahasa for Medan.", ["Pictures, signs and colours stay the same everywhere"], devHi("c-lang.webp", "The language sheet: English selected, Hindi, and greyed languages set per airport"))}
         </div>
 ${head2("s-14", "Prototype", "Away from the cart", "Optional channels for a worker who has stepped away. Both carry the same task in the same pictures.")}
         <div class="ss-trio reveal">
-          <div>${dev("ch-lock.webp", "Lock screen with a Time Sensitive Saaf Safar alert and I'm going and Can't go buttons", "phone")}${cap("<b>Lock screen.</b> Time Sensitive for Go now only.")}</div>
+          <div>${devHi("ch-lock.webp", "Lock screen with a Time Sensitive Saaf Safar alert and I'm going and Can't go buttons", "phone")}${cap("<b>Lock screen.</b> Time Sensitive for Go now only.")}</div>
           <div>${dev("ch-settings.webp", "Dark bento settings: tasks today, when alerts stop, my week as dots, and switches for Go now, Soon, location never shared, nothing outside the shift", "phone")}${cap("<b>Consent.</b> Opt-in, no location, off after the shift.")}</div>
-          <div>${dev("ch-watch.webp", "Watch face: Go now, gate 14, the jobs and an I'm going button, with a countdown ring", "watch")}${cap("<b>Wrist.</b> Three strong taps for Go now.")}</div>
+          <div>${devHi("ch-watch.webp", "Watch face: Go now, gate 14, the jobs and an I'm going button, with a countdown ring", "watch")}${cap("<b>Wrist.</b> Three strong taps for Go now.")}</div>
         </div>
 ${head2("s-15", "Prototype", "The zone supervisor", "A live map and a queue. The supervisor steps in only when a task stalls.")}
         <div class="ss-steps">

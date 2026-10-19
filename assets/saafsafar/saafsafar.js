@@ -50,7 +50,7 @@
   // Group every screen under the section head that comes before it, in document order.
   var groups = {};
   var current = "top";
-  document.querySelectorAll(".ss-head, .ss-col img, .ss-comp img, .ss-browser img, .ss-phone img, .ss-dev img").forEach(function (el) {
+  document.querySelectorAll(".ss-head, .ss-col img, .ss-comp img, .ss-browser img, .ss-phone img, .ss-dev img, .ss-hi-peek img").forEach(function (el) {
     if (el.classList.contains("ss-head")) { current = el.id; return; }
     (groups[current] = groups[current] || []).push(el);
     el.dataset.group = current;
@@ -122,7 +122,7 @@
     (list.length > 1 ? next : shut).focus();
     document.addEventListener("keydown", onKey);
   }
-  document.querySelectorAll(".ss-col img, .ss-comp img, .ss-browser img, .ss-phone img, .ss-dev img").forEach(function (img) {
+  document.querySelectorAll(".ss-col img, .ss-comp img, .ss-browser img, .ss-phone img, .ss-dev img, .ss-hi-peek img").forEach(function (img) {
     img.tabIndex = 0;
     img.setAttribute("role", "button");
     img.setAttribute("aria-haspopup", "dialog");
@@ -144,7 +144,7 @@
   var buttons = live.querySelectorAll(".ss-live-role");
   var mark = function (role) {
     buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.role === role)); });
-    open.href = base + "#/" + role;
+    open.href = base + "?lang=en#/" + role;
   };
   // The prototype's own window, when the page can reach it (same origin, already loaded).
   var app = function () {
@@ -158,7 +158,7 @@
       mark(role);
       if (w) { w.location.hash = "#/" + role; return; }
       frame.removeAttribute("loading");
-      frame.src = base + "?embed#/" + role;
+      frame.src = base + "?embed&lang=en#/" + role;
     });
   });
   // Keep the buttons in step with the prototype's own role tabs.

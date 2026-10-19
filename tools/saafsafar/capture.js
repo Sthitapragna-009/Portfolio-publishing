@@ -23,6 +23,8 @@ const BROWSERS = [
   'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
 ];
+// Kit blocks whose words follow the airport's language order.
+const KIT_HI = ['urgency', 'offer', 'jobs', 'cleaning', 'stock', 'signin', 'notif', 'watch'];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /* Injected into every evaluation. `S` is the app's store; `day` is today's midnight in sim minutes. */
@@ -127,35 +129,39 @@ async function main() {
   const run = (group) => !ONLY || ONLY === group;
   await viewport(stage);
 
-  if (run('cart')) {
-    console.log('cart iPad');
+  // Worker-facing screens are presented English first; the Hindi-first copies (-hi) sit beside them as previews.
+  const LANGS = [['en', ''], ['hi', '-hi']];
+
+  if (run('cart')) for (const [lang, sfx] of LANGS) {
+    console.log('cart iPad', lang);
     await open('attendant');
-    await js('at(16, 18); S.setRole("attendant"); S.emit();');
-    await crop('c-signin', '.ipad');
+    await js(`at(16, 18); S.setLang('${lang}'); S.setRole("attendant"); S.emit();`);
+    await crop('c-signin' + sfx, '.ipad');
     await js(`S.sim.signIn('B3', S.sim.personOf('B3').id);
       stepUntil(() => S.sim.cart('B3').state === 'idle' && !S.sim.cart('B3').offerId, 20, 0.25);
       S.sim.cart('B3').stock.tissue = 2;
       S.trigger(); stepUntil(() => !!S.sim.cart('B3').offerId, 10); S.sim.step(0.3); S.emit();`);
-    await crop('c-offer', '.ipad');
+    await crop('c-offer' + sfx, '.ipad');
     await js(`const c = S.sim.cart('B3'); S.sim.respond(c.offerId, 'B3', 'accept'); S.sim.step(0.6); S.emit();`);
-    await crop('c-going', '.ipad');
+    await crop('c-going' + sfx, '.ipad');
     await js(`stepUntil(() => S.sim.cart('B3').state === 'cleaning', 20); S.sim.step(2.2); S.emit();`);
-    await crop('c-cleaning', '.ipad');
+    await crop('c-cleaning' + sfx, '.ipad');
     await js(`stepUntil(() => S.sim.cart('B3').state === 'idle', 20); S.sim.step(0.2); S.emit();`);
-    await crop('c-done', '.ipad');
+    await crop('c-done' + sfx, '.ipad');
     await js(`S.sim.step(1.5); S.emit(); click('Language'); await wait(400);`);
-    await crop('c-lang', '.ipad');
+    await crop('c-lang' + sfx, '.ipad');
   }
 
-  if (run('channels')) {
-    console.log('phone and watch');
+  if (run('channels')) for (const [lang, sfx] of LANGS) {
+    console.log('phone and watch', lang);
     await open('channels');
-    await js(`at(16, 18); S.setRole('channels');
+    await js(`at(16, 18); S.setLang('${lang}'); S.setRole('channels');
       stepUntil(() => S.sim.cart('B3').state === 'idle' && !S.sim.cart('B3').offerId, 20, 0.25);
       S.trigger(); stepUntil(() => !!S.sim.cart('B3').offerId, 10); S.sim.step(0.35); S.emit();`);
-    await crop('ch-lock', '.phone', { nth: 0 });
+    await crop('ch-lock' + sfx, '.phone', { nth: 0 });
+    await crop('ch-watch' + sfx, '.watch');
+    if (sfx) continue;
     await crop('ch-settings', '.phone', { nth: 1 });
-    await crop('ch-watch', '.watch');
     await crop('ch-haptics', '.haptics');
     await crop('ch-stage', '.ch-stage');
   }
@@ -211,10 +217,13 @@ async function main() {
   if (run('kit')) {
     console.log('kit: components');
     await viewport({ w: 1900, h: 1280, dpr: 2 });
-    await open('kit', { transparent: false });
+    // #/kit/en is English first; the blocks whose words change are shot again Hindi first (-hi)
+    await open('kit/en', { transparent: false });
     const keys = await js(`return [...document.querySelectorAll('[data-kit]')].map((s) => s.dataset.kit);`);
     // the component itself, not the sheet's padding around it
     for (const k of keys) await crop(`k-${k}`, `[data-kit="${k}"] > *`);
+    await open('kit', { transparent: false });
+    for (const k of KIT_HI) await crop(`k-${k}-hi`, `[data-kit="${k}"] > *`);
     await viewport(stage);
   }
 
@@ -222,7 +231,7 @@ async function main() {
     console.log('the whole prototype');
     await viewport({ w: 1600, h: 1000, dpr: 2 });
     await open('attendant', { transparent: false });
-    await js(`at(16, 18); S.setRole('attendant'); S.sim.signIn('B3', S.sim.personOf('B3').id);
+    await js(`at(16, 18); S.setLang('en'); S.setRole('attendant'); S.sim.signIn('B3', S.sim.personOf('B3').id);
       stepUntil(() => S.sim.cart('B3').state === 'idle' && !S.sim.cart('B3').offerId, 20, 0.25);
       S.trigger(); stepUntil(() => !!S.sim.cart('B3').offerId, 10); S.sim.step(0.3); S.emit();`);
     await shot('s-shell');
@@ -241,7 +250,7 @@ async function main() {
     await crop('m-story', '.browser-view');
     await viewport(stage);
     await open('channels', { transparent: false });
-    await js(`at(16, 18); S.setRole('channels');
+    await js(`at(16, 18); S.setLang('en'); S.setRole('channels');
       stepUntil(() => S.sim.cart('B3').state === 'idle' && !S.sim.cart('B3').offerId, 20, 0.25);
       S.trigger(); stepUntil(() => !!S.sim.cart('B3').offerId, 10); S.sim.step(0.35); S.emit();`);
     await crop('m-phone', '.phone-screen', { nth: 0 });

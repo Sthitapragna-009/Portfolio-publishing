@@ -268,7 +268,9 @@
           revealObserver.unobserve(entry.target);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      // Any overlap at all, not a share of the element: a block taller than several
+      // screens (a design-system bento on a phone) can never be 12% visible.
+      { threshold: 0, rootMargin: "0px 0px -8% 0px" }
     );
 
     revealables.forEach((el) => revealObserver.observe(el));
