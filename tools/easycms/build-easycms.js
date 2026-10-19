@@ -71,10 +71,11 @@ const cap = (t) => `<p class="ec-cap">${t}</p>`;
 
 // ---------- layout helpers ----------
 // Section head: the title on the left, the phase as ghost text on the right (no pill, no new typeface).
+// "Prototype" appears once, on the live prototype itself, not on every section built from it.
 const head2 = (id, phase, title, intro) => `
         <div class="plate-head ec-head" id="${id}">
           <h2 class="display section-title">${e(title)}</h2>
-          <p class="ghost ec-ghost" aria-hidden="true">${e(phase)}</p>
+          ${phase !== "Prototype" || id === "s-11" ? `<p class="ghost ec-ghost" aria-hidden="true">${e(phase)}</p>` : ""}
           ${intro ? `<div class="section-intro"><p>${e(intro)}</p></div>` : ""}
         </div>`;
 const step = (n, label, title, text, why, shot, extra = "") => `
@@ -111,7 +112,7 @@ const comp = (file, name, rule, alt, span) => {
 
 // The design system as one bento grid: foundations first, then the real components, each a tile of the same kind.
 const designSystem = () => `
-        <div class="ec-bento reveal">
+        <div class="ec-bento">
           <section class="ec-tile ec-span-12" aria-label="Colour palette">
             <p class="ec-tile-k">Colour · one blue for actions, amber only for AI, orange only for alerts</p>
             <div class="ec-swatches">

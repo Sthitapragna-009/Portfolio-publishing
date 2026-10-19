@@ -167,3 +167,15 @@
   });
 })();
 
+
+/* Scroll reveal waits until 12% of a block is on screen. A block taller than a few screens (the
+   design system on a phone is ~9,600 px) can never reach that, so it would stay invisible: show it now. */
+(function () {
+  function check() {
+    document.querySelectorAll(".reveal:not(.in)").forEach(function (el) {
+      if (el.offsetHeight > window.innerHeight * 3) el.classList.add("in");
+    });
+  }
+  check();
+  window.addEventListener("resize", check);
+})();
