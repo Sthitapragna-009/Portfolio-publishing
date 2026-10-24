@@ -120,28 +120,42 @@
   </div>
 
   <!-- ===================== ABOUT ===================== -->
-  <section class="section" id="about">
-    <div class="wrap">
-      <div class="about-grid">
-        <div class="about-portrait reveal">
-          <img src="assets/portrait.jpg" alt="KSP standing in the brick arches at IIT Roorkee" loading="lazy" />
+  <!-- The portrait opens out from a small panel to the full arches shot,
+       then settles into its column beside the bio, with my name riding
+       on the photo throughout (script.js, "About scroll"). Without JS or with reduced motion, .as-slot shows the
+       static portrait. -->
+  <section class="about-scroll" id="about" aria-labelledby="aboutTitle">
+    <div class="as-track" id="aboutScroll">
+      <div class="as-stage">
+        <p class="as-ghost" aria-hidden="true">About me</p>
+
+        <div class="as-panel" aria-hidden="true">
+          <img src="assets/portrait.jpg" width="1200" height="1600" alt="" />
+          <div class="as-shade"></div>
+          <p class="as-name">
+            <span class="as-name-iam"><span>I am</span></span>
+            <span class="as-name-line as-name-line--1"><span>Sthitapragna</span></span>
+            <span class="as-name-line as-name-line--2"><span>Kollepara</span></span>
+          </p>
         </div>
 
-        <div class="about-body reveal" data-delay="1">
-          <p class="ghost ghost--inline" aria-hidden="true">About me</p>
-          <h2 class="about-statement">
-            Designer with roots in industrial design.
-          </h2>
-          <p>
-            Applying hands-on prototyping and research-driven methods across
-            systems, mobility, and UI/UX.
-          </p>
-          <p>
-            Passionate about blending craft with function, and capturing
-            narratives through photography.
-          </p>
-          <p class="tools-label">Tools</p>
-          <ul class="tools">
+        <div class="wrap as-grid">
+          <figure class="as-slot">
+            <img src="assets/portrait.jpg" width="1200" height="1600" alt="Sthitapragna standing in the brick arches at IIT Roorkee" />
+            <figcaption class="as-slot-name" aria-hidden="true">
+              <span class="as-name-iam"><span>I am</span></span>
+              <span class="as-name-line"><span>Sthitapragna</span></span>
+              <span class="as-name-line"><span>Kollepara</span></span>
+            </figcaption>
+          </figure>
+
+          <div class="as-body about-body">
+            <p class="eyebrow as-item">About me</p>
+            <h2 class="about-statement as-item" id="aboutTitle"><span class="sr-only">I am Sthitapragna Kollepara. </span>I design products, systems and the services that connect them.</h2>
+            <p class="as-item">Applying hands-on prototyping and research-driven methods across systems, mobility, and UI/UX.</p>
+            <p class="as-item">Passionate about blending craft with function, and capturing narratives through photography.</p>
+            <p class="tools-label as-item">Tools</p>
+            <ul class="tools as-item">
             <li class="tool">
               <span class="tool-mark" aria-hidden="true">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
@@ -192,6 +206,7 @@
               <span class="tool-name">Vizcom</span>
             </li>
           </ul>
+          </div>
         </div>
       </div>
     </div>

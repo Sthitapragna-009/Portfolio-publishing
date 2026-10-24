@@ -1151,36 +1151,223 @@ ul { margin: 0; padding: 0; list-style: none; }
    ABOUT
    ============================================================ */
 
-.about-grid {
+/* The portrait opens out and settles. While the track scrolls past, the
+   stage is pinned and script.js ("About scroll") moves one clipped copy of
+   the photo through three frames: a small panel over the ghost word, the
+   full arches shot at hero width, and finally the left column, where it
+   lands exactly on .as-slot. Until script.js adds .is-live (no JS, or
+   reduced motion), the static portrait in .as-slot is all there is. */
+.about-scroll {
+  position: relative;
+  /* clip, not hidden: hidden would make this the sticky stage's scroller. */
+  overflow: clip;
+}
+
+.as-stage { position: relative; }
+
+.as-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
   gap: clamp(2rem, 6vw, 5rem);
   align-items: center;
+  padding-block: var(--section);
 }
 
-.about-portrait {
+.as-slot {
   position: relative;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-}
-
-.about-portrait img {
+  margin: 0;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background: var(--bg-deep);
+}
+.as-slot img {
+  display: block;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  /* object-position only pans the crop; the scale is what actually enlarges
-     me in frame. Together they drop most of the arch headspace above. */
+  /* Drops the arch headspace so I fill the frame, as the old card did. */
   object-position: 50% 88%;
-  transform: scale(1.52);
+  transform: scale(1.5);
   transform-origin: 50% 46%;
-  filter: grayscale(1) contrast(1.06);
-  transition: transform 0.9s var(--ease), filter 0.6s var(--ease);
 }
 
-.about-portrait:hover img {
-  transform: scale(1.58);
-  filter: grayscale(0.35) contrast(1.02);
+.as-body .eyebrow { margin: 0 0 0.9rem; }
+.as-body .about-statement {
+  font-size: clamp(1.5rem, 2.9vw, 2.6rem);
+  line-height: 1;
+  max-width: 19ch;
+}
+
+.as-ghost,
+.as-panel { display: none; }
+
+/* ---------- Live ---------- */
+
+.about-scroll.is-live .as-track { height: 250svh; }
+
+.about-scroll.is-live .as-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+}
+
+.about-scroll.is-live .as-grid {
+  width: 100%;
+  /* Clear the fixed nav; the stage is exactly one screen tall. */
+  padding-block: calc(var(--nav-h, 4.5rem) + 1rem) 1.5rem;
+}
+
+.about-scroll.is-live .as-slot {
+  width: min(100%, calc(72svh * 0.8));
+  background: none;
+}
+/* Played through (or met on the way up): no pin, just the finished frame
+   in the normal flow. script.js keeps the view still when it switches. */
+.about-scroll.is-live.is-done .as-track { height: auto; }
+.about-scroll.is-live.is-done .as-stage { position: relative; }
+
+/* Kept for layout and for screen readers; the panel draws it. */
+.about-scroll.is-live .as-slot img { opacity: 0; }
+
+.about-scroll.is-live .as-ghost {
+  display: grid;
+  place-items: center;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding-top: var(--nav-h, 4.5rem);
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  font-size: clamp(4rem, 15vw, 15rem);
+  color: var(--ghost-ink);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  opacity: var(--g, 0);
+  transform: scale(calc(0.96 + 0.04 * var(--g, 0)));
+}
+
+.about-scroll.is-live .as-panel {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  /* Keeps each frame's repaint inside the panel. */
+  contain: strict;
+}
+/* Drawn at its natural size and placed by transform alone, so the move
+   stays on the compositor; the panel's clip-path is the frame. */
+.as-panel img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1200px;
+  height: 1600px;
+  max-width: none;
+  transform-origin: 0 0;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* ---------- Name on the photo ----------
+   White on a soft bottom fade, in both themes, since it always sits on the
+   picture. In the panel it is set once at 100px and script.js scales and
+   places it with the frame, so it rides the photo from open to settled. */
+.as-name,
+.as-slot-name {
+  position: absolute;
+  margin: 0;
+  color: #f9f9f9;
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.as-name {
+  left: 0;
+  top: 0;
+  font-size: 100px;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+.as-name-iam,
+.as-name-line { display: block; }
+.as-name-iam {
+  font-family: var(--font-body);
+  font-size: 0.24em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  margin-bottom: 0.35em;
+}
+/* Each line rises out of a slot at its baseline. */
+.as-name-line {
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  clip-path: inset(-0.3em -0.2em 0 -0.2em);
+}
+.as-name-iam > span,
+.as-name-line > span { display: inline-block; }
+.as-name .as-name-iam > span {
+  opacity: var(--ni, 1);
+  transform: translateY(calc((1 - var(--ni, 1)) * 0.6em));
+}
+.as-name .as-name-line--1 > span { transform: translateY(calc((1 - var(--n1, 1)) * 110%)); }
+.as-name .as-name-line--2 > span { transform: translateY(calc((1 - var(--n2, 1)) * 110%)); }
+
+.as-shade {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100px;
+  height: 100px;
+  transform-origin: 0 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+  opacity: var(--sh, 1);
+}
+
+/* Static portrait (no JS / reduced motion): the same name, laid out. */
+.as-slot::after {
+  content: "";
+  position: absolute;
+  inset: 45% 0 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6));
+}
+.as-slot-name {
+  z-index: 1;
+  left: 6%;
+  bottom: 6%;
+  font-size: clamp(1.75rem, 4.4vw, 3.75rem);
+}
+.about-scroll.is-live .as-slot::after,
+.about-scroll.is-live .as-slot-name { visibility: hidden; }
+
+.about-scroll.is-live .as-item {
+  opacity: var(--t, 1);
+  transform: translateY(calc((1 - var(--t, 1)) * 1.5rem));
+}
+
+/* Phones and narrow tablets: one column and no pin. The photo still opens
+   up as it comes into view; the text follows in the normal flow. */
+@media (max-width: 860px) {
+  .as-grid { grid-template-columns: 1fr; }
+  .about-scroll.is-live .as-track { height: auto; }
+  .about-scroll.is-live .as-stage { position: relative; height: auto; display: block; }
+  .about-scroll.is-live .as-grid { padding-block: var(--section); }
+  .about-scroll.is-live .as-slot { width: 100%; }
+  .about-scroll.is-live .as-ghost { display: none; }
 }
 
 .about-statement {
@@ -1199,21 +1386,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   max-width: 54ch;
 }
 
-/* The watermark now sits in the text column instead of over the section.
-   It has to out-specify .about-body p, which would otherwise repaint it in
-   body ink, and it drops the negative margin the full-width version uses to
-   tuck the heading under itself. */
-.about-body .ghost--inline {
-  text-align: left;
-  margin: 0 0 0.4rem;
-  max-width: none;
-  line-height: 0.95;
-  font-size: clamp(1.75rem, 3.6vw, 3rem);
-  color: var(--ghost-ink);
-}
 .about-body p + p { margin-top: 1.1rem; }
 
-.about-actions { margin-top: 2.25rem; }
 
 /* ============================================================
    WORK
@@ -2245,8 +2419,6 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 
 @media (max-width: 860px) {
-  .about-grid { grid-template-columns: 1fr; }
-  .about-portrait { max-width: 26rem; }
   .work-grid { grid-template-columns: 1fr; }
   .project.is-wide { grid-column: span 1; }
   .project.is-wide .project-media { aspect-ratio: 16 / 10; }
@@ -9556,7 +9728,7 @@ body.is-locked { overflow: hidden; }
   align-items: center;
   gap: 0.6rem;
   padding: 0.6rem 0;
-  border-bottom: 1px dotted color-mix(in srgb, var(--ink) 22%, transparent);
+  border-bottom: 1px dotted color-mix(in srgb, var(--ink) 14%, transparent);
   font-size: 0.875rem;
   line-height: 1.35;
   color: var(--ink);

@@ -276,6 +276,238 @@
     revealables.forEach((el) => revealObserver.observe(el));
   }
 
+  /* ---------- About scroll ----------
+     One clipped copy of the portrait moves through three frames as the
+     pinned track scrolls: a small panel, the full arches shot, then the
+     left column (.as-slot), where it lands on the static image's spot.
+     Each frame is a rect on the stage plus the region of the photo it
+     shows; both are blended, and the photo is cover-fitted to the result.
+
+     Smoothness: geometry is measured once (and on resize), so a frame
+     only reads scrollY. Progress then eases toward the scroll position
+     instead of jumping to it, which hides the steps of a mouse wheel.
+
+     One way only: it plays on the way down. Once it has finished, or the
+     moment you scroll back up, the section switches to "done": the pin is
+     released and the finished frame sits in the normal flow, so scrolling
+     up just scrolls. It re-arms out of sight, once no more than the empty
+     top of the section shows again, ready to play on the next pass down. */
+  const aboutTrack = document.getElementById("aboutScroll");
+  if (aboutTrack && !reduced) {
+    const section = aboutTrack.closest(".about-scroll");
+    const stage = aboutTrack.querySelector(".as-stage");
+    const panel = stage.querySelector(".as-panel");
+    const photo = panel.querySelector("img");
+    const name = panel.querySelector(".as-name");
+    const shade = panel.querySelector(".as-shade");
+    const slot = stage.querySelector(".as-slot");
+    const ghost = stage.querySelector(".as-ghost");
+    const grid = stage.querySelector(".as-grid");
+    const items = [...stage.querySelectorAll(".as-item")];
+    const nav = document.getElementById("nav");
+    const wide = window.matchMedia("(min-width: 861px)");
+    const PW = 1200, PH = 1600;
+    // Regions of the photo, as fractions of the frame.
+    const ME = { x: 0.22, y: 0.42, w: 0.64, h: 0.58 };
+    const ARCHES = { x: 0, y: 0.2, w: 1, h: 0.8 };
+    // Seconds for the eased progress to close most of the gap to the scroll.
+    const LAG = 0.11;
+    // Idle time after the last scroll before a finished scene unpins.
+    const SETTLE_MS = 180;
+
+    const clamp = (t) => Math.min(1, Math.max(0, t));
+    const seg = (p, a, b) => clamp((p - a) / (b - a));
+    const out = (t) => 1 - Math.pow(1 - t, 3);
+    const inOut = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+    const lerp = (a, b, t) => a + (b - a) * t;
+    const mix = (A, B, t) => ({ x: lerp(A.x, B.x, t), y: lerp(A.y, B.y, t), w: lerp(A.w, B.w, t), h: lerp(A.h, B.h, t) });
+
+    section.classList.add("is-live");
+
+    // ---- Geometry, in stage coordinates (constant while pinned).
+    let G = null;
+    const measure = () => {
+      const vh = window.innerHeight;
+      const navH = nav ? nav.offsetHeight : 0;
+      stage.style.setProperty("--nav-h", navH + "px");
+      const st = stage.getBoundingClientRect();
+      const sl = slot.getBoundingClientRect();
+      const tr = aboutTrack.getBoundingClientRect();
+      const gs = getComputedStyle(grid);
+      const gr = grid.getBoundingClientRect();
+      const gl = gr.left - st.left + parseFloat(gs.paddingLeft);
+      const gw = gr.width - parseFloat(gs.paddingLeft) - parseFloat(gs.paddingRight);
+      const h0 = vh * 0.34;
+      G = {
+        vh,
+        w: st.width,
+        h: st.height,
+        trackTop: tr.top + window.scrollY,
+        run: tr.height - vh,
+        slotTop: sl.top + window.scrollY,
+        end: { x: sl.left - st.left, y: sl.top - st.top, w: sl.width, h: sl.height },
+        // The open frame spans the page's content width, like the hero band.
+        big: { x: gl, y: navH + 12, w: gw, h: vh - navH - 36 },
+        start: { x: st.width / 2 - h0 * 0.4, y: navH + (vh - navH - h0) / 2, w: h0 * 0.8, h: h0 },
+      };
+      // How far down the stage nothing is drawn, in either state: the
+      // top of the settled card, the small panel, or the ghost word.
+      const gf = parseFloat(getComputedStyle(ghost).fontSize) || 0;
+      G.quiet = Math.max(0, Math.min(G.end.y, G.start.y, (vh + navH) / 2 - gf * 0.5) - 8);
+      // The name block at its 100px setting; script scales it from here.
+      G.nameW = name.offsetWidth;
+      G.nameH = name.offsetHeight;
+    };
+
+    // Where the scroll says we should be, 0..1.
+    const target = () => {
+      const y = window.scrollY;
+      if (wide.matches) return G.run > 0 ? clamp((y - G.trackTop) / G.run) : 1;
+      return clamp((G.vh - (G.slotTop - y)) / (G.vh * 0.8));
+    };
+
+    const paint = (p) => {
+      let R, F, rad = 16, g = 0, t = null, b = 1, ni, n1, n2, sh;
+      if (wide.matches) {
+        const a = inOut(seg(p, 0, 0.36));
+        b = inOut(seg(p, 0.5, 0.86));
+        R = mix(mix(G.start, G.big, a), G.end, b);
+        F = mix(mix(ME, ARCHES, a), ME, b);
+        // Hero corners while open, card corners small and settled.
+        rad = lerp(lerp(16, 8, a), 16, b);
+        g = 1 - seg(p, 0.04, 0.28);
+        // The name rises in as the frame opens, then stays with the photo.
+        sh = seg(p, 0.12, 0.28);
+        ni = out(seg(p, 0.16, 0.28));
+        n1 = out(seg(p, 0.2, 0.34));
+        n2 = out(seg(p, 0.25, 0.39));
+        // Six items; the last one lands exactly at the end of the track.
+        t = (i) => out(seg(p, 0.62 + i * 0.04, 0.8 + i * 0.04));
+      } else {
+        // No pin: open from 72% to the full slot as it comes into view.
+        const k = lerp(0.72, 1, out(p));
+        const E = G.end;
+        R = { x: E.x + (E.w * (1 - k)) / 2, y: E.y + (E.h * (1 - k)) / 2, w: E.w * k, h: E.h * k };
+        F = ME;
+        sh = seg(p, 0.2, 0.5);
+        ni = out(seg(p, 0.3, 0.6));
+        n1 = out(seg(p, 0.35, 0.7));
+        n2 = out(seg(p, 0.4, 0.75));
+      }
+
+      // Name: about 62% of the open frame's width, 84% of the settled card's,
+      // tucked into the bottom-left corner.
+      const ns = (R.w * lerp(0.62, 0.84, b)) / G.nameW;
+      const pad = R.w * lerp(0.03, 0.065, b);
+      name.style.transform = `translate3d(${(R.x + pad).toFixed(2)}px, ${(R.y + R.h - pad - G.nameH * ns).toFixed(2)}px, 0) scale(${ns.toFixed(5)})`;
+      shade.style.transform = `translate3d(${R.x.toFixed(2)}px, ${(R.y + R.h * 0.45).toFixed(2)}px, 0) scale(${(R.w / 100).toFixed(4)}, ${((R.h * 0.55) / 100).toFixed(4)})`;
+
+      // Cover-fit region F into rect R.
+      const s = Math.max(R.w / (F.w * PW), R.h / (F.h * PH));
+      const px = R.x + R.w / 2 - (F.x + F.w / 2) * PW * s;
+      const py = R.y + R.h / 2 - (F.y + F.h / 2) * PH * s;
+      const f = (n) => n.toFixed(2);
+      panel.style.clipPath = `inset(${f(R.y)}px ${f(G.w - R.x - R.w)}px ${f(G.h - R.y - R.h)}px ${f(R.x)}px round ${f(rad)}px)`;
+      photo.style.transform = `translate3d(${f(px)}px, ${f(py)}px, 0) scale(${s.toFixed(5)})`;
+      stage.style.setProperty("--g", g.toFixed(3));
+      stage.style.setProperty("--sh", sh.toFixed(3));
+      stage.style.setProperty("--ni", ni.toFixed(3));
+      stage.style.setProperty("--n1", n1.toFixed(3));
+      stage.style.setProperty("--n2", n2.toFixed(3));
+      items.forEach((el, i) => el.style.setProperty("--t", t ? t(i).toFixed(3) : "1"));
+    };
+
+    // ---- Modes. "armed": pinned and scroll-driven. "done": unpinned, final.
+    let done = false;
+    const finish = () => {
+      if (done) return;
+      // Keep the stage where it is on screen while the track collapses
+      // under it: shift the scroll by however far the stage was pinned.
+      const tr = aboutTrack.getBoundingClientRect().top;
+      const st = stage.getBoundingClientRect().top;
+      done = true;
+      section.classList.add("is-done");
+      window.scrollTo({ top: window.scrollY + (tr - st), behavior: "instant" });
+      lastY = window.scrollY;
+      measure();
+      cur = 1;
+      paint(1);
+    };
+    const rearm = () => {
+      // Only ever called with the section below the screen, so growing the
+      // track back moves nothing in view.
+      done = false;
+      section.classList.remove("is-done");
+      measure();
+      cur = 0;
+      paint(0);
+    };
+    // Out of sight for re-arming: only the empty top of the stage (or, on
+    // phones, none of the photo) is on screen, so the swap can't be seen.
+    const below = () => wide.matches
+      ? aboutTrack.getBoundingClientRect().top > window.innerHeight - G.quiet
+      : slot.getBoundingClientRect().top > window.innerHeight;
+
+    // ---- Eased loop: runs only while catching up, then stops. Progress
+    // never moves backwards; scrolling up is handled by the modes instead.
+    let cur = 0, running = false, last = 0, lastY = window.scrollY, idle = 0;
+    const step = (now) => {
+      const dt = Math.min(0.05, (now - last) / 1000 || 0.016);
+      last = now;
+      const goal = Math.max(cur, target());
+      cur += (goal - cur) * (1 - Math.exp(-dt / LAG));
+      if (Math.abs(goal - cur) < 0.0004) cur = goal;
+      paint(cur);
+      if (cur !== goal) requestAnimationFrame(step);
+      else { running = false; if (cur === 1) settle(); }
+    };
+    const kick = () => {
+      if (!running) { running = true; last = performance.now(); requestAnimationFrame(step); }
+    };
+
+    // Played through: unpin once the glide has landed and scrolling has paused.
+    const settle = () => {
+      clearTimeout(idle);
+      idle = setTimeout(() => { if (!done && wide.matches && cur === 1 && target() === 1) finish(); }, SETTLE_MS);
+    };
+
+    const onScroll = () => {
+      const y = window.scrollY;
+      const up = y < lastY - 1;
+      lastY = y;
+      if (below()) {
+        if (done || cur > 0) rearm();
+        return;
+      }
+      if (!wide.matches) { if (!up) kick(); return; }
+      if (done) return;
+      // On the way up: no rewinding. Jump to the finished frame and unpin.
+      if (up && cur > 0.02) { finish(); return; }
+      if (!up) kick();
+      settle();
+    };
+
+    // Resizes and layout changes snap rather than glide.
+    const reset = () => {
+      if (done && !wide.matches) { done = false; section.classList.remove("is-done"); }
+      measure();
+      if (done) { paint(1); return; }
+      cur = target();
+      paint(cur);
+      // Arriving part-way in or past it (a reload, a #work link) counts as
+      // having played: show the finished frame without a pin.
+      if (wide.matches && cur > 0) finish();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", reset);
+    wide.addEventListener("change", reset);
+    // Fonts and images above can shift the track once they load.
+    window.addEventListener("load", reset);
+    if (document.fonts) document.fonts.ready.then(reset);
+    reset();
+  }
+
   /* ---------- Capabilities accordion ---------- */
   const capList = document.getElementById("capList");
 
