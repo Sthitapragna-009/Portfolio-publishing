@@ -174,6 +174,9 @@ async function main() {
     await shot('d-editor-paste');
     await js(`click('Fill the form'); await wait(1200); document.querySelector('[data-help="title"]').scrollIntoView({ block: 'center' }); window.scrollBy(0, 120); await wait(400);`);
     await shot('d-editor-filled');
+    // The one review step: the strip walks through the helper's fields one at a time
+    await js(`click('Check them one by one'); await wait(900);`);
+    await shot('d-editor-reviewstep');
     await js(`click('Check before sending'); await wait(900); document.querySelector('[data-help="check-results"]').scrollIntoView({ block: 'start' }); window.scrollBy(0, -110); await wait(400);`);
     await shot('d-editor-check');
     await js(`for (let i = 0; i < 6; i++) { if (!click('Looks right')) break; await wait(150); }
@@ -189,13 +192,12 @@ async function main() {
     await js(`click('Go to the part to fix'); await wait(1400);`);
     await shot('d-returned-field');
     await open('edit/e-viksit');
-    await js(`document.querySelector('.help-btn').click(); await wait(600);
-      const input = document.getElementById('help-q'); setVal(input, 'how do I add a poster?'); input.form.requestSubmit(); await wait(400);
-      document.querySelector('.help-answer button')?.click(); await wait(1400);`);
+    // Help now lives in the assistant: ask it about this screen
+    await js(`document.querySelector('.ai-btn').click(); await wait(700); click('Help with this screen'); await wait(900);`);
     await shot('d-help');
     await open('home');
     await js(`document.querySelector('.ai-btn').click(); await wait(700); click('What needs my attention?'); await wait(500);
-      click('Draft a notice from a message'); await wait(500); click('Use an example message'); await wait(900);`);
+      click('Draft an announcement from a message'); await wait(500); click('Use an example message'); await wait(900);`);
     await shot('d-assistant');
     await open('website');
     await shot('d-website');
@@ -210,9 +212,10 @@ async function main() {
     await open('edit/n-associate');
     await js(`const exp = document.getElementById('f-expiry'); setVal(exp, exp.value.replace(/-(\\d\\d)$/, (m, d) => '-' + String(Math.min(28, +d + 7)).padStart(2, '0')));
       setVal('#f-body', 'One position on the GIS-based master plan project. The last date has been extended by a week. Eligibility, pay and how to apply are in the attached advertisement.');
-      await wait(1200); click('Send to the Coordinator for checking'); await wait(600); click('Send anyway'); await wait(1000);
-      localStorage.setItem('easycms:prefs:v1', JSON.stringify(Object.assign(JSON.parse(localStorage.getItem('easycms:prefs:v1')), { role: 'reviewer' })));`);
-    await send('Page.navigate', { url: `${APP}?r=${Date.now()}#/review` });
+      await wait(1200); click('Send to the Coordinator for checking'); await wait(600); click('Send anyway'); await wait(1000);`);
+    // Switch to the reviewer through the URL. Writing the role into storage here lost the race: the editor's
+    // app saved its own prefs while unloading, and the queue and detail shots came out as the editor's home.
+    await send('Page.navigate', { url: `${APP}?as=reviewer&r=${Date.now()}#/review` });
     await sleep(1400);
     await shot('d-review-queue');
     await js(`location.hash = '#/review/n-associate'; await wait(1300);`);
@@ -299,8 +302,10 @@ async function main() {
 
     // Stateful pieces, cropped where they live.
     await open('home', th);
-    await crop('k-tasks' + sfx, '.panel.tasks', { pad: 0 });
-    await crop('k-health' + sfx, '.panel.health', { pad: 0 });
+    await crop('k-counts' + sfx, '.home2-counts', { pad: 0 });
+    await crop('k-tasks' + sfx, '.home2-queue', { pad: 0 });
+    await crop('k-board' + sfx, '.home2-board', { pad: 0 });
+    await crop('k-health' + sfx, '.home2-health', { pad: 0 });
     await crop('k-rail' + sfx, '.rail', { pad: 0, maxH: 560 });
     await open('updates', th);
     await crop('k-table' + sfx, '.panel.table-panel', { pad: 0, maxH: 360 });

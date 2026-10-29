@@ -577,3 +577,132 @@
 .ec-tile--strip .ec-tile-k { flex-basis: 100%; }
 .ec-mark { align-items: center; text-align: center; }
 @media (max-width: 1000px) { .ec-row2 { grid-row: auto; } }
+
+/* ---------- UX laws and heuristics, beside each screen ---------- */
+.ec-laws { margin-top: 1rem; padding: 1rem 1.1rem; border-radius: 16px; background: var(--surface-hi); }
+.ec-laws-k { margin: 0 0 0.5rem; font-size: 0.86rem; font-weight: 650; color: var(--ink); }
+.ec-laws ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.45rem; }
+.ec-laws li { font-size: 0.88rem; line-height: 1.45; color: var(--ink-dim); }
+.ec-laws li b { color: var(--ink); font-weight: 650; margin-right: 0.2rem; }
+/* Beside a group of screens the box spans the column under them */
+.ec-wiz + .ec-laws, .ec-pair + .ec-laws { margin-top: 1.25rem; }
+
+/* ======================================================================================
+   Taste pass (tasteskill v2 house rules, brand kept): no mono outside code, no tracked
+   capitals, no eyebrows above headings, no gradients, no shadows at rest, body at 16px.
+   The portfolio shell (header, footer, display faces) and the ghost phase labels stay,
+   so this page keeps in step with the other case studies.
+   ====================================================================================== */
+[data-page="easycms"] { --ec-mono: var(--ec-ui); }
+
+/* Sentence case, the text face, 13px at the smallest */
+[data-page="easycms"] :is(.ec-kit-k, .ec-tile-k, .ec-bento-k, .ec-metric small, .ec-table th, .ec-pill, .ec-step-n, .ec-persona-role,
+  .ec-personas-k, .ec-rule .ec-n, .ec-type-row small, .ec-sw span, .ec-flags-k, .ec-car-count, .ec-zoom-count, .ec-src) {
+  text-transform: none; letter-spacing: 0; font-family: var(--ec-ui);
+}
+[data-page="easycms"] :is(.ec-kit-k, .ec-tile-k, .ec-bento-k) { font-size: 0.875rem; font-weight: 650; color: var(--ink); }
+[data-page="easycms"] :is(.ec-metric small, .ec-table th, .ec-pill, .ec-type-row small, .ec-sw span, .ec-persona-role) { font-size: 0.8125rem; }
+[data-page="easycms"] .ig .t-caps { text-transform: none; letter-spacing: 0; }
+[data-page="easycms"] .ec-j-decision::before { text-transform: none; letter-spacing: 0; }
+
+/* The step label goes under its heading, not above it */
+[data-page="easycms"] .ec-step-text h3 { order: 1; }
+[data-page="easycms"] .ec-step-n { order: 2; font-size: 0.875rem; color: var(--ink-dim); }
+[data-page="easycms"] .ec-step-text > :not(h3):not(.ec-step-n) { order: 3; }
+
+/* Flat colour only */
+[data-page="easycms"] .ec-ia-col--editor { background: #0047d6; }
+[data-page="easycms"] .ec-avatar { background: #0047d6; }
+[data-page="easycms"] .p--violet { background: #0047d6; }
+[data-page="easycms"] .ec-g--ai .ec-i { background: #ffc233; }
+[data-page="easycms"] .ec-ds .ec-icons span.duo, [data-page="easycms"] .ec-tile .ec-icons span.duo { background: #0047d6; }
+[data-page="easycms"] .ec-journey-line::before { background: var(--ec-royal, #0056ff); }
+[data-page="easycms"] .ec-meter::after { background: var(--ec-royal, #0056ff); }
+
+/* No shadows on things at rest; menus and the full-size viewer still float */
+[data-page="easycms"] :is(.ec-browser, .ec-phone, .ec-cover, .ec-col, .ec-hero-btn, .ec-hero-btn:hover) { box-shadow: none; }
+[data-page="easycms"] :is(.ec-mark img, .ec-moods svg, .ec-hero-face, .ec-hero-logo, .ec-marks img) { filter: none; }
+[data-page="easycms"] .ec-dot-org { box-shadow: none; }
+
+/* Running text at 16px; captions no smaller than 13px */
+[data-page="easycms"] :is(.ec-step-text p:not(.ec-step-n), .section-intro p, .ec-tile-note, .case-brief-val p, .ec-laws li) { font-size: 1rem; line-height: 1.55; }
+[data-page="easycms"] :is(.ec-cap, .ec-tile-note, .ec-laws li, .ec-moods span, .ec-comp figcaption) { font-size: max(0.8125rem, 0.86rem); }
+
+/* Section titles stay within two lines on a phone */
+@media (max-width: 480px) {
+  [data-page="easycms"] .section-title { font-size: 1.625rem; }
+}
+
+/* Taste pass: journey nodes sit on the line without a halo ring */
+.ec-j-node { box-shadow: none; }
+
+/* Taste pass, second round */
+/* The contact card is one flat ink colour, without a glow */
+[data-page="easycms"] .contact-card { background: #10142a; box-shadow: none; }
+[data-page="easycms"] .contact-card :is(.btn, .btn-primary, a) { background-image: none; box-shadow: none; filter: none; }
+/* No phase pill above section titles: the ghost label already names the phase */
+[data-page="easycms"] .section-title[data-phase]::before { content: none; }
+/* Results read number first, then what it counts */
+[data-page="easycms"] .ec-metric { display: flex; flex-direction: column; }
+[data-page="easycms"] .ec-metric b { order: -1; }
+/* Nothing meant to be read below 13px */
+[data-page="easycms"] :is(.ec-scale-n, .ec-bubble span, .ec-bubble small, .ec-hyps em, .ec-f-src, .ec-moods span, .ec-shape span,
+  .ec-j-phase, .ec-cap, .ec-sw span, .ec-type-row small) { font-size: 0.8125rem; }
+[data-page="easycms"] :is(.ec-j-decision, .ec-gate .ec-never)::before { font-size: 0.8125rem; }
+[data-page="easycms"] :is(.ec-menu small, .ec-tags li, .ec-ia-list li small, .ec-field small, .ec-field em) { font-size: 0.8125rem; }
+[data-page="easycms"] :is(.btn, .btn-primary, .btn-primary:hover) { box-shadow: none; background-image: none; }
+[data-page="easycms"] :is(.ec-chip, .ec-state span, .ec-url, .ec-url mark, .ec-type-row span, .contact-txt small) { font-size: 0.8125rem; }
+/* On a phone the section title takes the full width; the ghost phase label drops under it */
+@media (max-width: 480px) {
+  [data-page="easycms"] .ec-head { grid-template-columns: minmax(0, 1fr); }
+  [data-page="easycms"] .ec-head > .section-title { grid-column: 1; max-width: none; }
+}
+@media (max-width: 480px) {
+  [data-page="easycms"] .ec-head > .ec-ghost { grid-column: 1; grid-row: auto; }
+}
+[data-page="easycms"] .nav-links .nav-pill--photo { background: #10142a; box-shadow: none; }
+[data-page="easycms"] .lightbox-nav { background: var(--ec-royal, #0056ff); background-image: none; }
+[data-page="easycms"] :is(.ec-loop span, .ec-browser-bar span) { font-size: 0.8125rem; }
+[data-page="easycms"] .ec-type .ec-type-row span, [data-page="easycms"] .ec-type-row > span { font-size: 0.8125rem; }
+
+/* Taste pass: the four rows of identical icon cards, recomposed.
+   Personas: one row each, who they are on the left and their scales on the right, separated by space. */
+[data-page="easycms"] .ec-personas { grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 4vw, 3rem); }
+[data-page="easycms"] .ec-persona { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 0.5rem clamp(1.5rem, 4vw, 4rem); padding-top: 0; border-top: 0; }
+[data-page="easycms"] .ec-persona-who { display: grid; align-content: start; gap: 0.4rem; }
+[data-page="easycms"] .ec-persona h3 { font-size: clamp(1.5rem, 2.4vw, 2rem); }
+[data-page="easycms"] .ec-persona-role { font-weight: 650; color: var(--accent-text); }
+[data-page="easycms"] .ec-persona:nth-of-type(3) .ec-persona-role { color: var(--ink-dim); }
+[data-page="easycms"] .ec-persona-goal { font-size: 1rem; }
+[data-page="easycms"] .ec-persona-traits { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 1.5rem; align-content: start; }
+
+/* Roles: the editor is the one filled block; the reviewer and Computer Centre are plain text beside it */
+[data-page="easycms"] .ec-ia { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); grid-template-rows: auto 1fr; gap: 2rem clamp(1.5rem, 4vw, 3.5rem); }
+[data-page="easycms"] .ec-ia-col--editor { grid-row: 1 / span 2; padding: clamp(1.25rem, 2.5vw, 2rem); }
+[data-page="easycms"] .ec-ia-col--editor .ec-ia-list li { font-size: 1.05rem; padding: 0.7rem 0.9rem; }
+[data-page="easycms"] .ec-ia-col:not(.ec-ia-col--editor) { --ink: inherit; --ink-dim: inherit; --ink-faint: inherit; --accent-text: inherit; background: none; padding: 0; border-radius: 0; }
+[data-page="easycms"] .ec-ia-col:not(.ec-ia-col--editor) .ec-ia-list li { background: none; padding: 0.35rem 0; font-size: 1rem; }
+[data-page="easycms"] .ec-ia-col p { font-size: 1rem; }
+
+/* Workflow: the states sit on one track instead of five boxes */
+[data-page="easycms"] .ec-state { --ink: inherit; --ink-dim: inherit; --ink-faint: inherit; --accent-text: inherit; position: relative; z-index: 1; background: none; padding: 0 1rem 0 0; border-radius: 0; }
+[data-page="easycms"] .ec-state:not(:last-child)::after { content: none; }
+[data-page="easycms"] .ec-flow::before { content: ""; position: absolute; left: 0; right: 18%; top: calc(1.4rem + 0.85rem); height: 2px; background: var(--ink-faint); opacity: 0.45; }
+[data-page="easycms"] .ec-state b { font-size: 1.05rem; }
+[data-page="easycms"] .ec-state > span:last-child { font-size: 1rem; }
+
+/* Where it stands: the next step leads in large type; built and not yet sit beside it */
+[data-page="easycms"] .ec-status { grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr); align-items: start; }
+[data-page="easycms"] .ec-status-col { padding-top: 0; border-top: 0; }
+[data-page="easycms"] .ec-status .ec-next-big { font-size: clamp(1.5rem, 2.6vw, 2.125rem); line-height: 1.2; }
+[data-page="easycms"] .ec-status-col li { font-size: 1rem; }
+[data-page="easycms"] .ec-status-col .ec-kit-k { font-size: 1rem; }
+[data-page="easycms"] .ec-status-col--done .ec-kit-k .ec-i { color: #0d6b45; }
+
+@media (max-width: 760px) {
+  [data-page="easycms"] :is(.ec-persona, .ec-ia, .ec-status) { grid-template-columns: minmax(0, 1fr); }
+  [data-page="easycms"] .ec-ia-col--editor { grid-row: auto; }
+  [data-page="easycms"] .ec-persona-traits { grid-template-columns: minmax(0, 1fr); }
+  [data-page="easycms"] .ec-flow::before { content: none; }
+}
+[data-page="easycms"] .ec-ia-col p.ec-ia-role { color: var(--ink); font-size: 1.125rem; }

@@ -78,6 +78,28 @@ const head2 = (id, phase, title, intro) => `
           ${phase !== "Prototype" || id === "s-11" ? `<p class="ghost ec-ghost" aria-hidden="true">${e(phase)}</p>` : ""}
           ${intro ? `<div class="section-intro"><p>${e(intro)}</p></div>` : ""}
         </div>`;
+// UX laws and Nielsen heuristics each screen applies, shown in a box beside it.
+const LAWS = {
+  "Nothing registered yet": [["Hick's law", "One action on the page: create the first website."], ["Help and documentation (H10)", "The empty state says what is missing and what happens next."]],
+  setup: [["Zeigarnik effect", "Four steps with the current one marked, so the unfinished part stays in view."], ["Error prevention (H5)", "The web address is cleaned as you type, so a link can never break."], ["Recognition over recall (H6)", "Pages are chosen from tiles, not typed from memory."]],
+  "What do you want to update?": [["Visibility of system status (H1)", "The greeting states today's one fact: what came back, what leaves this week."], ["Von Restorff effect", "One filled button on the screen: New announcement."], ["Miller's law", "Four counts, not a wall of metrics."], ["Jakob's law", "Navigation on the left, the person and help top right, as in every tool they use."]],
+  "Paste the message": [["Flexibility and efficiency (H7)", "Paste the email or WhatsApp forward instead of retyping it."], ["Match with the real world (H2)", "It asks for a message, an email or a circular: their words, not 'import'."]],
+  "Filled fields wait for a person": [["Visibility of system status (H1)", "A dashed amber field and a tag mark every suggestion until a person accepts it."], ["Aesthetic and minimalist design (H8)", "One small tag per field instead of five large panels."]],
+  "Check them one by one": [["Hick's law", "One field and two choices at a time: Looks right or Clear."], ["Zeigarnik effect", "'Checking 2 of 5' keeps the unfinished fields in mind."], ["User control and freedom (H3)", "Stop for now at any point; nothing is lost."]],
+  "It will not send unconfirmed work": [["Error prevention (H5)", "Must-fix items block sending; notes can be sent anyway."], ["Recognise, diagnose, recover (H9)", "Plain words, and Go there jumps to the field."]],
+  "Make Hindi version": [["Consistency and standards (H4)", "GIGW asks for both languages, so the Hindi title is Recommended, not Optional."], ["Visibility of system status (H1)", "Machine translated stays on the field until a person checks it."]],
+  "Send to the Coordinator for checking": [["Match with the real world (H2)", "The button names the person who will check it."], ["Error prevention (H5)", "A short dialog lists the notes before anything leaves the editor."]],
+  "Where everything stands": [["Visibility of system status (H1)", "Each status is a word, a colour and an icon; counts read as badges."], ["Recognition over recall (H6)", "Search by any word in the title."]],
+  review: [["Fitts's law", "Two large buttons at the thumb on a phone: Approve and publish, or Send back."], ["Visibility of system status (H1)", "What changed: the old value struck through, the new one highlighted."], ["User control and freedom (H3)", "Send back with a one-line note that lands beside its field, and Approve keeps an Undo for a few seconds after publishing."]],
+  "Help with this screen": [["Help and documentation (H10)", "Help lists what this screen is for, and Show me outlines each control."], ["Jakob's law", "One help button, top right, on every screen."], ["Consistency and standards (H4)", "Help and the assistant are one place now, not two panels."]],
+  "An assistant that reads before it speaks": [["Doherty threshold", "A short thinking beat, well under a second, then the answer."], ["Error prevention (H5)", "It only suggests; drafts open in the form for a person to confirm."], ["Aesthetic-usability effect", "A friendly face whose mood matches the reply."]],
+  access: [["Non-text contrast (WCAG 1.4.11)", "Fields, switches and outline buttons keep a 3:1 edge in light and dark."], ["Colour independence", "Status is never colour alone: a word and an icon always come with it."], ["Fitts's law", "Every target is at least 44px."]],
+};
+const lawsBox = (key) => {
+  const l = LAWS[key];
+  if (!l) return "";
+  return `<aside class="ec-laws" aria-label="UX laws and heuristics applied"><p class="ec-laws-k">UX laws and heuristics applied</p><ul>${l.map(([n, how]) => `<li><b>${e(n)}</b> ${e(how)}</li>`).join("")}</ul></aside>`;
+};
 const step = (n, label, title, text, why, shot, extra = "") => `
           <div class="ec-step reveal">
             <div class="ec-step-text">
@@ -86,6 +108,7 @@ const step = (n, label, title, text, why, shot, extra = "") => `
               <p>${e(text)}</p>
               ${why.length ? `<ul class="ec-why">${why.map((w) => `<li>${ico("CircleCheck")}<span>${e(w)}</span></li>`).join("")}</ul>` : ""}
               ${extra}
+              ${lawsBox(title)}
             </div>
             <div class="ec-step-shot">${shot}</div>
           </div>`;
@@ -121,10 +144,10 @@ const designSystem = () => `
               <div class="ec-sw ec-sw--dark-ink" style="background:#e3e7fc"><b>Soft Lavender</b><span>#E3E7FC · tints</span></div>
               <div class="ec-sw" style="background:#4737ff"><b>Vivid Blue</b><span>#4737FF · waiting for review</span></div>
               <div class="ec-sw ec-sw--dark-ink" style="background:#ddf5ea;color:#0d4a31"><b>Mint</b><span>#DDF5EA · live</span></div>
-              <div class="ec-sw ec-sw--dark-ink" style="background:linear-gradient(135deg,#ffd84d,#ffb020);color:#2a1800"><b>Sunlit Amber</b><span>#FFC233 · the helper and assistant</span></div>
+              <div class="ec-sw ec-sw--dark-ink" style="background:#ffc233;color:#2a1800"><b>Sunlit Amber</b><span>#FFC233 · the helper and assistant</span></div>
               <div class="ec-sw" style="background:#f75c03;color:#1d0a00"><b>Vivid Orange</b><span>#F75C03 · alerts only</span></div>
-              <div class="ec-sw ec-sw--wide" style="background:linear-gradient(160deg,#020a2b,#001a6e 58%,#0046e0 135%)"><b>Midnight Surge</b><span>rail, panels of attention</span></div>
-              <div class="ec-sw ec-sw--wide ec-sw--pill" style="background:linear-gradient(90deg,#0056ff 0%,#2277ff 55%,#8db4ff 100%)"><b>Futurewave</b><span>the one lead card</span></div>
+              <div class="ec-sw ec-sw--wide" style="background:#10142a"><b>Ink</b><span>#10142A · text, the rail is gone</span></div>
+              <div class="ec-sw ec-sw--wide ec-sw--dark-ink" style="background:#f3f5fa;color:#10142a"><b>Chrome</b><span>#F3F5FA · the frame around the white sheet</span></div>
             </div>
           </section>
 
@@ -139,7 +162,7 @@ const designSystem = () => `
               <div class="ec-type-row"><small>Heading 36</small><span style="font-size:2.1rem;font-weight:750;letter-spacing:-0.025em;line-height:1.1">My updates</span></div>
               <div class="ec-type-row"><small>Title 26</small><span style="font-size:1.6rem;font-weight:700;letter-spacing:-0.02em">Post an announcement</span></div>
               <div class="ec-type-row"><small>Body 17</small><span style="font-size:1.06rem;line-height:1.5">17 px at 1.5 line height, in rem, so text size scales the layout.</span></div>
-              <div class="ec-type-row"><small>Small 13</small><span style="font-size:0.81rem;line-height:1.45">Hints under each field: Say what it is in a few words.</span></div>
+              <div class="ec-type-row"><small>Small 13</small><span style="font-size:0.8125rem;line-height:1.45">Hints under each field: Say what it is in a few words.</span></div>
               <div class="ec-type-row"><small>Hindi</small><span class="ec-hi" style="font-size:1.25rem;font-weight:600">आज आप क्या अपडेट करना चाहते हैं?</span></div>
             </div>
           </section>
@@ -179,8 +202,10 @@ const designSystem = () => `
           ${comp("k-rail.webp", "Navigation rail", "One active pill, an orange badge for what came back.", "The navigation rail with Home active and an orange badge on My updates", 4)}
           ${comp("k-assistant.webp", "Assistant", "Its own amber; each reply shows the face it was said in.", "The assistant button, suggestion chips and a short conversation with thinking and surprised faces", 6)}
           ${comp("k-dialog.webp", "Dialog", "The only blocking surface, and the only place with a scrim.", "A dialog: Send with these notes? with Fix them first and Send anyway", 6)}
-          ${comp("k-tasks.webp", "Task cards", "The most used job leads in Futurewave; the rest are in the users' own words.", "Home task cards with Post an announcement or circular as the large blue lead", 7)}
+          ${comp("k-counts.webp", "Counts", "A label, the number at regular weight and a plain caption. No icons, no deltas.", "Four counts: Drafts 1, Waiting for review 1, Live 13 and Expiring soon 2", 12)}
+          ${comp("k-tasks.webp", "Needs your attention", "What came back first, then unsent drafts, each with the one thing to do.", "The queue: a sent-back call for applications with the Coordinator note, and a draft lecture series, each with an outlined action", 7)}
           ${comp("k-health.webp", "Website health", "GIGW checks as a short to-do list, each with a count and Fix.", "The website health panel with counts and Fix links", 5)}
+          ${comp("k-board.webp", "On your website now", "The centre's notice board as visitors see it, with when each notice leaves.", "The notice board: dates, titles and Leaves in 5 days in amber", 12)}
           ${comp("k-file.webp", "File field", "Drop or choose. A picture also needs a description.", "The attachment field showing a PDF with Replace and Remove", 4)}
           ${comp("k-toast.webp", "Toast", "Says what happened, in the person's terms.", "A toast confirming the update was sent to the Coordinator", 4)}
           ${comp("k-people.webp", "People and empty states", "Initials where a photo would be; an empty state says what will appear.", "Three initial avatars and an empty state", 4)}
@@ -190,7 +215,7 @@ const designSystem = () => `
 // ---------- page ----------
 // Hero collage: [file, width, height, alt, position class]
 const HERO = [
-  ["mock-angled.jpg", 1472, 1962, "An angled monitor showing the Easy CMS home: Namaste, Ashish, five task cards with Post an announcement first, and the counts of drafts, waiting and live items", "angled"],
+  ["mock-angled.jpg", 1472, 1962, "An angled monitor showing the Easy CMS home: Namaste, Ashish, the New announcement button, and the counts of drafts, waiting, live and expiring items", "angled"],
   ["mock-desk.jpg", 2400, 1800, "Someone at a desk working in Easy CMS: the editor with a helper-filled announcement on the left and the live preview of the centre's Announcements page on the right", "desk"],
   ["mock-phone.jpg", 1600, 1600, "A hand holding a phone with the reviewer's screen: a round table notice waiting for review, with Send back with a note and Approve and publish", "phone"],
   ["mock-appicon.jpg", 1600, 1600, "Close-up of a phone's home screen with the Easy CMS app icon, a frosted tile and a pencil over a tilted blue tile, with an orange badge showing 2", "icon"],
@@ -301,7 +326,7 @@ ${head2("s-01", "Empathise", "The problem", "Chakra accepts only HTML. I have do
         </div>
 ${head2("s-02", "Empathise", "What a live site shows", "Before any interview, I mapped the public menu of one centre’s website. The slips hand-written HTML invites are visible from outside.")}
         <div class="ec-split ec-split--wide reveal">
-          <div class="ec-scroll">${fig(ig.sitemap(), "", "ec-ig--flush")}</div>
+          <div class="ec-scroll" tabindex="0" role="region" aria-label="Site menu map, scrolls sideways">${fig(ig.sitemap(), "", "ec-ig--flush")}</div>
           <div class="ec-flags">
             <p class="ec-flags-k"><span class="ec-dot-org" aria-hidden="true"></span>Seen on the live site</p>
             <div class="ec-flag-item"><b>Labels and links out of step</b><code class="ec-url">About Us → …/<mark>About MoHUA.html</mark><br>About IITR → …/<mark>About CUPCB.html</mark></code></div>
@@ -310,7 +335,7 @@ ${head2("s-02", "Empathise", "What a live site shows", "Before any interview, I 
           </div>
         </div>
 ${head2("s-03", "Empathise", "Who it touches", "From the people who press the buttons to the rules every government site must follow.")}
-        <div class="ec-scroll ec-scroll--narrow">${fig(ig.stakeholders(), "Stakeholder map. Editors and reviewers use it every week; the Computer Centre, faculty and a new hand-over editor work with it; students, applicants and city officials read it; GIGW, MoHUA, NIC and the Hindi Cell set the rules.", "ec-ig--center")}</div>
+        <div class="ec-scroll ec-scroll--narrow" tabindex="0" role="region" aria-label="Stakeholder map, scrolls sideways">${fig(ig.stakeholders(), "Stakeholder map. Editors and reviewers use it every week; the Computer Centre, faculty and a new hand-over editor work with it; students, applicants and city officials read it; GIGW, MoHUA, NIC and the Hindi Cell set the rules.", "ec-ig--center")}</div>
         <div class="ec-personas reveal" aria-label="Proto-personas">
           <p class="ec-personas-k">Proto-personas · assumptions the interviews will test</p>
           ${[
@@ -318,10 +343,12 @@ ${head2("s-03", "Empathise", "Who it touches", "From the people who press the bu
             ["The faculty coordinator", "Reviewer", "See it as readers will, then approve or say what to fix in one line.", [["Time to check", 1, "between classes"], ["On a phone", 5, "mostly"], ["Updates", 2, "checks, never writes"], ["Patience for tools", 1, "very little"]]],
             ["The new hand-over editor", "Editor, first week", "Finish a real update in the first session, and remember how in three weeks.", [["Training", 0, "none"], ["Confidence", 1, "low"], ["Updates", 1, "now and then"], ["Memorability", 5, "what matters"]]],
           ].map(([name, role, goal, traits]) => `<article class="ec-persona">
-            <p class="ec-persona-role">${e(role)}</p>
-            <h3>${e(name)}</h3>
-            <p class="ec-persona-goal">${e(goal)}</p>
-            ${traits.map(([l, n, note]) => scale(l, n, note)).join("")}
+            <div class="ec-persona-who">
+              <h3>${e(name)}</h3>
+              <p class="ec-persona-role">${e(role)}</p>
+              <p class="ec-persona-goal">${e(goal)}</p>
+            </div>
+            <div class="ec-persona-traits">${traits.map(([l, n, note]) => scale(l, n, note)).join("")}</div>
           </article>`).join("")}
         </div>
 ${head2("s-04", "Empathise", "The research plan", "Planned, not yet run: watch five or six admin staff do real updates in Chakra, then test Easy CMS on the same three tasks.")}
@@ -354,7 +381,7 @@ ${head2("s-05", "Define", "What other teams found", "The problem is common acros
 ${head2("s-06", "Define", "Principles", "Apple’s design principles, turned into rules for a nervous, infrequent editor.")}
         ${fig(ig.wheel(), "", "ec-ig--center ec-ig--wheel")}
 ${head2("s-07", "Ideate", "Brainstorm", "Six directions from one idea. Filled ideas are in the prototype; dashed ones are parked for later.")}
-        <div class="ec-scroll reveal">${fig(ig.mindmap(), "", "ec-ig--flush ec-ig--mind")}</div>
+        <div class="ec-scroll reveal" tabindex="0" role="region" aria-label="Brainstorm map, scrolls sideways">${fig(ig.mindmap(), "", "ec-ig--flush ec-ig--mind")}</div>
         <p class="ec-legend reveal"><span class="ec-lg-on"></span>In the prototype <span class="ec-lg-off"></span>Parked</p>
 ${head2("s-08", "Ideate", "Roles and places", "Editors see six places, one level deep. Reviewers and the Computer Centre each see only their one job.")}
         <div class="ec-ia reveal">
@@ -430,19 +457,21 @@ ${step(1, "Computer Centre", "Nothing registered yet", "The first screen says wh
           <figure>${browser("d-wiz-3.webp", "Wizard step 3: editor and reviewer names and emails")}${cap("<b>3 · People.</b> One editor and one reviewer to begin.")}</figure>
           <figure>${browser("d-wiz-4.webp", "Wizard step 4: a summary beside a live preview of the new, still empty website")}${cap("<b>4 · Check and create.</b> A first look at the empty site.")}</figure>
         </div>
+        ${lawsBox("setup")}
         <div class="ec-pair reveal" style="margin-top:1.5rem">
           <div>${browser("d-admin-sites.webp", "The Websites list after creation, with the new Centre for Transportation Systems card waiting for its first update")}${cap("The new site waits for its first update.")}</div>
           <div>${browser("d-people.webp", "People screen: who can update which parts of each website, with section toggles per person")}${cap("Access per website and per section. No content here.")}</div>
         </div>
 ${head2("s-13", "Prototype", "The editor, step by step", "Posting an announcement from a message that arrived on WhatsApp.")}
         <div class="ec-steps">
-${step(1, "Home", "What do you want to update?", "Five task cards in the users’ own words, the most used first. Anything sent back waits on the right.", ["Status in words, colour and icon", "Website health from GIGW checks"], browser("d-home.webp", "Editor home: greeting, five task cards with Post an announcement first, a Needs your attention panel with a sent-back item, counts and website health"))}
+${step(1, "Home", "What do you want to update?", "A greeting that states today's one fact, four counts, what needs you, and the centre's notice board as visitors see it, with when each notice leaves.", ["One filled button: New announcement", "Website health from GIGW checks"], browser("d-home.webp", "Editor home: Namaste, Ashish with the line Prof. A. Mehra sent back 1 of your updates, four counts, Needs your attention beside Add something else, and the notice board On your website now"))}
 ${step(2, "Helper", "Paste the message", "Most updates already exist as an email or a WhatsApp forward. The editor pastes it instead of retyping.", [], browser("d-editor-paste.webp", "Editor with the Have the message already panel open and an example call for applications pasted in"), callout("ai", "Sparkles", "The helper only copies dates, names and links from the text. It never invents them and never posts anything."))}
-${step(3, "Helper", "Every filled field is marked", "Each filled field gets a dashed amber outline and a Looks right button. The preview beside it is the real page.", ["Amber means suggested, not settled", "One click to confirm or clear"], browser("d-editor-filled.webp", "Editor after the helper filled the form: dashed amber fields with Looks right buttons, and the live preview of the centre's Announcements page with the new item highlighted"))}
-${step(4, "Check", "It will not send unconfirmed work", "Sending runs the check first. Must-fix items block it; notes like a missing Hindi title can be sent anyway.", ["Plain words, no blame", "Go there jumps to the field"], browser("d-editor-check.webp", "The check panel listing five things to fix: each field the helper filled still needs a person to confirm it"), callout("alert", "TriangleAlert", "Must-fix items block sending. The reviewer sees the same notes."))}
-${step(5, "Hindi", "Make Hindi version", "One press drafts the Hindi title. It stays labelled Machine translated until a person ticks I checked it.", ["GIGW asks for both languages", "The label travels to the reviewer"], browser("d-editor-hindi.webp", "The Title in Hindi field with a machine-drafted translation and a Machine translated, check before publishing label"))}
-${step(6, "Send", "Send to the Coordinator for checking", "The button names the person. A short dialog lists any notes.", [], browser("d-editor-send-dialog.webp", "Send with these notes dialog listing one note about the machine-translated Hindi title, with Fix them first and Send anyway"))}
-${step(7, "My updates", "Where everything stands", "Drafts, sent back, waiting, live and expiring soon. Search by any word in the title.", ["Hindi version shown per row", "Owner and last change on every item"], browser("d-updates-review.webp", "My updates board filtered to Waiting for review, showing the new call for applications and a round table notice"))}
+${step(3, "Helper", "Filled fields wait for a person", "Each filled field gets a dashed amber outline and a small tag. A strip above the form counts them. The preview beside it is the real page.", ["Amber means suggested, not settled"], browser("d-editor-filled.webp", "Editor after the helper filled the form: an amber strip saying the helper filled 5 fields, dashed amber fields each tagged Filled by the helper, and the live preview of the centre's Announcements page"))}
+${step(4, "Review", "Check them one by one", "The strip walks through the filled fields in order. Each one asks a single question, Looks right or Clear, and says where you are.", ["One decision at a time"], browser("d-editor-reviewstep.webp", "The review step: the strip reads Checking 1 of 5: Title, and the title field asks The helper filled this from your message. Is it right? with Looks right and Clear"))}
+${step(5, "Check", "It will not send unconfirmed work", "Sending runs the check first. Must-fix items block it; notes like a missing Hindi title can be sent anyway.", ["Plain words, no blame", "Go there jumps to the field"], browser("d-editor-check.webp", "The check panel listing five things to fix: each field the helper filled still needs a person to confirm it"), callout("alert", "TriangleAlert", "Must-fix items block sending. The reviewer sees the same notes."))}
+${step(6, "Hindi", "Make Hindi version", "One press drafts the Hindi title. It stays labelled Machine translated until a person ticks I checked it.", ["GIGW asks for both languages", "The label travels to the reviewer"], browser("d-editor-hindi.webp", "The Title in Hindi field with a machine-drafted translation and a Machine translated, check before publishing label"))}
+${step(7, "Send", "Send to the Coordinator for checking", "The button names the person. A short dialog lists any notes.", [], browser("d-editor-send-dialog.webp", "Send with these notes dialog listing one note about the machine-translated Hindi title, with Fix them first and Send anyway"))}
+${step(8, "My updates", "Where everything stands", "Drafts, sent back, waiting, live and expiring soon. Search by any word in the title.", ["Hindi version shown per row", "Owner and last change on every item"], browser("d-updates-review.webp", "My updates board filtered to Waiting for review, showing the new call for applications and a round table notice"))}
         </div>
 ${head2("s-14", "Prototype", "Review, mostly on a phone", "What changed, the notes the editor saw, and the page as readers will see it. One tap approves; one line sends it back.")}
         <div class="ec-trio reveal" data-gallery="review">
@@ -454,22 +483,24 @@ ${head2("s-14", "Prototype", "Review, mostly on a phone", "What changed, the not
           <div>${browser("d-review-detail.webp", "Reviewer desktop view: a What changed panel with the old and new values, beside the preview")}${cap("<b>What changed.</b> Old struck through, new highlighted.")}</div>
           <div>${browser("d-returned-field.webp", "The editor's form with the reviewer's note shown beside the removal date field it refers to")}${cap("<b>Sent back.</b> The note lands beside its field.")}</div>
         </div>
+        ${lawsBox("review")}
 ${head2("s-15", "Prototype", "The preview is the real page", "Preview and public site are drawn by the same components from the same data. The centre’s site was redesigned too: blue, purple accents, orange only for alerts.")}
         <div class="ec-mix reveal">
           <div>${browser("d-site-home.webp", "The AMRUT Centre home page: floating menu, a blue hero with a Next up lecture card and an orange Last date soon workshop card, an at-a-glance band with counts, and announcement, event and workshop panels", "iitr.ac.in/centres/amrut-centre-urban-planning", "ec-site")}</div>
           <div>${phone("p-editor-preview.webp", "Editor on a phone switched to the Preview tab, showing the new announcement highlighted on the centre's site")}${cap("Form and preview are two tabs on a phone.")}</div>
         </div>
-${head2("s-16", "Prototype", "Help and an assistant, in the same place", "Both sit top right on every screen. Help shows where things are; the assistant answers from the website itself.")}
+${head2("s-16", "Prototype", "Help and the assistant, in one place", "One button, top right on every screen. It answers from the website itself and points at the controls it talks about.")}
         <div class="ec-steps">
-${step("?", "Help", "Show me, not tell me", "Asked “how do I add a poster?”, help answers in steps and outlines the Poster field.", ["Same place on every screen", "Answers point at real controls"], browser("d-help.webp", "Help panel open beside an event form, answering how to add a poster, with the Poster field outlined on the page"))}
-${step("AI", "Assistant", "An assistant that reads before it speaks", "It wears glasses because its job is to read carefully: what was sent back, what leaves the site this week, what fails a GIGW check. Paste a message and it drafts a notice, then hands it to the form for a person to confirm.", ["Answers come from the website’s own data", "Drafts open in the form, never straight to review", "Amber, like every other suggestion"], browser("d-assistant.webp", "The Easy CMS assistant panel open over the home page: an amber face with round glasses, a reply listing what was sent back and the open drafts, and a notice drafted from a pasted message with an Open it in the notice form button"), callout("ai", "ShieldCheck", "It only suggests. A person checks every field, and the Coordinator approves before anything goes live."))}
+${step("?", "Help", "Help with this screen", "Help used to be a second panel. Now the assistant lists what this screen is for, and Show me closes the panel and outlines each control.", ["Answers point at real controls"], browser("d-help.webp", "The assistant open beside an event form, listing the steps for this screen, each with a Show me button"))}
+${step("AI", "Assistant", "An assistant that reads before it speaks", "It wears glasses because its job is to read carefully: what was sent back, what leaves the site this week, what fails a GIGW check. Paste a message and it drafts a notice, then hands it to the form for a person to confirm.", ["Answers come from the website’s own data", "Drafts open in the form, never straight to review", "Amber, like every other suggestion"], browser("d-assistant.webp", "The Easy CMS assistant panel open over the home page: an amber face with round glasses, a reply listing what was sent back and the open drafts, and an announcement drafted from a pasted message with an Open it in the announcement form button"), callout("ai", "ShieldCheck", "It only suggests. A person checks every field, and the Coordinator approves before anything goes live."))}
         </div>
 ${fig(`<ul class="ec-moods">${MOODS_CS.map(([m, name, when], i) => `<li>${faceSvg(m, "cm" + i, 72)}<b>${e(name)}</b><span>${e(when)}</span></li>`).join("")}</ul>`, "<b>Moods.</b> Like a cartoon, only the eyes, the brows and one small extra change, so it is always the same character. Each reply carries the face it was said in; the header shows the latest.", "ec-moods-fig")}
 ${head2("s-17", "Prototype", "Accessibility and GIGW", "The interface aims for WCAG 2.1 AA; what it publishes is GIGW-ready by default.")}
         <div class="ec-pair reveal">
           <div>${browser("d-home-hi.webp", "The editor home in Hindi")}${cap("<b>हिन्दी.</b> The whole interface, help included.")}</div>
-          <div>${browser("d-home-dark.webp", "The editor home in dark mode, deep navy rather than black")}${cap("<b>Dark.</b> Deep navy; status colours keep their meaning.")}</div>
+          <div>${browser("d-home-dark.webp", "The editor home in dark mode, true neutral black")}${cap("<b>Dark.</b> True neutral black; every control keeps a visible edge.")}</div>
         </div>
+        ${lawsBox("access")}
         <ul class="ec-checks reveal" aria-label="Accessibility and GIGW checks">
           ${[["Image", "Picture descriptions required"], ["Languages", "Hindi status on every item"], ["CalendarClock", "Removal dates, auto archive"], ["FileWarning", "Scanned PDFs flagged"], ["Paperclip", "Vague and broken links flagged"], ["UserRound", "Owner and date on every page"], ["Keyboard", "Keyboard throughout"], ["Eye", "High contrast and dark"], ["TextSq", "Text size that reflows"], ["Smartphone", "44 px touch targets"], ["RotateCcw", "Reduced motion"], ["Palette", "Never colour alone"]].map(([icon, l]) => `<li>${ico(solar.linear[icon] ? icon : "CircleCheck")}<span>${e(l)}</span></li>`).join("")}
         </ul>
@@ -493,9 +524,9 @@ ${head2("s-19", "Test", "What to measure", "Before and after: the same three tas
         </ol>
 ${head2("s-20", "Test", "Where it stands, and next", "")}
         <div class="ec-status reveal">
+          <p class="ec-next-big">Run the Chakra baseline, test twice, then pilot with one centre.</p>
           <div class="ec-status-col ec-status-col--done"><p class="ec-kit-k">${ico("CircleCheck")} Built</p><ul>${["Five content types", "Live preview, computer and phone", "Review loop with notes", "Version history", "Helper: fill, translate, check, describe", "Hindi and English", "Website setup and access", "Size, contrast, dark, motion"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
           <div class="ec-status-col"><p class="ec-kit-k">${ico("Hourglass")} Not yet</p><ul>${["Real file storage", "Real translation and model calls", "Block and template library", "Photo crop with focal point", "Single sign-on", "Chakra integration"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
-          <div class="ec-status-col ec-status-col--next"><p class="ec-kit-k">${ico("ArrowRight")} Next</p><p class="ec-next-big">Run the Chakra baseline, test twice, then pilot with one centre.</p></div>
         </div>
 
       </div>
