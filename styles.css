@@ -5610,8 +5610,8 @@ body.is-locked { overflow: hidden; }
 .pg-stage { padding: 0.7rem 0.8rem; border-radius: 16px 4px 16px 4px; background: var(--pollen); color: #0d0d0e; font: 700 0.78rem/1.2 var(--font-body); text-align: center; }
 .pg-lane { display: flex; align-items: center; padding: 0.6rem 0.2rem; font: 700 0.75rem/1.3 var(--font-body); color: var(--ink); }
 .pg-lane small { display: block; font: 500 0.68rem/1.35 var(--pg-mono); color: var(--ink-dim); }
-.pg-cell { padding: 0.7rem 0.8rem; border-radius: 12px; background: rgba(249, 249, 249, 0.045); font-size: 0.75rem; line-height: 1.45; color: var(--ink-dim); }
-.pg-cell--tp { background: transparent; box-shadow: inset 0 0 0 1px rgba(249, 249, 249, 0.14); font-family: var(--pg-mono); font-size: 0.7rem; }
+.pg-cell { padding: 0.7rem 0.8rem; border-radius: 12px; background: rgba(249, 249, 249, 0.045); font-size: 0.8125rem; line-height: 1.45; color: var(--ink-dim); }
+.pg-cell--tp { background: transparent; box-shadow: inset 0 0 0 1px rgba(249, 249, 249, 0.14); font-family: var(--pg-mono); font-size: 0.75rem; }
 .pg-cell--pain { background: rgba(255, 107, 77, 0.14); color: #ffc7b9; box-shadow: inset 0 0 0 1px rgba(255, 107, 77, 0.4); }
 .pg-cell--parag { background: var(--pollen); color: rgba(13, 13, 14, 0.78); border-radius: 14px 4px 14px 4px; }
 .pg-cell--wait { box-shadow: inset 0 0 0 1px rgba(255, 241, 184, 0.5); }
@@ -6610,12 +6610,14 @@ body.is-locked { overflow: hidden; }
   .pg-process-steps li { scroll-snap-align: start; }
 }
 
-/* ---- Phase eyebrow on every section title ---- */
+/* ---- Phase eyebrow, only where a phase begins ---- */
 [data-page="parag"] .section-title[data-phase]::before {
   content: attr(data-phase); display: block; width: fit-content; margin: 0 0 0.6rem; padding: 0.3rem 0.7rem;
   border-radius: 999px; background: var(--surface-hi); color: var(--ink-dim);
   font: 600 0.68rem/1 var(--pg-mono); letter-spacing: 0.08em; text-transform: uppercase;
 }
+[data-page="parag"] .section-title[data-phase]:not([data-phase-start])::before { content: none; }
+[data-page="parag"] .section-title[data-phase-start]::before { background: var(--pollen); color: #0d0d0e; }
 
 /* ---- Boards of sticky notes, on a dotted canvas ---- */
 .pg-board-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.5rem 1rem; }
@@ -9861,3 +9863,20 @@ body.is-locked { overflow: hidden; }
 
 /* Codes and counters keep even figure widths now that they are in Lato. */
 .gantt-phase span, .gantt-wk, .pal-v dt, .pal-v dd, .h2-rules li::before { font-variant-numeric: tabular-nums; }
+
+/* ---- Rethink pass: room for the navigator, principles without numbers ---- */
+@media (min-width: 1000px) and (max-width: 1439px) {
+  html[data-page="parag"] .wrap { padding-inline: max(var(--gutter), 64px); }
+}
+[data-page="parag"] .pg-principles .p-t { font-size: clamp(1.15rem, 1.6vw, 1.45rem); line-height: 1.2; }
+
+/* ---- The main action docked at the bottom of every app screen ---- */
+.ap-dock { flex: none; position: relative; z-index: 2; padding: 6px 16px 14px; transition: background-color 0.2s var(--ease), box-shadow 0.2s var(--ease); }
+.ap-dock > :first-child, .ap-dock > .ap-pair:first-child > .ap-pill { margin-top: 0; }
+.ap-body:has(+ .ap-dock) { padding-bottom: 6px; }
+.ap-tabbar { position: relative; z-index: 2; }
+.ap-dock.is-over { background: rgba(255, 255, 255, 0.72); -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); box-shadow: 0 -1px 0 rgba(13, 13, 14, 0.06); }
+.ap-lab-pane:has(> .ap-dock) { display: flex; flex-direction: column; }
+.ap-lab-pane:has(> .ap-dock)[hidden] { display: none; }
+.ap-lab-pane > .ap-dock { position: sticky; bottom: -14px; margin: auto -16px -14px; }
+@media (prefers-reduced-transparency: reduce) { .ap-dock.is-over { -webkit-backdrop-filter: none; backdrop-filter: none; background: #f6f2e6; } }

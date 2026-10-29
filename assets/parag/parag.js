@@ -326,6 +326,38 @@
     start();
   });
 
+  // ---------- The main action sits at the bottom of every screen ----------
+  // The trailing button, pair or button-and-note of a screen moves into a dock
+  // under the scrolling body, above the tab bar, so it is always in the same
+  // place and in reach of the thumb. Buttons inside cards stay where they are.
+  // Runs before any screen is cloned, so the copies carry the dock too.
+  const isAction = (el) => el.matches(".ap-pill, .ap-pair, .ap-note");
+  document.querySelectorAll(".ap .ap-body").forEach((body) => {
+    if (body.closest(".ap-kit") || body.querySelector(":scope > .ap-dock")) return;
+    const run = [];
+    for (let el = body.lastElementChild; el && isAction(el); el = el.previousElementSibling) run.unshift(el);
+    while (run.length && run[0].matches(".ap-note")) run.shift();
+    if (!run.length) return;
+    const dock = document.createElement("div");
+    dock.className = "ap-dock";
+    run.forEach((el) => dock.append(el));
+    // A pane among tabbed panes keeps its dock inside, so it hides with the pane.
+    if (body.matches(".ap-lab-pane")) body.append(dock);
+    else body.after(dock);
+  });
+  // A soft bar behind the dock only while content scrolls under it.
+  // Watching each body also catches a screen being shown, and the copies made later.
+  const shade = (body) => {
+    const dock = body.matches(".ap-lab-pane") ? body.querySelector(":scope > .ap-dock") : body.nextElementSibling;
+    if (dock && dock.classList.contains("ap-dock")) dock.classList.toggle("is-over", body.scrollHeight > body.clientHeight + 2);
+  };
+  if ("ResizeObserver" in window) {
+    const ro = new ResizeObserver((entries) => entries.forEach((e) => shade(e.target)));
+    const watch = () => document.querySelectorAll(".ap-body").forEach((b) => ro.observe(b));
+    watch();
+    addEventListener("load", watch);
+  }
+
   // ---------- Mockups ----------
   // Live screens are cloned onto product photos and mapped to the glass with
   // a homography. Each figure carries the photo width it was measured on, the
