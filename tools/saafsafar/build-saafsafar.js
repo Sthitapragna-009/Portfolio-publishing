@@ -103,10 +103,13 @@ const step = (n, label, title, text, why, shot, extra = "") => `
           </div>`;
 const callout = (tone, icon, text) => `<p class="ss-callout ss-callout--${tone}">${ico(icon)}<span>${e(text)}</span></p>`;
 const fig = (inner, caption, cls = "") => `<figure class="ss-ig${cls ? " " + cls : ""} reveal">${inner}${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
+const trait = (label, note) => `<div class="ss-scale ss-scale--plain"><span class="ss-scale-k">${e(label)}</span><span class="ss-scale-n">${e(note)}</span></div>`;
 const scale = (label, n, note) => `<div class="ss-scale"><span class="ss-scale-k">${e(label)}</span><span class="ss-dots" role="img" aria-label="${n} out of 5">${[1, 2, 3, 4, 5].map((i) => `<i${i <= n ? ' class="on"' : ""}></i>`).join("")}</span><span class="ss-scale-n">${e(note)}</span></div>`;
 
 // ---------- design system: foundations, then the real components ----------
-const compImg = (file, alt) => { const [w, h2] = size(file); return `<img src="${A}${file}" alt="${e(alt)}" width="${Math.round(w / 2)}" height="${Math.round(h2 / 2)}" loading="lazy" decoding="async" />`; };
+// Crops are shot at 2x; the inline width shows each at its real size (the stylesheet's width: auto
+// would otherwise draw it at double size, capped only by the tile).
+const compImg = (file, alt) => { const [w, h2] = size(file); return `<img src="${A}${file}" alt="${e(alt)}" width="${Math.round(w / 2)}" height="${Math.round(h2 / 2)}" style="width:${Math.round(w / 2)}px" loading="lazy" decoding="async" />`; };
 // Components with words come in both language orders, side by side; they stack when the tile is narrow.
 const comp = (file, name, rule, alt, span) => {
   const both = fs.existsSync(SITE + "/assets/saafsafar/" + hiFile(file));
@@ -135,14 +138,14 @@ const designSystem = () => `
               <div class="ss-sw ss-sw--dark-ink" style="background:#ff9419;color:#000"><b>Soon</b><span>#FF9419 · with a clock</span></div>
               <div class="ss-sw" style="background:#5f31c4"><b>Violet</b><span>#5F31C4 · forecast</span></div>
               <div class="ss-sw ss-sw--dark-ink" style="background:#c6f04a;color:#101114"><b>Lime</b><span>#C6F04A · done, all clear</span></div>
-              <div class="ss-sw ss-sw--wide" style="background:#55606d"><b>Steel</b><span>#55606D · quiet text and lines</span></div>
+              <div class="ss-sw ss-sw--wide ss-sw--steel" style="background:#55606d"><b>Steel</b><span>#55606D · quiet text and lines</span></div>
             </div>
           </section>
 
           <figure class="ss-tile ss-span-5 ss-mark"><figcaption class="ss-tile-k">Logo</figcaption><img src="${A}logo.svg" alt="The Saaf Safar logo: a black S drawn like a route, with a small sparkle, on a gate-sign yellow tile" width="96" height="96" /><p class="ss-tile-note">An S that is also a route, on the yellow of a gate sign.</p></figure>
           ${comp("k-gates.webp", "Gate sign", "The sign workers already read every shift: number first, pictogram beside it.", "Gate signs in four sizes: 14 with the gents figure and an arrow, 14 ladies, 17, 11 and 16", 7)}
 
-          <section class="ss-tile ss-span-7 ss-row2" aria-label="Type">
+          <section class="ss-tile ss-span-7" aria-label="Type">
             <p class="ss-tile-k">Type · Inter Tight, Noto Sans Devanagari, JetBrains Mono</p>
             <div class="ss-type">
               <div class="ss-type-row"><small>Gate 104</small><span style="font-size:3.4rem;font-weight:800;letter-spacing:-0.03em;line-height:1">14</span></div>
@@ -157,11 +160,6 @@ const designSystem = () => `
             <div class="ss-icons">${["binFull", "tissue", "towel", "soap", "floor", "odour", "liner", "chem", "gents", "ladies", "store", "walk", "cart", "radio", "speaker", "now"].map((n) => `<span>${pic(n)}</span>`).join("")}</div>
           </section>
 
-          <section class="ss-tile ss-span-5" aria-label="Motion">
-            <p class="ss-tile-k">Motion · only Go now moves</p>
-            <div class="ss-pulse" aria-hidden="true"><i></i><span>${pic("now")}</span></div>
-            <p class="ss-tile-note">A slow pulse on Go now, so urgency reads in peripheral vision and for colour-blind workers. With reduced motion it simply stays red.</p>
-          </section>
           <section class="ss-tile ss-span-7" aria-label="Shape and touch">
             <p class="ss-tile-k">Shape and touch · for gloved hands</p>
             <div class="ss-shape">
@@ -172,21 +170,26 @@ const designSystem = () => `
             </div>
             <p class="ss-tile-note"><b>60 pt</b> minimum for main actions, above Apple's 44 pt, because workers wear gloves.</p>
           </section>
+          <section class="ss-tile ss-span-5" aria-label="Motion">
+            <p class="ss-tile-k">Motion · only Go now moves</p>
+            <div class="ss-pulse" aria-hidden="true"><i></i><span>${pic("now")}</span></div>
+            <p class="ss-tile-note">A slow pulse on Go now, so urgency reads in peripheral vision and for colour-blind workers. With reduced motion it simply stays red.</p>
+          </section>
 
-          <p class="ss-bento-k ss-span-12">Components · cropped from the working prototype at real size</p>
+          <p class="ss-bento-k ss-span-12">Components · from the working prototype</p>
           ${comp("k-offer.webp", "Task card", "One task at a time: urgency, the gate sign, jobs in pictures with counts, what to fetch, and three big answers.", "The Go now task card: Gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first for tissue, with Listen, I'm going and Can't go", 12)}
-          ${comp("k-urgency.webp", "Urgency", "Colour, icon and word together, in three sizes; the airport’s language first.", "Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English", 6)}
-          ${comp("k-jobs.webp", "Job tiles", "Picture first, then both languages in the airport’s order, the count where it matters.", "Job tiles for empty the bin, refill tissue ×4 and mop the floor", 6)}
+          ${comp("k-urgency.webp", "Urgency", "Colour, icon and word together, in three sizes; the airport’s language first.", "Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English", 12)}
+          ${comp("k-jobs.webp", "Job tiles", "Picture first, then both languages in the airport’s order, the count where it matters.", "Job tiles for empty the bin, refill tissue ×4 and mop the floor", 12)}
           ${comp("k-stock.webp", "On my cart", "Counts, not percentages. Blue: needed for this task. Red: not enough.", "The On my cart panel with tissue short by 2, liners and cleaner needed", 12)}
           ${comp("k-cleaning.webp", "Cleaning", "Each job fills as it is done; the sensor confirms, nobody taps done.", "The cleaning card with jobs filling in and a note that the sensor confirms it", 12)}
           ${comp("k-signin.webp", "Sign in by photo", "Carts change hands between shifts: tap your face, no passwords.", "Four drawn crew portraits for the evening shift, Imran on cart B3 highlighted", 12)}
           ${comp("k-radio.webp", "Radio prompt", "Only when a Go now task has sat for 5 minutes: who to call, how far.", "The red radio prompt: nobody took W-14G in 5 min, call Sanjay on cart B1, with a Called button", 6)}
           ${comp("k-queue.webp", "Queue rows", "State bar, gate sign, jobs, age and who has it, in one line.", "Queue rows for washrooms near gates 14 and 11 with their status", 6)}
-          ${comp("k-notif.webp", "Lock-screen alert", "Time Sensitive only for Go now; answer without unlocking.", "A Time Sensitive notification on a lock screen with the gate sign, jobs, I'm going and Can't go", 6)}
-          ${comp("k-watch.webp", "Watch and wrist taps", "A distinct tap per urgency; gate number and one button.", "A watch face with Go now, gate 14 and an I'm going button, beside the wrist-tap patterns", 6)}
-          ${comp("k-chips.webp", "Zone chips and crew", "Counts that matter to a supervisor, and what each cart is doing.", "Zone chips for Go now, Soon, being handled and free carts, with four crew cards", 12)}
+          ${comp("k-notif.webp", "Lock-screen alert", "Time Sensitive only for Go now; answer without unlocking.", "A Time Sensitive notification on a lock screen with the gate sign, jobs, I'm going and Can't go", 12)}
+          ${comp("k-watch.webp", "Watch and wrist taps", "A distinct tap per urgency; gate number and one button.", "A watch face with Go now, gate 14 and an I'm going button, beside the wrist-tap patterns", 12)}
+          ${comp("k-chips.webp", "Zone chips and crew", "Counts that matter to a supervisor, and what each cart is doing.", "Zone chips for Go now, Soon, being handled and free carts, with four crew cards", 6)}
           ${comp("k-faces.webp", "Four-face rating", "The passengers' check on the sensors, at the door.", "Four big rating buttons from very clean to dirty, in English and Hindi", 6)}
-          ${comp("k-kpi.webp", "Ops tiles", "One number each, with what it means underneath.", "Three tiles: Go now waiting, alert to arrival median, passengers rating it clean", 6)}
+          ${comp("k-kpi.webp", "Ops tiles", "One number each, with what it means underneath.", "Three tiles: Go now waiting, alert to arrival median, passengers rating it clean", 12)}
         </div>`;
 
 // ---------- page ----------
@@ -198,11 +201,11 @@ const HERO = [
 ];
 
 const JOURNEY = [
-  ["Empathise", "#s-01", "Most of the delay is before anyone knows", "Context, hierarchy, stakeholders, proto-personas, a research plan"],
-  ["Define", "#s-06", "Pictures first, Hindi first, gloves on", "The incident, eight principles"],
-  ["Ideate", "#s-08", "One task, seven touchpoints", "Brainstorm, blueprint, lifecycle, escalation"],
-  ["Prototype", "#s-12", "A working terminal, not a mock-up", "A live simulation and six touchpoints"],
-  ["Test", "#s-20", "Comprehension before screens", "Targets, three rounds, what is next"],
+  ["Empathise", "#s-01", "Most of the delay is before anyone knows", "The problem, one incident, who it touches"],
+  ["Define", "#s-04", "Pictures first, Hindi first, gloves on", "Eight principles"],
+  ["Ideate", "#s-05", "One task, seven touchpoints", "Brainstorm, blueprint, lifecycle, escalation"],
+  ["Prototype", "#s-06", "A working terminal, not a mock-up", "Cart, phone, watch, door, dashboards, data story, design system"],
+  ["Test", "#s-11", "Comprehension before screens", "Research plan, three rounds, measures, what is next"],
 ];
 
 const main = `<main id="top">
@@ -231,7 +234,7 @@ const main = `<main id="top">
               <li>${ico("Code")}<span><b>Built</b> a working prototype on a simulated week</span></li>
             </ul>
             <div class="ss-hero-cta">
-              <a class="ss-hero-btn" href="#s-12">Try the prototype ${ico("ArrowRight")}</a>
+              <a class="ss-hero-btn" href="#ss-try">Try the prototype ${ico("ArrowRight")}</a>
               <a class="ss-hero-link" href="#ss-journey-h">Read the journey</a>
             </div>
             </div>
@@ -278,6 +281,25 @@ const main = `<main id="top">
     <section class="section case-plates">
       <div class="wrap">
 
+        <div class="plate-head ss-head ss-line--prototype" id="ss-try">
+          <div class="ss-sign" aria-hidden="true">
+            <span class="ss-sign-line">${arrow()}Try it</span>
+            <span class="ss-sign-stop">Live</span>
+          </div>
+          <h2 class="display section-title">Follow one incident</h2>
+          <div class="section-intro"><p>The whole terminal runs live on this page: one simulation drives every screen. Press Trigger incident, then switch roles to follow it.</p></div>
+        </div>
+        <div class="ss-live reveal">
+          <div class="ss-live-bar" role="group" aria-label="Open the prototype as">
+            ${[["attendant", "Attendant", "Smartphone"], ["supervisor", "Zone supervisor", "Phone"], ["manager", "Shift manager", "Monitor"], ["ops", "Ops and DIAL", "Graph"], ["passenger", "Passengers", "Users"]].map(([r, l, icon], i) => `<button type="button" class="ss-live-role" data-role="${r}" aria-pressed="${i ? "false" : "true"}">${ico(icon)}${e(l)}</button>`).join("")}
+            <a class="ss-live-open" href="../prototypes/saaf-safar/index.html?lang=en#/attendant" target="_blank" rel="noopener">${ico("ExternalLink")}Open full screen<span class="sr-only"> (new tab)</span></a>
+          </div>
+          <figure class="ss-browser ss-live-frame">
+            <div class="ss-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>saafsafar · delhi-t3</span></div>
+            <iframe src="../prototypes/saaf-safar/index.html?embed&amp;lang=en#/attendant" title="Saaf Safar prototype" loading="lazy"></iframe>
+          </figure>
+          <p class="ss-cap">Runs in your browser on simulated data. The dock controls time: play, 1×, 10× or 60×, drag across the day, or trigger the Gate 14 incident.</p>
+        </div>
         <!-- The journey as a metro line: one line colour per phase, a lettered station for each. -->
         <nav class="ss-metro reveal" aria-labelledby="ss-journey-h">
           <div class="ss-metro-head">
@@ -306,19 +328,18 @@ ${head2("s-01", "Empathise", "The problem", "Rounds run on the clock; passengers
             <div class="ss-plat ss-plat--red"><dt>0</dt><dd>washroom layers on the control centre’s wall today, beside 50,000+ sensor points</dd></div>
           </dl>
         </div>
-${head2("s-02", "Empathise", "What the public record shows", "No airport access, so the context comes from public sources first. Each fact changes a design decision.")}
-        <ol class="ss-findings reveal">
+        <div class="ss-subhead reveal"><h3>What the public record shows</h3><p>No airport access, so the context comes from public sources first. Each fact changes a design decision.</p></div>
+        <ul class="ss-findings reveal">
           ${[
-            ["78M passengers a year at Delhi", "Delhi is the hardest case; if it works there, it scales down", "Business Today", "https://www.businesstoday.in/india/story/delhi-igi-airport-handled-78-million-passengers-in-2025-beats-seoul-paris-and-los-angeles-550229-2026-08-20"],
             ["20.4M at Delhi against 7.1M at Hyderabad in a quarter", "Configure, don’t redesign", "GMR Q1 FY27", "https://nsearchives.nseindia.com/corporate/GMRINFRA_12082026194953_Press_Release.pdf"],
             ["T3’s control centre: 3,200 cameras, 50,000+ sensor points", "A washroom layer, not another screen", "HCL Infosystems", "https://hclinfosystems.in/?p=3046"],
-            ["Hyderabad runs a predictive operations centre on 40+ IoT parameters", "Plug into it, don’t sit beside it", "Indian Infrastructure", "https://indianinfrastructure.com/2024/12/12/hyderabad-airport-launches-ai-powered-digital-twin-platform-with-apoc/"],
-            ["400+ housekeeping staff in shifts, under terminal operations", "Contractor crews, terminal ops in charge", "GMR Group", "https://gmrgroup.in/blog/covid-19-gmr-airports-undertake-massive-sanitization.aspx"],
             ["Washroom cleanliness is rated in ACI’s passenger survey", "Report in ACI’s language", "Adda247", "https://currentaffairs.adda247.com/delhi-international-airport-among-cleanest-in-asia-pacific-says-aci/"],
             ["117 restrooms already sensed at an Indian airport", "The sensors are proven; the worker side is not described", "Milesight", "https://www.milesight.com/iot/success-stories/iot-smart-washroom-india-airport"],
             ["Low literacy is not one group", "Pictures first, words second", "CHI 2009", "https://www.dgp.toronto.edu/public_user/ravin/papers/chi2009_literacy.pdf"],
           ].map(([a, b, srcName, href]) => `<li><span class="ss-f-a">${e(a)}</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">${e(b)}</span><a class="ss-f-src" href="${href}" target="_blank" rel="noopener">${e(srcName)}<span class="sr-only"> (opens a source)</span></a></li>`).join("")}
-        </ol>
+        </ul>
+${head2("s-02", "Empathise", "Where the time goes", "One incident, a washroom near Gate 14 running out of tissue in the evening bank. Our estimate: most of the hour passes before anyone knows.")}
+        ${fig(ig.incident(h.phases), "Estimates, not measurements, beside the simulated week’s median. The incident timing log in the research plan replaces them.", "ss-ig--incident")}
 ${head2("s-03", "Empathise", "Who it touches", "Two organisations, five levels, three shifts. Each level gets only what it needs to act.")}
         <div class="ss-split ss-split--org reveal">
           ${fig(ig.hierarchy(), "The housekeeping hierarchy, a typical model from public tenders and job listings, to be confirmed in interviews. Delhi does not publish it.", "ss-ig--flush")}
@@ -334,27 +355,10 @@ ${head2("s-03", "Empathise", "Who it touches", "Two organisations, five levels, 
             <p class="ss-persona-role">${e(role)}</p>
             <h3>${e(name)}</h3>
             <p class="ss-persona-goal">${e(goal)}</p>
-            ${traits.map(([l, n, note]) => scale(l, n, note)).join("")}
+            ${traits.map(([l, , note]) => trait(l, note)).join("")}
           </article>`).join("")}
         </div>
-${head2("s-04", "Empathise", "The research plan", "Planned, not yet run. Without airport access, the fieldwork uses campus and hospital housekeeping teams as a proxy.")}
-        <div class="ss-plan reveal">
-          <div class="ss-bubbles" role="img" aria-label="Participants per method: 3 shift shadowings, 6 attendant interviews, 5 or more timed incidents, 10 or more pictogram testers">
-            ${[["3", "shifts shadowed", "across 2 sites", 0.55], ["6", "attendant interviews", "Hindi or English", 0.75], ["5+", "incidents timed", "to replace estimates", 0.55], ["10+", "pictogram testers", "ISO 9186 style", 1]].map(([n, l, s2, sc]) => `<div class="ss-bubble" style="--s:${sc}"><b>${n}</b><span>${e(l)}</span><small>${e(s2)}</small></div>`).join("")}
-          </div>
-          <ol class="ss-tasks">
-            <li>${pic("clock")}<b>How do attendants learn</b><span>a washroom needs them, and how long it takes?</span></li>
-            <li>${pic("walk")}<b>Where does the time go</b><span>noticing, telling, fetching, walking, cleaning</span></li>
-            <li>${pic("tissue")}<b>Which pictograms</b><span>are recognised without words?</span></li>
-          </ol>
-          <ul class="ss-hyps" aria-label="Hypotheses to test">
-            ${[["Unnoticed", "Eye", "Most delay is before anyone knows"], ["Two trips", "Routing", "Refills are missing on arrival, so a store trip"], ["Radio", "Phone", "Supervisors find problems by walking"], ["Handover", "History", "Late problems fall through at shift change"], ["Habit", "Archive", "Stores restock by habit, not use"], ["Words", "Languages", "English labels slow people down"]].map(([kk, icon, hy]) => `<li>${ico(icon)}<span><b>${e(kk)}</b>${e(hy)}</span><em>to test</em></li>`).join("")}
-          </ul>
-          <p class="ss-kit-link"><a href="../assets/saafsafar/research-kit.html" target="_blank" rel="noopener">${ico("FileText")} Open the research kit: interview guide, observation sheet, incident timing log, consent script and pictogram test cards</a></p>
-        </div>
-${head2("s-06", "Define", "Where the time goes", "One incident, a washroom near Gate 14 running out of tissue in the evening bank. Today, most of the hour passes before anyone knows.")}
-        ${fig(ig.incident(h.phases), "Estimates typed for the brief, beside the simulated week’s median. The timing log in research replaces the estimates.", "ss-ig--incident")}
-${head2("s-07", "Define", "Principles", "Apple’s Human Interface Guidelines, then further wherever they assume a reader. The test for every screen: can a worker who reads Hindi slowly act on it in under five seconds?")}
+${head2("s-04", "Define", "Principles", "Apple’s Human Interface Guidelines, then further wherever they assume a reader. The test for every screen: can a worker who reads Hindi slowly act on it in under five seconds?")}
         <!-- Contrast cards: every pairing is light against dark, as signage must be. -->
         <ul class="ss-vcards reveal">
           ${[
@@ -371,41 +375,17 @@ ${head2("s-07", "Define", "Principles", "Apple’s Human Interface Guidelines, t
             <div class="ss-vcard-band"><b>${e(t)}</b><span>${e(d)}</span></div>
           </li>`).join("")}
         </ul>
-${head2("s-08", "Ideate", "Brainstorm", "Six directions from one idea. Filled ideas are in the prototype; dashed ones are parked.")}
+${head2("s-05", "Ideate", "From one idea to one task", "Six directions from one idea, then one task that moves through the whole service by itself.")}
         <div class="ss-scroll reveal">${fig(ig.mindmap(), "", "ss-ig--flush ss-ig--mind")}</div>
         <p class="ss-legend reveal"><span class="ss-lg-on"></span>In the prototype <span class="ss-lg-off"></span>Parked</p>
-${head2("s-09", "Ideate", "One task, across the service", "The same alert is an instruction for the worker and a live state for everyone above them.")}
+        <div class="ss-subhead reveal"><h3>One task, across the service</h3><p>The same alert is an instruction for the worker and a live state for everyone above them.</p></div>
         <div class="ss-scroll reveal">${fig(ig.blueprint(), "Service blueprint. Above the red line is what people see; below it, what the system and the stores do.", "ss-ig--flush")}</div>
-${head2("s-10", "Ideate", "Lifecycle and escalation", "A task moves on by itself when nobody answers. The supervisor is the last step, not the first.")}
+        <div class="ss-subhead reveal"><h3>Lifecycle and escalation</h3><p>A task moves on by itself when nobody answers. The supervisor is the last step, not the first.</p></div>
         <div class="ss-split reveal">
           ${fig(ig.lifecycle(), "", "ss-ig--flush")}
           ${ig.ladder()}
         </div>
-${head2("s-11", "Ideate", "Seven touchpoints, one task model", "Cart app and zone dashboard first; the door display last and optional.")}
-        <div class="ss-touch reveal">
-          ${[
-            ["cart", "Cart iPad", "Attendant", "One task in pictures, what the cart has, I’m going or Can’t go"],
-            ["phone", "Phone, opt-in", "Attendant", "Accept from the lock screen; Time Sensitive for Go now only"],
-            ["watch", "Watch", "Attendant", "A distinct tap per urgency, the gate number, one button"],
-            ["radio", "Zone iPad", "Supervisor", "Live map, queue, who is going where, the radio prompt"],
-            ["clock", "Terminal web", "Shift manager", "All zones against the departure banks, automatic handover"],
-            ["eye", "Ops wall and reports", "AOCC, contractor, DIAL", "A washroom layer and the weekly data story"],
-            ["washroom", "Door display", "Passengers", "Cleaned 12 min ago, and a four-face rating"],
-          ].map(([icon, t, who, job], i) => `<div class="ss-tp-card ss-tp-card--${i + 1}"><span class="ss-tp-row">${arrow("up")}${pic(icon)}</span><small>${e(who)}</small><span class="ss-tp-job">${e(job)}</span><b>${e(t)}</b></div>`).join("")}
-        </div>
-${head2("s-12", "Prototype", "Try the prototype", "The whole terminal runs live on this page: one simulation drives every screen. Press Trigger incident, then switch roles to follow it.")}
-        <div class="ss-live reveal">
-          <div class="ss-live-bar" role="group" aria-label="Open the prototype as">
-            ${[["attendant", "Attendant", "Smartphone"], ["supervisor", "Zone supervisor", "Phone"], ["manager", "Shift manager", "Monitor"], ["ops", "Ops and DIAL", "Graph"], ["passenger", "Passengers", "Users"]].map(([r, l, icon], i) => `<button type="button" class="ss-live-role" data-role="${r}" aria-pressed="${i ? "false" : "true"}">${ico(icon)}${e(l)}</button>`).join("")}
-            <a class="ss-live-open" href="../prototypes/saaf-safar/index.html?lang=en#/attendant" target="_blank" rel="noopener">${ico("ExternalLink")}Open full screen<span class="sr-only"> (new tab)</span></a>
-          </div>
-          <figure class="ss-browser ss-live-frame">
-            <div class="ss-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>saafsafar · delhi-t3</span></div>
-            <iframe src="../prototypes/saaf-safar/index.html?embed&amp;lang=en#/attendant" title="Saaf Safar prototype" loading="lazy"></iframe>
-          </figure>
-          <p class="ss-cap">Runs in your browser on simulated data. The dock controls time: play, 1×, 10× or 60×, drag across the day, or trigger the Gate 14 incident.</p>
-        </div>
-${head2("s-13", "Prototype", "The cart iPad, step by step", "Imran’s evening shift, Cart B3, Zone B. Light on purpose: terminal glare washes out dark screens.")}
+${head2("s-06", "Prototype", "The cart iPad, step by step", "Imran’s evening shift, Cart B3, Zone B. Light on purpose: terminal glare washes out dark screens.")}
         <p class="ss-lang-note reveal">${ico("Languages")}<span>Shown in English for this page. The cart opens in Hindi, so each screen has a small <span class="ss-hi" lang="hi">हिंदी</span> preview beside it; click it to see it full size.</span></p>
         <div class="ss-steps">
 ${step(1, "Start of shift", "Tap your photo", "The cart shows the zone’s crew for this shift. No password, no typing; the supervisor still sees who took which task.", ["Faces are drawn; every person is fictional"], devHi("c-signin.webp", "Cart iPad sign-in: tap your photo, with four crew portraits and Imran on cart B3 highlighted"))}
@@ -415,27 +395,33 @@ ${step(4, "Cleaning", "The sensor closes it", "Each job fills as time passes. Wh
 ${step(5, "Done", "Done, and on to the next", "A short confirmation with the time from alert to clean, then back to all clear.", [], devHi("c-done.webp", "Done: a lime check with the sensor confirmed message and the time from alert to clean"))}
 ${step(6, "Language", "Hindi first, configurable", "Hindi and English, either one first. Other languages are switched on per airport by the admin: Telugu for Hyderabad, Konkani for Goa, Bahasa for Medan.", ["Pictures, signs and colours stay the same everywhere"], devHi("c-lang.webp", "The language sheet: English selected, Hindi, and greyed languages set per airport"))}
         </div>
-${head2("s-14", "Prototype", "Away from the cart", "Optional channels for a worker who has stepped away. Both carry the same task in the same pictures.")}
+${head2("s-07", "Prototype", "Beyond the cart", "A phone or watch for an attendant who has stepped away, and a small screen at the door for passengers. Each carries the same task in the same pictures.")}
         <div class="ss-trio reveal">
           <div>${devHi("ch-lock.webp", "Lock screen with a Time Sensitive Saaf Safar alert and I'm going and Can't go buttons", "phone")}${cap("<b>Lock screen.</b> Time Sensitive for Go now only.")}</div>
           <div>${dev("ch-settings.webp", "Dark bento settings: tasks today, when alerts stop, my week as dots, and switches for Go now, Soon, location never shared, nothing outside the shift", "phone")}${cap("<b>Consent.</b> Opt-in, no location, off after the shift.")}</div>
           <div>${devHi("ch-watch.webp", "Watch face: Go now, gate 14, the jobs and an I'm going button, with a countdown ring", "watch")}${cap("<b>Wrist.</b> Three strong taps for Go now.")}</div>
         </div>
-${head2("s-15", "Prototype", "The zone supervisor", "A live map and a queue. The supervisor steps in only when a task stalls.")}
+        <div class="ss-subhead reveal"><h3>Passengers at the door</h3><p>When it was last cleaned, and four faces to say how clean it is now.</p></div>
+        <div class="ss-trio reveal">
+          <div>${dev("d-door.webp", "Door display for Ladies near gate 17: cleaned 12 min ago, tissue, soap and towels fine, and four rating faces", "door")}${cap("<b>Cleaned 12 min ago.</b> Supplies in plain words.")}</div>
+          <div>${dev("d-cleaning.webp", "Door display while cleaning: Cleaning now, and please use gents near gate 17, 165 m", "door")}${cap("<b>Cleaning now.</b> Sends people to the next one.")}</div>
+          <div>${dev("d-thanks.webp", "Door display after a Not clean rating: thank you, the cleaning team has been told", "door")}${cap("<b>Thank you.</b> A low rating reaches the zone.")}</div>
+        </div>
+${head2("s-08", "Prototype", "The supervisor and the shift manager", "The supervisor steps in only when a task stalls. The shift manager sees all three zones, and handover carries open tasks by itself.")}
         <div class="ss-steps">
 ${step("5′", "Escalation", "Nobody took it in 5 minutes", "The zone’s first alert of this kind is a red card at the top of the queue: who is nearest, how far, and one button to say the call was made.", ["The map pulses where the problem is", "Detail shows every sensor and the task timeline"], dev("z-radio.webp", "Zone B dashboard: isometric map of the pier with aircraft at gates, a red radio prompt for W-14G, the queue, the crew and the W-14G detail panel"))}
 ${step("?", "Feedback", "Passengers unhappy, sensors fine", "W-17L has a broken flush from 15:10. No sensor sees it, but the four-face ratings fall, and the dashboard asks for a check in person.", ["The rating is the check on the sensors"], dev("z-check.webp", "Zone dashboard with a check in person card for W-17L and its detail panel showing normal sensors but falling ratings"))}
         </div>
-${head2("s-16", "Prototype", "The shift manager", "All three zones against the departure banks. Handover carries open tasks by itself.")}
+        <div class="ss-subhead reveal"><h3>The shift manager</h3><p>All three zones against the departure banks.</p></div>
         <div class="ss-wide reveal">${dev("t-terminal.webp", "Terminal dashboard: three zone cards, the whole pier with carts and aircraft, departures by zone per hour against alerts, and shift handovers with zero lost", "browser")}</div>
-${head2("s-17", "Prototype", "The ops centre and the weekly story", "A washroom layer for the control-room wall, and a data story for the contractor and DIAL from the same task log.")}
+${head2("s-09", "Prototype", "The ops centre and the weekly story", "A washroom layer for the control-room wall, and a data story for the contractor and DIAL from the same task log.")}
         <div class="ss-wide reveal">${dev("o-live.webp", "The live washroom layer for the operations control centre: five tiles and the whole pier, with an event feed", "browser")}</div>
         <div class="ss-story reveal">
           <div class="ss-story-tiles">
-            <div><b>${h.sla.tasks.toLocaleString("en-IN")}</b><span>tasks raised and closed by sensors in the week</span></div>
-            <div><b>${pct(h.sla.now)}</b><span>of Go now tasks reached within 10 minutes</span></div>
-            <div><b>${Math.round(h.phases.total)} min</b><span>median from alert to confirmed clean</span></div>
-            <div><b>${pct(h.sla.positive)}</b><span>of passenger ratings positive</span></div>
+            <div><b>${h.sla.tasks.toLocaleString("en-IN")}</b><span>tasks raised and closed by sensors in the simulated week</span></div>
+            <div><b>${pct(h.sla.now)}</b><span>of Go now tasks reached within 10 minutes, simulated</span></div>
+            <div><b>${Math.round(h.phases.total)} min</b><span>median from alert to confirmed clean, simulated</span></div>
+            <div><b>${pct(h.sla.positive)}</b><span>of passenger ratings positive, simulated</span></div>
           </div>
           <p class="ss-story-k">Simulated week, Sun 11 to Sat 17 October 2026 · computed when this page was built</p>
         </div>
@@ -453,15 +439,24 @@ ${head2("s-17", "Prototype", "The ops centre and the weekly story", "A washroom 
           </div>
           <div>${img("n-thresholds.webp", "The Observable notebook page Choosing the alert threshold: sliders, four result tiles and a chart of the bin across Friday")}</div>
         </div>
-${head2("s-18", "Prototype", "Passengers at the door", "A small screen beside the washroom: when it was last cleaned, and four faces to say how clean it is now.")}
-        <div class="ss-trio reveal">
-          <div>${dev("d-door.webp", "Door display for Ladies near gate 17: cleaned 12 min ago, tissue, soap and towels fine, and four rating faces", "door")}${cap("<b>Cleaned 12 min ago.</b> Supplies in plain words.")}</div>
-          <div>${dev("d-cleaning.webp", "Door display while cleaning: Cleaning now, and please use gents near gate 17, 165 m", "door")}${cap("<b>Cleaning now.</b> Sends people to the next one.")}</div>
-          <div>${dev("d-thanks.webp", "Door display after a Not clean rating: thank you, the cleaning team has been told", "door")}${cap("<b>Thank you.</b> A low rating reaches the zone.")}</div>
-        </div>
-${head2("s-19", "Prototype", "The design system", "Tokens, type, pictograms and components, shared by every touchpoint.")}
+${head2("s-10", "Prototype", "The design system", "Tokens, type, pictograms and components, shared by every touchpoint.")}
 ${designSystem()}
-${head2("s-20", "Test", "What to measure", "Targets to validate, not results. The simulation’s numbers are hypotheses until the fieldwork replaces them.")}
+${head2("s-11", "Test", "How it gets tested, and next", "Planned, not yet run. Without airport access, the fieldwork uses campus and hospital housekeeping teams as a proxy. The simulation’s numbers stay hypotheses until it replaces them.")}
+        <div class="ss-plan reveal">
+          <div class="ss-bubbles" role="img" aria-label="Participants per method: 3 shift shadowings, 6 attendant interviews, 5 or more timed incidents, 10 or more pictogram testers">
+            ${[["3", "shifts shadowed", "across 2 sites", 0.55], ["6", "attendant interviews", "Hindi or English", 0.75], ["5+", "incidents timed", "to replace estimates", 0.55], ["10+", "pictogram testers", "ISO 9186 style", 1]].map(([n, l, s2, sc]) => `<div class="ss-bubble" style="--s:${sc}"><b>${n}</b><span>${e(l)}</span><small>${e(s2)}</small></div>`).join("")}
+          </div>
+          <ol class="ss-tasks">
+            <li>${pic("clock")}<b>How do attendants learn</b><span>a washroom needs them, and how long it takes?</span></li>
+            <li>${pic("walk")}<b>Where does the time go</b><span>noticing, telling, fetching, walking, cleaning</span></li>
+            <li>${pic("tissue")}<b>Which pictograms</b><span>are recognised without words?</span></li>
+          </ol>
+          <ul class="ss-hyps" aria-label="Hypotheses to test">
+            ${[["Unnoticed", "Eye", "Most delay is before anyone knows"], ["Two trips", "Routing", "Refills are missing on arrival, so a store trip"], ["Radio", "Phone", "Supervisors find problems by walking"], ["Handover", "History", "Late problems fall through at shift change"], ["Habit", "Archive", "Stores restock by habit, not use"], ["Words", "Languages", "English labels slow people down"]].map(([kk, icon, hy]) => `<li>${ico(icon)}<span><b>${e(kk)}</b>${e(hy)}</span><em>to test</em></li>`).join("")}
+          </ul>
+          <p class="ss-kit-link"><a href="../assets/saafsafar/research-kit.html" target="_blank" rel="noopener">${ico("FileText")} Open the research kit: interview guide, observation sheet, incident timing log, consent script and pictogram test cards</a></p>
+        </div>
+        <div class="ss-subhead reveal"><h3>What to measure</h3><p>Targets to validate, not results.</p></div>
         <div class="ss-metrics reveal">
           ${[
             ["Trips per task", "1", "today assumed 2: store, then washroom", 100],
@@ -477,13 +472,12 @@ ${head2("s-20", "Test", "What to measure", "Targets to validate, not results. Th
           <li><b>Round 2</b><span>Cart iPad with gloves · 5 attendants · task success, time and errors</span></li>
           <li><b>Round 3</b><span>Zone dashboard walkthrough · 2–3 supervisors · the escalation and handover</span></li>
         </ol>
-${head2("s-21", "Test", "Where it stands, and next", "")}
+        <div class="ss-subhead reveal"><h3>Where it stands</h3></div>
         <div class="ss-status reveal">
           <div class="ss-status-col ss-status-col--done"><p class="ss-kit-k">${ico("CircleCheck")} Built</p><ul>${["Six touchpoints on one simulation", "Escalation at 2 and 5 minutes", "Store-aware routing", "Automatic shift handover", "Unsensed-fault detection from ratings", "Seven-day history and data story", "Observable notebook", "Hindi and English, spoken Hindi"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
           <div class="ss-status-col"><p class="ss-kit-k">${ico("Hourglass")} Not yet</p><ul>${["Field research", "Real sensors and a backend", "Integration with GMR systems", "A recorded Hindi voice", "Tableau Public story", "Telugu and other languages"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
           <div class="ss-status-col ss-status-col--next"><p class="ss-kit-k">${ico("ArrowRight")} Next</p><p class="ss-next-big">Shadow three shifts, time five incidents, test the pictograms, then put the cart iPad in gloved hands.</p></div>
         </div>
-
       </div>
     </section>
 

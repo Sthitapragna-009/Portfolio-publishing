@@ -252,7 +252,7 @@
               <li><svg class="ss-i" aria-hidden="true"><use href="#i-Code"/></svg><span><b>Built</b> a working prototype on a simulated week</span></li>
             </ul>
             <div class="ss-hero-cta">
-              <a class="ss-hero-btn" href="#s-12">Try the prototype <svg class="ss-i" aria-hidden="true"><use href="#i-ArrowRight"/></svg></a>
+              <a class="ss-hero-btn" href="#ss-try">Try the prototype <svg class="ss-i" aria-hidden="true"><use href="#i-ArrowRight"/></svg></a>
               <a class="ss-hero-link" href="#ss-journey-h">Read the journey</a>
             </div>
             </div>
@@ -302,6 +302,25 @@
     <section class="section case-plates">
       <div class="wrap">
 
+        <div class="plate-head ss-head ss-line--prototype" id="ss-try">
+          <div class="ss-sign" aria-hidden="true">
+            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Try it</span>
+            <span class="ss-sign-stop">Live</span>
+          </div>
+          <h2 class="display section-title">Follow one incident</h2>
+          <div class="section-intro"><p>The whole terminal runs live on this page: one simulation drives every screen. Press Trigger incident, then switch roles to follow it.</p></div>
+        </div>
+        <div class="ss-live reveal">
+          <div class="ss-live-bar" role="group" aria-label="Open the prototype as">
+            <button type="button" class="ss-live-role" data-role="attendant" aria-pressed="true"><svg class="ss-i" aria-hidden="true"><use href="#i-Smartphone"/></svg>Attendant</button><button type="button" class="ss-live-role" data-role="supervisor" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Phone"/></svg>Zone supervisor</button><button type="button" class="ss-live-role" data-role="manager" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Monitor"/></svg>Shift manager</button><button type="button" class="ss-live-role" data-role="ops" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Graph"/></svg>Ops and DIAL</button><button type="button" class="ss-live-role" data-role="passenger" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Users"/></svg>Passengers</button>
+            <a class="ss-live-open" href="../prototypes/saaf-safar/index.html?lang=en#/attendant" target="_blank" rel="noopener"><svg class="ss-i" aria-hidden="true"><use href="#i-ExternalLink"/></svg>Open full screen<span class="sr-only"> (new tab)</span></a>
+          </div>
+          <figure class="ss-browser ss-live-frame">
+            <div class="ss-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>saafsafar · delhi-t3</span></div>
+            <iframe src="../prototypes/saaf-safar/index.html?embed&amp;lang=en#/attendant" title="Saaf Safar prototype" loading="lazy"></iframe>
+          </figure>
+          <p class="ss-cap">Runs in your browser on simulated data. The dock controls time: play, 1×, 10× or 60×, drag across the day, or trigger the Gate 14 incident.</p>
+        </div>
         <!-- The journey as a metro line: one line colour per phase, a lettered station for each. -->
         <nav class="ss-metro reveal" aria-labelledby="ss-journey-h">
           <div class="ss-metro-head">
@@ -314,35 +333,35 @@
                 <span class="ss-stop-dot" aria-hidden="true">E</span>
                 <span class="ss-stop-phase">Empathise</span>
                 <span class="ss-stop-decision">Most of the delay is before anyone knows</span>
-                <span class="ss-stop-what">Context, hierarchy, stakeholders, proto-personas, a research plan</span>
+                <span class="ss-stop-what">The problem, one incident, who it touches</span>
               </a>
             </li><li class="ss-stop ss-line--define">
-              <a href="#s-06">
+              <a href="#s-04">
                 <span class="ss-stop-dot" aria-hidden="true">D</span>
                 <span class="ss-stop-phase">Define</span>
                 <span class="ss-stop-decision">Pictures first, Hindi first, gloves on</span>
-                <span class="ss-stop-what">The incident, eight principles</span>
+                <span class="ss-stop-what">Eight principles</span>
               </a>
             </li><li class="ss-stop ss-line--ideate">
-              <a href="#s-08">
+              <a href="#s-05">
                 <span class="ss-stop-dot" aria-hidden="true">I</span>
                 <span class="ss-stop-phase">Ideate</span>
                 <span class="ss-stop-decision">One task, seven touchpoints</span>
                 <span class="ss-stop-what">Brainstorm, blueprint, lifecycle, escalation</span>
               </a>
             </li><li class="ss-stop ss-line--prototype">
-              <a href="#s-12">
+              <a href="#s-06">
                 <span class="ss-stop-dot" aria-hidden="true">P</span>
                 <span class="ss-stop-phase">Prototype</span>
                 <span class="ss-stop-decision">A working terminal, not a mock-up</span>
-                <span class="ss-stop-what">A live simulation and six touchpoints</span>
+                <span class="ss-stop-what">Cart, phone, watch, door, dashboards, data story, design system</span>
               </a>
             </li><li class="ss-stop ss-line--test">
-              <a href="#s-20">
+              <a href="#s-11">
                 <span class="ss-stop-dot" aria-hidden="true">T</span>
                 <span class="ss-stop-phase">Test</span>
                 <span class="ss-stop-decision">Comprehension before screens</span>
-                <span class="ss-stop-what">Targets, three rounds, what is next</span>
+                <span class="ss-stop-what">Research plan, three rounds, measures, what is next</span>
               </a>
             </li>
           </ol>
@@ -367,18 +386,21 @@
             <div class="ss-plat ss-plat--red"><dt>0</dt><dd>washroom layers on the control centre’s wall today, beside 50,000+ sensor points</dd></div>
           </dl>
         </div>
+        <div class="ss-subhead reveal"><h3>What the public record shows</h3><p>No airport access, so the context comes from public sources first. Each fact changes a design decision.</p></div>
+        <ul class="ss-findings reveal">
+          <li><span class="ss-f-a">20.4M at Delhi against 7.1M at Hyderabad in a quarter</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Configure, don’t redesign</span><a class="ss-f-src" href="https://nsearchives.nseindia.com/corporate/GMRINFRA_12082026194953_Press_Release.pdf" target="_blank" rel="noopener">GMR Q1 FY27<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">T3’s control centre: 3,200 cameras, 50,000+ sensor points</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">A washroom layer, not another screen</span><a class="ss-f-src" href="https://hclinfosystems.in/?p=3046" target="_blank" rel="noopener">HCL Infosystems<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">Washroom cleanliness is rated in ACI’s passenger survey</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Report in ACI’s language</span><a class="ss-f-src" href="https://currentaffairs.adda247.com/delhi-international-airport-among-cleanest-in-asia-pacific-says-aci/" target="_blank" rel="noopener">Adda247<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">117 restrooms already sensed at an Indian airport</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">The sensors are proven; the worker side is not described</span><a class="ss-f-src" href="https://www.milesight.com/iot/success-stories/iot-smart-washroom-india-airport" target="_blank" rel="noopener">Milesight<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">Low literacy is not one group</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Pictures first, words second</span><a class="ss-f-src" href="https://www.dgp.toronto.edu/public_user/ravin/papers/chi2009_literacy.pdf" target="_blank" rel="noopener">CHI 2009<span class="sr-only"> (opens a source)</span></a></li>
+        </ul>
 
         <div class="plate-head ss-head ss-line--empathise" id="s-02">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Empathise</span>
             <span class="ss-sign-stop">Stop <b>02</b></span>
           </div>
-          <h2 class="display section-title">What the public record shows</h2>
-          <div class="section-intro"><p>No airport access, so the context comes from public sources first. Each fact changes a design decision.</p></div>
+          <h2 class="display section-title">Where the time goes</h2>
+          <div class="section-intro"><p>One incident, a washroom near Gate 14 running out of tissue in the evening bank. Our estimate: most of the hour passes before anyone knows.</p></div>
         </div>
-        <ol class="ss-findings reveal">
-          <li><span class="ss-f-a">78M passengers a year at Delhi</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Delhi is the hardest case; if it works there, it scales down</span><a class="ss-f-src" href="https://www.businesstoday.in/india/story/delhi-igi-airport-handled-78-million-passengers-in-2025-beats-seoul-paris-and-los-angeles-550229-2026-08-20" target="_blank" rel="noopener">Business Today<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">20.4M at Delhi against 7.1M at Hyderabad in a quarter</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Configure, don’t redesign</span><a class="ss-f-src" href="https://nsearchives.nseindia.com/corporate/GMRINFRA_12082026194953_Press_Release.pdf" target="_blank" rel="noopener">GMR Q1 FY27<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">T3’s control centre: 3,200 cameras, 50,000+ sensor points</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">A washroom layer, not another screen</span><a class="ss-f-src" href="https://hclinfosystems.in/?p=3046" target="_blank" rel="noopener">HCL Infosystems<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">Hyderabad runs a predictive operations centre on 40+ IoT parameters</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Plug into it, don’t sit beside it</span><a class="ss-f-src" href="https://indianinfrastructure.com/2024/12/12/hyderabad-airport-launches-ai-powered-digital-twin-platform-with-apoc/" target="_blank" rel="noopener">Indian Infrastructure<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">400+ housekeeping staff in shifts, under terminal operations</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Contractor crews, terminal ops in charge</span><a class="ss-f-src" href="https://gmrgroup.in/blog/covid-19-gmr-airports-undertake-massive-sanitization.aspx" target="_blank" rel="noopener">GMR Group<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">Washroom cleanliness is rated in ACI’s passenger survey</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Report in ACI’s language</span><a class="ss-f-src" href="https://currentaffairs.adda247.com/delhi-international-airport-among-cleanest-in-asia-pacific-says-aci/" target="_blank" rel="noopener">Adda247<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">117 restrooms already sensed at an Indian airport</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">The sensors are proven; the worker side is not described</span><a class="ss-f-src" href="https://www.milesight.com/iot/success-stories/iot-smart-washroom-india-airport" target="_blank" rel="noopener">Milesight<span class="sr-only"> (opens a source)</span></a></li><li><span class="ss-f-a">Low literacy is not one group</span><span class="ss-f-arrow" aria-hidden="true"></span><span class="ss-f-b">Pictures first, words second</span><a class="ss-f-src" href="https://www.dgp.toronto.edu/public_user/ravin/papers/chi2009_literacy.pdf" target="_blank" rel="noopener">CHI 2009<span class="sr-only"> (opens a source)</span></a></li>
-        </ol>
+        <figure class="ss-ig ss-ig--incident reveal"><svg class="ig ss-ig-incident" viewBox="0 0 1000 322" role="img" aria-labelledby="ig-inc-t">
+  <title id="ig-inc-t">Minutes in one incident. Today, estimated: 34 minutes before anyone knows, 6 for the radio, 12 for the store and walk, 4 to refill, 56 in all. With Saaf Safar, estimated: 3 to alert and accept, 5 to walk, 4 to refill, 12 in all. Simulated week, median: 15 minutes.</title><line x1="210" x2="210" y1="10" y2="296" class="ln"/><text x="210" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">0</text><line x1="390" x2="390" y1="10" y2="296" class="ln"/><text x="390" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">15</text><line x1="570" x2="570" y1="10" y2="296" class="ln"/><text x="570" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">30</text><line x1="750" x2="750" y1="10" y2="296" class="ln"/><text x="750" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">45</text><line x1="930" x2="930" y1="10" y2="296" class="ln"/><text x="930" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">60 min</text><text x="0" y="38" text-anchor="start" class="t-ink t-b" font-size="20"><tspan x="0" dy="0">Today</tspan></text><text x="0" y="60" text-anchor="start" class="t-dim" font-size="14"><tspan x="0" dy="0">schedule-driven, estimate</tspan></text><rect x="210" y="14" width="405" height="54" rx="2" class="ss-seg ss-seg--gap"/><text x="222" y="47" class="ss-seg-t ss-seg-t--gap" font-size="15">Nobody knows yet</text><rect x="618" y="14" width="69" height="54" rx="2" class="ss-seg ss-seg--tell"/><text x="630" y="47" class="ss-seg-t ss-seg-t--tell" font-size="15">Radio</text><rect x="690" y="14" width="141" height="54" rx="2" class="ss-seg ss-seg--go"/><text x="702" y="47" class="ss-seg-t ss-seg-t--go" font-size="15">Store, walk</text><rect x="834" y="14" width="48" height="54" rx="8" class="ss-seg ss-seg--work"/><text x="894" y="48" class="t-ink t-b" font-size="20">56 min</text><text x="0" y="132" text-anchor="start" class="t-ink t-b" font-size="20"><tspan x="0" dy="0">With Saaf Safar</tspan></text><text x="0" y="154" text-anchor="start" class="t-dim" font-size="14"><tspan x="0" dy="0">estimate</tspan></text><rect x="210" y="108" width="33" height="54" rx="2" class="ss-seg ss-seg--tell"/><rect x="246" y="108" width="57" height="54" rx="2" class="ss-seg ss-seg--go"/><text x="258" y="141" class="ss-seg-t ss-seg-t--go" font-size="15">Walk</text><rect x="306" y="108" width="48" height="54" rx="8" class="ss-seg ss-seg--work"/><text x="366" y="142" class="t-ink t-b" font-size="20">12 min</text><text x="0" y="226" text-anchor="start" class="t-ink t-b" font-size="20"><tspan x="0" dy="0">Simulated week</tspan></text><text x="0" y="248" text-anchor="start" class="t-dim" font-size="14"><tspan x="0" dy="0">median of 1,473 tasks</tspan></text><rect x="210" y="202" width="57" height="54" rx="2" class="ss-seg ss-seg--tell"/><rect x="270" y="202" width="33" height="54" rx="2" class="ss-seg ss-seg--go"/><rect x="306" y="202" width="84" height="54" rx="8" class="ss-seg ss-seg--work"/><text x="318" y="235" class="ss-seg-t ss-seg-t--work" font-size="15">Clean</text><text x="402" y="236" class="t-ink t-b" font-size="20">15 min</text></svg><figcaption>Estimates, not measurements, beside the simulated week’s median. The incident timing log in the research plan replaces them.</figcaption></figure>
 
         <div class="plate-head ss-head ss-line--empathise" id="s-03">
           <div class="ss-sign" aria-hidden="true">
@@ -400,58 +422,24 @@
             <p class="ss-persona-role">Attendant</p>
             <h3>The cart attendant</h3>
             <p class="ss-persona-goal">Know which washroom needs me, and what to bring, without reading English.</p>
-            <div class="ss-scale"><span class="ss-scale-k">Reads English</span><span class="ss-dots" role="img" aria-label="1 out of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="ss-scale-n">a little</span></div><div class="ss-scale"><span class="ss-scale-k">Reads Hindi</span><span class="ss-dots" role="img" aria-label="3 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span><span class="ss-scale-n">slowly</span></div><div class="ss-scale"><span class="ss-scale-k">Hands free</span><span class="ss-dots" role="img" aria-label="1 out of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="ss-scale-n">gloves on</span></div><div class="ss-scale"><span class="ss-scale-k">Phone of own</span><span class="ss-dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="ss-scale-n">most have one</span></div>
+            <div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Reads English</span><span class="ss-scale-n">a little</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Reads Hindi</span><span class="ss-scale-n">slowly</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Hands free</span><span class="ss-scale-n">gloves on</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Phone of own</span><span class="ss-scale-n">most have one</span></div>
           </article><article class="ss-persona">
             <p class="ss-persona-role">Supervisor</p>
             <h3>The zone supervisor</h3>
             <p class="ss-persona-goal">Stop walking rounds just to find problems; step in only when a task stalls.</p>
-            <div class="ss-scale"><span class="ss-scale-k">On the move</span><span class="ss-dots" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="ss-scale-n">all shift</span></div><div class="ss-scale"><span class="ss-scale-k">Radio</span><span class="ss-dots" role="img" aria-label="5 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span><span class="ss-scale-n">always on</span></div><div class="ss-scale"><span class="ss-scale-k">Time at a screen</span><span class="ss-dots" role="img" aria-label="2 out of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="ss-scale-n">glances</span></div><div class="ss-scale"><span class="ss-scale-k">Paperwork</span><span class="ss-dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="ss-scale-n">checklists</span></div>
+            <div class="ss-scale ss-scale--plain"><span class="ss-scale-k">On the move</span><span class="ss-scale-n">all shift</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Radio</span><span class="ss-scale-n">always on</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Time at a screen</span><span class="ss-scale-n">glances</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Paperwork</span><span class="ss-scale-n">checklists</span></div>
           </article><article class="ss-persona">
             <p class="ss-persona-role">Manager</p>
             <h3>The shift manager</h3>
             <p class="ss-persona-goal">Hand over without losing what started late in my shift.</p>
-            <div class="ss-scale"><span class="ss-scale-k">Terminal-wide view</span><span class="ss-dots" role="img" aria-label="1 out of 5"><i class="on"></i><i></i><i></i><i></i><i></i></span><span class="ss-scale-n">today: none</span></div><div class="ss-scale"><span class="ss-scale-k">Reports</span><span class="ss-dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="ss-scale-n">monthly</span></div><div class="ss-scale"><span class="ss-scale-k">Handover</span><span class="ss-dots" role="img" aria-label="2 out of 5"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></span><span class="ss-scale-n">verbal</span></div><div class="ss-scale"><span class="ss-scale-k">Data comfort</span><span class="ss-dots" role="img" aria-label="4 out of 5"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span><span class="ss-scale-n">spreadsheets</span></div>
+            <div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Terminal-wide view</span><span class="ss-scale-n">today: none</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Reports</span><span class="ss-scale-n">monthly</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Handover</span><span class="ss-scale-n">verbal</span></div><div class="ss-scale ss-scale--plain"><span class="ss-scale-k">Data comfort</span><span class="ss-scale-n">spreadsheets</span></div>
           </article>
         </div>
 
-        <div class="plate-head ss-head ss-line--empathise" id="s-04">
+        <div class="plate-head ss-head ss-line--define" id="s-04">
           <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Empathise</span>
+            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Define</span>
             <span class="ss-sign-stop">Stop <b>04</b></span>
-          </div>
-          <h2 class="display section-title">The research plan</h2>
-          <div class="section-intro"><p>Planned, not yet run. Without airport access, the fieldwork uses campus and hospital housekeeping teams as a proxy.</p></div>
-        </div>
-        <div class="ss-plan reveal">
-          <div class="ss-bubbles" role="img" aria-label="Participants per method: 3 shift shadowings, 6 attendant interviews, 5 or more timed incidents, 10 or more pictogram testers">
-            <div class="ss-bubble" style="--s:0.55"><b>3</b><span>shifts shadowed</span><small>across 2 sites</small></div><div class="ss-bubble" style="--s:0.75"><b>6</b><span>attendant interviews</span><small>Hindi or English</small></div><div class="ss-bubble" style="--s:0.55"><b>5+</b><span>incidents timed</span><small>to replace estimates</small></div><div class="ss-bubble" style="--s:1"><b>10+</b><span>pictogram testers</span><small>ISO 9186 style</small></div>
-          </div>
-          <ol class="ss-tasks">
-            <li><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-clock"/></svg><b>How do attendants learn</b><span>a washroom needs them, and how long it takes?</span></li>
-            <li><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-walk"/></svg><b>Where does the time go</b><span>noticing, telling, fetching, walking, cleaning</span></li>
-            <li><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-tissue"/></svg><b>Which pictograms</b><span>are recognised without words?</span></li>
-          </ol>
-          <ul class="ss-hyps" aria-label="Hypotheses to test">
-            <li><svg class="ss-i" aria-hidden="true"><use href="#i-Eye"/></svg><span><b>Unnoticed</b>Most delay is before anyone knows</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Routing"/></svg><span><b>Two trips</b>Refills are missing on arrival, so a store trip</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Phone"/></svg><span><b>Radio</b>Supervisors find problems by walking</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-History"/></svg><span><b>Handover</b>Late problems fall through at shift change</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Archive"/></svg><span><b>Habit</b>Stores restock by habit, not use</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Languages"/></svg><span><b>Words</b>English labels slow people down</span><em>to test</em></li>
-          </ul>
-          <p class="ss-kit-link"><a href="../assets/saafsafar/research-kit.html" target="_blank" rel="noopener"><svg class="ss-i" aria-hidden="true"><use href="#i-FileText"/></svg> Open the research kit: interview guide, observation sheet, incident timing log, consent script and pictogram test cards</a></p>
-        </div>
-
-        <div class="plate-head ss-head ss-line--define" id="s-06">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Define</span>
-            <span class="ss-sign-stop">Stop <b>06</b></span>
-          </div>
-          <h2 class="display section-title">Where the time goes</h2>
-          <div class="section-intro"><p>One incident, a washroom near Gate 14 running out of tissue in the evening bank. Today, most of the hour passes before anyone knows.</p></div>
-        </div>
-        <figure class="ss-ig ss-ig--incident reveal"><svg class="ig ss-ig-incident" viewBox="0 0 1000 322" role="img" aria-labelledby="ig-inc-t">
-  <title id="ig-inc-t">Minutes in one incident. Today, estimated: 34 minutes before anyone knows, 6 for the radio, 12 for the store and walk, 4 to refill, 56 in all. With Saaf Safar, estimated: 3 to alert and accept, 5 to walk, 4 to refill, 12 in all. Simulated week, median: 15 minutes.</title><line x1="210" x2="210" y1="10" y2="296" class="ln"/><text x="210" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">0</text><line x1="390" x2="390" y1="10" y2="296" class="ln"/><text x="390" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">15</text><line x1="570" x2="570" y1="10" y2="296" class="ln"/><text x="570" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">30</text><line x1="750" x2="750" y1="10" y2="296" class="ln"/><text x="750" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">45</text><line x1="930" x2="930" y1="10" y2="296" class="ln"/><text x="930" y="316" text-anchor="middle" class="t-faint t-mono" font-size="14">60 min</text><text x="0" y="38" text-anchor="start" class="t-ink t-b" font-size="20"><tspan x="0" dy="0">Today</tspan></text><text x="0" y="60" text-anchor="start" class="t-dim" font-size="14"><tspan x="0" dy="0">schedule-driven, estimate</tspan></text><rect x="210" y="14" width="405" height="54" rx="2" class="ss-seg ss-seg--gap"/><text x="222" y="47" class="ss-seg-t ss-seg-t--gap" font-size="15">Nobody knows yet</text><rect x="618" y="14" width="69" height="54" rx="2" class="ss-seg ss-seg--tell"/><text x="630" y="47" class="ss-seg-t ss-seg-t--tell" font-size="15">Radio</text><rect x="690" y="14" width="141" height="54" rx="2" class="ss-seg ss-seg--go"/><text x="702" y="47" class="ss-seg-t ss-seg-t--go" font-size="15">Store, walk</text><rect x="834" y="14" width="48" height="54" rx="8" class="ss-seg ss-seg--work"/><text x="894" y="48" class="t-ink t-b" font-size="20">56 min</text><text x="0" y="132" text-anchor="start" class="t-ink t-b" font-size="20"><tspan x="0" dy="0">With Saaf Safar</tspan></text><text x="0" y="154" text-anchor="start" class="t-dim" font-size="14"><tspan x="0" dy="0">estimate</tspan></text><rect x="210" y="108" width="33" height="54" rx="2" class="ss-seg ss-seg--tell"/><rect x="246" y="108" width="57" height="54" rx="2" class="ss-seg ss-seg--go"/><text x="258" y="141" class="ss-seg-t ss-seg-t--go" font-size="15">Walk</text><rect x="306" y="108" width="48" height="54" rx="8" class="ss-seg ss-seg--work"/><text x="366" y="142" class="t-ink t-b" font-size="20">12 min</text><text x="0" y="226" text-anchor="start" class="t-ink t-b" font-size="20"><tspan x="0" dy="0">Simulated week</tspan></text><text x="0" y="248" text-anchor="start" class="t-dim" font-size="14"><tspan x="0" dy="0">median of 1,473 tasks</tspan></text><rect x="210" y="202" width="57" height="54" rx="2" class="ss-seg ss-seg--tell"/><rect x="270" y="202" width="33" height="54" rx="2" class="ss-seg ss-seg--go"/><rect x="306" y="202" width="84" height="54" rx="8" class="ss-seg ss-seg--work"/><text x="318" y="235" class="ss-seg-t ss-seg-t--work" font-size="15">Clean</text><text x="402" y="236" class="t-ink t-b" font-size="20">15 min</text></svg><figcaption>Estimates typed for the brief, beside the simulated week’s median. The timing log in research replaces the estimates.</figcaption></figure>
-
-        <div class="plate-head ss-head ss-line--define" id="s-07">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Define</span>
-            <span class="ss-sign-stop">Stop <b>07</b></span>
           </div>
           <h2 class="display section-title">Principles</h2>
           <div class="section-intro"><p>Apple’s Human Interface Guidelines, then further wherever they assume a reader. The test for every screen: can a worker who reads Hindi slowly act on it in under five seconds?</p></div>
@@ -485,37 +473,21 @@
           </li>
         </ul>
 
-        <div class="plate-head ss-head ss-line--ideate" id="s-08">
+        <div class="plate-head ss-head ss-line--ideate" id="s-05">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Ideate</span>
-            <span class="ss-sign-stop">Stop <b>08</b></span>
+            <span class="ss-sign-stop">Stop <b>05</b></span>
           </div>
-          <h2 class="display section-title">Brainstorm</h2>
-          <div class="section-intro"><p>Six directions from one idea. Filled ideas are in the prototype; dashed ones are parked.</p></div>
+          <h2 class="display section-title">From one idea to one task</h2>
+          <div class="section-intro"><p>Six directions from one idea, then one task that moves through the whole service by itself.</p></div>
         </div>
         <div class="ss-scroll reveal"><figure class="ss-ig ss-ig--flush ss-ig--mind reveal"><svg class="ig ss-ig-mind" viewBox="0 0 1000 620" role="img" aria-labelledby="ig-mind-t">
   <title id="ig-mind-t">Brainstorm around one idea, tell the right person right now, in six directions: Sense: Fill, tissue, soap, odour, wet, Footfall from the timetable, Leak detection (parked); Tell: Pictures and spoken Hindi, Phone and watch, opt-in, Smart glasses (parked); Route: Nearest free cart, 2 min, then the next cart, Indoor positioning (parked); Stock: Cart checks its own stock, Restock per 100 passengers, Auto re-order (parked); Prove: Sensor closes the task, Weekly data story, SLA, Live ACI score (parked); Passengers: Cleaned 12 min ago, Four-face rating, Queue length on signage (parked).</title><line x1="500" y1="310" x2="587.5" y2="158.4" class="ln-strong mm-line mm-1"/><path d="M587.5 158.4 C622.5 158.4 622.5 112.4 657.5 112.4" class="ln mm-twig mm-1" fill="none"/><rect x="657.5" y="96.4" width="254" height="32" rx="16" class="pill-on"/><text x="670.5" y="117.4" class="t-ink" font-size="14">Fill, tissue, soap, odour, wet</text><path d="M587.5 158.4 C622.5 158.4 622.5 158.4 657.5 158.4" class="ln mm-twig mm-1" fill="none"/><rect x="657.5" y="142.4" width="231.2" height="32" rx="16" class="pill-on"/><text x="670.5" y="163.4" class="t-ink" font-size="14">Footfall from the timetable</text><path d="M587.5 158.4 C622.5 158.4 622.5 204.4 657.5 204.4" class="ln mm-twig mm-1" fill="none"/><rect x="657.5" y="188.4" width="132.4" height="32" rx="16" class="pill-off"/><text x="670.5" y="209.4" class="t-faint" font-size="14">Leak detection</text><circle cx="587.5" cy="158.4" r="38" class="node mm-stn mm-1"/><text x="587.5" y="163.4" text-anchor="middle" class="t-ink t-b" font-size="14">Sense</text><line x1="500" y1="310" x2="675" y2="310" class="ln-strong mm-line mm-2"/><path d="M675 310 C710 310 710 264 745 264" class="ln mm-twig mm-2" fill="none"/><rect x="745" y="248" width="216" height="32" rx="16" class="pill-on"/><text x="758" y="269" class="t-ink" font-size="14">Pictures and spoken Hindi</text><path d="M675 310 C710 310 710 310 745 310" class="ln mm-twig mm-2" fill="none"/><rect x="745" y="294" width="200.8" height="32" rx="16" class="pill-on"/><text x="758" y="315" class="t-ink" font-size="14">Phone and watch, opt-in</text><path d="M675 310 C710 310 710 356 745 356" class="ln mm-twig mm-2" fill="none"/><rect x="745" y="340" width="124.8" height="32" rx="16" class="pill-off"/><text x="758" y="361" class="t-faint" font-size="14">Smart glasses</text><circle cx="675" cy="310" r="38" class="node mm-stn mm-2"/><text x="675" y="315" text-anchor="middle" class="t-ink t-b" font-size="14">Tell</text><line x1="500" y1="310" x2="587.5" y2="461.6" class="ln-strong mm-line mm-3"/><path d="M587.5 461.6 C622.5 461.6 622.5 415.6 657.5 415.6" class="ln mm-twig mm-3" fill="none"/><rect x="657.5" y="399.6" width="155.2" height="32" rx="16" class="pill-on"/><text x="670.5" y="420.6" class="t-ink" font-size="14">Nearest free cart</text><path d="M587.5 461.6 C622.5 461.6 622.5 461.6 657.5 461.6" class="ln mm-twig mm-3" fill="none"/><rect x="657.5" y="445.6" width="216" height="32" rx="16" class="pill-on"/><text x="670.5" y="466.6" class="t-ink" font-size="14">2 min, then the next cart</text><path d="M587.5 461.6 C622.5 461.6 622.5 507.6 657.5 507.6" class="ln mm-twig mm-3" fill="none"/><rect x="657.5" y="491.6" width="162.8" height="32" rx="16" class="pill-off"/><text x="670.5" y="512.6" class="t-faint" font-size="14">Indoor positioning</text><circle cx="587.5" cy="461.6" r="38" class="node mm-stn mm-3"/><text x="587.5" y="466.6" text-anchor="middle" class="t-ink t-b" font-size="14">Route</text><line x1="500" y1="310" x2="412.5" y2="461.6" class="ln-strong mm-line mm-4"/><path d="M412.5 461.6 C377.5 461.6 377.5 415.6 342.5 415.6" class="ln mm-twig mm-4" fill="none"/><rect x="126.5" y="399.6" width="216" height="32" rx="16" class="pill-on"/><text x="139.5" y="420.6" class="t-ink" font-size="14">Cart checks its own stock</text><path d="M412.5 461.6 C377.5 461.6 377.5 461.6 342.5 461.6" class="ln mm-twig mm-4" fill="none"/><rect x="118.9" y="445.6" width="223.6" height="32" rx="16" class="pill-on"/><text x="131.9" y="466.6" class="t-ink" font-size="14">Restock per 100 passengers</text><path d="M412.5 461.6 C377.5 461.6 377.5 507.6 342.5 507.6" class="ln mm-twig mm-4" fill="none"/><rect x="217.7" y="491.6" width="124.8" height="32" rx="16" class="pill-off"/><text x="230.7" y="512.6" class="t-faint" font-size="14">Auto re-order</text><circle cx="412.5" cy="461.6" r="38" class="node mm-stn mm-4"/><text x="412.5" y="466.6" text-anchor="middle" class="t-ink t-b" font-size="14">Stock</text><line x1="500" y1="310" x2="325" y2="310" class="ln-strong mm-line mm-5"/><path d="M325 310 C290 310 290 264 255 264" class="ln mm-twig mm-5" fill="none"/><rect x="61.8" y="248" width="193.2" height="32" rx="16" class="pill-on"/><text x="74.8" y="269" class="t-ink" font-size="14">Sensor closes the task</text><path d="M325 310 C290 310 290 310 255 310" class="ln mm-twig mm-5" fill="none"/><rect x="61.8" y="294" width="193.2" height="32" rx="16" class="pill-on"/><text x="74.8" y="315" class="t-ink" font-size="14">Weekly data story, SLA</text><path d="M325 310 C290 310 290 356 255 356" class="ln mm-twig mm-5" fill="none"/><rect x="122.6" y="340" width="132.4" height="32" rx="16" class="pill-off"/><text x="135.6" y="361" class="t-faint" font-size="14">Live ACI score</text><circle cx="325" cy="310" r="38" class="node mm-stn mm-5"/><text x="325" y="315" text-anchor="middle" class="t-ink t-b" font-size="14">Prove</text><line x1="500" y1="310" x2="412.5" y2="158.4" class="ln-strong mm-line mm-6"/><path d="M412.5 158.4 C377.5 158.4 377.5 112.4 342.5 112.4" class="ln mm-twig mm-6" fill="none"/><rect x="179.7" y="96.4" width="162.8" height="32" rx="16" class="pill-on"/><text x="192.7" y="117.4" class="t-ink" font-size="14">Cleaned 12 min ago</text><path d="M412.5 158.4 C377.5 158.4 377.5 158.4 342.5 158.4" class="ln mm-twig mm-6" fill="none"/><rect x="194.9" y="142.4" width="147.6" height="32" rx="16" class="pill-on"/><text x="207.9" y="163.4" class="t-ink" font-size="14">Four-face rating</text><path d="M412.5 158.4 C377.5 158.4 377.5 204.4 342.5 204.4" class="ln mm-twig mm-6" fill="none"/><rect x="141.7" y="188.4" width="200.8" height="32" rx="16" class="pill-off"/><text x="154.7" y="209.4" class="t-faint" font-size="14">Queue length on signage</text><circle cx="412.5" cy="158.4" r="38" class="node mm-stn mm-6"/><text x="412.5" y="163.4" text-anchor="middle" class="t-ink t-b" font-size="12">Passengers</text><circle cx="500" cy="310" r="78" class="node-acc"/><text x="500" y="300" text-anchor="middle" class="t-on t-b" font-size="16"><tspan x="500" dy="0">Tell the right</tspan><tspan x="500" dy="20">person, right now</tspan></text></svg></figure></div>
         <p class="ss-legend reveal"><span class="ss-lg-on"></span>In the prototype <span class="ss-lg-off"></span>Parked</p>
-
-        <div class="plate-head ss-head ss-line--ideate" id="s-09">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Ideate</span>
-            <span class="ss-sign-stop">Stop <b>09</b></span>
-          </div>
-          <h2 class="display section-title">One task, across the service</h2>
-          <div class="section-intro"><p>The same alert is an instruction for the worker and a live state for everyone above them.</p></div>
-        </div>
+        <div class="ss-subhead reveal"><h3>One task, across the service</h3><p>The same alert is an instruction for the worker and a live state for everyone above them.</p></div>
         <div class="ss-scroll reveal"><figure class="ss-ig ss-ig--flush reveal"><svg class="ig ss-ig-bp" viewBox="0 0 1006 594" role="img" aria-labelledby="ig-bp-t">
   <title id="ig-bp-t">Service blueprint of one task, in seven stages from sense to learn, across passengers, attendants, supervisors and managers, the Saaf Safar system, and sensors and stores.</title><text x="229" y="24" text-anchor="middle" class="t-ink t-b" font-size="15">Sense</text><text x="347" y="24" text-anchor="middle" class="t-ink t-b" font-size="15">Decide</text><text x="465" y="24" text-anchor="middle" class="t-ink t-b" font-size="15">Offer</text><text x="583" y="24" text-anchor="middle" class="t-ink t-b" font-size="15">Go</text><text x="701" y="24" text-anchor="middle" class="t-ink t-b" font-size="15">Clean</text><text x="819" y="24" text-anchor="middle" class="t-ink t-b" font-size="15">Confirm</text><text x="937" y="24" text-anchor="middle" class="t-ink t-b" font-size="15">Learn</text><text x="0" y="74" text-anchor="start" class="t-b t-dim" font-size="14.5"><tspan x="0" dy="0">Passenger</tspan></text><rect x="174" y="44" width="110" height="94" rx="10" class="node"/><text x="183" y="64" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="183" dy="0">Uses the</tspan><tspan x="183" dy="15.25">washroom</tspan></text><rect x="646" y="44" width="110" height="94" rx="10" class="node"/><text x="655" y="64" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="655" dy="0">Sees “Cleaning</tspan><tspan x="655" dy="15.25">now”, sent to</tspan><tspan x="655" dy="15.25">the next one</tspan></text><rect x="764" y="44" width="110" height="94" rx="10" class="node"/><text x="773" y="64" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="773" dy="0">Rates it on the</tspan><tspan x="773" dy="15.25">door</tspan></text><rect x="882" y="44" width="110" height="94" rx="10" class="node"/><text x="891" y="64" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="891" dy="0">Fewer bad</tspan><tspan x="891" dy="15.25">surprises</tspan></text><text x="0" y="182" text-anchor="start" class="t-b t-dim" font-size="14.5"><tspan x="0" dy="0">Attendant</tspan></text><rect x="410" y="152" width="110" height="94" rx="10" class="ss-bp-front"/><text x="419" y="172" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="419" dy="0">Chime,</tspan><tspan x="419" dy="15.25">pictures,</tspan><tspan x="419" dy="15.25">spoken Hindi</tspan></text><rect x="528" y="152" width="110" height="94" rx="10" class="ss-bp-front"/><text x="537" y="172" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="537" dy="0">I’m going ·</tspan><tspan x="537" dy="15.25">store first if</tspan><tspan x="537" dy="15.25">short</tspan></text><rect x="646" y="152" width="110" height="94" rx="10" class="ss-bp-front"/><text x="655" y="172" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="655" dy="0">Jobs ticked as</tspan><tspan x="655" dy="15.25">done</tspan></text><rect x="764" y="152" width="110" height="94" rx="10" class="ss-bp-front"/><text x="773" y="172" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="773" dy="0">Sensor closes</tspan><tspan x="773" dy="15.25">it</tspan></text><rect x="882" y="152" width="110" height="94" rx="10" class="ss-bp-front"/><text x="891" y="172" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="891" dy="0">Done count for</tspan><tspan x="891" dy="15.25">the shift</tspan></text><line x1="0" x2="1006" y1="254" y2="254" class="ln ln-dash"/><text x="0" y="290" text-anchor="start" class="t-b t-dim" font-size="14.5"><tspan x="0" dy="0">Supervisor and manager</tspan></text><rect x="410" y="260" width="110" height="94" rx="10" class="node"/><text x="419" y="280" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="419" dy="0">Queue shows who</tspan><tspan x="419" dy="15.25">has it</tspan></text><rect x="528" y="260" width="110" height="94" rx="10" class="node"/><text x="537" y="280" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="537" dy="0">Radio prompt at</tspan><tspan x="537" dy="15.25">5 min if nobody</tspan></text><rect x="646" y="260" width="110" height="94" rx="10" class="node"/><text x="655" y="280" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="655" dy="0">Map shows it</tspan><tspan x="655" dy="15.25">being cleaned</tspan></text><rect x="882" y="260" width="110" height="94" rx="10" class="node"/><text x="891" y="280" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="891" dy="0">Handover</tspan><tspan x="891" dy="15.25">carries open</tspan><tspan x="891" dy="15.25">tasks</tspan></text><line x1="0" x2="1006" y1="362" y2="362" class="ln-org ss-lov"/><text x="0" y="398" text-anchor="start" class="t-b t-ink" font-size="14.5"><tspan x="0" dy="0">Saaf Safar</tspan></text><rect x="174" y="368" width="110" height="94" rx="10" class="ss-bp-sys"/><text x="183" y="388" text-anchor="start" class="t-on" font-size="12.5"><tspan x="183" dy="0">Readings every</tspan><tspan x="183" dy="15.25">few minutes</tspan></text><rect x="292" y="368" width="110" height="94" rx="10" class="ss-bp-sys"/><text x="301" y="388" text-anchor="start" class="t-on" font-size="12.5"><tspan x="301" dy="0">Thresholds, 20</tspan><tspan x="301" dy="15.25">min forecast</tspan></text><rect x="410" y="368" width="110" height="94" rx="10" class="ss-bp-sys"/><text x="419" y="388" text-anchor="start" class="t-on" font-size="12.5"><tspan x="419" dy="0">Nearest free</tspan><tspan x="419" dy="15.25">cart, 2 min to</tspan><tspan x="419" dy="15.25">answer</tspan></text><rect x="528" y="368" width="110" height="94" rx="10" class="ss-bp-sys"/><text x="537" y="388" text-anchor="start" class="t-on" font-size="12.5"><tspan x="537" dy="0">Route, cart</tspan><tspan x="537" dy="15.25">stock check</tspan></text><rect x="646" y="368" width="110" height="94" rx="10" class="ss-bp-sys"/><text x="655" y="388" text-anchor="start" class="t-on" font-size="12.5"><tspan x="655" dy="0">Timer per job</tspan></text><rect x="764" y="368" width="110" height="94" rx="10" class="ss-bp-sys"/><text x="773" y="388" text-anchor="start" class="t-on" font-size="12.5"><tspan x="773" dy="0">Reset confirmed</tspan><tspan x="773" dy="15.25">by sensor</tspan></text><rect x="882" y="368" width="110" height="94" rx="10" class="ss-bp-sys"/><text x="891" y="388" text-anchor="start" class="t-on" font-size="12.5"><tspan x="891" dy="0">Week story, SLA</tspan><tspan x="891" dy="15.25">evidence</tspan></text><text x="0" y="506" text-anchor="start" class="t-b t-dim" font-size="14.5"><tspan x="0" dy="0">Sensors and stores</tspan></text><rect x="174" y="476" width="110" height="94" rx="10" class="node"/><text x="183" y="496" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="183" dy="0">Fill, tissue,</tspan><tspan x="183" dy="15.25">soap, odour,</tspan><tspan x="183" dy="15.25">wet floor,</tspan><tspan x="183" dy="15.25">footfall</tspan></text><rect x="528" y="476" width="110" height="94" rx="10" class="node"/><text x="537" y="496" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="537" dy="0">Store keeper</tspan><tspan x="537" dy="15.25">restocks</tspan></text><rect x="764" y="476" width="110" height="94" rx="10" class="node"/><text x="773" y="496" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="773" dy="0">Levels reset</tspan></text><rect x="882" y="476" width="110" height="94" rx="10" class="node"/><text x="891" y="496" text-anchor="start" class="t-ink" font-size="12.5"><tspan x="891" dy="0">Restock by use</tspan></text><text x="1000" y="356" text-anchor="end" class="t-org t-caps" font-size="10.5">line of visibility</text></svg><figcaption>Service blueprint. Above the red line is what people see; below it, what the system and the stores do.</figcaption></figure></div>
-
-        <div class="plate-head ss-head ss-line--ideate" id="s-10">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Ideate</span>
-            <span class="ss-sign-stop">Stop <b>10</b></span>
-          </div>
-          <h2 class="display section-title">Lifecycle and escalation</h2>
-          <div class="section-intro"><p>A task moves on by itself when nobody answers. The supervisor is the last step, not the first.</p></div>
-        </div>
+        <div class="ss-subhead reveal"><h3>Lifecycle and escalation</h3><p>A task moves on by itself when nobody answers. The supervisor is the last step, not the first.</p></div>
         <div class="ss-split reveal">
           <figure class="ss-ig ss-ig--flush reveal"><svg class="ig ss-ig-life" viewBox="0 0 1000 330" role="img" aria-labelledby="ig-life-t">
   <title id="ig-life-t">Task lifecycle. A sensor crossing a threshold opens a task. It is offered to the nearest free cart. If the cart cannot go or does not answer in 2 minutes, it goes back to open and the next cart. If nobody has taken a Go now task at 5 minutes, the supervisor is asked to call on the radio. Once someone is going, the cart stops at the store only if short, then cleans, and the sensor closes the task.</title>
@@ -523,42 +495,10 @@
           <ol class="ss-ladder"><li class="ss-rung ss-rung--now"><span class="ss-rung-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#p-bolt"/></svg></span><b>0 min</b><span>Chime, pictures and spoken Hindi on the nearest cart iPad; phone or watch if the attendant has opted in</span></li><li class="ss-rung ss-rung--plain"><span class="ss-rung-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#p-cart"/></svg></span><b>2 min</b><span>Not taken: offered to the next nearest cart</span></li><li class="ss-rung ss-rung--now"><span class="ss-rung-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#p-radio"/></svg></span><b>5 min</b><span>Still not taken: the zone dashboard asks the supervisor to call on the walkie-talkie</span></li><li class="ss-rung ss-rung--ok"><span class="ss-rung-ic"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#p-check"/></svg></span><b>Done</b><span>The sensor confirms the reset and closes the task. Nobody taps done.</span></li></ol>
         </div>
 
-        <div class="plate-head ss-head ss-line--ideate" id="s-11">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Ideate</span>
-            <span class="ss-sign-stop">Stop <b>11</b></span>
-          </div>
-          <h2 class="display section-title">Seven touchpoints, one task model</h2>
-          <div class="section-intro"><p>Cart app and zone dashboard first; the door display last and optional.</p></div>
-        </div>
-        <div class="ss-touch reveal">
-          <div class="ss-tp-card ss-tp-card--1"><span class="ss-tp-row"><svg class="ss-arrow ss-arrow--up" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-cart"/></svg></span><small>Attendant</small><span class="ss-tp-job">One task in pictures, what the cart has, I’m going or Can’t go</span><b>Cart iPad</b></div><div class="ss-tp-card ss-tp-card--2"><span class="ss-tp-row"><svg class="ss-arrow ss-arrow--up" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-phone"/></svg></span><small>Attendant</small><span class="ss-tp-job">Accept from the lock screen; Time Sensitive for Go now only</span><b>Phone, opt-in</b></div><div class="ss-tp-card ss-tp-card--3"><span class="ss-tp-row"><svg class="ss-arrow ss-arrow--up" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-watch"/></svg></span><small>Attendant</small><span class="ss-tp-job">A distinct tap per urgency, the gate number, one button</span><b>Watch</b></div><div class="ss-tp-card ss-tp-card--4"><span class="ss-tp-row"><svg class="ss-arrow ss-arrow--up" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-radio"/></svg></span><small>Supervisor</small><span class="ss-tp-job">Live map, queue, who is going where, the radio prompt</span><b>Zone iPad</b></div><div class="ss-tp-card ss-tp-card--5"><span class="ss-tp-row"><svg class="ss-arrow ss-arrow--up" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-clock"/></svg></span><small>Shift manager</small><span class="ss-tp-job">All zones against the departure banks, automatic handover</span><b>Terminal web</b></div><div class="ss-tp-card ss-tp-card--6"><span class="ss-tp-row"><svg class="ss-arrow ss-arrow--up" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-eye"/></svg></span><small>AOCC, contractor, DIAL</small><span class="ss-tp-job">A washroom layer and the weekly data story</span><b>Ops wall and reports</b></div><div class="ss-tp-card ss-tp-card--7"><span class="ss-tp-row"><svg class="ss-arrow ss-arrow--up" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-washroom"/></svg></span><small>Passengers</small><span class="ss-tp-job">Cleaned 12 min ago, and a four-face rating</span><b>Door display</b></div>
-        </div>
-
-        <div class="plate-head ss-head ss-line--prototype" id="s-12">
+        <div class="plate-head ss-head ss-line--prototype" id="s-06">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>12</b></span>
-          </div>
-          <h2 class="display section-title">Try the prototype</h2>
-          <div class="section-intro"><p>The whole terminal runs live on this page: one simulation drives every screen. Press Trigger incident, then switch roles to follow it.</p></div>
-        </div>
-        <div class="ss-live reveal">
-          <div class="ss-live-bar" role="group" aria-label="Open the prototype as">
-            <button type="button" class="ss-live-role" data-role="attendant" aria-pressed="true"><svg class="ss-i" aria-hidden="true"><use href="#i-Smartphone"/></svg>Attendant</button><button type="button" class="ss-live-role" data-role="supervisor" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Phone"/></svg>Zone supervisor</button><button type="button" class="ss-live-role" data-role="manager" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Monitor"/></svg>Shift manager</button><button type="button" class="ss-live-role" data-role="ops" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Graph"/></svg>Ops and DIAL</button><button type="button" class="ss-live-role" data-role="passenger" aria-pressed="false"><svg class="ss-i" aria-hidden="true"><use href="#i-Users"/></svg>Passengers</button>
-            <a class="ss-live-open" href="../prototypes/saaf-safar/index.html?lang=en#/attendant" target="_blank" rel="noopener"><svg class="ss-i" aria-hidden="true"><use href="#i-ExternalLink"/></svg>Open full screen<span class="sr-only"> (new tab)</span></a>
-          </div>
-          <figure class="ss-browser ss-live-frame">
-            <div class="ss-browser-bar" aria-hidden="true"><i></i><i></i><i></i><span>saafsafar · delhi-t3</span></div>
-            <iframe src="../prototypes/saaf-safar/index.html?embed&amp;lang=en#/attendant" title="Saaf Safar prototype" loading="lazy"></iframe>
-          </figure>
-          <p class="ss-cap">Runs in your browser on simulated data. The dock controls time: play, 1×, 10× or 60×, drag across the day, or trigger the Gate 14 incident.</p>
-        </div>
-
-        <div class="plate-head ss-head ss-line--prototype" id="s-13">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>13</b></span>
+            <span class="ss-sign-stop">Stop <b>06</b></span>
           </div>
           <h2 class="display section-title">The cart iPad, step by step</h2>
           <div class="section-intro"><p>Imran’s evening shift, Cart B3, Zone B. Light on purpose: terminal glare washes out dark screens.</p></div>
@@ -633,27 +573,33 @@
           </div>
         </div>
 
-        <div class="plate-head ss-head ss-line--prototype" id="s-14">
+        <div class="plate-head ss-head ss-line--prototype" id="s-07">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>14</b></span>
+            <span class="ss-sign-stop">Stop <b>07</b></span>
           </div>
-          <h2 class="display section-title">Away from the cart</h2>
-          <div class="section-intro"><p>Optional channels for a worker who has stepped away. Both carry the same task in the same pictures.</p></div>
+          <h2 class="display section-title">Beyond the cart</h2>
+          <div class="section-intro"><p>A phone or watch for an attendant who has stepped away, and a small screen at the door for passengers. Each carries the same task in the same pictures.</p></div>
         </div>
         <div class="ss-trio reveal">
           <div><div class="ss-dev-pair ss-dev-pair--phone"><figure class="ss-dev ss-dev--phone"><img src="../assets/saafsafar/ch-lock.webp" alt="Lock screen with a Time Sensitive Saaf Safar alert and I’m going and Can’t go buttons" width="417" height="876" loading="lazy" decoding="async" /></figure><figure class="ss-hi-peek"><img src="../assets/saafsafar/ch-lock-hi.webp" alt="Lock screen with a Time Sensitive Saaf Safar alert and I’m going and Can’t go buttons, Hindi first" width="417" height="876" loading="lazy" decoding="async" /><figcaption><span class="ss-hi" lang="hi">हिंदी</span>As attendants see it</figcaption></figure></div><p class="ss-cap"><b>Lock screen.</b> Time Sensitive for Go now only.</p></div>
           <div><figure class="ss-dev ss-dev--phone"><img src="../assets/saafsafar/ch-settings.webp" alt="Dark bento settings: tasks today, when alerts stop, my week as dots, and switches for Go now, Soon, location never shared, nothing outside the shift" width="417" height="876" loading="lazy" decoding="async" /></figure><p class="ss-cap"><b>Consent.</b> Opt-in, no location, off after the shift.</p></div>
           <div><div class="ss-dev-pair ss-dev-pair--watch"><figure class="ss-dev ss-dev--watch"><img src="../assets/saafsafar/ch-watch.webp" alt="Watch face: Go now, gate 14, the jobs and an I’m going button, with a countdown ring" width="236" height="416" loading="lazy" decoding="async" /></figure><figure class="ss-hi-peek"><img src="../assets/saafsafar/ch-watch-hi.webp" alt="Watch face: Go now, gate 14, the jobs and an I’m going button, with a countdown ring, Hindi first" width="236" height="416" loading="lazy" decoding="async" /><figcaption><span class="ss-hi" lang="hi">हिंदी</span>As attendants see it</figcaption></figure></div><p class="ss-cap"><b>Wrist.</b> Three strong taps for Go now.</p></div>
         </div>
+        <div class="ss-subhead reveal"><h3>Passengers at the door</h3><p>When it was last cleaned, and four faces to say how clean it is now.</p></div>
+        <div class="ss-trio reveal">
+          <div><figure class="ss-dev ss-dev--door"><img src="../assets/saafsafar/d-door.webp" alt="Door display for Ladies near gate 17: cleaned 12 min ago, tissue, soap and towels fine, and four rating faces" width="652" height="1012" loading="lazy" decoding="async" /></figure><p class="ss-cap"><b>Cleaned 12 min ago.</b> Supplies in plain words.</p></div>
+          <div><figure class="ss-dev ss-dev--door"><img src="../assets/saafsafar/d-cleaning.webp" alt="Door display while cleaning: Cleaning now, and please use gents near gate 17, 165 m" width="652" height="1012" loading="lazy" decoding="async" /></figure><p class="ss-cap"><b>Cleaning now.</b> Sends people to the next one.</p></div>
+          <div><figure class="ss-dev ss-dev--door"><img src="../assets/saafsafar/d-thanks.webp" alt="Door display after a Not clean rating: thank you, the cleaning team has been told" width="652" height="1012" loading="lazy" decoding="async" /></figure><p class="ss-cap"><b>Thank you.</b> A low rating reaches the zone.</p></div>
+        </div>
 
-        <div class="plate-head ss-head ss-line--prototype" id="s-15">
+        <div class="plate-head ss-head ss-line--prototype" id="s-08">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>15</b></span>
+            <span class="ss-sign-stop">Stop <b>08</b></span>
           </div>
-          <h2 class="display section-title">The zone supervisor</h2>
-          <div class="section-intro"><p>A live map and a queue. The supervisor steps in only when a task stalls.</p></div>
+          <h2 class="display section-title">The supervisor and the shift manager</h2>
+          <div class="section-intro"><p>The supervisor steps in only when a task stalls. The shift manager sees all three zones, and handover carries open tasks by itself.</p></div>
         </div>
         <div class="ss-steps">
 
@@ -679,21 +625,13 @@
             <div class="ss-step-shot"><figure class="ss-dev ss-dev--ipad"><img src="../assets/saafsafar/z-check.webp" alt="Zone dashboard with a check in person card for W-17L and its detail panel showing normal sensors but falling ratings" width="1224" height="864" loading="lazy" decoding="async" /></figure></div>
           </div>
         </div>
-
-        <div class="plate-head ss-head ss-line--prototype" id="s-16">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>16</b></span>
-          </div>
-          <h2 class="display section-title">The shift manager</h2>
-          <div class="section-intro"><p>All three zones against the departure banks. Handover carries open tasks by itself.</p></div>
-        </div>
+        <div class="ss-subhead reveal"><h3>The shift manager</h3><p>All three zones against the departure banks.</p></div>
         <div class="ss-wide reveal"><figure class="ss-dev ss-dev--browser"><img src="../assets/saafsafar/t-terminal.webp" alt="Terminal dashboard: three zone cards, the whole pier with carts and aircraft, departures by zone per hour against alerts, and shift handovers with zero lost" width="1440" height="940" loading="lazy" decoding="async" /></figure></div>
 
-        <div class="plate-head ss-head ss-line--prototype" id="s-17">
+        <div class="plate-head ss-head ss-line--prototype" id="s-09">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>17</b></span>
+            <span class="ss-sign-stop">Stop <b>09</b></span>
           </div>
           <h2 class="display section-title">The ops centre and the weekly story</h2>
           <div class="section-intro"><p>A washroom layer for the control-room wall, and a data story for the contractor and DIAL from the same task log.</p></div>
@@ -701,10 +639,10 @@
         <div class="ss-wide reveal"><figure class="ss-dev ss-dev--browser"><img src="../assets/saafsafar/o-live.webp" alt="The live washroom layer for the operations control centre: five tiles and the whole pier, with an event feed" width="1440" height="940" loading="lazy" decoding="async" /></figure></div>
         <div class="ss-story reveal">
           <div class="ss-story-tiles">
-            <div><b>4,068</b><span>tasks raised and closed by sensors in the week</span></div>
-            <div><b>92%</b><span>of Go now tasks reached within 10 minutes</span></div>
-            <div><b>17 min</b><span>median from alert to confirmed clean</span></div>
-            <div><b>87%</b><span>of passenger ratings positive</span></div>
+            <div><b>4,068</b><span>tasks raised and closed by sensors in the simulated week</span></div>
+            <div><b>92%</b><span>of Go now tasks reached within 10 minutes, simulated</span></div>
+            <div><b>17 min</b><span>median from alert to confirmed clean, simulated</span></div>
+            <div><b>87%</b><span>of passenger ratings positive, simulated</span></div>
           </div>
           <p class="ss-story-k">Simulated week, Sun 11 to Sat 17 October 2026 · computed when this page was built</p>
         </div>
@@ -723,24 +661,10 @@
           <div><img src="../assets/saafsafar/n-thresholds.webp" alt="The Observable notebook page Choosing the alert threshold: sliders, four result tiles and a chart of the bin across Friday" width="1216" height="980" loading="lazy" decoding="async" /></div>
         </div>
 
-        <div class="plate-head ss-head ss-line--prototype" id="s-18">
+        <div class="plate-head ss-head ss-line--prototype" id="s-10">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>18</b></span>
-          </div>
-          <h2 class="display section-title">Passengers at the door</h2>
-          <div class="section-intro"><p>A small screen beside the washroom: when it was last cleaned, and four faces to say how clean it is now.</p></div>
-        </div>
-        <div class="ss-trio reveal">
-          <div><figure class="ss-dev ss-dev--door"><img src="../assets/saafsafar/d-door.webp" alt="Door display for Ladies near gate 17: cleaned 12 min ago, tissue, soap and towels fine, and four rating faces" width="652" height="1012" loading="lazy" decoding="async" /></figure><p class="ss-cap"><b>Cleaned 12 min ago.</b> Supplies in plain words.</p></div>
-          <div><figure class="ss-dev ss-dev--door"><img src="../assets/saafsafar/d-cleaning.webp" alt="Door display while cleaning: Cleaning now, and please use gents near gate 17, 165 m" width="652" height="1012" loading="lazy" decoding="async" /></figure><p class="ss-cap"><b>Cleaning now.</b> Sends people to the next one.</p></div>
-          <div><figure class="ss-dev ss-dev--door"><img src="../assets/saafsafar/d-thanks.webp" alt="Door display after a Not clean rating: thank you, the cleaning team has been told" width="652" height="1012" loading="lazy" decoding="async" /></figure><p class="ss-cap"><b>Thank you.</b> A low rating reaches the zone.</p></div>
-        </div>
-
-        <div class="plate-head ss-head ss-line--prototype" id="s-19">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Prototype</span>
-            <span class="ss-sign-stop">Stop <b>19</b></span>
+            <span class="ss-sign-stop">Stop <b>10</b></span>
           </div>
           <h2 class="display section-title">The design system</h2>
           <div class="section-intro"><p>Tokens, type, pictograms and components, shared by every touchpoint.</p></div>
@@ -758,18 +682,18 @@
               <div class="ss-sw ss-sw--dark-ink" style="background:#ff9419;color:#000"><b>Soon</b><span>#FF9419 · with a clock</span></div>
               <div class="ss-sw" style="background:#5f31c4"><b>Violet</b><span>#5F31C4 · forecast</span></div>
               <div class="ss-sw ss-sw--dark-ink" style="background:#c6f04a;color:#101114"><b>Lime</b><span>#C6F04A · done, all clear</span></div>
-              <div class="ss-sw ss-sw--wide" style="background:#55606d"><b>Steel</b><span>#55606D · quiet text and lines</span></div>
+              <div class="ss-sw ss-sw--wide ss-sw--steel" style="background:#55606d"><b>Steel</b><span>#55606D · quiet text and lines</span></div>
             </div>
           </section>
 
           <figure class="ss-tile ss-span-5 ss-mark"><figcaption class="ss-tile-k">Logo</figcaption><img src="../assets/saafsafar/logo.svg" alt="The Saaf Safar logo: a black S drawn like a route, with a small sparkle, on a gate-sign yellow tile" width="96" height="96" /><p class="ss-tile-note">An S that is also a route, on the yellow of a gate sign.</p></figure>
           <figure class="ss-tile ss-span-7 ss-comp">
             <figcaption class="ss-tile-k">Gate sign</figcaption>
-            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-gates.webp" alt="Gate signs in four sizes: 14 with the gents figure and an arrow, 14 ladies, 17, 11 and 16" width="741" height="136" loading="lazy" decoding="async" /></div>
+            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-gates.webp" alt="Gate signs in four sizes: 14 with the gents figure and an arrow, 14 ladies, 17, 11 and 16" width="758" height="152" style="width:758px" loading="lazy" decoding="async" /></div>
             <p class="ss-tile-note">The sign workers already read every shift: number first, pictogram beside it.</p>
           </figure>
 
-          <section class="ss-tile ss-span-7 ss-row2" aria-label="Type">
+          <section class="ss-tile ss-span-7" aria-label="Type">
             <p class="ss-tile-k">Type · Inter Tight, Noto Sans Devanagari, JetBrains Mono</p>
             <div class="ss-type">
               <div class="ss-type-row"><small>Gate 104</small><span style="font-size:3.4rem;font-weight:800;letter-spacing:-0.03em;line-height:1">14</span></div>
@@ -784,11 +708,6 @@
             <div class="ss-icons"><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-binFull"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-tissue"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-towel"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-soap"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-floor"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-odour"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-liner"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-chem"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-gents"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-ladies"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-store"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-walk"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-cart"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-radio"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-speaker"/></svg></span><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-now"/></svg></span></div>
           </section>
 
-          <section class="ss-tile ss-span-5" aria-label="Motion">
-            <p class="ss-tile-k">Motion · only Go now moves</p>
-            <div class="ss-pulse" aria-hidden="true"><i></i><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-now"/></svg></span></div>
-            <p class="ss-tile-note">A slow pulse on Go now, so urgency reads in peripheral vision and for colour-blind workers. With reduced motion it simply stays red.</p>
-          </section>
           <section class="ss-tile ss-span-7" aria-label="Shape and touch">
             <p class="ss-tile-k">Shape and touch · for gloved hands</p>
             <div class="ss-shape">
@@ -799,107 +718,127 @@
             </div>
             <p class="ss-tile-note"><b>60 pt</b> minimum for main actions, above Apple's 44 pt, because workers wear gloves.</p>
           </section>
+          <section class="ss-tile ss-span-5" aria-label="Motion">
+            <p class="ss-tile-k">Motion · only Go now moves</p>
+            <div class="ss-pulse" aria-hidden="true"><i></i><span><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-now"/></svg></span></div>
+            <p class="ss-tile-note">A slow pulse on Go now, so urgency reads in peripheral vision and for colour-blind workers. With reduced motion it simply stays red.</p>
+          </section>
 
-          <p class="ss-bento-k ss-span-12">Components · cropped from the working prototype at real size</p>
+          <p class="ss-bento-k ss-span-12">Components · from the working prototype</p>
           <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">Task card</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-offer.webp" alt="The Go now task card: Gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first for tissue, with Listen, I’m going and Can’t go, English first" width="820" height="648" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-offer-hi.webp" alt="The Go now task card: Gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first for tissue, with Listen, I’m going and Can’t go, Hindi first" width="820" height="648" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-offer.webp" alt="The Go now task card: Gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first for tissue, with Listen, I’m going and Can’t go, English first" width="836" height="665" style="width:836px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-offer-hi.webp" alt="The Go now task card: Gents near gate 14, empty the bin, clean toilets, tissue ×4, stop at the store first for tissue, with Listen, I’m going and Can’t go, Hindi first" width="836" height="665" style="width:836px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">One task at a time: urgency, the gate sign, jobs in pictures with counts, what to fetch, and three big answers.</p>
           </figure>
-          <figure class="ss-tile ss-span-6 ss-comp ss-comp--pair">
+          <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">Urgency</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-urgency.webp" alt="Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English, English first" width="534" height="148" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-urgency-hi.webp" alt="Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English, Hindi first" width="515" height="148" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-urgency.webp" alt="Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English, English first" width="551" height="164" style="width:551px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-urgency-hi.webp" alt="Urgency pills: Go now with a bolt, Soon with a clock, In a while with an hourglass, in Hindi and English, Hindi first" width="532" height="164" style="width:532px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">Colour, icon and word together, in three sizes; the airport’s language first.</p>
           </figure>
-          <figure class="ss-tile ss-span-6 ss-comp ss-comp--pair">
+          <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">Job tiles</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-jobs.webp" alt="Job tiles for empty the bin, refill tissue ×4 and mop the floor, English first" width="486" height="176" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-jobs-hi.webp" alt="Job tiles for empty the bin, refill tissue ×4 and mop the floor, Hindi first" width="497" height="184" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-jobs.webp" alt="Job tiles for empty the bin, refill tissue ×4 and mop the floor, English first" width="494" height="184" style="width:494px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-jobs-hi.webp" alt="Job tiles for empty the bin, refill tissue ×4 and mop the floor, Hindi first" width="505" height="193" style="width:505px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">Picture first, then both languages in the airport’s order, the count where it matters.</p>
           </figure>
           <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">On my cart</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-stock.webp" alt="The On my cart panel with tissue short by 2, liners and cleaner needed, English first" width="360" height="305" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-stock-hi.webp" alt="The On my cart panel with tissue short by 2, liners and cleaner needed, Hindi first" width="360" height="305" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-stock.webp" alt="The On my cart panel with tissue short by 2, liners and cleaner needed, English first" width="368" height="314" style="width:368px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-stock-hi.webp" alt="The On my cart panel with tissue short by 2, liners and cleaner needed, Hindi first" width="368" height="314" style="width:368px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">Counts, not percentages. Blue: needed for this task. Red: not enough.</p>
           </figure>
           <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">Cleaning</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-cleaning.webp" alt="The cleaning card with jobs filling in and a note that the sensor confirms it, English first" width="820" height="354" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-cleaning-hi.webp" alt="The cleaning card with jobs filling in and a note that the sensor confirms it, Hindi first" width="820" height="354" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-cleaning.webp" alt="The cleaning card with jobs filling in and a note that the sensor confirms it, English first" width="836" height="370" style="width:836px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-cleaning-hi.webp" alt="The cleaning card with jobs filling in and a note that the sensor confirms it, Hindi first" width="836" height="370" style="width:836px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">Each job fills as it is done; the sensor confirms, nobody taps done.</p>
           </figure>
           <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">Sign in by photo</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-signin.webp" alt="Four drawn crew portraits for the evening shift, Imran on cart B3 highlighted, English first" width="734" height="254" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-signin-hi.webp" alt="Four drawn crew portraits for the evening shift, Imran on cart B3 highlighted, Hindi first" width="734" height="254" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-signin.webp" alt="Four drawn crew portraits for the evening shift, Imran on cart B3 highlighted, English first" width="774" height="295" style="width:774px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-signin-hi.webp" alt="Four drawn crew portraits for the evening shift, Imran on cart B3 highlighted, Hindi first" width="774" height="295" style="width:774px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">Carts change hands between shifts: tap your face, no passwords.</p>
           </figure>
           <figure class="ss-tile ss-span-6 ss-comp">
             <figcaption class="ss-tile-k">Radio prompt</figcaption>
-            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-radio.webp" alt="The red radio prompt: nobody took W-14G in 5 min, call Sanjay on cart B1, with a Called button" width="360" height="150" loading="lazy" decoding="async" /></div>
+            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-radio.webp" alt="The red radio prompt: nobody took W-14G in 5 min, call Sanjay on cart B1, with a Called button" width="368" height="159" style="width:368px" loading="lazy" decoding="async" /></div>
             <p class="ss-tile-note">Only when a Go now task has sat for 5 minutes: who to call, how far.</p>
           </figure>
           <figure class="ss-tile ss-span-6 ss-comp">
             <figcaption class="ss-tile-k">Queue rows</figcaption>
-            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-queue.webp" alt="Queue rows for washrooms near gates 14 and 11 with their status" width="360" height="263" loading="lazy" decoding="async" /></div>
+            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-queue.webp" alt="Queue rows for washrooms near gates 14 and 11 with their status" width="368" height="272" style="width:368px" loading="lazy" decoding="async" /></div>
             <p class="ss-tile-note">State bar, gate sign, jobs, age and who has it, in one line.</p>
           </figure>
-          <figure class="ss-tile ss-span-6 ss-comp ss-comp--pair">
+          <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">Lock-screen alert</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-notif.webp" alt="A Time Sensitive notification on a lock screen with the gate sign, jobs, I’m going and Can’t go, English first" width="370" height="266" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-notif-hi.webp" alt="A Time Sensitive notification on a lock screen with the gate sign, jobs, I’m going and Can’t go, Hindi first" width="370" height="266" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-notif.webp" alt="A Time Sensitive notification on a lock screen with the gate sign, jobs, I’m going and Can’t go, English first" width="386" height="282" style="width:386px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-notif-hi.webp" alt="A Time Sensitive notification on a lock screen with the gate sign, jobs, I’m going and Can’t go, Hindi first" width="386" height="282" style="width:386px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">Time Sensitive only for Go now; answer without unlocking.</p>
           </figure>
-          <figure class="ss-tile ss-span-6 ss-comp ss-comp--pair">
+          <figure class="ss-tile ss-span-12 ss-comp ss-comp--pair">
             <figcaption class="ss-tile-k">Watch and wrist taps</figcaption>
             <div class="ss-comp-stage ss-comp-langs">
-              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-watch.webp" alt="A watch face with Go now, gate 14 and an I’m going button, beside the wrist-tap patterns, English first" width="512" height="248" loading="lazy" decoding="async" /></figure>
-              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-watch-hi.webp" alt="A watch face with Go now, gate 14 and an I’m going button, beside the wrist-tap patterns, Hindi first" width="512" height="248" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang">English first</span><img src="../assets/saafsafar/k-watch.webp" alt="A watch face with Go now, gate 14 and an I’m going button, beside the wrist-tap patterns, English first" width="528" height="264" style="width:528px" loading="lazy" decoding="async" /></figure>
+              <figure><span class="ss-comp-lang"><span class="ss-hi" lang="hi">हिंदी</span>Hindi first</span><img src="../assets/saafsafar/k-watch-hi.webp" alt="A watch face with Go now, gate 14 and an I’m going button, beside the wrist-tap patterns, Hindi first" width="528" height="264" style="width:528px" loading="lazy" decoding="async" /></figure>
             </div>
             <p class="ss-tile-note">A distinct tap per urgency; gate number and one button.</p>
           </figure>
-          <figure class="ss-tile ss-span-12 ss-comp">
+          <figure class="ss-tile ss-span-6 ss-comp">
             <figcaption class="ss-tile-k">Zone chips and crew</figcaption>
-            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-chips.webp" alt="Zone chips for Go now, Soon, being handled and free carts, with four crew cards" width="571" height="150" loading="lazy" decoding="async" /></div>
+            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-chips.webp" alt="Zone chips for Go now, Soon, being handled and free carts, with four crew cards" width="580" height="159" style="width:580px" loading="lazy" decoding="async" /></div>
             <p class="ss-tile-note">Counts that matter to a supervisor, and what each cart is doing.</p>
           </figure>
           <figure class="ss-tile ss-span-6 ss-comp">
             <figcaption class="ss-tile-k">Four-face rating</figcaption>
-            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-faces.webp" alt="Four big rating buttons from very clean to dirty, in English and Hindi" width="560" height="164" loading="lazy" decoding="async" /></div>
+            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-faces.webp" alt="Four big rating buttons from very clean to dirty, in English and Hindi" width="576" height="181" style="width:576px" loading="lazy" decoding="async" /></div>
             <p class="ss-tile-note">The passengers’ check on the sensors, at the door.</p>
           </figure>
-          <figure class="ss-tile ss-span-6 ss-comp">
+          <figure class="ss-tile ss-span-12 ss-comp">
             <figcaption class="ss-tile-k">Ops tiles</figcaption>
-            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-kpi.webp" alt="Three tiles: Go now waiting, alert to arrival median, passengers rating it clean" width="752" height="118" loading="lazy" decoding="async" /></div>
+            <div class="ss-comp-stage"><img src="../assets/saafsafar/k-kpi.webp" alt="Three tiles: Go now waiting, alert to arrival median, passengers rating it clean" width="1132" height="183" style="width:1132px" loading="lazy" decoding="async" /></div>
             <p class="ss-tile-note">One number each, with what it means underneath.</p>
           </figure>
         </div>
 
-        <div class="plate-head ss-head ss-line--test" id="s-20">
+        <div class="plate-head ss-head ss-line--test" id="s-11">
           <div class="ss-sign" aria-hidden="true">
             <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Test</span>
-            <span class="ss-sign-stop">Stop <b>20</b></span>
+            <span class="ss-sign-stop">Stop <b>11</b></span>
           </div>
-          <h2 class="display section-title">What to measure</h2>
-          <div class="section-intro"><p>Targets to validate, not results. The simulation’s numbers are hypotheses until the fieldwork replaces them.</p></div>
+          <h2 class="display section-title">How it gets tested, and next</h2>
+          <div class="section-intro"><p>Planned, not yet run. Without airport access, the fieldwork uses campus and hospital housekeeping teams as a proxy. The simulation’s numbers stay hypotheses until it replaces them.</p></div>
         </div>
+        <div class="ss-plan reveal">
+          <div class="ss-bubbles" role="img" aria-label="Participants per method: 3 shift shadowings, 6 attendant interviews, 5 or more timed incidents, 10 or more pictogram testers">
+            <div class="ss-bubble" style="--s:0.55"><b>3</b><span>shifts shadowed</span><small>across 2 sites</small></div><div class="ss-bubble" style="--s:0.75"><b>6</b><span>attendant interviews</span><small>Hindi or English</small></div><div class="ss-bubble" style="--s:0.55"><b>5+</b><span>incidents timed</span><small>to replace estimates</small></div><div class="ss-bubble" style="--s:1"><b>10+</b><span>pictogram testers</span><small>ISO 9186 style</small></div>
+          </div>
+          <ol class="ss-tasks">
+            <li><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-clock"/></svg><b>How do attendants learn</b><span>a washroom needs them, and how long it takes?</span></li>
+            <li><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-walk"/></svg><b>Where does the time go</b><span>noticing, telling, fetching, walking, cleaning</span></li>
+            <li><svg class="ss-p" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-tissue"/></svg><b>Which pictograms</b><span>are recognised without words?</span></li>
+          </ol>
+          <ul class="ss-hyps" aria-label="Hypotheses to test">
+            <li><svg class="ss-i" aria-hidden="true"><use href="#i-Eye"/></svg><span><b>Unnoticed</b>Most delay is before anyone knows</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Routing"/></svg><span><b>Two trips</b>Refills are missing on arrival, so a store trip</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Phone"/></svg><span><b>Radio</b>Supervisors find problems by walking</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-History"/></svg><span><b>Handover</b>Late problems fall through at shift change</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Archive"/></svg><span><b>Habit</b>Stores restock by habit, not use</span><em>to test</em></li><li><svg class="ss-i" aria-hidden="true"><use href="#i-Languages"/></svg><span><b>Words</b>English labels slow people down</span><em>to test</em></li>
+          </ul>
+          <p class="ss-kit-link"><a href="../assets/saafsafar/research-kit.html" target="_blank" rel="noopener"><svg class="ss-i" aria-hidden="true"><use href="#i-FileText"/></svg> Open the research kit: interview guide, observation sheet, incident timing log, consent script and pictogram test cards</a></p>
+        </div>
+        <div class="ss-subhead reveal"><h3>What to measure</h3><p>Targets to validate, not results.</p></div>
         <div class="ss-metrics reveal">
           <div class="ss-metric"><small>Trips per task</small><b>1</b><span>today assumed 2: store, then washroom</span><i class="ss-meter" style="--p:100%" aria-hidden="true"></i></div><div class="ss-metric"><small>Pictogram recognition</small><b>≥ ⅔</b><span>per symbol, without words</span><i class="ss-meter" style="--p:67%" aria-hidden="true"></i></div><div class="ss-metric"><small>Task success with gloves</small><b>4/5</b><span>attendants in the usability test</span><i class="ss-meter" style="--p:80%" aria-hidden="true"></i></div><div class="ss-metric"><small>Supervisor rounds</small><b>on stall</b><span>only when a task stalls, not every 1–2 h</span><i class="ss-meter" style="--p:85%" aria-hidden="true"></i></div><div class="ss-metric"><small>Lost at handover</small><b>0</b><span>open tasks</span><i class="ss-meter" style="--p:100%" aria-hidden="true"></i></div><div class="ss-metric"><small>Bin overflow</small><b>0 min</b><span>per bin-day, against 124 with fixed rounds (simulated)</span><i class="ss-meter" style="--p:95%" aria-hidden="true"></i></div>
         </div>
@@ -908,21 +847,12 @@
           <li><b>Round 2</b><span>Cart iPad with gloves · 5 attendants · task success, time and errors</span></li>
           <li><b>Round 3</b><span>Zone dashboard walkthrough · 2–3 supervisors · the escalation and handover</span></li>
         </ol>
-
-        <div class="plate-head ss-head ss-line--test" id="s-21">
-          <div class="ss-sign" aria-hidden="true">
-            <span class="ss-sign-line"><svg class="ss-arrow ss-arrow--right" viewBox="0 0 48 48" aria-hidden="true"><use href="#p-arrow"/></svg>Test</span>
-            <span class="ss-sign-stop">Stop <b>21</b></span>
-          </div>
-          <h2 class="display section-title">Where it stands, and next</h2>
-          
-        </div>
+        <div class="ss-subhead reveal"><h3>Where it stands</h3></div>
         <div class="ss-status reveal">
           <div class="ss-status-col ss-status-col--done"><p class="ss-kit-k"><svg class="ss-i" aria-hidden="true"><use href="#i-CircleCheck"/></svg> Built</p><ul><li>Six touchpoints on one simulation</li><li>Escalation at 2 and 5 minutes</li><li>Store-aware routing</li><li>Automatic shift handover</li><li>Unsensed-fault detection from ratings</li><li>Seven-day history and data story</li><li>Observable notebook</li><li>Hindi and English, spoken Hindi</li></ul></div>
           <div class="ss-status-col"><p class="ss-kit-k"><svg class="ss-i" aria-hidden="true"><use href="#i-Hourglass"/></svg> Not yet</p><ul><li>Field research</li><li>Real sensors and a backend</li><li>Integration with GMR systems</li><li>A recorded Hindi voice</li><li>Tableau Public story</li><li>Telugu and other languages</li></ul></div>
           <div class="ss-status-col ss-status-col--next"><p class="ss-kit-k"><svg class="ss-i" aria-hidden="true"><use href="#i-ArrowRight"/></svg> Next</p><p class="ss-next-big">Shadow three shifts, time five incidents, test the pictograms, then put the cart iPad in gloved hands.</p></div>
         </div>
-
       </div>
     </section>
 

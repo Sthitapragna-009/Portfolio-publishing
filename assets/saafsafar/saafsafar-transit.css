@@ -382,3 +382,44 @@
 .ss-comp-langs figure { margin: 0; display: grid; gap: 0.6rem; justify-items: center; align-content: start; }
 .ss-comp-lang { justify-self: start; display: inline-flex; align-items: center; gap: 0.45rem; font: 600 0.75rem/1.2 var(--sign-font); letter-spacing: 0.02em; color: var(--ink-faint); }
 .ss-comp-langs img { max-height: 26rem; }
+
+/* ---------- Restructure: merged stops carry their parts under subheads ---------- */
+.ss-subhead { display: grid; gap: 0.5rem; max-width: 62ch; margin: clamp(3.5rem, 7vw, 6rem) 0 clamp(1.25rem, 2.5vw, 2rem); }
+.ss-subhead h3 { margin: 0; font: 700 clamp(1.5rem, 1.1rem + 1.4vw, 2.25rem)/1.1 var(--sign-font); letter-spacing: -0.03em; color: var(--ink); }
+.ss-subhead p { margin: 0; font-size: 1.05rem; line-height: 1.55; color: var(--ink-dim); }
+
+/* Public record: order carries no meaning, so no 01-08; the source is a plain link */
+.ss-findings li { grid-template-columns: minmax(0, 1fr) 4rem minmax(0, 1fr) auto; }
+.ss-findings li::before { content: none; }
+.ss-f-src { padding: 0; border: 0; border-radius: 0; background: none; font-size: 0.82rem; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+.ss-f-src:hover { background: none; text-decoration-thickness: 2px; }
+@media (max-width: 760px) {
+  .ss-findings li { grid-template-columns: minmax(0, 1fr) auto; }
+  .ss-f-a { grid-column: 1; grid-row: 1; }
+  .ss-f-b { grid-column: 1; grid-row: 2; }
+  .ss-f-src { grid-column: 2; grid-row: 1 / span 2; }
+}
+
+/* Proto-persona traits as plain words, not invented scores */
+.ss-scale--plain { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto; align-items: baseline; }
+.ss-scale--plain .ss-scale-n { grid-column: auto; font-size: 0.85rem; color: var(--ink); }
+
+/* The live prototype opens the plates, before the journey */
+#ss-try { margin-top: 0; }
+.ss-live + .ss-metro, #ss-try ~ .ss-live { margin-bottom: clamp(4rem, 8vw, 7rem); }
+/* Six measures: three by two, never five and a stray */
+.ss-metrics { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 860px) { .ss-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .ss-metrics { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- Design system: components sit on the tile, not in a screenshot box ----------
+   The crops have transparent grounds, so the inner stage would only add a second and third box. */
+.ss-comp-stage,
+[data-theme="dark"] .ss-comp-stage { flex: 1; min-height: 0; padding: clamp(0.5rem, 1.5vw, 1rem) 0; background: none; box-shadow: none; border-radius: 0; place-items: center; overflow: visible; }
+.ss-comp-stage img { border-radius: 0; max-height: 26rem; }
+.ss-comp-langs { align-items: start; }
+.ss-comp-langs figure { gap: 0.75rem; }
+/* Steel closes its row of swatches; the logo needs no shadow box behind it */
+.ss-sw--steel { grid-column: span 3; }
+@media (max-width: 640px) { .ss-sw--steel { grid-column: span 1; } }
+.ss-mark img { filter: none; }

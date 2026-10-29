@@ -216,14 +216,40 @@ async function main() {
 
   if (run('kit')) {
     console.log('kit: components');
-    await viewport({ w: 1900, h: 1280, dpr: 2 });
+    await viewport({ w: 1900, h: 1280, dpr: 2, transparent: true });
+    // Components are shot on a transparent ground, so on the page they sit on the tile like real
+    // elements instead of as screenshots of the sheet: the sheet's panels go, each component keeps
+    // its own surfaces. The ops tiles are drawn for a wall screen, so they are enlarged to read
+    // at the same scale as the rest.
+    const bare = `const st = document.createElement('style');
+      st.textContent = '.kit, .kit-sec, [data-kit] > * { background: transparent !important; box-shadow: none !important; }'
+        + ' .notif { background: #f2f3f5 !important; backdrop-filter: none !important; }'
+        + ' .kit-kpis { zoom: 1.5; }'
+        // the sign-in cards are faded on the cart's light screen; on a dark tile they turn muddy, so they keep it
+        + ' [data-kit="signin"] > .cart { background: var(--mist) !important; border-radius: 24px; padding: 16px !important; }';
+      document.head.appendChild(st); await wait(300);`;
+    // Tight to the component: the union of the block's real parts, a little room for rings and borders.
+    const shoot = async (name, k) => {
+      const depth = k === 'signin' ? '> *' : '> * > *';
+      const r = await js(`const els = [...document.querySelectorAll('[data-kit="${k}"] ${depth}')].filter((n) => n.getBoundingClientRect().width > 0);
+        if (!els.length) return null;
+        els[0].scrollIntoView({ block: 'center' }); await wait(250);
+        const bs = els.map((n) => n.getBoundingClientRect());
+        const x = Math.min(...bs.map((b) => b.left)), y = Math.min(...bs.map((b) => b.top));
+        return { x: x + scrollX, y: y + scrollY, w: Math.max(...bs.map((b) => b.right)) - x, h: Math.max(...bs.map((b) => b.bottom)) - y };`);
+      if (!r) { console.log('  MISSING', name); return; }
+      const pad = 8;
+      const { data } = await send('Page.captureScreenshot', { format: 'webp', quality: 100, captureBeyondViewport: true, clip: { x: r.x - pad, y: r.y - pad, width: r.w + pad * 2, height: r.h + pad * 2, scale: 1 } });
+      await save(name, data);
+    };
     // #/kit/en is English first; the blocks whose words change are shot again Hindi first (-hi)
-    await open('kit/en', { transparent: false });
+    await open('kit/en');
+    await js(bare);
     const keys = await js(`return [...document.querySelectorAll('[data-kit]')].map((s) => s.dataset.kit);`);
-    // the component itself, not the sheet's padding around it
-    for (const k of keys) await crop(`k-${k}`, `[data-kit="${k}"] > *`);
-    await open('kit', { transparent: false });
-    for (const k of KIT_HI) await crop(`k-${k}-hi`, `[data-kit="${k}"] > *`);
+    for (const k of keys) await shoot(`k-${k}`, k);
+    await open('kit');
+    await js(bare);
+    for (const k of KIT_HI) await shoot(`k-${k}-hi`, k);
     await viewport(stage);
   }
 
