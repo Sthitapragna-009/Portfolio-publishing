@@ -1,0 +1,16 @@
+Sounds for the H2o Connect walkthrough film (assets/h2o/film.js)
+
+All six are from "Interface Sounds" (1.0) by Kenney, www.kenney.nl
+https://kenney.nl/assets/interface-sounds
+Licence: Creative Commons Zero (CC0), checked on the pack page and in its License.txt on 30 October 2026.
+http://creativecommons.org/publicdomain/zero/1.0/
+Credit is not required; this file keeps it anyway.
+
+Converted from OGG to 22.05 kHz mono 16-bit WAV so every browser can play them.
+
+click.wav   click_002.ogg         a tap
+tick.wav    tick_002.ogg          a level set, the tank full
+grow.wav    maximize_007.ogg      the card grows into a new state
+shrink.wav  minimize_007.ogg      the card shrinks into a new state
+done.wav    confirmation_001.ogg  automatic filling paused
+alert.wav   question_002.ogg      the possible leak alert arrives
