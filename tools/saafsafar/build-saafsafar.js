@@ -223,16 +223,11 @@ const main = `<main id="top">
           </div>
           <div class="ss-hero-text">
             <div class="ss-hero-titles">
-              <p class="eyebrow">Service design &middot; Inclusive UI &middot; Data visualization</p>
               <h1 class="display case-title"><img class="ss-hero-logo" src="${A}logo.svg" alt="" width="40" height="40" />Saaf Safar</h1>
             </div>
             <div class="ss-hero-copy">
             <p class="case-sub">Airport washrooms that call for help: sensors tell the cleaning crew where to go, in pictures and spoken Hindi</p>
-            <ul class="ss-hero-facts">
-              <li>${ico("Users")}<span><b>For</b> housekeeping crews and their supervisors</span></li>
-              <li>${ico("MapPin")}<span><b>Modelled on</b> Delhi T3 departures</span></li>
-              <li>${ico("Code")}<span><b>Built</b> a working prototype on a simulated week</span></li>
-            </ul>
+            <p class="ss-hero-note">For housekeeping crews and their supervisors, modelled on Delhi T3 departures. A working prototype runs on a simulated week.</p>
             <div class="ss-hero-cta">
               <a class="ss-hero-btn" href="#ss-try">Try the prototype ${ico("ArrowRight")}</a>
               <a class="ss-hero-link" href="#ss-journey-h">Read the journey</a>
@@ -254,17 +249,7 @@ const main = `<main id="top">
           <div class="case-brief-row">
             <h2 class="case-brief-key">Outcomes</h2>
             <div class="case-brief-val">
-              <ul class="case-outcomes">
-                <li>Cart iPad in pictures</li>
-                <li>Spoken Hindi</li>
-                <li>Phone and watch alerts</li>
-                <li>Zone dashboard with escalation</li>
-                <li>Terminal view and handover</li>
-                <li>Ops-centre layer</li>
-                <li>Data story and notebook</li>
-                <li>Door display</li>
-                <li>Pictogram set</li>
-              </ul>
+              <p>Nine pieces on one simulation: a cart iPad in pictures with spoken Hindi, phone and watch alerts, a zone dashboard with escalation, a terminal view with automatic handover, a layer for the ops centre, a data story and notebook, a door display for passengers, and the pictogram set they all share.</p>
             </div>
           </div>
         </div>
@@ -291,7 +276,7 @@ const main = `<main id="top">
         </div>
         <div class="ss-live reveal">
           <div class="ss-live-bar" role="group" aria-label="Open the prototype as">
-            ${[["attendant", "Attendant", "Smartphone"], ["supervisor", "Zone supervisor", "Phone"], ["manager", "Shift manager", "Monitor"], ["ops", "Ops and DIAL", "Graph"], ["passenger", "Passengers", "Users"]].map(([r, l, icon], i) => `<button type="button" class="ss-live-role" data-role="${r}" aria-pressed="${i ? "false" : "true"}">${ico(icon)}${e(l)}</button>`).join("")}
+            ${[["attendant", "Attendant", "Smartphone"], ["channels", "Phone & watch", "Phone2"], ["supervisor", "Zone supervisor", "Phone"], ["manager", "Shift manager", "Monitor"], ["ops", "Ops and DIAL", "Graph"], ["passenger", "Passengers", "Users"]].map(([r, l, icon], i) => `<button type="button" class="ss-live-role" data-role="${r}" aria-pressed="${i ? "false" : "true"}">${ico(icon)}${e(l)}</button>`).join("")}
             <a class="ss-live-open" href="../prototypes/saaf-safar/index.html?lang=en#/attendant" target="_blank" rel="noopener">${ico("ExternalLink")}Open full screen<span class="sr-only"> (new tab)</span></a>
           </div>
           <figure class="ss-browser ss-live-frame">
@@ -345,8 +330,8 @@ ${head2("s-03", "Empathise", "Who it touches", "Two organisations, five levels, 
           ${fig(ig.hierarchy(), "The housekeeping hierarchy, a typical model from public tenders and job listings, to be confirmed in interviews. Delhi does not publish it.", "ss-ig--flush")}
           ${fig(ig.stakeholders(), "Stakeholder map: who uses it every shift, who works with it, and who it serves or answers to.", "ss-ig--flush")}
         </div>
+        <div class="ss-subhead reveal"><h3>Proto-personas</h3><p>Assumptions, not findings: the fieldwork will test each one.</p></div>
         <div class="ss-personas reveal" aria-label="Proto-personas">
-          <p class="ss-personas-k">Proto-personas · assumptions the fieldwork will test</p>
           ${[
             ["The cart attendant", "Attendant", "Know which washroom needs me, and what to bring, without reading English.", [["Reads English", 1, "a little"], ["Reads Hindi", 3, "slowly"], ["Hands free", 1, "gloves on"], ["Phone of own", 4, "most have one"]]],
             ["The zone supervisor", "Supervisor", "Stop walking rounds just to find problems; step in only when a task stalls.", [["On the move", 5, "all shift"], ["Radio", 5, "always on"], ["Time at a screen", 2, "glances"], ["Paperwork", 4, "checklists"]]],
@@ -371,7 +356,7 @@ ${head2("s-04", "Define", "Principles", "Apple’s Human Interface Guidelines, t
             ["noLocation", "Consent", "Consent for personal devices", "Phone alerts are opt-in, never track location, and stop when the shift ends."],
             ["globe", "Configure", "Configure, don’t redesign", "Zones, thresholds and languages are settings per airport, from Delhi to Bidar."],
           ].map(([icon, word, t, d], i) => `<li class="ss-vcard ss-vcard--${i + 1}">
-            <div class="ss-vcard-top"><span class="ss-vcard-word">${e(word)}</span>${pic(icon)}${arrow("up")}</div>
+            <div class="ss-vcard-top"><span class="ss-vcard-word">${e(word)}</span>${pic(icon)}</div>
             <div class="ss-vcard-band"><b>${e(t)}</b><span>${e(d)}</span></div>
           </li>`).join("")}
         </ul>
@@ -451,8 +436,9 @@ ${head2("s-11", "Test", "How it gets tested, and next", "Planned, not yet run. W
             <li>${pic("walk")}<b>Where does the time go</b><span>noticing, telling, fetching, walking, cleaning</span></li>
             <li>${pic("tissue")}<b>Which pictograms</b><span>are recognised without words?</span></li>
           </ol>
-          <ul class="ss-hyps" aria-label="Hypotheses to test">
-            ${[["Unnoticed", "Eye", "Most delay is before anyone knows"], ["Two trips", "Routing", "Refills are missing on arrival, so a store trip"], ["Radio", "Phone", "Supervisors find problems by walking"], ["Handover", "History", "Late problems fall through at shift change"], ["Habit", "Archive", "Stores restock by habit, not use"], ["Words", "Languages", "English labels slow people down"]].map(([kk, icon, hy]) => `<li>${ico(icon)}<span><b>${e(kk)}</b>${e(hy)}</span><em>to test</em></li>`).join("")}
+          <h3 class="ss-hyps-h" id="ss-hyps-h">Six hypotheses the fieldwork will test</h3>
+          <ul class="ss-hyps" aria-labelledby="ss-hyps-h">
+            ${[["Unnoticed", "Eye", "Most delay is before anyone knows"], ["Two trips", "Routing", "Refills are missing on arrival, so a store trip"], ["Radio", "Phone", "Supervisors find problems by walking"], ["Handover", "History", "Late problems fall through at shift change"], ["Habit", "Archive", "Stores restock by habit, not use"], ["Words", "Languages", "English labels slow people down"]].map(([kk, icon, hy]) => `<li>${ico(icon)}<span><b>${e(kk)}</b>${e(hy)}</span></li>`).join("")}
           </ul>
           <p class="ss-kit-link"><a href="../assets/saafsafar/research-kit.html" target="_blank" rel="noopener">${ico("FileText")} Open the research kit: interview guide, observation sheet, incident timing log, consent script and pictogram test cards</a></p>
         </div>
@@ -474,9 +460,9 @@ ${head2("s-11", "Test", "How it gets tested, and next", "Planned, not yet run. W
         </ol>
         <div class="ss-subhead reveal"><h3>Where it stands</h3></div>
         <div class="ss-status reveal">
-          <div class="ss-status-col ss-status-col--done"><p class="ss-kit-k">${ico("CircleCheck")} Built</p><ul>${["Six touchpoints on one simulation", "Escalation at 2 and 5 minutes", "Store-aware routing", "Automatic shift handover", "Unsensed-fault detection from ratings", "Seven-day history and data story", "Observable notebook", "Hindi and English, spoken Hindi"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
-          <div class="ss-status-col"><p class="ss-kit-k">${ico("Hourglass")} Not yet</p><ul>${["Field research", "Real sensors and a backend", "Integration with GMR systems", "A recorded Hindi voice", "Tableau Public story", "Telugu and other languages"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
-          <div class="ss-status-col ss-status-col--next"><p class="ss-kit-k">${ico("ArrowRight")} Next</p><p class="ss-next-big">Shadow three shifts, time five incidents, test the pictograms, then put the cart iPad in gloved hands.</p></div>
+          <div class="ss-status-col ss-status-col--done"><h4 class="ss-status-h">Built</h4><ul>${["Six touchpoints on one simulation", "Escalation at 2 and 5 minutes", "Store-aware routing", "Automatic shift handover", "Unsensed-fault detection from ratings", "Seven-day history and data story", "Observable notebook", "Hindi and English, spoken Hindi"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
+          <div class="ss-status-col"><h4 class="ss-status-h">Not yet</h4><ul>${["Field research", "Real sensors and a backend", "Integration with GMR systems", "A recorded Hindi voice", "Tableau Public story", "Telugu and other languages"].map((x) => `<li>${e(x)}</li>`).join("")}</ul></div>
+          <div class="ss-status-col ss-status-col--next"><h4 class="ss-status-h">Next</h4><p class="ss-next-big">Shadow three shifts, time five incidents, test the pictograms, then put the cart iPad in gloved hands.</p></div>
         </div>
       </div>
     </section>

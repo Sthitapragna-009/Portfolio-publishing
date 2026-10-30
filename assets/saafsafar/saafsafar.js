@@ -134,7 +134,7 @@
 })();
 
 /* The live prototype: each role button opens that touchpoint. Roles are plain links (#/attendant ...),
-   and ?embed hides the prototype's own side caption, since this page explains it. */
+   and ?embed folds the prototype's own side caption down to its "Try this" strip, since this page explains the rest. */
 (function () {
   var live = document.querySelector(".ss-live");
   if (!live) return;
@@ -161,13 +161,21 @@
       frame.src = base + "?embed&lang=en#/" + role;
     });
   });
+  // On a phone the cart iPad would shrink to a stamp, so the frame opens on the
+  // phone-and-watch touchpoint, which is phone-sized. (The frame is lazy, so this lands before it loads.)
+  if (window.matchMedia("(max-width: 760px)").matches) {
+    mark("channels");
+    frame.src = base + "?embed&lang=en#/channels";
+  }
   // Keep the buttons in step with the prototype's own role tabs.
   frame.addEventListener("load", function () {
     var w = app();
     if (!w) return;
-    w.addEventListener("hashchange", function () {
+    var sync = function () {
       var role = w.location.hash.replace(/^#\/?/, "").split(/[/?]/)[0];
       if (role) mark(role);
-    });
+    };
+    sync();
+    w.addEventListener("hashchange", sync);
   });
 })();

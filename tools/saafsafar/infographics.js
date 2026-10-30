@@ -10,6 +10,12 @@ const pic = (name, x, y, s, cls = "ico") => `<use href="#p-${name}" x="${f(x - s
 const lines = (x, y, arr, cls, size, anchor = "start", lh = 1.25) =>
   `<text x="${f(x)}" y="${f(y)}" text-anchor="${anchor}" class="${cls}" font-size="${size}">${arr.map((l, i) => `<tspan x="${f(x)}" dy="${i ? size * lh : 0}">${esc(l)}</tspan>`).join("")}</text>`;
 
+// Phone versions. A 1000-wide diagram on a 390 screen draws its labels at about 5px, so the
+// wide diagrams also carry the same content as a stacked list. CSS shows one or the other
+// (.ss-ig-full above 760px, .ss-ig-list below), so a screen reader only ever meets one.
+const hpic = (name, cls = "") => `<span class="ss-igl-ic${cls ? " " + cls : ""}"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#p-${name}"/></svg></span>`;
+const full = (svg) => svg.replace('<svg class="ig ', '<svg class="ig ss-ig-full ');
+
 /* 1. One incident, before and after: where the minutes go. Estimates from the brief. */
 function incident(sim) {
   const rows = [
@@ -68,7 +74,12 @@ function hierarchy() {
     out += `<circle cx="${x + 24}" cy="${y + 36}" r="24" class="node"/>` + pic(icon, x + 24, y + 36, 28);
     out += lines(x + 60, y + 30, [n], "t-ink t-b", 17) + lines(x + 60, y + 52, [tp], "t-dim", 14.5);
   });
-  return out + "</svg>";
+  const list = `<div class="ss-ig-list ss-igl ss-igl--org">
+    <ol>${LEVELS.map(([name, what, tp, icon], i) => `<li>${hpic(icon, i === LEVELS.length - 1 ? "is-alert" : i === 4 ? "is-acc" : "")}<b>${esc(name)}</b><span>${esc(what)}</span><span class="ss-igl-tp">${esc(tp)}</span></li>`).join("")}</ol>
+    <p class="ss-igl-h">Alongside</p>
+    <ul>${[["Store keeper", "Usage-based restock list", "store"], ["Passengers, about 214,000 a day", "Door display and four-face rating", "washroom"]].map(([n, tp, icon]) => `<li>${hpic(icon)}<b>${esc(n)}</b><span class="ss-igl-tp">${esc(tp)}</span></li>`).join("")}</ul>
+  </div>`;
+  return full(out + "</svg>") + list;
 }
 
 /* 3. Stakeholders as rings: who uses it, who works with it, who it serves, who sets the rules. */
@@ -84,7 +95,7 @@ function stakeholders() {
   [...rings].reverse().forEach(([r], i) => { out += `<circle cx="${cx}" cy="${cy}" r="${r + 40}" class="${i % 2 ? "ring-b" : "ring-a"}"/>`; });
   out += `<circle cx="${cx}" cy="${cy}" r="62" class="node-acc"/>` + pic("washroom", cx, cy - 8, 40, "ico-on") + `<text x="${cx}" y="${cy + 34}" text-anchor="middle" class="t-on t-b" font-size="13">Washroom</text>`;
   rings.forEach(([r, label, people], ri) => {
-    out += `<text x="${cx}" y="${cy - r - 46}" text-anchor="middle" class="t-faint t-caps" font-size="12">${esc(label)}</text>`;
+    out += `<text x="${cx}" y="${cy - r - 46}" text-anchor="middle" class="t-dim t-b" font-size="15">${esc(label)}</text>`;
     people.forEach(([n, icon], i) => {
       const a = (360 / people.length) * i + (ri === 0 ? 90 : ri === 1 ? 30 : 0) + 18;
       const [x, y] = pol(cx, cy, r, a);
@@ -92,7 +103,11 @@ function stakeholders() {
       out += `<text x="${f(x)}" y="${f(y + 46)}" text-anchor="middle" class="t-ink t-b" font-size="15">${esc(n)}</text>`;
     });
   });
-  return out + "</svg>";
+  const list = `<div class="ss-ig-list ss-igl ss-igl--rings">${rings.map(([, label, people], ri) => `
+    <p class="ss-igl-h">${esc(label)}</p>
+    <ul>${people.map(([n, icon]) => `<li>${hpic(icon, ri === 0 ? "is-alert" : "")}<b>${esc(n)}</b></li>`).join("")}</ul>`).join("")}
+  </div>`;
+  return full(out + "</svg>") + list;
 }
 
 /* 4. Service blueprint: one task from sensor to SLA report, across five lanes. */
@@ -125,7 +140,7 @@ function blueprint() {
       out += lines(x + 9, y + 20, wrapped.slice(0, 5), r === 3 ? "t-on" : "t-ink", 12.5, "start", 1.22);
     });
   });
-  out += `<text x="${W - 6}" y="${top + 3 * rowH - 12}" text-anchor="end" class="t-org t-caps" font-size="10.5">line of visibility</text>`;
+  out += `<text x="${W - 6}" y="${top + 3 * rowH - 12}" text-anchor="end" class="t-org t-b" font-size="12.5">Line of visibility</text>`;
   return out + "</svg>";
 }
 
@@ -171,7 +186,15 @@ function lifecycle() {
       out += `<text x="${x}" y="${ty + 18}" text-anchor="middle" class="t-dim" font-size="13">${esc(sub)}</text>`;
     }
   });
-  return out + "</svg>";
+  // The phone list follows the main line; the escalation branch reads as its own step,
+  // and the ladder beside the diagram gives the times in full.
+  const flow = ["Open", "Offered", "Going", "Store", "Cleaning", "Closed"].map((k) => at[k]);
+  const list = `<div class="ss-ig-list ss-igl ss-igl--life">
+    <ol>${flow.map(([name, sub, , , icon]) => `<li>${hpic(icon, name === "Going" ? "is-acc" : name === "Closed" ? "is-done" : "")}<b>${esc(name)}</b><span>${esc(sub)}</span></li>`).join("")}</ol>
+    <p class="ss-igl-h ss-igl-h--org">If nobody answers</p>
+    <ul><li>${hpic("cart")}<b>2 min</b><span>back to open, offered to the next cart</span></li><li>${hpic("radio", "is-alert")}<b>5 min: Radio</b><span>${esc(at.Radio[1])}, who then goes</span></li></ul>
+  </div>`;
+  return full(out + "</svg>") + list;
 }
 
 /* 6. The escalation ladder for a Go now task. */
