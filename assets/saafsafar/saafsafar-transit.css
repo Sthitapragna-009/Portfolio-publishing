@@ -36,11 +36,9 @@
   --surface-hi: #282826;
   --surface-edge: rgba(245, 243, 236, 0.28);
   --ghost-ink: rgba(245, 243, 236, 0.08);
-  --nav-bg: rgba(28, 28, 26, 0.84);
+  --nav-bg: rgba(28, 28, 26, 0.98);
   --nav-bg-solid: rgba(28, 28, 26, 0.97);
   --outline-soft: rgba(245, 243, 236, 0.32);
-  --dot-rgb: 255, 211, 41;
-  --dot-strength: 0.28;
   --ss-royal: #ffd329;
 
   --ig-node: #262624;
@@ -72,11 +70,9 @@
   --surface-hi: #fffdf6;
   --surface-edge: rgba(18, 18, 18, 0.24);
   --ghost-ink: rgba(18, 18, 18, 0.06);
-  --nav-bg: rgba(244, 240, 226, 0.86);
+  --nav-bg: rgba(244, 240, 226, 0.98);
   --nav-bg-solid: rgba(244, 240, 226, 0.97);
   --outline-soft: rgba(18, 18, 18, 0.3);
-  --dot-rgb: 0, 25, 168;
-  --dot-strength: 0.2;
   --ss-royal: #0019a8;
   --ig-node: #fffdf6;
   --ig-line: rgba(18, 18, 18, 0.3);
