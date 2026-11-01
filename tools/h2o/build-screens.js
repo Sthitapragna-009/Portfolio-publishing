@@ -1,10 +1,18 @@
 // Builds the H2o Connect app screens as HTML, then renders them to the images the
-// case study uses. The screens follow tools/h2o/app-fix-spec.md (fixes 1 to 12).
+// case study uses. v2 is a full redesign on one small system (below); the content, features
+// and numbers are the ones from tools/h2o/app-fix-spec.md.
 //
 //   node tools/h2o/build-screens.js            writes tools/h2o/screens/index.html (all screens on one board)
 //   node tools/h2o/build-screens.js --render   also renders each screen into assets/h2o/
 //
 // Each screen is 360 x 779 CSS px; rendered at 2x it is 720 x 1558, the size the case study expects.
+//
+// The system:
+// - Two surfaces: the ground and one raised tone. No outlines, no card inside a card.
+// - Chalk for text and the main button. Water blue for the tank. Lime only while the motor runs:
+//   the motor panel and the Stop inside it. Orange marks low or stale, red marks a leak.
+// - Archivo in five sizes: 64 (the one number), 28 (titles), 17, 15 and 13. Sentence case.
+// - Four plain tabs. Starting and stopping the motor lives on the motor panel, not in the tab bar.
 const fs = require("fs");
 const path = require("path");
 const { execFileSync } = require("child_process");
@@ -18,417 +26,418 @@ const P = {
   bars: '<path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/>',
   gauge: '<path d="m12 14 4-4"/><path d="M3.34 19a10 10 0 1 1 17.32 0"/>',
   sliders: '<path d="M21 4h-7M10 4H3M21 12h-9M8 12H3M21 20h-5M12 20H3M14 2v4M8 10v4M16 18v4"/>',
-  zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
   bell: '<path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/>',
-  menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
   back: '<path d="m15 18-6-6 6-6"/>',
   next: '<path d="m9 18 6-6-6-6"/>',
+  down: '<path d="m6 9 6 6 6-6"/>',
   close: '<path d="M18 6 6 18M6 6l12 12"/>',
-  plus: '<path d="M5 12h14M12 5v14"/>',
-  sparkle: '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>',
   alert: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>',
   wifiOff: '<path d="M12 20h.01M8.5 16.429a5 5 0 0 1 7 0M5 12.859a10 10 0 0 1 5.17-2.69M19 12.859a10 10 0 0 0-2.007-1.523M2 8.82a15 15 0 0 1 4.177-2.643M22 8.82a15 15 0 0 0-11.288-3.764M2 2l20 20"/>',
 };
-const ic = (n, s = 20, w = 2) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
-const stopSq = (s = 14) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3" fill="currentColor"/></svg>`;
+const ic = (n, s = 22, w = 2) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+const stopSq = `<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4" fill="currentColor"/></svg>`;
 
 // ---------- shared pieces ----------
-const statusBar = `<div class="sb"><span>9:41</span><span class="sb-r"><svg width="68" height="14" viewBox="0 0 68 14" fill="#f4f6fa" aria-hidden="true"><rect x="0" y="9" width="3.5" height="5" rx="1"/><rect x="5.5" y="6.5" width="3.5" height="7.5" rx="1"/><rect x="11" y="3.5" width="3.5" height="10.5" rx="1"/><rect x="16.5" y="0.5" width="3.5" height="13.5" rx="1"/><path d="M33 3.2c2.6 0 5 1 6.8 2.7l1.3-1.4C38.9 2.4 36 1.2 33 1.2s-5.9 1.2-8.1 3.3l1.3 1.4C28 4.2 30.4 3.2 33 3.2Zm0 4c1.5 0 2.9.6 3.9 1.5l1.4-1.4C36.9 6 35 5.2 33 5.2s-3.9.8-5.3 2.1l1.4 1.4c1-.9 2.4-1.5 3.9-1.5Zm0 4 2.2-2.2c-.6-.5-1.4-.8-2.2-.8s-1.6.3-2.2.8Z"/><rect x="45" y="1" width="20" height="12" rx="3.5" fill="none" stroke="#f4f6fa" stroke-opacity="0.45"/><rect x="47" y="3" width="16" height="8" rx="2"/><rect x="66" y="5" width="1.6" height="4" rx="0.8" fill-opacity="0.45"/></svg></span></div>`;
+const statusBar = `<div class="sb"><span>9:41</span><svg width="68" height="14" viewBox="0 0 68 14" fill="currentColor" aria-hidden="true"><rect x="0" y="9" width="3.5" height="5" rx="1"/><rect x="5.5" y="6.5" width="3.5" height="7.5" rx="1"/><rect x="11" y="3.5" width="3.5" height="10.5" rx="1"/><rect x="16.5" y="0.5" width="3.5" height="13.5" rx="1"/><path d="M33 3.2c2.6 0 5 1 6.8 2.7l1.3-1.4C38.9 2.4 36 1.2 33 1.2s-5.9 1.2-8.1 3.3l1.3 1.4C28 4.2 30.4 3.2 33 3.2Zm0 4c1.5 0 2.9.6 3.9 1.5l1.4-1.4C36.9 6 35 5.2 33 5.2s-3.9.8-5.3 2.1l1.4 1.4c1-.9 2.4-1.5 3.9-1.5Zm0 4 2.2-2.2c-.6-.5-1.4-.8-2.2-.8s-1.6.3-2.2.8Z"/><rect x="45" y="1" width="20" height="12" rx="3.5" fill="none" stroke="currentColor" stroke-opacity="0.45"/><rect x="47" y="3" width="16" height="8" rx="2"/><rect x="66" y="5" width="1.6" height="4" rx="0.8" fill-opacity="0.45"/></svg></div>`;
 const homeBar = `<i class="hi"></i>`;
-const circ = (inner, cls = "") => `<span class="circ${cls ? " " + cls : ""}">${inner}</span>`;
-const back = circ(ic("back"));
 
-// Fix 1: labels under the tab icons. Fix 3: the fifth button reads "Filling" and dims while the motor runs.
 const TABS = [["home", "droplet", "Home"], ["usage", "bars", "Usage"], ["motor", "gauge", "Motor"], ["modes", "sliders", "Modes"]];
-const tabBar = (active, running) => `<nav class="tb">${TABS.map(([k, i, l]) => `<span class="tb-i${k === active ? " on" : ""}"><b>${ic(i, 20)}</b><small>${l}</small></span>`).join("")}<span class="tb-i tb-fill${running ? " off" : ""}"><b>${ic("zap", 20)}</b><small>${running ? "Filling" : "Fill now"}</small></span></nav>`;
+const tabBar = (active) => `<nav class="tb">${TABS.map(([k, i, l]) => `<span class="tb-i${k === active ? " on" : ""}">${ic(i, 24)}<small>${l}</small></span>`).join("")}</nav>${homeBar}`;
 
-// Fix 10: one Stop style everywhere (dark red fill, red border, red label with a square).
-const stopPill = (label = "Stop", cls = "") => `<span class="stop${cls ? " " + cls : ""}">${stopSq()}${label}</span>`;
+// Headers: a title with its context line; a back chevron on pushed screens.
+const header = (title, ctx, { back = false, bell = false, tankPicker = false } = {}) => `
+  <header class="hd">
+    ${back ? `<span class="hd-back">${ic("back", 24)}</span>` : ""}
+    <div class="hd-t">
+      <h1>${title}</h1>
+      ${ctx ? `<p class="ctx">${ctx}${tankPicker ? ic("down", 18) : ""}</p>` : ""}
+    </div>
+    ${bell ? `<span class="ib dot">${ic("bell", 22)}</span>` : ""}
+  </header>`;
 
-// The tank. level and the two lines are percent; tone: water | low | stale.
-const tank = (level, { h = 190, w = 92, tone = "water", labels = true, handles = false } = {}) => `
+// The tank. level and lines are percent; tone: water | low | stale.
+const tank = (level, { w = 116, h = 290, tone = "water", lines = true } = {}) => `
   <div class="tank tank--${tone}" style="width:${w}px;height:${h}px">
     <i class="tank-water" style="height:${level}%"></i>
-    <i class="tank-line" style="bottom:90%"></i><i class="tank-line" style="bottom:25%"></i>
-    ${labels ? `<em style="bottom:calc(90% - 22px)">MAX</em><em style="bottom:calc(25% - 22px)">MIN</em>` : ""}
-    ${handles ? `<b class="tank-h tank-h--stop" style="bottom:90%"></b><b class="tank-h tank-h--start" style="bottom:25%"></b>` : ""}
+    ${lines ? `<i class="tank-line" style="bottom:90%"></i><i class="tank-line" style="bottom:25%"></i>` : ""}
   </div>`;
 
 const toggle = (on) => `<span class="tg${on ? " on" : ""}"><i></i></span>`;
-const seg = (sel) => `<div class="seg">${[["Automatic", ""], ["Manual", ""], ["Smart", ic("sparkle", 14)]].map(([l, i]) => `<span${l === sel ? ' class="on"' : ""}>${i}${l}</span>`).join("")}</div>`;
-const weekBars = (vals, hi) => `<div class="wk">${vals.map((v, i) => `<i${i === hi ? ' class="hi-b"' : ""} style="height:${v}%"></i>`).join("")}</div>`;
+const seg = (items, sel) => `<div class="seg">${items.map((l) => `<span${l === sel ? ' class="on"' : ""}>${l}</span>`).join("")}</div>`;
+const stopPill = (label = "Stop", cls = "") => `<span class="stop${cls ? " " + cls : ""}">${stopSq}${label}</span>`;
 
-// Top of Home. Fix 11: the blue app icon replaces the lime drop.
-const homeTop = `<div class="top"><img class="appmark" src="${ICON}" alt="" width="40" height="40" /><span class="top-r">${circ(ic("bell", 19), "dot")}${circ(ic("menu", 19))}</span></div>`;
-const chips = `<div class="chips"><span class="chip on"><i></i>Overhead</span><span class="chip"><i class="lime"></i>Sump</span><span class="chip sq">${ic("plus", 16)}</span></div>`;
-
-// Fix 8: how fresh the reading is.
-const fresh = (stale, text) => `<p class="fresh${stale ? " stale" : ""}"><i></i>${text}</p>`;
-
-const tankCard = ({ tone = "water", pct = "78", stale = false, freshText = "Live · updated 9:41", status = true, h = 190 } = {}) => `
-  <section class="card tank-card">
-    ${chips}
-    <div class="tank-row">
-      ${tank(78, { tone, h })}
-      <div class="tank-num">
-        <p class="big${stale ? " dim" : ""}">${pct}<small>%</small></p>
-        <p class="sub">1,560 of 2,000 L</p>
-        ${fresh(stale, freshText)}
-        ${status ? `<span class="pill-blue"><i></i>Filling · 12 min left</span>` : ""}
-      </div>
+// Home's hero: the tank and what it says. stale greys the water and the number.
+const hero = ({ stale = false, fresh = "Live · updated 9:41", eta = "Full in 12 min", h = 290 } = {}) => `
+  <section class="hero">
+    ${tank(78, { tone: stale ? "stale" : "water", h })}
+    <div class="read">
+      <p class="num${stale ? " dim" : ""}">78<small>%</small></p>
+      <p class="lead">1,560 of 2,000 L</p>
+      ${eta ? `<p class="sub">${eta}</p>` : ""}
+      <p class="meta fresh${stale ? " stale" : ""}"><i></i>${fresh}</p>
     </div>
   </section>`;
 
-// Fixes 2 and 10: the lime motor card keeps its look; Stop is a labelled pill in the one Stop style.
-const motorCard = `
-  <section class="card lime motor">
-    <div>
-      <p class="mk"><i></i>Motor running · Automatic</p>
-      <p class="timer">04:12</p>
-      <p class="msub">0.75 kW · 4.2 units saved this week</p>
-    </div>
+// The motor panel: the only lime on the app, there while the motor runs, with Stop inside it.
+const motorPanel = `
+  <section class="motor">
+    <div><p class="lead">Motor running</p><p class="m-sub">Automatic · <span class="timer">04:12</span></p></div>
     ${stopPill()}
   </section>`;
 
-const weekCard = `
-  <section class="card week">
-    <div class="week-h"><div><p class="mk mk--muted"><i></i>This week</p><p class="wk-n">1,240 <small>L</small></p></div>${circ(ic("next", 18), "sm")}</div>
-    ${weekBars([34, 52, 22, 64, 40, 100, 30], 5)}
+const weekRow = `
+  <section class="row">
+    <div><p class="sub">This week</p><p class="lead">1,240 L used</p></div>
+    <span class="spark">${[34, 52, 22, 64, 40, 100, 30].map((v, i) => `<i${i === 5 ? ' class="on"' : ""} style="height:${Math.max(18, v)}%"></i>`).join("")}</span>
+    ${ic("next", 20)}
   </section>`;
+
+const grp = (rows) => `<section class="grp">${rows.map(([t, s, on]) => `<div class="grp-r"><div><p class="lead">${t}</p><p class="sub">${s}</p></div>${toggle(on)}</div>`).join("")}</section>`;
 
 // ---------- the screens ----------
 const S = {};
 
-S.f1 = { title: "Home", note: "Fixes 1, 2, 3, 8, 10, 11", body: `
-  ${statusBar}${homeTop}
-  ${tankCard()}
-  ${motorCard}
-  ${weekCard}
-  ${tabBar("home", true)}${homeBar}` };
+S.f1 = { title: "Home", note: "The tank first, the motor second", body: `
+  ${statusBar}
+  ${header("Overhead tank", "Home · 2 tanks", { bell: true, tankPicker: true })}
+  ${hero()}
+  ${motorPanel}
+  ${weekRow}
+  ${tabBar("home")}` };
 
-S.f2 = { title: "Fill range", note: "Fixes 1, 12", body: `
-  ${statusBar}<div class="top">${back}</div>
-  <h1>Fill range</h1><p class="h-sub">Overhead tank</p>
-  <section class="card range">
-    ${tank(70, { h: 232, labels: false, handles: true })}
-    <div class="range-v">
-      <div><p class="k k--blue">STOP FILLING</p><p class="rv">90%<small>1,800 L</small></p></div>
-      <div><p class="k k--low">START FILLING</p><p class="rv">25%<small>500 L</small></p><p class="hint">Drag either handle on the tank.</p></div>
-    </div>
+// Labels sit beside each handle, at its height, so the drag explains itself.
+const RANGE_H = 380;
+const handleY = (p) => Math.round(RANGE_H * (1 - p / 100));
+S.f2 = { title: "Fill range", note: "Both levels set on the tank", body: `
+  ${statusBar}
+  ${header("Fill range", "Overhead tank", { back: true })}
+  <section class="range" style="height:${RANGE_H}px">
+    ${tank(70, { w: 150, h: RANGE_H, lines: false })}
+    <span class="hdl" style="top:${handleY(90)}px"><i></i></span>
+    <span class="hdl" style="top:${handleY(25)}px"><i></i></span>
+    <div class="hl" style="top:${handleY(90) - 24}px"><p class="meta">Stop at</p><p class="lead"><b class="rv">90%</b> · 1,800 L</p></div>
+    <div class="hl" style="top:${handleY(25) - 24}px"><p class="meta">Start at</p><p class="lead"><b class="rv">25%</b> · 500 L</p></div>
   </section>
-  <section class="card">
-    <h2>What this means</h2>
-    <p class="body">The motor runs about 18 minutes each time, roughly twice a day. A narrower range keeps the tank fuller but runs the motor more often.</p>
-  </section>
-  <span class="btn lime-btn">Save range</span>
-  ${tabBar("home", false)}${homeBar}` };
+  <p class="sub">The motor will run about 18 minutes each time, roughly twice a day.</p>
+  <span class="btn btn-p">Save range</span>
+  ${tabBar("home")}` };
 
-S.f3 = { title: "Motor", note: "Fixes 1, 3, 10", body: `
-  ${statusBar}<div class="top">${back}</div>
-  <h1>Motor</h1><p class="h-sub">Overhead tank</p>
-  <section class="card lime run">
-    <p class="mk"><i></i>RUNNING · AUTOMATIC</p>
-    <p class="timer timer--xl">04:12</p>
-    <p class="msub">of about 18 min</p>
+S.f3 = { title: "Motor", note: "Running, with Stop in the panel", body: `
+  ${statusBar}
+  ${header("Motor", "Overhead tank", { back: true })}
+  <section class="motor motor--xl">
+    <p class="lead">Running · Automatic</p>
+    <p class="num timer">04:12</p>
+    <p class="m-sub">of about 18 min</p>
     <span class="prog"><i style="width:23%"></i></span>
+    ${stopPill("Stop motor", "stop--wide")}
   </section>
-  <div class="stats">${[["FLOW", "22", "L/min"], ["POWER", "0.75", "kW"], ["TODAY", "3", "runs"]].map(([k, n, u]) => `<section class="card st"><p class="k">${k}</p><p class="st-n">${n} <small>${u}</small></p></section>`).join("")}</div>
-  <section class="card row"><div><h2>Dry-run protection</h2><p class="body sm">Cuts power if the sump runs empty</p></div>${toggle(true)}</section>
-  ${stopPill("Stop motor", "stop--wide")}
-  ${tabBar("motor", true)}${homeBar}` };
+  <div class="stats">${[["22", "L/min", "Flow"], ["0.75", "kW", "Power"], ["3", "", "Runs today"]].map(([n, u, k]) => `<div><p class="h28">${n}${u ? `<small> ${u}</small>` : ""}</p><p class="meta">${k}</p></div>`).join("")}</div>
+  ${grp([["Dry-run protection", "Cuts power if the sump runs empty", true]])}
+  ${tabBar("motor")}` };
 
-S.f4 = { title: "Modes · Automatic", note: "Fixes 1, 4, 7", body: `
-  ${statusBar}<div class="top">${back}</div>
-  <h1>Modes</h1>
-  ${seg("Automatic")}
-  <section class="card how">
-    <p class="k k--lime">HOW AUTOMATIC WORKS</p>
-    <ul>${[["Drops to 25%", "motor starts itself"], ["Reaches 90%", "motor cuts off itself"], ["Sensor goes quiet", "you get an alert"]].map(([a, b]) => `<li><b>${a}</b><span>${b}</span></li>`).join("")}</ul>
+S.f4 = { title: "Modes · Automatic", note: "One tap between modes", body: `
+  ${statusBar}
+  ${header("Modes", "Overhead tank")}
+  ${seg(["Automatic", "Manual", "Smart"], "Automatic")}
+  <section class="how">
+    <p class="lead">Keeps the tank between your two levels.</p>
+    <dl>${[["Below 25%", "the motor starts"], ["At 90%", "the motor stops"], ["Sensor quiet", "you get an alert"]].map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join("")}</dl>
   </section>
-  <section class="card row"><div><h2>Eco mode</h2><p class="body sm">Runs only in off-peak hours · 4.2 units saved</p></div>${toggle(true)}</section>
-  <section class="card row"><div><h2 class="dim">Boost</h2><p class="body sm">Fills at maximum rate</p></div>${toggle(false)}</section>
-  <section class="card row"><div><h2>Quiet hours</h2><p class="body sm">No motor between 9 PM and 1 AM</p></div>${toggle(true)}</section>
-  ${tabBar("modes", false)}${homeBar}` };
+  ${grp([["Eco mode", "Off-peak only · 4.2 units saved", true], ["Boost", "Fills at the maximum rate", false], ["Quiet hours", "No motor from 9 PM to 1 AM", true]])}
+  ${tabBar("modes")}` };
 
-S.f5 = { title: "Low water alert", note: "Fix 4", cls: "alert alert--low", body: `
-  ${statusBar}<div class="top top--end">${circ(ic("close"))}</div>
-  <span class="tag tag--low"><i></i>MANUAL MODE · 6:42 AM</span>
-  <div class="center">${tank(22, { h: 212, w: 96, tone: "low" })}</div>
+S.f5 = { title: "Low water alert", note: "Warns, offers, never acts in Manual", cls: "alert", body: `
+  ${statusBar}
+  <header class="hd hd--end"><span class="ib">${ic("close", 24)}</span></header>
+  <div class="center">${tank(22, { w: 124, h: 270, tone: "low" })}</div>
+  <p class="meta c"><i class="dot dot--low"></i>Manual mode · 6:42 AM</p>
   <h1 class="c">Water is low</h1>
-  <p class="body c">Overhead tank is at 22%. The motor is off.</p>
+  <p class="sub c">The overhead tank is at 22%. The motor is off.</p>
   <div class="actions">
-    <span class="btn lime-btn">Start motor</span>
-    <span class="btn dark-btn">Remind me in 15 minutes</span>
-    <span class="link">Switch to Automatic so this happens on its own</span>
+    <span class="btn btn-p">Start motor</span>
+    <span class="btn btn-s">Remind me in 15 minutes</span>
+    <span class="btn-t">Switch to Automatic so this happens on its own</span>
   </div>
   ${homeBar}` };
 
-// Fix 5: every run says what it cost and what started it (minutes x 0.75 kW x ₹8 a unit).
+// Every run says what it cost and what started it (minutes x 0.75 kW x ₹8 a unit).
 const RUNS = [
-  ["Today, 6:42 AM", "18 min · 720 L · ₹1.80", "Started at 25%", "AUTO"],
-  ["Yesterday, 7:10 PM", "12 min · 480 L · ₹1.20", "Started from the unit", "MANUAL"],
-  ["Monday, 6:38 AM", "21 min · 840 L · ₹2.10", "Started at 25%", "AUTO"],
+  ["Today, 6:42 AM", "18 min · 720 L · ₹1.80", "Started at 25%", "Auto"],
+  ["Yesterday, 7:10 PM", "12 min · 480 L · ₹1.20", "Started from the unit", "Manual"],
+  ["Monday, 6:38 AM", "21 min · 840 L · ₹2.10", "Started at 25%", "Auto"],
 ];
-S.f6 = { title: "Usage", note: "Fixes 1, 5", body: `
+S.f6 = { title: "Usage", note: "A receipt for every run", body: `
   ${statusBar}
-  <h1 class="h1-top">Usage</h1>
-  <div class="chips chips--range"><span class="chip on">Week</span><span class="chip">Month</span><span class="chip">Year</span></div>
-  <section class="card use">
-    <div class="use-h"><div><p class="k">WATER USED</p><p class="use-n">1,240 <small class="blue">L</small></p></div><div class="r"><p class="k">ELECTRICITY</p><p class="use-n">8.4 <small class="lime-t">units</small></p></div></div>
-    <div class="ch">${[44, 62, 30, 72, 50, 96, 40].map((v, i) => `<span${i === 5 ? ' class="on"' : ""}><i style="height:${v}%"></i></span>`).join("")}</div>
-    <div class="ch-l">${["M", "T", "W", "T", "F", "S", "S"].map((d, i) => `<span${i === 5 ? ' class="on"' : ""}>${d}</span>`).join("")}</div>
+  ${header("Usage", "This week")}
+  <section class="use">
+    <p class="num">1,240<small> L</small></p>
+    <p class="sub">and 8.4 units of electricity</p>
   </section>
-  <p class="k sec">RECENT MOTOR RUNS</p>
-  ${RUNS.map(([t, a, b, tag]) => `<section class="card runrow"><div><h3>${t}</h3><p class="body sm">${a}</p><p class="body sm">${b}</p></div><span class="rt rt--${tag === "AUTO" ? "auto" : "man"}">${tag}</span></section>`).join("")}
-  ${tabBar("usage", false)}${homeBar}` };
+  <div class="ch">${[44, 62, 30, 72, 50, 96, 40].map((v, i) => `<span${i === 5 ? ' class="on"' : ""}><i style="height:${v}%"></i><b>${"MTWTFSS"[i]}</b></span>`).join("")}</div>
+  <p class="lead sec">Recent runs</p>
+  <section class="grp">${RUNS.map(([t, a, b, tag]) => `<div class="grp-r run"><div><p class="lead">${t}</p><p class="sub">${a}</p><p class="sub">${b}</p></div><span class="meta">${tag}</span></div>`).join("")}</section>
+  ${tabBar("usage")}` };
 
-S.f7 = { title: "Modes · Smart", note: "Fixes 1, 4, 7", body: `
-  ${statusBar}<div class="top">${back}</div>
-  <h1>Modes</h1>
-  ${seg("Smart")}
-  <section class="card pred">
-    <p class="k k--lime">${ic("sparkle", 13)} PREDICTION</p>
-    <p class="body">You’ll reach 25% at</p>
-    <p class="pred-t">4:10 PM tomorrow</p>
-    <span class="ltag">LEARNED FROM 34 DAYS · 92% CONFIDENT</span>
+S.f7 = { title: "Modes · Smart", note: "Every prediction shows its evidence", body: `
+  ${statusBar}
+  ${header("Modes", "Overhead tank")}
+  ${seg(["Automatic", "Manual", "Smart"], "Smart")}
+  <section class="pred">
+    <p class="sub">You’ll reach 25% at</p>
+    <p class="h28 pred-t">4:10 PM tomorrow</p>
+    <p class="meta">Learned from 34 days · 92% confident</p>
   </section>
-  <section class="card plan">
-    <p class="k">TONIGHT’S PLAN</p>
-    <div class="plan-r"><div><h2>Fill 01:40 – 02:05</h2><p class="body sm">Off-peak tariff · after quiet hours</p></div><span class="ltag">SAVES 38%</span></div>
-    <p class="why">Why this time? ${ic("next", 16)}</p>
+  <section class="plan">
+    <p class="meta">Tonight’s plan</p>
+    <p class="lead">Fill 01:40 – 02:05</p>
+    <p class="sub">Off-peak tariff, after quiet hours</p>
+    <p class="meta">Saves 38% on tonight’s fill</p>
+    <p class="why">Why this time? ${ic("next", 18)}</p>
   </section>
-  <section class="card row"><div><h2>Let Smart shift fill times</h2><p class="body sm">Never during your quiet hours</p></div>${toggle(true)}</section>
-  ${tabBar("modes", false)}${homeBar}` };
+  ${grp([["Let Smart shift fill times", "Never during your quiet hours", true]])}
+  ${tabBar("modes")}` };
 
-// Fix 6: the installed kit has no inlet valve, so the alert offers what it can do.
-const leakChart = `<svg viewBox="0 0 300 120" width="100%" aria-hidden="true"><path d="M4 22 H296" stroke="#626a77" stroke-width="2" stroke-dasharray="7 6" fill="none"/><path d="M4 22 C70 24 110 34 160 52 S250 82 296 92" stroke="#ff4d5e" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
-S.f8 = { title: "Possible leak", note: "Fixes 6, 12", cls: "alert alert--crit", body: `
-  ${statusBar}<div class="top top--end">${circ(ic("close"))}</div>
-  <span class="tag tag--crit">${ic("sparkle", 13)}SMART NOTICED · 5:04 AM</span>
-  <h1 class="c">Possible leak</h1>
-  <p class="body c">The tank lost 42 L overnight while every tap was closed.</p>
-  <section class="card chart">
-    <p class="k">WHAT SMART SAW</p>
-    <div class="chart-w"><span class="lbl lbl--exp">Expected</span>${leakChart}<span class="lbl lbl--act">Actual</span><span class="delta">−42 L</span></div>
+// The installed kit has no inlet valve, so the alert offers what it can do.
+const leakChart = `<svg viewBox="0 0 300 110" width="100%" aria-hidden="true"><path d="M4 18 H296" style="stroke:var(--ink-3)" stroke-width="2" stroke-dasharray="6 6" fill="none"/><path d="M4 18 C70 20 110 30 160 48 S250 78 296 88" stroke="#ff4d5e" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+S.f8 = { title: "Possible leak", note: "Evidence first, then two choices", cls: "alert", body: `
+  ${statusBar}
+  <header class="hd hd--end"><span class="ib">${ic("close", 24)}</span></header>
+  <p class="meta"><i class="dot dot--crit"></i>Smart noticed · 5:04 AM</p>
+  <h1>Possible leak</h1>
+  <p class="sub">The tank lost 42 L overnight while every tap was closed.</p>
+  <section class="chart">
+    <div class="chart-w"><span class="lbl lbl--exp">Expected</span>${leakChart}<span class="lbl lbl--act">−42 L</span></div>
     <div class="chart-t"><span>1:00 AM</span><span>5:00 AM</span></div>
   </section>
   <div class="actions">
-    <span class="btn lime-btn">Pause automatic filling</span>
-    <span class="btn dark-btn">That was us</span>
-    <p class="hint c">Ignoring teaches Smart your household’s pattern</p>
+    <span class="btn btn-p">Pause automatic filling</span>
+    <span class="btn btn-s">That was us</span>
+    <p class="meta c">Either answer teaches Smart your household’s pattern.</p>
   </div>
   ${homeBar}` };
 
-// Fix 9: the two edge states, as variants of Home.
-S.f9 = { title: "Sensor not reporting", note: "Fixes 8, 9", body: `
-  ${statusBar}${homeTop}
-  ${tankCard({ tone: "stale", stale: true, freshText: "Last reading 2 h ago", status: false, h: 160 })}
-  <section class="card banner banner--low">
-    <p class="ban-h">${ic("alert", 18)}Sensor not reporting</p>
-    <p class="body sm">The tank sensor hasn’t sent a reading since 7:40 AM. Automatic won’t start the motor until it’s back.</p>
-    <div class="ban-a"><span class="btn lime-btn sm">Check sensor</span><span class="btn dark-btn sm">Start motor</span></div>
-    <p class="hint">The unit’s dry run and thermal cut-offs still protect the motor.</p>
-  </section>
-  ${tabBar("home", false)}${homeBar}` };
-
-S.f10 = { title: "No internet", note: "Fixes 8, 9", body: `
+// The two edge states, as variants of Home.
+S.f9 = { title: "Sensor not reporting", note: "Automatic holds off; the unit still protects the motor", body: `
   ${statusBar}
-  <p class="offline">${ic("wifiOff", 14)}Offline · last update 9:12 AM</p>
-  ${homeTop}
-  ${tankCard({ tone: "stale", stale: true, freshText: "Last update 9:12 AM", status: false, h: 140 })}
-  <section class="card banner">
-    <p class="ban-h">${ic("wifiOff", 18)}No internet</p>
-    <p class="body sm">The unit runs on its own: Automatic and the safety cut-offs don’t need internet. On home Wi‑Fi, Stop still works.</p>
+  ${header("Overhead tank", "Home · 2 tanks", { bell: true, tankPicker: true })}
+  ${hero({ stale: true, fresh: "Last reading 2 h ago", eta: "", h: 240 })}
+  <section class="note">
+    <p class="lead">${ic("alert", 20)}Sensor not reporting</p>
+    <p class="sub">No reading since 7:40 AM, so Automatic won’t start the motor. The unit’s dry-run and thermal cut-offs still protect it.</p>
+    <div class="note-a"><span class="btn btn-p btn-sm">Check sensor</span><span class="btn btn-s btn-sm">Start motor</span></div>
   </section>
-  ${motorCard}
-  ${tabBar("home", true)}${homeBar}` };
+  ${tabBar("home")}` };
+
+S.f10 = { title: "No internet", note: "The unit runs on its own; Stop works at home", body: `
+  ${statusBar}
+  <p class="offline">${ic("wifiOff", 16)}Offline · last update 9:12 AM</p>
+  ${header("Overhead tank", "Home · 2 tanks", { bell: true, tankPicker: true })}
+  ${hero({ stale: true, fresh: "Last update 9:12 AM", eta: "", h: 200 })}
+  <section class="note note--plain">
+    <p class="lead">${ic("wifiOff", 20)}No internet</p>
+    <p class="sub">Automatic and the safety cut-offs run on the unit. On home Wi‑Fi you can still stop the motor.</p>
+  </section>
+  ${motorPanel}
+  ${tabBar("home")}` };
+
+// Settings, from the tank menu. Appearance follows the phone, or is fixed to dark or light.
+const linkRows = (rows) => `<section class="grp">${rows.map(([t, s]) => `<div class="grp-r"><div><p class="lead">${t}</p>${s ? `<p class="sub">${s}</p>` : ""}</div>${ic("next", 20)}</div>`).join("")}</section>`;
+const settings = (mode) => `
+  ${statusBar}
+  ${header("Settings", "Home · 2 tanks", { back: true })}
+  <p class="meta grp-h">Appearance</p>
+  ${seg(["System", "Dark", "Light"], mode)}
+  <p class="sub">System matches your phone’s setting.</p>
+  <p class="meta grp-h">Home</p>
+  ${linkRows([["Tanks and sensors", "Overhead and sump"], ["Members", "Who can start and stop the motor"], ["Matter link", "Apple Home, Alexa, Google Home"], ["Language and text size", "English · follows your phone"]])}
+  ${tabBar("home")}`;
+S.f11 = { title: "Settings", note: "Appearance: system, dark or light", body: settings("Dark") };
+
+// ---------- the component sheet (the case study's design system section) ----------
+const dsCol = (label, inner, w) => `<div class="ds-c" style="width:${w}px"><div class="ds-x">${inner}</div><p class="meta">${label}</p></div>`;
+const DS = [
+  dsCol("Tank: water, low, stale", `<div class="ds-row">${tank(78, { w: 40, h: 104, lines: false })}${tank(22, { w: 40, h: 104, tone: "low", lines: false })}${tank(78, { w: 40, h: 104, tone: "stale", lines: false })}</div>`, 150),
+  dsCol("Buttons: main, secondary", `<div class="ds-st"><span class="btn btn-p btn-sm">Save range</span><span class="btn btn-s btn-sm">That was us</span></div>`, 180),
+  dsCol("Motor panel: only while it runs", motorPanel, 290),
+  dsCol("Toggle", `<div class="ds-st ds-st--c">${toggle(true)}${toggle(false)}</div>`, 64),
+  dsCol("Modes", seg(["Automatic", "Manual", "Smart"], "Automatic"), 260),
+].join("");
 
 // ---------- styles ----------
 const css = `
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-font-smoothing:antialiased}
-body{background:#1b1d22;color:#f4f6fa;font-family:Archivo,system-ui,sans-serif;padding:40px;display:flex;flex-wrap:wrap;gap:48px 40px}
+body{background:#1b1d22;color:#f4f2ec;font-family:Archivo,system-ui,sans-serif;padding:40px;display:flex;flex-wrap:wrap;gap:48px 40px}
 .cell{width:360px;display:flex;flex-direction:column;gap:10px}
-.cell > p{font:600 14px/1.3 Archivo;color:#f4f6fa}.cell > p small{display:block;font-weight:500;color:#99a1ae}
-body:has(.scr:target){padding:0;background:#09090b;display:block}
-body:has(.scr:target) .cell{display:none}
-body:has(.scr:target) .cell:has(.scr:target){display:block}
-body:has(.scr:target) .cell > p{display:none}
-.scr{position:relative;width:360px;height:779px;overflow:hidden;background:#09090b;padding:0 18px;display:flex;flex-direction:column;gap:10px}
-.alert--low{background:radial-gradient(90% 50% at 50% 36%,rgba(255,165,61,.16),transparent 70%),#09090b}
-.alert--crit{background:radial-gradient(90% 40% at 50% 20%,rgba(255,77,94,.14),transparent 70%),#09090b}
-.sb{flex:none;height:50px;margin:0 -4px -10px;display:flex;align-items:center;justify-content:space-between;padding:4px 8px 0 14px;font:600 16px Archivo}
-.hi{position:absolute;left:50%;bottom:8px;width:124px;height:5px;margin-left:-62px;border-radius:3px;background:#f4f6fa}
-.top{flex:none;display:flex;align-items:center;justify-content:space-between;height:52px}
-.top--end{justify-content:flex-end}
-.top-r{display:flex;gap:8px}
-.appmark{width:40px;height:40px;border-radius:11px}
-.circ{position:relative;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#15171c;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);color:#f4f6fa}
-.circ.sm{width:34px;height:34px}
-.circ.dot::after{content:"";position:absolute;top:9px;right:9px;width:7px;height:7px;border-radius:50%;background:#f4f6fa;box-shadow:0 0 0 2px #15171c}
-h1{font:700 27px/1.15 Archivo;letter-spacing:-.02em}
-.h1-top{margin-top:10px}
-.h-sub{font:400 15px/1.3 Archivo;color:#99a1ae;margin-top:-6px}
-h2{font:600 17px/1.3 Archivo}
-h3{font:600 17px/1.3 Archivo}
-.dim{color:#99a1ae}
-.c{text-align:center}
-.body{font:400 15px/1.45 Archivo;color:#99a1ae}
-.body.sm{font-size:14px;line-height:1.4}
-.k{font:600 12px/1.2 Archivo;letter-spacing:.03em;color:#99a1ae;display:flex;align-items:center;gap:6px}
-.k--lime{color:#cbf848}.k--blue{color:#8fb0ff}.k--low{color:#ffa53d}
-.card{flex:none;background:#131519;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);border-radius:18px;padding:15px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 15px}
-.row h2{margin-bottom:2px}
-.lime{background:#cbf848;box-shadow:none;color:#0d0e11}
-.mk{font:500 14px/1.2 Archivo;display:flex;align-items:center;gap:7px}
-.mk i{width:7px;height:7px;border-radius:50%;background:#0d0e11}
-.mk--muted{color:#99a1ae}.mk--muted i{background:#626a77}
+.cell > p{font:600 14px/1.3 Archivo;color:#f4f2ec}.cell > p small{display:block;font-weight:500;color:#a3a8b0}
+body:has(:target){padding:0;background:#0a0b0d;display:block}
+body:has(:target) .cell{display:none}
+body:has(:target) .cell:has(:target){display:block}
+body:has(:target) .cell > p{display:none}
+/* Theme tokens. Dark is the default; .light is the light mode from Settings › Appearance.
+   Lime, the Stop pill on it and the water blue are the same in both. */
+.scr,.ds{--bg:#0a0b0d;--raised:#15171b;--raised-2:#1e2126;--ink:#f4f2ec;--ink-2:#a3a8b0;--ink-3:#80868f;--tank:#15171b;--track:#2a2d33;--knob-off:#a3a8b0;--bar:#111316;--spark:#2b3240;--col:#232a3a;--btn:#f4f2ec;--btn-ink:#0a0b0d;--low-ink:#ffa53d;--crit-ink:#ff6b79;--stale:#3a3f48}
+.scr.light{--bg:#f3f2ee;--raised:#ffffff;--raised-2:#e7e5df;--ink:#0a0b0d;--ink-2:#5b616b;--ink-3:#6b717b;--tank:#e4e2dc;--track:#d4d2cc;--knob-off:#ffffff;--bar:#ffffff;--spark:#d3d7df;--col:#d9dee9;--btn:#0a0b0d;--btn-ink:#f4f2ec;--low-ink:#c2410c;--crit-ink:#c81e36;--stale:#b9bcc2}
+.scr{position:relative;width:360px;height:779px;overflow:hidden;background:var(--bg);color:var(--ink);padding:0 20px;display:flex;flex-direction:column;gap:20px}
+.sb{flex:none;height:50px;margin:0 -6px -20px;display:flex;align-items:center;justify-content:space-between;padding:4px 8px 0 14px;font:600 16px Archivo}
+.hi{position:absolute;left:50%;bottom:8px;width:124px;height:5px;margin-left:-62px;border-radius:3px;background:var(--ink)}
+/* type: five sizes */
+h1,.h28{font:700 28px/1.12 Archivo;letter-spacing:-.02em}
+.h28 small{font-size:15px;font-weight:500;letter-spacing:0;color:var(--ink-2)}
+.num{font:700 64px/.95 Archivo;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.num small{font-size:28px;letter-spacing:-.02em;margin-left:2px}
+.num.dim{color:var(--ink-3)}
+.lead{font:600 17px/1.3 Archivo}
+.sub{font:400 15px/1.45 Archivo;color:var(--ink-2)}
+.meta{display:flex;align-items:center;gap:7px;font:500 13px/1.3 Archivo;color:var(--ink-2)}
+.c{text-align:center;justify-content:center}
+.dot{flex:none;width:8px;height:8px;border-radius:50%}
+.dot--low{background:#ffa53d}.dot--crit{background:#ff4d5e}
+/* header */
+.hd{flex:none;display:flex;align-items:flex-start;gap:4px;padding-top:12px}
+.hd--end{justify-content:flex-end}
+.hd-t{flex:1;min-width:0}
+.hd-back,.ib{flex:none;width:44px;height:44px;display:grid;place-items:center;color:var(--ink)}
+.hd-back{margin:-6px 0 0 -12px}
+.ib{margin:-6px -12px 0 0}
+.ib.dot{position:relative;width:44px;height:44px;border-radius:0;background:none}
+.ib.dot::after{content:"";position:absolute;top:10px;right:11px;width:8px;height:8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 2px var(--bg)}
+.ctx{display:flex;align-items:center;gap:2px;margin-top:4px;font:500 15px/1.3 Archivo;color:var(--ink-2)}
 /* tank */
-.tank{position:relative;flex:none;border-radius:24px;overflow:hidden;background:#1d2a4d}
-.tank-water{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(#5b8bff,#1f47c8)}
-.tank-line{position:absolute;left:0;right:0;height:2px;background:#f4f6fa;opacity:.9}
-.tank em{position:absolute;left:12px;font:600 10px/1 Archivo;font-style:normal;letter-spacing:.06em;color:#f4f6fa}
-.tank--low{background:linear-gradient(#232630 20%,#7a5230 85%);box-shadow:inset 0 0 0 2px rgba(255,165,61,.55)}
-.tank--stale{background:#20232a}.tank--stale .tank-water{background:linear-gradient(#5a606b,#3a3f48)}.tank--stale .tank-line{opacity:.45}
-.tank-h{position:absolute;left:50%;width:24px;height:24px;margin:0 0 -12px -12px;border-radius:50%;background:#0d0e11;border:4px solid}
-.tank-h::after{content:"";position:absolute;inset:-16px;border-radius:50%}
-.tank-h--stop{border-color:#2f6bff}.tank-h--start{border-color:#ffa53d}
+.tank{position:relative;flex:none;border-radius:28px;overflow:hidden;background:var(--tank)}
+.tank-water{position:absolute;left:0;right:0;bottom:0;background:#2f6bff}
+.tank--low .tank-water{background:#ffa53d}
+.tank--stale .tank-water{background:var(--stale)}
+.tank-line{position:absolute;left:0;right:0;height:2px;background:color-mix(in srgb,var(--ink) 40%,transparent)}
 /* home */
-.chips{display:flex;gap:8px;margin-bottom:14px}
-.chip{display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 14px;border-radius:15px;background:#1d2026;font:500 14px/1 Archivo;color:#99a1ae}
-.chip i{width:7px;height:7px;border-radius:50%;background:#0d0e11}
-.chip i.lime{background:#cbf848}
-.chip.on{background:#f4f6fa;color:#0d0e11}
-.chip.sq{width:30px;padding:0;justify-content:center}
-.chips--range{margin:2px 0 4px}
-.chips--range .chip{height:34px;padding:0 16px;border-radius:17px}
-.tank-row{display:flex;gap:18px;align-items:center}
-.tank-num{display:flex;flex-direction:column;gap:6px;min-width:0}
-.big{font:700 60px/.95 Archivo;letter-spacing:-.04em}.big small{font-size:28px;margin-left:4px;letter-spacing:0}
-.big.dim{color:#99a1ae}
-.sub{font:400 16px/1.2 Archivo;color:#99a1ae}
-.fresh{display:flex;align-items:center;gap:6px;font:500 13px/1.25 Archivo;color:#99a1ae}
-.fresh i{flex:none;width:6px;height:6px;border-radius:50%;background:#2f6bff}
-.fresh.stale{color:#ffa53d}.fresh.stale i{background:#ffa53d}
-.pill-blue{align-self:flex-start;margin-top:4px;display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 13px;border-radius:16px;background:#14203f;box-shadow:inset 0 0 0 1.5px #2f6bff;font:500 14px/1 Archivo;color:#f4f6fa}
-.pill-blue i{width:7px;height:7px;border-radius:50%;background:#cbf848}
-.motor{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:15px 15px 14px 17px}
-.timer{font:700 40px/1.05 Archivo;letter-spacing:-.03em;margin:6px 0 4px}
-.timer--xl{font-size:60px;margin:8px 0 2px}
-.msub{font:400 13px/1.3 Archivo;color:rgba(13,14,17,.62)}
-.stop{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;height:56px;padding:0 20px;border-radius:28px;background:#2a1416;box-shadow:inset 0 0 0 2px #ff4d5e;color:#ff4d5e;font:600 17px/1 Archivo}
-.stop--wide{width:100%}
-.week-h{display:flex;justify-content:space-between;align-items:flex-start}
-.wk-n{font:700 32px/1.1 Archivo;letter-spacing:-.03em;margin-top:6px}.wk-n small{font-size:18px;color:#99a1ae;font-weight:600}
-.wk{display:flex;align-items:flex-end;justify-content:space-between;height:30px;margin-top:10px}
-.wk i{width:24px;min-height:9px;border-radius:7px;background:#2a2d34}
-.wk i.hi-b{background:#2f6bff}
+.hero{flex:none;display:flex;align-items:flex-end;gap:22px;margin-top:4px}
+.read{display:flex;flex-direction:column;gap:6px;padding-bottom:4px;min-width:0}
+.read .lead{margin-top:6px}
+.fresh{margin-top:10px}
+.fresh i{flex:none;width:8px;height:8px;border-radius:50%;background:#2f6bff}
+.fresh.stale{color:var(--low-ink)}.fresh.stale i{background:#ffa53d}
+.motor{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 16px 16px 20px;border-radius:24px;background:#cbf848;color:#0a0b0d}
+.m-sub{font:500 15px/1.35 Archivo;color:rgba(10,11,13,.66);margin-top:2px;font-variant-numeric:tabular-nums}
+.stop{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;height:52px;padding:0 22px;border-radius:26px;background:#0a0b0d;color:#f4f2ec;font:600 17px/1 Archivo}
+.stop svg{color:#ff4d5e}
+.row{flex:none;display:flex;align-items:center;gap:16px;padding:14px 16px 14px 20px;border-radius:20px;background:var(--raised)}
+.row > div{flex:1}
+.row > svg{color:var(--ink-3)}
+.spark{display:flex;align-items:flex-end;gap:4px;height:30px}
+.spark i{width:6px;border-radius:3px;background:var(--spark)}
+.spark i.on{background:#2f6bff}
 /* tab bar */
-.tb{position:absolute;left:16px;right:16px;bottom:24px;display:flex;justify-content:space-between}
-.tb-i{display:flex;flex-direction:column;align-items:center;gap:6px;width:58px}
-.tb-i b{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:#15171c;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);color:#99a1ae}
-.tb-i small{font:500 12px/1 Archivo;color:#99a1ae}
-.tb-i.on b{background:#f4f6fa;color:#0d0e11;box-shadow:none}.tb-i.on small{color:#f4f6fa}
-.tb-fill b{background:#cbf848;color:#0d0e11;box-shadow:none}.tb-fill small{color:#f4f6fa}
-.tb-fill.off{opacity:.4}
+.tb{position:absolute;left:0;right:0;bottom:0;height:88px;padding:12px 16px 0;background:var(--bar);display:flex;justify-content:space-around}
+.tb-i{display:flex;flex-direction:column;align-items:center;gap:6px;width:72px;color:var(--ink-3)}
+.tb-i small{font:500 12px/1 Archivo}
+.tb-i.on{color:var(--ink)}
+/* buttons */
+.btn{flex:none;display:flex;align-items:center;justify-content:center;height:56px;padding:0 20px;border-radius:28px;font:600 17px/1 Archivo}
+.btn-sm{height:48px;border-radius:24px;font-size:15px}
+.btn-p{background:var(--btn);color:var(--btn-ink)}
+.btn-s{background:var(--raised-2);color:var(--ink)}
+.btn-t{display:flex;align-items:center;justify-content:center;min-height:44px;font:500 15px/1.35 Archivo;color:var(--ink);text-align:center;text-decoration:underline;text-underline-offset:4px;text-decoration-color:color-mix(in srgb,var(--ink) 45%,transparent)}
 /* fill range */
-.range{display:flex;gap:20px;align-items:stretch}
-.range-v{display:flex;flex-direction:column;justify-content:space-between;padding:4px 0}
-.rv{font:700 40px/1.1 Archivo;letter-spacing:-.03em;margin-top:4px;display:flex;align-items:baseline;gap:10px}
-.rv small{font:500 15px/1 Archivo;color:#99a1ae;letter-spacing:0}
-.hint{font:400 13px/1.4 Archivo;color:#99a1ae;margin-top:8px}
-.card h2 + .body{margin-top:6px}
-.btn{flex:none;display:flex;align-items:center;justify-content:center;height:56px;border-radius:28px;font:600 17px/1 Archivo}
-.btn.sm{height:48px;font-size:15px;padding:0 16px}
-.lime-btn{background:#cbf848;color:#0d0e11}
-.dark-btn{background:#1d2026;color:#f4f6fa}
-.link{display:flex;align-items:center;justify-content:center;height:48px;font:500 15px/1.3 Archivo;color:#cbf848;text-align:center}
+.range{position:relative;flex:none;margin-top:4px}
+.hdl{position:absolute;left:0;width:150px;height:0}
+.hdl::before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--ink)}
+.hdl i{position:absolute;right:-16px;top:-16px;width:32px;height:32px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 5px var(--bg)}
+.hdl i::after{content:"";position:absolute;inset:-8px;border-radius:50%}
+.hl{position:absolute;left:182px;display:flex;flex-direction:column;gap:4px}
+.hl .rv{font:700 28px/1 Archivo;letter-spacing:-.02em}
+.hl .lead{display:flex;align-items:baseline;gap:6px;font-weight:500;color:var(--ink-2)}
+.hl .lead b{color:var(--ink)}
 /* motor */
-.run{padding:17px}
-.prog{display:block;height:8px;border-radius:4px;background:rgba(13,14,17,.16);margin-top:14px;overflow:hidden}
-.prog i{display:block;height:100%;border-radius:4px;background:#0d0e11}
-.stats{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.st{padding:13px}
-.st-n{font:600 20px/1.2 Archivo;margin-top:8px}.st-n small{font-size:12px;color:#99a1ae;font-weight:500}
-.tg{flex:none;width:52px;height:30px;border-radius:15px;background:#2a2d34;position:relative}
-.tg i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:#f4f6fa}
-.tg.on{background:#cbf848}.tg.on i{left:25px;background:#0d0e11}
+.motor--xl{flex-direction:column;align-items:stretch;gap:0;padding:20px}
+.motor--xl .num{margin:14px 0 4px}
+.prog{display:block;height:6px;border-radius:3px;background:rgba(10,11,13,.16);margin:16px 0 20px;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:3px;background:#0a0b0d}
+.stop--wide{width:100%;height:56px;border-radius:28px}
+.stats{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 4px}
+.stats .meta{margin-top:4px}
+.grp{flex:none;display:flex;flex-direction:column;gap:2px;border-radius:20px;overflow:hidden}
+.grp-r{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 18px;background:var(--raised)}
+.grp-r .sub{font-size:14px;margin-top:2px}
+.grp-r > svg{flex:none;color:var(--ink-3)}
+.grp-h{margin:4px 0 -12px 4px}
+.tg{flex:none;position:relative;width:52px;height:32px;border-radius:16px;background:var(--track)}
+.tg i{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:var(--knob-off);box-shadow:0 1px 2px rgba(0,0,0,.18)}
+.tg.on{background:var(--ink)}.tg.on i{left:23px;background:var(--bg)}
 /* modes */
-.seg{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:26px;background:#131519;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
-.seg span{display:flex;align-items:center;justify-content:center;gap:5px;height:44px;border-radius:22px;font:600 16px/1 Archivo;color:#99a1ae}
-.seg span.on{background:#cbf848;color:#0d0e11}
-.how ul{list-style:none;display:flex;flex-direction:column;gap:9px;margin-top:11px}
-.how li{display:flex;align-items:baseline;gap:8px}
-.how li::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:#cbf848;transform:translateY(-2px)}
-.how b{font:600 17px/1.2 Archivo}.how span{font:400 14px/1.2 Archivo;color:#99a1ae}
+.seg{flex:none;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;border-radius:26px;background:var(--raised)}
+.seg span{display:flex;align-items:center;justify-content:center;height:44px;border-radius:22px;font:600 15px/1 Archivo;color:var(--ink-2)}
+.seg span.on{background:var(--ink);color:var(--bg)}
+.how{flex:none;display:flex;flex-direction:column;gap:14px;padding:0 4px}
+.how dl{display:flex;flex-direction:column;gap:10px}
+.how dl div{display:flex;align-items:baseline;gap:10px}
+.how dt{width:112px;font:600 17px/1.3 Archivo}
+.how dd{font:400 15px/1.3 Archivo;color:var(--ink-2)}
 /* alerts */
-.tag{align-self:center;display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 15px;border-radius:16px;font:600 13px/1 Archivo;letter-spacing:.02em}
-.tag i{width:7px;height:7px;border-radius:50%;background:currentColor}
-.tag--low{color:#ffa53d;background:rgba(255,165,61,.12);box-shadow:inset 0 0 0 1.5px rgba(255,165,61,.5)}
-.tag--crit{color:#ff6b79;background:rgba(255,77,94,.12);box-shadow:inset 0 0 0 1.5px rgba(255,77,94,.5)}
-.center{display:flex;justify-content:center;margin:14px 0 8px}
-.alert h1{margin-top:6px}
-.alert--crit h1{margin-top:14px}
-.actions{position:absolute;left:18px;right:18px;bottom:44px;display:flex;flex-direction:column;gap:10px}
-.chart{margin-top:10px;padding:16px}
-.chart-w{position:relative;margin-top:14px}
-.lbl{position:absolute;font:500 12px/1 Archivo}
-.lbl--exp{right:4px;top:-2px;color:#99a1ae}
-.lbl--act{right:4px;bottom:-8px;color:#ff6b79}
-.delta{position:absolute;left:44%;top:52%;padding:5px 10px;border-radius:12px;background:#3a1a1e;font:600 12px/1 Archivo;color:#f4f6fa}
-.chart-t{display:flex;justify-content:space-between;margin-top:14px;font:500 12px/1 Archivo;color:#99a1ae}
+.alert{padding-bottom:0}
+.center{display:flex;justify-content:center;margin:8px 0 4px}
+.alert h1{margin-top:-8px}
+.actions{position:absolute;left:20px;right:20px;bottom:40px;display:flex;flex-direction:column;gap:10px}
+.chart{flex:none;padding:18px 18px 14px;border-radius:20px;background:var(--raised);margin-top:4px}
+.chart-w{position:relative;margin-top:18px}
+.lbl{position:absolute;right:2px;font:600 13px/1 Archivo}
+.lbl--exp{top:-16px;color:var(--ink-2)}
+.lbl--act{bottom:-2px;color:var(--crit-ink)}
+.chart-t{display:flex;justify-content:space-between;margin-top:12px;font:500 13px/1 Archivo;color:var(--ink-2)}
 /* usage */
-.use{padding:16px}
-.use-h{display:flex;justify-content:space-between}.use-h .r{text-align:right}.use-h .r .k{justify-content:flex-end}
-.use-n{font:700 30px/1.1 Archivo;letter-spacing:-.03em;margin-top:6px}.use-n small{font-size:20px}
-.blue{color:#5b8bff}.lime-t{color:#cbf848}
-.ch{display:flex;justify-content:space-between;height:78px;margin-top:12px}
-.ch span{width:30px;border-radius:9px;background:#1d2026;display:flex;align-items:flex-end;overflow:hidden}
-.ch i{display:block;width:100%;border-radius:9px;background:#2848b4}
-.ch span.on i{background:#5b8bff}
-.ch-l{display:flex;justify-content:space-between;margin-top:8px}
-.ch-l span{width:30px;text-align:center;font:500 12px/1 Archivo;color:#99a1ae}.ch-l span.on{color:#f4f6fa}
-.sec{margin:6px 0 -2px}
-.runrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 15px}
-.runrow h3{font-size:16px;margin-bottom:3px}
-.rt{flex:none;padding:6px 10px;border-radius:12px;font:600 12px/1 Archivo;letter-spacing:.03em}
-.rt--auto{background:rgba(203,248,72,.14);color:#cbf848}.rt--man{background:rgba(255,165,61,.14);color:#ffa53d}
+.use{flex:none;display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.ch{flex:none;display:flex;justify-content:space-between;height:96px}
+.ch span{width:32px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:8px}
+.ch i{display:block;width:100%;border-radius:8px;background:var(--col)}
+.ch span.on i{background:#2f6bff}
+.ch b{font:500 13px/1 Archivo;color:var(--ink-3)}.ch span.on b{color:var(--ink)}
+.sec{margin-bottom:-8px}
+.run{padding:10px 18px}
+.run .sub{font-size:14px;line-height:1.35}
 /* smart */
-.pred{box-shadow:inset 0 0 0 1.5px rgba(203,248,72,.45);padding:16px}
-.pred .body{margin-top:12px;font-size:15px}
-.pred-t{font:700 33px/1.1 Archivo;letter-spacing:-.03em;margin:2px 0 12px}
-.ltag{display:inline-flex;align-items:center;height:28px;padding:0 11px;border-radius:14px;background:rgba(203,248,72,.12);color:#cbf848;font:600 11px/1 Archivo;letter-spacing:.04em}
-.plan{padding:16px}
-.plan-r{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px}
-.plan-r h2{font-size:19px}
-.why{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);font:500 15px/1 Archivo;color:#cbf848}
+.pred{flex:none;display:flex;flex-direction:column;gap:6px;padding:0 4px}
+.pred .meta{margin-top:4px}
+.plan{flex:none;display:flex;flex-direction:column;gap:6px;padding:18px;border-radius:20px;background:var(--raised)}
+.why{display:flex;align-items:center;justify-content:space-between;margin-top:10px;font:600 15px/1 Archivo;color:var(--ink)}
 /* edge states */
-.banner{padding:16px;display:flex;flex-direction:column;gap:8px}
-.banner--low{box-shadow:inset 0 0 0 1.5px rgba(255,165,61,.45)}
-.ban-h{display:flex;align-items:center;gap:8px;font:600 17px/1.2 Archivo}
-.banner--low .ban-h svg{color:#ffa53d}
-.ban-a{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
-.banner .hint{margin-top:0}
-.offline{flex:none;display:flex;align-items:center;justify-content:center;gap:7px;height:28px;margin:4px -18px -6px;background:#1d2026;font:500 13px/1 Archivo;color:#99a1ae}
+.note{flex:none;display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:20px;background:var(--raised)}
+.note .lead{display:flex;align-items:center;gap:9px}
+.note .lead svg{color:#ffa53d}
+.note--plain .lead svg{color:var(--ink)}
+.note-a{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.ds{width:1104px;height:200px;display:flex;align-items:stretch;gap:24px;padding:28px 30px;background:#0a0b0d;color:#f4f2ec}
+.ds-c{flex:none;display:flex;flex-direction:column;justify-content:space-between;gap:14px}
+.ds-x{flex:1;display:flex;align-items:center}
+.ds-x > *{flex:1}
+.ds-row{display:flex;gap:10px;flex:none !important}
+.ds-st{display:flex;flex-direction:column;gap:8px}.ds-st--c{align-items:flex-start;gap:12px}
+.cell--ds{width:1104px}
+.offline{flex:none;display:flex;align-items:center;justify-content:center;gap:8px;height:32px;margin:0 -20px -12px;background:var(--raised);font:500 13px/1 Archivo;color:var(--ink-2)}
 `;
 
 // ---------- write the board ----------
 const ORDER = ["f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10"];
+// Settings is rendered on its own (the film and the gallery use the ten above), and these
+// screens are also rendered in light mode for the case study's dark and light previews.
+const EXTRA = ["f11"];
+const LIGHT = ["f1", "f3", "f8", "f11"];
+const lightBody = (k) => (k === "f11" ? settings("Light") : S[k].body);
 // build-h2o.js reuses the screens for the walkthrough film, so the board and the renders
 // only happen when this file is run directly.
-module.exports = { S, css, ORDER, ICON };
+module.exports = { S, css, ORDER, ICON, LIGHT };
 if (require.main === module) {
   const html = `<!doctype html>
-  <html lang="en"><head><meta charset="utf-8" />
-  <title>H2o Connect · app screens</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <style>${css}</style></head>
-  <body>
-  ${ORDER.map((k) => `<div class="cell"><p>${S[k].title} · screen-${k}<small>${S[k].note}</small></p><div class="scr${S[k].cls ? " " + S[k].cls : ""}" id="${k}">${S[k].body}</div></div>`).join("\n")}
-  </body></html>`;
+<html lang="en"><head><meta charset="utf-8" />
+<title>H2o Connect · app screens</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>${css}</style></head>
+<body>
+<div class="cell cell--ds"><p>Components · ds-components<small>For the design system section</small></p><div class="ds" id="ds">${DS}</div></div>
+${[...ORDER, ...EXTRA].map((k) => `<div class="cell"><p>${S[k].title} · screen-${k}<small>${S[k].note}</small></p><div class="scr${S[k].cls ? " " + S[k].cls : ""}" id="${k}">${S[k].body}</div></div>`).join("\n")}
+${LIGHT.map((k) => `<div class="cell"><p>${S[k].title} · light · screen-${k}-light<small>Light mode</small></p><div class="scr light${S[k].cls ? " " + S[k].cls : ""}" id="${k}-light">${lightBody(k)}</div></div>`).join("\n")}
+</body></html>`;
   fs.mkdirSync(OUT, { recursive: true });
   fs.writeFileSync(path.join(OUT, "index.html"), html);
   console.log("wrote", path.relative(SITE, path.join(OUT, "index.html")), "with", ORDER.length, "screens");
@@ -442,7 +451,10 @@ if (require.main === module) {
     const url = "file:///" + path.join(OUT, "index.html").replace(/\\/g, "/");
     const shot = (id, file, scale) => execFileSync(exe, ["--headless=new", "--disable-gpu", "--hide-scrollbars", `--user-data-dir=${prof}`,
       "--window-size=360,779", `--force-device-scale-factor=${scale}`, "--virtual-time-budget=4000", `--screenshot=${path.join(SITE, "assets/h2o", file)}`, `${url}#${id}`], { stdio: "ignore" });
-    ORDER.forEach((k) => { shot(k, `screen-${k}.jpg`, 2); console.log("  rendered screen-" + k + ".jpg"); });
+    [...ORDER, ...EXTRA].forEach((k) => { shot(k, `screen-${k}.jpg`, 2); console.log("  rendered screen-" + k + ".jpg"); });
+    LIGHT.forEach((k) => { shot(k + "-light", `screen-${k}-light.jpg`, 2); console.log("  rendered screen-" + k + "-light.jpg"); });
+    execFileSync(exe, ["--headless=new", "--disable-gpu", "--hide-scrollbars", `--user-data-dir=${prof}`, "--window-size=1104,200", "--force-device-scale-factor=2", "--virtual-time-budget=4000", `--screenshot=${path.join(SITE, "assets/h2o/ds-components.webp")}`, `${url}#ds`], { stdio: "ignore" });
+    console.log("  rendered ds-components.webp");
     // The hero shows three of them at their own sizes.
     [["f1", "cover-home.webp", 789 / 360], ["f7", "cover-smart.webp", 644 / 360], ["f8", "cover-leak.webp", 644 / 360]].forEach(([k, f, s]) => { shot(k, f, s); console.log("  rendered " + f); });
   }

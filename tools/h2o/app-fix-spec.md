@@ -1,3 +1,5 @@
+> **Superseded by the v2 redesign.** These twelve fixes were built first and kept the old look. The screens were then redesigned on one small system (see the header of `build-screens.js`): two surfaces and no outlines, lime only while the motor runs, five type sizes, four plain tabs. The content, features and numbers below still hold.
+
 # H2o Connect app: fix spec
 
 > **Status: built for the phone screens.** `tools/h2o/build-screens.js` rebuilds all ten phone screens in HTML with fixes 1–12 and renders them into `assets/h2o/`. The originals are backed up outside the repo. **Not built yet:**

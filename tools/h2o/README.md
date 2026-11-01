@@ -4,7 +4,7 @@
 
 - `build-h2o.js` writes `projects/h2o-connect.html`. All copy, data and markup live in it. The nav, lightbox, footer and theme toggle are lifted from `projects/pathang-mobility.html`.
 - The page's styles live directly in `styles.css`: the block under the `H2O CONNECT` header, plus the bento block and the "H2O v3" rules at the end of the file. Edit them there.
-- `build-screens.js` holds the app screens as HTML (`screens/index.html` shows all ten on one board). With `--render` it renders them with Chrome or Edge into `assets/h2o/screen-f1.jpg` … `screen-f10.jpg` and the three hero `cover-*.webp` files.
+- `build-screens.js` holds the app screens (v2, a full redesign; its header describes the system) and the design-system component sheet as HTML (`screens/index.html` shows them on one board). With `--render` it renders them with Chrome or Edge into `assets/h2o/screen-f1.jpg` … `screen-f10.jpg`, `ds-components.webp` and the three hero `cover-*.webp` files. `v1-screen-f1.jpg`, `v1-screen-f8.jpg` and `v2-screen-f1.jpg` are the earlier versions shown in decision 5. The screens use theme tokens: dark is the default and `.light` is the light mode picked in Settings (`f11`); `--render` also writes `screen-f1-light.jpg`, `screen-f3-light.jpg`, `screen-f8-light.jpg` and `screen-f11-light.jpg` for the dark and light previews.
 
 Run from the site root after an edit:
 

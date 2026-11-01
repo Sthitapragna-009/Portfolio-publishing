@@ -1,7 +1,9 @@
 /* H2o Connect walkthrough film.
    A product film of the real app: the ten screens run live inside the phone
    (from the <template data-app>, in a shadow root), headlines animate in beside
-   it and details lift out as callouts. Every frame is computed from the clock
+   it and details lift out as callouts. The stage is water that follows the
+   story, big figures count up behind the phone, Home comes apart in 3D once,
+   and the ten screens close on a turning arc. Every frame is computed from the clock
    by frame(t), so seeking, the chapter bar and reduced motion are all just
    "draw this moment". App positions are in the app's own 360 x 779 px.
    Sounds are CC0 (Kenney, Interface Sounds; see sfx/CREDITS.txt) and play
@@ -110,7 +112,8 @@
   // Fill range handles (illustrative start positions, dragged to the real 90% and 25%)
   const DRAG = { stop: [11.2, 0.9, 80, 90], start: [12.6, 0.9, 35, 25] };
   const rangeTank = $(".range .tank", f2);
-  const handleAt = (pct) => { const [x] = pos(rangeTank); return [x, pos(rangeTank)[1] - rangeTank.offsetHeight / 2 + rangeTank.offsetHeight * (1 - pct / 100)]; };
+  // The handle's knob sits on the tank's right edge.
+  const handleAt = (pct) => { const [x, y] = pos(rangeTank); return [x + rangeTank.offsetWidth / 2, y - rangeTank.offsetHeight / 2 + rangeTank.offsetHeight * (1 - pct / 100)]; };
 
   // The finger: a touch marker, like a screen recording. Built from measured targets.
   const TAPS = [10.2, 14.85, 16.6, 19.6, 25.2, 27.3, 29.6, 35.6, 42.9, 47.3];
@@ -118,15 +121,15 @@
   let fx, pressEls;
   const build = () => {
     const P = (el) => pos(el);
-    const tankF1 = P($(".tank-card .tank", f1));
-    const back = P($(".top .circ", f2));
-    const motorTab = P($(".tb-i:nth-child(3) b", f1));
+    const tankF1 = P($(".hero .tank", f1));
+    const back = P($(".hd-back", f2));
+    const motorTab = P($(".tb-i:nth-child(3)", f1));
     const stopBtn = P($(".stop--wide", f3));
     const banner = [180, 90];
-    const link = P($(".link", scr.f5));
+    const link = P($(".btn-t", scr.f5));
     const smart = P($(".seg span:nth-child(4)", f4));
-    const usageTab = P($(".tb-i:nth-child(2) b", f7));
-    const pause = P($(".actions .lime-btn", f8));
+    const usageTab = P($(".tb-i:nth-child(2)", f7));
+    const pause = P($(".actions .btn-p", f8));
     fx = track([
       [0, [300, 830]],
       [9.6, [292, 720], 0.01], [9.75, tankF1, 0.45, out5],
@@ -138,9 +141,9 @@
       [47.8, [320, 860], 0.5, io],
     ]);
     pressEls = [
-      [14.85, $(".top .circ", f2)], [16.6, $(".tb-i:nth-child(3) b", f1)], [19.6, $(".stop--wide", f3)],
-      [27.3, $(".link", scr.f5)], [29.6, $(".seg span:nth-child(4)", f4)], [35.6, $(".tb-i:nth-child(2) b", f7)],
-      [47.3, $(".actions .lime-btn", f8)],
+      [14.85, $(".hd-back", f2)], [16.6, $(".tb-i:nth-child(3)", f1)], [19.6, $(".stop--wide", f3)],
+      [27.3, $(".btn-t", scr.f5)], [29.6, $(".seg span:nth-child(4)", f4)], [35.6, $(".tb-i:nth-child(2)", f7)],
+      [47.3, $(".actions .btn-p", f8)],
     ];
   };
   // The finger shows only around the moments it touches the screen.
@@ -155,9 +158,12 @@
 
   // The camera moves the phone: [rotateY, rotateX, scale, x, y], x and y in phone widths.
   const cam = track([
-    [0, [-26, 8, 0.9, 0.25, 1.5]],
-    [0.2, [-16, 5, 1, 0, 0], 1.6, out5],
+    [0, [-26, 8, 0.9, 0.25, 2.4]],
+    [1.0, [-16, 5, 1, 0, 0], 1.7, out5],
     [4.0, [-9, 3, 1, 0, 0], 1.2, io],
+    // Home comes apart: the phone swings round while its cards lift off the screen.
+    [6.0, [-36, 22, 0.9, -0.12, 0.08], 0.9, io],
+    [8.35, [-7, 2.5, 1, 0, 0], 0.8, io],
     [9.6, [-4, 2, 1, 0, 0], 0.8, io],
     [10.9, [-2, 1, 1.32, -0.1, 0.25], 0.9, io],
     [14.4, [-6, 2, 1, 0, 0], 0.8, io],
@@ -174,49 +180,82 @@
     [46.3, [-3, 1, 1.22, -0.08, -0.38], 0.8, io],
     [47.4, [-10, 3, 1, 0, 0], 0.8, io],
     [50.4, [-14, 4, 1, 0, 0], 1.0, io],
-    [57.0, [0, 0, 0.94, 0, 0], 1.2, io],
+    // The phone shrinks to the centre and hands over to the wall of screens.
+    [57.0, [0, 0, 0.48, -0.975, 0.15], 0.9, io],
   ]);
 
+  // The water: the stage is the tank. Level is a share of the stage height; it fills with
+  // the app's tank, goes still at Stop, drains for the low-water alert, refills in Automatic,
+  // drops at the leak, turns grey while the sensor is silent and floods the stage at the end.
+  const water = track([[0, 0.12], [0.95, 0.42, 1.8, out5], [24.0, 0.13, 1.5, io], [28.6, 0.42, 2.4, io], [41.9, 0.35, 2.0, io], [48.0, 0.42, 1.5, io], [57.2, 0.3, 1.0, io], [62.6, 1.12, 1.1, io]]);
+  const wAmp = track([[0, 1.1], [19.75, 0.12, 0.8], [23.5, 1.1, 1.2, io]]);
+  const wGrey = track([[0, 0], [51.0, 1, 1.0, io], [57.2, 0, 1.0, io]]);
+  const DROP_T = 0.95;
+  // Big figures behind the phone: [from, to, prefix, value, decimals, suffix]. The first counts with the tank.
+  const NUMS = [[2.4, 9.4, "", 78, 0, "%"], [9.7, 15.9, "", 90, 0, "%"], [16.2, 23.3, "", 200, 0, "ms"], [23.8, 28.3, "", 22, 0, "%"], [28.8, 34.8, "", 92, 0, "%"], [35.3, 41.3, "₹", 1.8, 2, ""], [41.9, 49.8, "−", 42, 0, "L"], [50.3, 56.7, "", 2, 0, "h"]];
+  // The finale: all ten screens on an arc that turns, then the water covers them.
+  const spin = track([[0, 34], [57.6, -30, 4.9, io]]);
+  const LIFT = [0.12, 0.34, 0.5, 0.34, 0.16];
+
   // Headlines and callouts
-  const BEATS = [[0, 4], [4, 9.5], [9.5, 16], [16, 23.5], [23.5, 28.5], [28.5, 35], [35, 41.5], [41.5, 50], [50, 57], [57, 999]];
+  const BEATS = [[0, 4], [4, 9.5], [9.5, 16], [16, 23.5], [23.5, 28.5], [28.5, 35], [35, 41.5], [41.5, 50], [50, 57], [57.3, 62.6], [63.2, 999]];
   const CALL = [[5.0, 8.9], [12.4, 15.6], [20.2, 23.2], [31.0, 34.8], [37.4, 41.0], [45.4, 49.6]];
   const beats = qa(".mg-beat").map((el) => ({ el, k: el.querySelector(".mg-k"), p: el.querySelector(".mg-p"), w: [...el.querySelectorAll(".mg-w > span")] }));
   const calls = qa(".mg-co").map((el) => ({ el, line: el.querySelector(".mg-co-line") }));
 
   // Sounds, by moment
   const SFX = [
-    [0.3, "grow"], [3.75, "tick"], [10.2, "tap"], [10.35, "grow"], [12.2, "tick"], [13.6, "tick"], [14.85, "tap"], [15.0, "shrink"],
+    [DROP_T, "tick"], [3.75, "tick"], [6.05, "grow"], [8.3, "shrink"], [10.2, "tap"], [10.35, "grow"], [12.2, "tick"], [13.6, "tick"], [14.85, "tap"], [15.0, "shrink"],
     [16.6, "tap"], [19.6, "tap"], [24.0, "alert"], [25.2, "tap"], [25.35, "grow"], [27.3, "tap"], [29.6, "tap"], [35.6, "tap"],
-    [41.8, "alert"], [42.9, "tap"], [43.05, "grow"], [47.3, "tap"], [47.45, "shrink"], [47.65, "done"], [57.0, "grow"],
+    [41.8, "alert"], [42.9, "tap"], [43.05, "grow"], [47.3, "tap"], [47.45, "shrink"], [47.65, "done"], [57.3, "grow"], [62.6, "grow"],
   ];
-  const CH = [0, 9.5, 16, 23.5, 28.5, 35, 41.5, 50];
-  const TOTAL = 62;
-  const REST = [8.8, 13.9, 22.8, 27.0, 34.5, 40.8, 46.5, 61.5];
+  const CH = [0, 9.5, 16, 23.5, 28.5, 35, 41.5, 50, 57];
+  const TOTAL = 70;
+  const REST = [5.5, 13.9, 22.8, 27.0, 34.5, 40.8, 46.5, 55.5, 61.0];
 
   // Elements
-  const vEl = q(".mg-vis"), phone = q(".mg-phone"), screenEl = q(".mg-screen"), panel = q(".mg-panel");
+  const vEl = q(".mg-vis"), phone = q(".mg-phone"), screenEl = q(".mg-screen");
+  const waterEl = q(".mg-water"), waveB = q(".mg-wave--b"), waveF = q(".mg-wave--f"), dropEl = q(".mg-drop"), rip = q(".mg-rip");
+  const nums = qa(".mg-num"), wall = q(".mg-wall"), cards = qa(".mg-card");
   const splash = $(".spl"), splImg = $(".spl img");
   const touch = $(".tch"), tDot = $(".tch i"), tRing = $(".tch b");
   const nbs = { low: $('.nb[data-k="low"]'), leak: $('.nb[data-k="leak"]') }, toast = $(".tst");
-  const homeParts = [".top", ".tank-card", ".motor", ".week", ".tb"].map((s) => $(s, f1));
-  const h1Water = $(".tank-water", f1), h1Big = $(".big", f1).firstChild, h1Sub = $(".sub", f1), h1Timer = $(".motor .timer", f1);
-  const r2 = { stop: [$(".tank-h--stop", f2), $$(".tank-line", f2)[0], $(".range-v > div:nth-child(1) .rv", f2)], start: [$(".tank-h--start", f2), $$(".tank-line", f2)[1], $(".range-v > div:nth-child(2) .rv", f2)] };
-  const run = $(".run", f3), runMk = $(".mk", run), runTimer = $(".timer--xl", f3), runSub = $(".msub", run), runProg = $(".prog", f3), runBar = $(".prog i", f3);
-  const stopBtn = $(".stop--wide", f3), stopHTML = stopBtn.innerHTML, fillTab = $(".tb-fill", f3);
+  const homeParts = [".hd", ".hero", ".motor", ".row", ".tb"].map((s) => $(s, f1));
+  const h1Water = $(".tank-water", f1), h1Big = $(".num", f1).firstChild, h1Sub = $(".read .lead", f1), h1Timer = $(".motor .timer", f1);
+  const hdls = $$(".hdl", f2), hls = $$(".hl", f2);
+  const r2 = { stop: [hdls[0], hls[0]], start: [hdls[1], hls[1]] };
+  const run = $(".motor--xl", f3), runMk = $(".motor--xl > .lead", f3), runTimer = $(".motor--xl .timer", f3), runSub = $(".motor--xl .m-sub", f3), runProg = $(".prog", f3), runBar = $(".prog i", f3);
+  const stopBtn = $(".stop--wide", f3), stopHTML = stopBtn.innerHTML;
   const segK4 = $(".seg-k", f4), segSpans4 = $$(".seg span", f4), segK7 = $(".seg-k", f7);
-  const predT = $(".pred-t", f7), planTag = $(".plan .ltag", f7);
+  const predT = $(".pred-t", f7), planTag = $(".plan", f7);
   const bars = $$(".ch i", f6).map((el) => [el, parseFloat(el.style.height)]);
-  const useN = $$(".use-n", f6).map((el) => el.firstChild), runRows = $$(".runrow", f6);
-  const chartSvg = $(".chart-w svg", f8), delta = $(".delta", f8), lbls = $$(".lbl", f8), actions = $(".actions", f8);
-  const banner9 = $(".banner", f9), offBar = $(".offline", f10);
+  const useN = $(".use .num", f6).firstChild, useSub = $(".use .sub", f6), runRows = $$(".grp-r.run", f6);
+  const chartSvg = $(".chart-w svg", f8), delta = $(".lbl--act", f8), lbls = $$(".lbl--exp", f8), actions = $(".actions", f8);
+  const banner9 = $(".note", f9), offBar = $(".offline", f10);
   const clock = (s) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
   const STOP_T = 19.75;
 
-  let cqw = 4, tall = false;
+  let cqw = 4, tall = false, H = 56.25, scrRad = 0, in3d = false;
   const measure = () => {
     cqw = vEl.clientWidth / 100 || 4;
     tall = vEl.clientHeight > vEl.clientWidth * 0.8;
-    app.style.setProperty("--k", (screenEl.clientWidth / 360).toFixed(5));
+    H = (vEl.clientHeight / vEl.clientWidth) * 100 || 56.25;
+    waterEl.setAttribute("viewBox", `0 0 100 ${H.toFixed(2)}`);
+    const k = screenEl.clientWidth / 360;
+    app.style.setProperty("--k", k.toFixed(5));
+    scrRad = parseFloat(getComputedStyle(screenEl).borderTopLeftRadius) / (k || 1);
+  };
+  // The water's surface: two waves, plus the ring the drop sends out when it lands (x in cqw).
+  const wave = (lvl, amp, ph, t, dropX) => {
+    const y0 = H * (1 - lvl), since = t - DROP_T;
+    let d = `M0 ${(H + 1).toFixed(2)}`;
+    for (let i = 0; i <= 40; i++) {
+      const x = i * 2.5;
+      let y = y0 + amp * (0.6 * Math.sin(x * 0.085 + t * 1.5 + ph) + 0.4 * Math.sin(x * 0.2 - t * 1.05 + ph * 1.7));
+      if (since > 0 && since < 3) { const r = Math.abs(x - dropX); y += 2.4 * Math.exp(-since * 1.6) * Math.exp(-r * 0.03) * Math.cos((r - since * 38) * 0.32); }
+      d += `L${x} ${y.toFixed(2)}`;
+    }
+    return d + `L100 ${(H + 1).toFixed(2)}Z`;
   };
   const fade = (el, o, dy = 0, unit = "px", extra = "") => {
     el.style.visibility = o > 0.002 ? "visible" : "hidden";
@@ -225,12 +264,57 @@
   };
 
   const frame = (t) => {
-    // Panel and camera
-    const pIn = win(t, 0.05, 1.0, out5), pEnd = win(t, 57.0, 0.9, out5);
-    panel.style.transform = tall ? `scaleY(${(0.68 * pIn + 0.32 * pEnd).toFixed(4)})` : `scaleX(${(0.5 * pIn + 0.5 * pEnd).toFixed(4)})`;
+    // The water, and the drop that starts it
+    const dropX = tall ? 50 : 73, lvl = water(t), amp = wAmp(t), g = wGrey(t);
+    waveB.setAttribute("d", wave(lvl + 0.018, amp * 1.25, 2.1, t, dropX));
+    waveF.setAttribute("d", wave(lvl, amp, 0, t, dropX));
+    waveB.style.fill = rgb(mix([30, 72, 205], [62, 67, 77], g));
+    waveF.style.fill = rgb(mix([0, 47, 167], [44, 48, 56], g));
+    const fall = clamp((t - 0.25) / (DROP_T - 0.25)), surf = H * (1 - 0.12);
+    dropEl.style.visibility = t >= 0.25 && t < DROP_T ? "visible" : "hidden";
+    dropEl.style.transform = `translate(${dropX}cqw, ${(-8 + (surf + 6) * inq(fall)).toFixed(2)}cqw) translate(-50%, -100%) scaleY(${(1 + 0.25 * inq(fall)).toFixed(3)})`;
+    const rp0 = clamp((t - DROP_T) / 0.8);
+    rip.style.visibility = rp0 > 0 && rp0 < 1 ? "visible" : "hidden";
+    rip.style.opacity = (1 - rp0).toFixed(3);
+    rip.style.transform = `translate(${dropX}cqw, ${(H * (1 - lvl)).toFixed(2)}cqw) translate(-50%, -50%) scale(${(0.2 + 1.6 * out(rp0)).toFixed(3)})`;
+
+    // Camera
     const [ry, rx, s0, x0, y0] = cam(t);
-    const s = tall ? 1 + (s0 - 1) * 0.6 : s0, pw = phone.offsetWidth;
-    phone.style.transform = `translate(-50%, -50%) translate(${(x0 * pw).toFixed(1)}px, ${(y0 * pw).toFixed(1)}px) perspective(${(pw * 6).toFixed(0)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${s.toFixed(4)})`;
+    const s = tall ? 1 + (s0 - 1) * 0.6 : s0, pw = phone.offsetWidth, px = tall && t > 56.9 ? 0 : x0, py = tall && Math.abs(y0) < 1 ? y0 * 0.4 : y0;
+    phone.style.transform = `translate(-50%, -50%) translate(${(px * pw).toFixed(1)}px, ${(py * pw).toFixed(1)}px) perspective(${(pw * 6).toFixed(0)}px) rotateY(${ry.toFixed(2)}deg) rotateX(${rx.toFixed(2)}deg) scale(${s.toFixed(4)})`;
+    const po = 1 - win(t, 57.45, 0.45);
+    phone.style.opacity = po < 1 ? po.toFixed(3) : "";
+    phone.style.visibility = po > 0.002 ? "visible" : "hidden";
+
+    // Big figures behind the phone, drifting against the camera
+    const lv = win(t, 2.45, 1.3, io);
+    nums.forEach((el, i) => {
+      const [a, b, pre, v, dp, suf] = NUMS[i];
+      const on = t >= a && t < b;
+      el.style.visibility = on ? "visible" : "hidden";
+      if (!on) return;
+      const pin = win(t, a, 0.8, out5), pout = win(t, b - 0.4, 0.4, inq), c = i === 0 ? lv : win(t, a + 0.1, 1.0, out);
+      const txt = pre + (v * c).toFixed(dp) + suf;
+      if (el.textContent !== txt) el.textContent = txt;
+      el.style.opacity = (pin * (1 - pout)).toFixed(3);
+      // Longer figures are set smaller, so none of them reaches the headline.
+      const fit = Math.min(1, 3.4 / (pre + v.toFixed(dp) + suf).length);
+      el.style.transform = `translate(-50%, -50%) translateX(${((1 - pin) * 9 - pout * 9 + ry * 0.22).toFixed(2)}cqw) scale(${((0.9 + 0.1 * pin) * fit).toFixed(3)})`;
+    });
+
+    // The finale wall
+    const wallOn = t > 57.2 && t < 63.4;
+    wall.style.visibility = wallOn ? "visible" : "hidden";
+    if (wallOn) {
+      const R = (tall ? 72 : 44) * cqw, wo = 1 - win(t, 62.55, 0.6, inq);
+      // Opacity stays on the cards: on the wall it would flatten the 3D.
+      wall.style.transform = `perspective(${(120 * cqw).toFixed(0)}px) translateZ(${(-R).toFixed(1)}px) translateY(${(-(1 - wo) * 6 * cqw).toFixed(1)}px) rotateX(${(-7).toFixed(1)}deg) rotateY(${spin(t).toFixed(2)}deg)`;
+      cards.forEach((el, i) => {
+        const p = win(t, 57.3 + i * 0.07, 0.9, out5);
+        el.style.opacity = (p * wo).toFixed(3);
+        el.style.transform = `translate(-50%, -50%) rotateY(${((i - 4.5) * 15).toFixed(1)}deg) translateZ(${(R - (1 - p) * R * 2.2).toFixed(1)}px)`;
+      });
+    }
 
     // Screens
     for (const [el, p, z] of SCR) {
@@ -248,8 +332,21 @@
     splImg.style.transform = `scale(${(1 + 0.3 * win(t, 2.15, 0.45, inq)).toFixed(3)})`;
 
     // Home: the cards arrive, the tank fills, the timer runs
-    homeParts.forEach((el, i) => { const p = win(t, 2.3 + i * 0.07, 0.6, out5); el.style.opacity = p.toFixed(3); el.style.transform = `translateY(${((1 - p) * 26).toFixed(1)}px)`; });
-    const lv = win(t, 2.45, 1.3, io);
+    // The exploded view needs a 3D chain from the phone down to the cards, unclipped.
+    const ex = win(t, 6.05, 0.8, out5) * (1 - win(t, 8.25, 0.65, io));
+    if ((ex > 0.001) !== in3d) {
+      in3d = ex > 0.001;
+      for (const el of [phone, screenEl, host, app, f1]) el.style.transformStyle = in3d ? "preserve-3d" : "";
+      for (const el of [screenEl, host, app, f1]) el.style.overflow = in3d ? "visible" : "";
+      f1.style.borderRadius = in3d ? scrRad.toFixed(1) + "px" : "";
+      screenEl.style.background = in3d ? "transparent" : "";
+    }
+    homeParts.forEach((el, i) => {
+      const p = win(t, 2.3 + i * 0.07, 0.6, out5);
+      el.style.opacity = p.toFixed(3);
+      el.style.transform = `translateY(${((1 - p) * 26).toFixed(1)}px)` + (in3d ? ` translateZ(${(ex * pw * LIFT[i]).toFixed(1)}px)` : "");
+      el.style.boxShadow = in3d && (i === 2 || i === 3) ? `0 ${(ex * 24).toFixed(1)}px ${(ex * 48).toFixed(1)}px rgba(0,0,0,${(0.55 * ex).toFixed(2)})` : "";
+    });
     h1Water.style.height = (78 * lv).toFixed(2) + "%";
     h1Big.nodeValue = String(Math.round(78 * lv));
     h1Sub.textContent = `${L(1560 * lv)} of 2,000 L`;
@@ -258,31 +355,30 @@
 
     // Fill range
     for (const k of ["stop", "start"]) {
-      const [a, d, v0, v1] = DRAG[k], v = mix(v0, v1, win(t, a, d, io)), [h, line, rv] = r2[k];
-      h.style.bottom = line.style.bottom = v.toFixed(2) + "%";
-      rv.firstChild.nodeValue = Math.round(v) + "%";
-      rv.lastChild.textContent = `${L(v * 20)} L`;
+      const [a, d, v0, v1] = DRAG[k], v = mix(v0, v1, win(t, a, d, io)), [h, hl] = r2[k];
+      const y = rangeTank.offsetHeight * (1 - v / 100), b = hl.querySelector(".rv");
+      h.style.top = y.toFixed(1) + "px";
+      hl.style.top = (y - 24).toFixed(1) + "px";
+      b.textContent = Math.round(v) + "%";
+      b.nextSibling.nodeValue = ` · ${L(v * 20)} L`;
     }
 
-    // Motor: the timer and the bar run until Stop; then the card says what changed
+    // Motor: the timer and the bar run until Stop; then the panel says what changed
     runTimer.textContent = clock(secs);
     runBar.style.width = ((secs / 1080) * 100).toFixed(2) + "%";
     const st = win(t, STOP_T, 0.35);
-    run.style.background = rgb(mix([203, 248, 72], [19, 21, 25], st));
-    run.style.color = rgb(mix([13, 14, 17], [244, 246, 250], st));
-    run.style.boxShadow = st > 0.5 ? "inset 0 0 0 1px rgba(255,255,255,.08)" : "none";
-    runMk.lastChild.nodeValue = t < STOP_T ? "RUNNING · AUTOMATIC" : "STOPPED · MANUAL";
+    run.style.background = rgb(mix([203, 248, 72], [21, 23, 27], st));
+    run.style.color = rgb(mix([10, 11, 13], [244, 242, 236], st));
+    runMk.textContent = t < STOP_T ? "Running · Automatic" : "Stopped · Manual";
     runSub.textContent = t < STOP_T ? "of about 18 min" : "Manual until you switch back";
-    runSub.style.color = t < STOP_T ? "" : "#99a1ae";
+    runSub.style.color = t < STOP_T ? "" : "#a3a8b0";
     runProg.style.opacity = (1 - 0.7 * st).toFixed(3);
     const swapped = t >= STOP_T + 0.1;
     if (swapped !== stopBtn.classList.contains("btn")) {
-      stopBtn.className = swapped ? "btn lime-btn" : "stop stop--wide";
+      stopBtn.className = swapped ? "btn btn-p" : "stop stop--wide";
       stopBtn.innerHTML = swapped ? "Start motor" : stopHTML;
     }
     stopBtn.style.opacity = (1 - Math.max(0, 1 - Math.abs(t - (STOP_T + 0.1)) / 0.1)).toFixed(3);
-    fillTab.classList.toggle("off", t < STOP_T);
-    fillTab.querySelector("small").textContent = t < STOP_T ? "Filling" : "Fill now";
 
     // Notifications and the toast
     for (const [k, a, b] of [["low", 24.0, 25.3], ["leak", 41.8, 42.95]]) {
@@ -300,14 +396,14 @@
     segK7.style.setProperty("--i", "2");
     predT.style.clipPath = `inset(0 ${(100 * (1 - win(t, 30.05, 0.7, io))).toFixed(1)}% 0 0)`;
     const pt = win(t, 30.7, 0.5, spr);
-    planTag.style.transform = `scale(${(0.6 + 0.4 * pt).toFixed(3)})`;
+    planTag.style.transform = `translateY(${((1 - pt) * 16).toFixed(1)}px)`;
     planTag.style.opacity = clamp(pt * 1.5).toFixed(3);
 
     // Usage: bars grow, totals count, the runs arrive
     bars.forEach(([el, h], i) => { el.style.height = (h * win(t, 35.9 + i * 0.05, 0.55, out5)).toFixed(1) + "%"; });
     const un = win(t, 35.9, 1.0, out);
-    useN[0].nodeValue = L(1240 * un) + " ";
-    useN[1].nodeValue = (8.4 * un).toFixed(1) + " ";
+    useN.nodeValue = L(1240 * un);
+    useSub.textContent = `and ${(8.4 * un).toFixed(1)} units of electricity`;
     runRows.forEach((el, i) => { const p = win(t, 36.3 + i * 0.08, 0.5, out5); el.style.opacity = p.toFixed(3); el.style.transform = `translateY(${((1 - p) * 18).toFixed(1)}px)`; });
 
     // Leak: the chart draws, the loss is marked, then the choices
@@ -435,6 +531,8 @@
   seek(reduce ? REST[0] : 0);
   // Autoplay while the film is on screen, unless the visitor paused it or prefers less motion.
   new IntersectionObserver(([en]) => {
+    // The finale's screens stay hidden until the end, so lazy loading would never fetch them.
+    if (en.isIntersecting) for (const img of wall.querySelectorAll("img")) img.loading = "eager";
     if (en.isIntersecting && !userPaused && !reduce) play();
     else if (!en.isIntersecting) pause();
   }, { threshold: 0.45 }).observe(vEl);

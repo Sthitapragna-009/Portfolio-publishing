@@ -1,8 +1,10 @@
 // Builds projects/h2o-connect.html. Copy rewritten from the Figma "Case Study · Portfolio"
 // board (page 10): plainer, outcome led, no em dashes, six week timeline.
-// v3: told as four decision stories (title, hook, before, decision, after, result).
+// v5: visuals first. A design and decision journey (as in the Saaf Safar case study), the job,
+// five decisions told in six parts (title, hook, before, decision, after, result), how the screens
+// took shape, how it was built with AI, and the mess. Copy is one or two sentences per part;
+// flows and the structure map sit inside the decisions they support.
 // Research was desk research; the kit and app are installed in about 100 homes.
-// Personas, journey, plan, structure and the directions scorecard sit in an appendix.
 // Shell (nav, lightbox, footer, theme toggle) is lifted from pathang-mobility.html.
 const fs = require("fs");
 const path = require("path");
@@ -20,7 +22,7 @@ const A = "../assets/h2o/";
 let head = src.slice(0, src.indexOf("<main"));
 head = head
   .replace(/<title>[^<]*<\/title>/, "<title>H2o Connect — Domestic Water Management | Sthitapragna Kollepara</title>")
-  .replace(/<meta name="description" content="[^"]*"/, '<meta name="description" content="H2o Connect: a retrofit water tank kit and app, installed in about 100 homes, that shows what the pump is about to do, proves what it just did, and hands control back in one tap. Told as four design decisions."')
+  .replace(/<meta name="description" content="[^"]*"/, '<meta name="description" content="H2o Connect: a retrofit water tank kit and app, installed in about 100 homes, that shows what the pump is about to do, proves what it just did, and hands control back in one tap. Told as a design and decision journey."')
   .replace("family=Inter:wght@400;500;600;700", "family=Archivo:wght@400;500;600;700;800");
 const tail = src.slice(src.indexOf("  <!-- ===================== LIGHTBOX"));
 
@@ -43,11 +45,10 @@ const aside = {
   rows: (label, items) => card(`${k(label)}<div class="h2-rows">${items.map(([a, b, tone]) => `<div${tone ? ` style="--tone-ink:var(--h2-${tone}-ink)"` : ""}><b>${e(a)}</b><span>${e(b)}</span></div>`).join("")}</div>`, "h2-aside"),
 };
 
-// Section head: a chip naming the part, the title as a sentence, the hook under it.
+// Section head: the title as a sentence, the hook under it. (The second argument is unused.)
 const shead = (id, chip, title, intro) => `
         <header class="h2-head h2-head--solo" id="${id}">
           <div>
-            <div class="h2-chips"><span class="h2-chip-n">${e(chip)}</span></div>
             <h2 class="h2-title">${e(title)}</h2>
             ${intro ? `<p class="h2-intro">${e(intro)}</p>` : ""}
           </div>
@@ -108,7 +109,7 @@ const hero = `
 
         <dl class="case-meta reveal" data-delay="4">
           <div><dt>Role</dt><dd>End to end UX and UI, sole designer</dd></div>
-          <div><dt>Scope</dt><dd>Desk research, system, app, 8 screens</dd></div>
+          <div><dt>Scope</dt><dd>Desk research, system, app, 11 screens</dd></div>
           <div><dt>Team</dt><dd>Partnered with Dwaj&#8209;Tech</dd></div>
           <div><dt>Timeline</dt><dd>6 weeks, 2026</dd></div>
           <div><dt>In use</dt><dd>Installed in about 100 homes</dd></div>
@@ -129,134 +130,119 @@ const P = (spec, inner, mods = "") => {
   return `<div class="p${cls}" style="${style}">${inner}</div>`;
 };
 const bx = (panels, cls = "") => `<div class="bx reveal${cls ? " " + cls : ""}">${panels.join("")}</div>`;
-const mono = (t) => `<p class="p-k">${e(t)}</p>`;
 const num = (n, u) => `<p class="p-n">${e(n)}${u ? `<small>${e(u)}</small>` : ""}</p>`;
 const pt = (t) => `<h3 class="p-t">${e(t)}</h3>`;
 const ps = (t) => `<p class="p-s">${e(t)}</p>`;
 const fine = (t) => `<p class="h2-fine reveal">${e(t)}</p>`;
 const pimg = (img, alt, w, h, cap) => `<img class="p-img" src="${A}${img}" alt="${e(alt)}" width="${w}" height="${h}" loading="lazy" decoding="async" />${cap ? `<p class="p-cap">${e(cap)}</p>` : ""}`;
-const chips = (items, tone) => `<ul class="p-pills${tone ? " p-pills--" + tone : ""}">${items.map((i) => `<li>${e(i)}</li>`).join("")}</ul>`;
 
 // The problem, and how the work was done
-const secProblem = sec(shead("s-problem", "The problem", "Water comes for a few hours. Nobody can see the tank.", "Piped water arrives for a few hours a day. Homes store it in a rooftop tank and pump it up by hand, with no gauge and no warning.") +
-  bx([
-    P("w6 h2 t12", pimg("overflow-splash.jpg", "Water gushing over the rim of an overfilled storage tank", 800, 450, "Every overflow is water the household already paid to pump."), "photo"),
-    P("w3 t6", mono("source: MIT Tata Center") + num("<6", "hrs") + ps("of piped supply a day in many Indian cities")),
-    P("w3 t6", mono("source: World Bank") + num("2", "hrs") + ps("what most town homes receive on a normal day"), "hatch"),
-    P("w3 t6", mono("source: Jal Jeevan Mission, 2024") + num("73.9", "%") + ps("of rural homes now have a tap. The problem has moved indoors."), "lime"),
-    P("w3 t6", pimg("overflow-rooftop.jpg", "A blue rooftop water tank overflowing from its top outlet", 433, 319, "No gauge, so the first sign of full is water down the side."), "photo"),
-    P("w7 t12", mono("the gap") + `<p class="p-xl">${e("People check the tank because nothing proves what it is doing. The product has to supply the proof.")}</p>`, "blue"),
-    P("w5 t12", mono("how I worked") + ps("Desk research into piped supply and the float switches and app controllers on sale. No formal interviews or usability study: the design changes in the stories below came from my own reviews.") + ps("The kit and app were then installed and tested with Dwaj‑Tech in about 100 homes in Visakhapatnam, Narsapuram and Hyderabad. After that I reviewed my own screens and rebuilt them (decision 5).")),
-  ]));
-
-// The four stories, listed up front so a reader can jump to one.
+// The five decisions told in full. The decision map below links to them.
 const STORIES = [
-  ["s-d1", "Decision 1 · strategic · weeks 1 and 2", "Why I designed an app people should open less"],
-  ["s-d2", "Decision 2 · strategic · weeks 3 and 4", "Why Stop never asks “Are you sure?”"],
-  ["s-d3", "Decision 3 · micro · week 4", "Why the leak alert proves before it asks"],
-  ["s-d4", "Decision 4 · micro · week 5", "Why the tank speaks in litres, not just percent"],
-  ["s-d5", "Decision 5 · iteration · after the installs", "How reviewing my own app found 34 problems, and why I fixed twelve"],
+  ["s-d1", "strategic", "Designing for fewer app opens"],
+  ["s-d2", "strategic", "Stop gets one tap and no dialog"],
+  ["s-d3", "micro", "The leak alert shows its evidence first"],
+  ["s-d4", "micro", "Readings in litres and minutes"],
+  ["s-d5", "strategic", "34 problems in my own app, and a redesign"],
 ];
-const secToc = sec(shead("s-decisions", "Decision log", "Five decisions, in the order I made them", "Each one runs the same way: what was there before, the options I weighed, what I chose and gave up, and what changed. The last one is me going back through my own work.") +
-  bx(STORIES.map(([id, kick, t], i) => P(i < 3 ? "w4 t6" : i === 3 ? "w6 t6" : "w6 t12", mono(kick) + `<h3 class="p-t p-t--link"><a href="#${id}">${e(t)}</a></h3>`))));
+// ---------- visualizations ----------
+// Charts and diagrams carry the story; copy is a caption of one or two sentences.
+// They sit on the dark panels, so their colours are the app's dark palette.
+const V = { ink: "#f9f9f9", dim: "#a9abb0", faint: "#6c7079", water: "#2f6bff", lime: "#cbf848", low: "#ffa53d", crit: "#ff4d5e", line: "rgba(249,249,249,0.14)" };
+const cap = (t) => `<p class="vz-cap">${e(t)}</p>`;
 
-// 03 People: radial stakeholders + three personas
-const STK = [
-  { tone: "lime", col: "#cbf848", r0: 62, r1: 155, ring: "Primary", title: "The pump keeper", desc: "Runs the motor and takes the blame.", nodes: [["Pump keeper", -90]] },
-  { tone: "water", col: "#5b8bff", r0: 155, r1: 250, ring: "Secondary", title: "Everyone else at home", desc: "Find the problem at the tap, not the tank.", nodes: [["Family", -150], ["Kids", -30], ["Tenants", 30], ["House help", 150]] },
-  { tone: "low", col: "#ffa53d", r0: 250, r1: 350, ring: "Tertiary", title: "Trades, RWA, power company", desc: "Decide what can be installed and what power costs.", nodes: [["Plumber", -120], ["Electrician", -60], ["RWA", 60], ["Power company", 120]] },
-];
-const stkSvg = (() => {
-  const C = 360, Pt = (r, a) => [C + r * Math.cos(a * Math.PI / 180), C + r * Math.sin(a * Math.PI / 180)];
-  let rings = "", spokes = "", nodes = "", labels = "";
-  [...STK].reverse().forEach((t) => {
-    rings += `<circle cx="${C}" cy="${C}" r="${t.r1}" fill="${t.col}" fill-opacity="0.07" stroke="${t.col}" stroke-opacity="0.45" stroke-width="1.5"/>`;
-  });
-  STK.forEach((t) => {
-    const rm = (t.r0 + t.r1) / 2;
-    t.nodes.forEach(([name, a]) => {
-      const [x, y] = Pt(rm, a), [sx, sy] = Pt(62, a);
-      spokes += `<line x1="${sx.toFixed(1)}" y1="${sy.toFixed(1)}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${t.col}" stroke-opacity="0.55" stroke-width="1.5" stroke-dasharray="3 4"/>`;
-      const w = Math.round(name.length * 12.2 + 50);
-      nodes += `<g><rect x="${(x - w / 2).toFixed(1)}" y="${(y - 22).toFixed(1)}" width="${w}" height="44" rx="22" fill="#131519" stroke="${t.col}" stroke-width="1.5"/><circle cx="${(x - w / 2 + 21).toFixed(1)}" cy="${y.toFixed(1)}" r="6" fill="${t.col}"/><text x="${(x - w / 2 + 36).toFixed(1)}" y="${(y + 7).toFixed(1)}" font-size="20" font-weight="600" fill="#f4f6fa">${e(name)}</text></g>`;
-    });
-    labels += `<text x="${C}" y="${(C + rm + 6).toFixed(1)}" text-anchor="middle" font-size="16" font-weight="700" letter-spacing="0.08em" fill="${t.col}">${t.ring.toUpperCase()}</text>`;
-  });
-  const centre = `<circle cx="${C}" cy="${C}" r="62" fill="#0d0e11" stroke="rgba(249,249,249,0.18)" stroke-width="1.5"/><image href="${A}app-icon.svg" x="${C - 21}" y="${C - 40}" width="42" height="42"/><text x="${C}" y="${C + 26}" text-anchor="middle" font-size="18" font-weight="700" fill="#f9f9f9">H2o Connect</text>`;
-  return `<svg class="stk-svg" viewBox="0 0 720 720" role="img" aria-label="Stakeholder map: H2o Connect at the centre; the pump keeper in the primary ring; family, kids, tenants and house help in the secondary ring; plumber, electrician, RWA and power company in the tertiary ring" font-family="Archivo, system-ui, sans-serif">${rings}${spokes}${labels}${centre}${nodes}</svg>`;
+// A day of water: the two hours it arrives, and what the pump keeper does in them.
+const dayChart = (() => {
+  const W = 1000, x = (h) => 40 + (h / 24) * 920;
+  const ticks = [0, 3, 6, 9, 12, 15, 18, 21, 24].map((h) => `<text x="${x(h)}" y="196" text-anchor="middle" font-size="15" fill="${V.dim}">${h === 0 || h === 24 ? "12 AM" : h === 12 ? "12 PM" : h < 12 ? h + " AM" : h - 12 + " PM"}</text><line x1="${x(h)}" y1="150" x2="${x(h)}" y2="164" stroke="${V.line}" stroke-width="2"/>`).join("");
+  const ev = (h, y, text, col, anchor = "start") => `<line x1="${x(h)}" y1="${y + 8}" x2="${x(h)}" y2="118" stroke="${col}" stroke-width="2" stroke-dasharray="3 4"/><circle cx="${x(h)}" cy="118" r="6" fill="${col}"/><text x="${x(h) + (anchor === "start" ? 10 : -10)}" y="${y}" text-anchor="${anchor}" font-size="17" font-weight="600" fill="${V.ink}">${e(text)}</text>`;
+  return `<svg class="vz-svg" viewBox="0 0 ${W} 210" role="img" aria-label="A typical day: piped water arrives for about two hours in the morning. In that window someone switches the pump on, climbs up to check the tank, and either it overflows or they switch off early. For the other 22 hours the tank is the only water." font-family="Archivo, system-ui, sans-serif">
+    <rect x="${x(0)}" y="104" width="${x(24) - x(0)}" height="28" rx="14" fill="rgba(249,249,249,0.06)"/>
+    <rect x="${x(6)}" y="104" width="${x(8) - x(6)}" height="28" rx="14" fill="${V.water}"/>
+    <text x="${x(8) + 16}" y="124" font-size="16" fill="${V.dim}">The other 22 hours, the tank is all the water there is</text>
+    ${ev(6, 30, "Pump on", V.ink)}${ev(6.7, 58, "Climbs up to check", V.ink)}${ev(7.9, 86, "Overflow, or off too early", V.low)}
+    ${ticks}
+  </svg>`;
 })();
-const persona = (tone, L, name, role, quote, tests) => P("w4 t12", `<div class="pp"><span class="h2-avatar h2-avatar--${tone}" aria-hidden="true">${L}</span><div><b>${name}</b><small>${e(role)}</small></div></div><p class="pp-q">${e(quote)}</p>${mono("tests · " + tests)}`);
-const appPeople = sec(shead("s-people", "People", "Who the product has to serve", "One person carries the job; everyone else notices only when it fails. The personas and their quotes are assumptions built from desk research, not people I interviewed.") +
-  bx([
-    P("w7 t12", stkSvg, "flat stk-p"),
-    P("w5 t12", `${mono("three rings")}<ol class="stk-legend">${STK.map((t) => `<li style="--c:${t.col}"><p class="h2-k h2-k--${t.tone}">${t.ring}</p><h3 class="p-t">${e(t.title)}</h3><p class="p-s">${e(t.desc)}</p></li>`).join("")}</ol>`),
-    persona("lime", "M", "Meera, 47", "The pump keeper", "“I know the sound it makes when it's nearly full. I don't trust anything else.”", "trust"),
-    persona("water", "R", "Rohit, 29", "The optimiser", "“If it can't tell me why it did that, I'll switch it off.”", "interoperability"),
-    persona("low", "S", "Suresh, 62", "The sceptic", "“The switch is downstairs. That's where I'll be.”", "accessibility"),
-  ]));
 
-// 04 Empathy and journey
-const eq = (cls, ico, title, notes) => `
-            <div class="h2-eq h2-eq--${cls}">
-              <div class="h2-eq-head"><span class="h2-eq-ico" aria-hidden="true">${icons[ico]}</span><div><b>${title}</b></div></div>
-              ${notes.map((n) => `<p class="h2-note-chip">${e(n)}</p>`).join("")}
-            </div>`;
-const J = [
-  ["Supply arrives", "06:30", "“Is it a supply day?”", "good"],
-  ["Notices it", "0 to 40 min", "“Did someone switch it on?”", "bad"],
-  ["Walks to the switch", "+1 min", "“How long has it run?”", "mid"],
-  ["Motor on", "+0 min", "“Twenty minutes should do.”", "good"],
-  ["Waits and guesses", "5 to 20 min", "“Is that our pump or the neighbour's?”", "bad", "The wait"],
-  ["Climbs to check", "+15 min", "“Better to look than flood the terrace.”", "bad", "The climb"],
-  ["Switches off early", "+22 min", "“Full is a guess.”", "mid"],
-  ["Lives with it", "Next morning", "“Tomorrow I'll start earlier.”", "bad"],
-];
-const snake = `<div class="snake-card reveal"><ol class="snake" aria-label="Current journey for one refill, in eight stages">${[0, 1, 2, 3].map((r) => `
-          <li class="snake-row${r % 2 ? " snake-row--rtl" : ""}">${[0, 1].map((c) => {
-            const i = r * 2 + c, [name, time, quote, tone, pain] = J[i];
-            return `<div class="snake-stop snake-stop--${tone}"><span class="snake-dot" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span><div class="snake-txt"><p class="p-k">${e(time)}${pain ? ` · <b>pain point</b>` : ""}</p><b>${e(name)}</b><span>${e(quote)}</span></div></div>`;
-          }).join("")}</li>`).join("")}
-        </ol></div>`;
-const appJourney = sec(shead("s-journey", "Journey", "One refill, as it happens today", "An assumed pump keeper, Meera, built from desk research. Of the eight stages in a refill, two carry most of the pain: the wait and the climb.") + `
-        <div class="h2-emap reveal" role="group" aria-label="Empathy map for Meera, the pump keeper">
-          <div class="h2-emap-centre"><span class="h2-avatar" aria-hidden="true">M</span><b>Meera, 47</b><small>The pump keeper</small></div>` +
-  eq("says", "says", "Says", ["“The tank's nearly full, I can hear it.”", "“Last time it ran dry, the motor burnt out.”"]) +
-  eq("thinks", "thinks", "Thinks", ["If I forget now, there's no water at six.", "Automatic things break when nobody's watching."]) +
-  eq("does", "does", "Does", ["Climbs to the terrace to look inside.", "Switches off early on purpose."]) +
-  eq("feels", "feels", "Feels", ["Responsible by default.", "Wary of anything that takes the switch away."]) +
-  `</div>` + snake);
+// Decision 1: what each option shows. Filled means it does.
+const optionGrid = (() => {
+  const rows = [["Shows the level", 0, 0, 1], ["Says what it will do", 0, 0, 1], ["Proves what it did", 0, 0, 1], ["Stops in one tap", 1, 0, 1]];
+  const mark = (v) => `<i class="og-m${v ? " og-m--on" : ""}" aria-label="${v ? "Yes" : "No"}"></i>`;
+  return `<div class="og" role="table" aria-label="What each option shows">
+    <div class="og-r og-h" role="row"><span role="columnheader"></span><span role="columnheader">A remote</span><span role="columnheader">An automatic box</span><span role="columnheader" class="og-win">H2o</span></div>
+    ${rows.map(([t, a, b, c]) => `<div class="og-r" role="row"><span role="rowheader">${t}</span><span role="cell">${mark(a)}</span><span role="cell">${mark(b)}</span><span role="cell" class="og-win">${mark(c)}</span></div>`).join("")}
+  </div>`;
+})();
 
-// The four principles every screen is checked against. They come out of decision 1.
-const principles = bx([
-  ["State before controls", "a home screen that opens on a power button"],
-  ["Every action leaves a receipt", "silent schedules and automation with no history"],
-  ["Colour means something", "colour used only to fill space"],
-  ["The wall switch always wins", "any flow that traps a household inside the app"],
-].map(([t, r], i) => P("w3 t6", `${pt(t)}${mono("rules out: " + r)}`, i === 3 ? "lime" : "")), "bx--principles");
+// Decision 2: the actions between "that looks wrong" and the motor stopping.
+const stopSteps = (() => {
+  const step = (t, cls = "") => `<span class="ss-b${cls ? " " + cls : ""}">${e(t)}</span>`;
+  const row = (name, steps, total, win) => `<div class="ss-r${win ? " ss-r--win" : ""}"><p class="ss-n">${e(name)}</p><div class="ss-t">${steps.join('<span class="ss-a" aria-hidden="true"></span>')}</div><p class="ss-x">${e(total)}</p></div>`;
+  return `<div class="ss">${row("With a confirmation", [step("Tap Stop"), step("Read the dialog"), step("Tap Confirm"), step("Motor stops", "ss-b--end")], "3 actions")}${row("In H2o", [step("Tap Stop"), step("Motor stops in under 200 ms", "ss-b--end ss-b--lime")], "1 action", true)}</div>`;
+})();
+const SURF = [["Phone", "In the motor panel"], ["Dynamic Island", "Two taps from any app"], ["Watch", "Where the thumb lands"], ["Kitchen display", "“Alexa, stop the pump”"], ["The unit", "A button and a Manual switch"]];
+const surfaces = `<ul class="sf">${SURF.map(([a, b]) => `<li><b>${e(a)}</b><span>${e(b)}</span></li>`).join("")}</ul>`;
 
-// 06 Plan: six-week phase chart
-const G = [
-  ["Research", 1, 2, "low"],
-  ["Structure", 3, 4, "water"],
-  ["Design and prove", 5, 6, "lime"],
-];
-const GW = [
-  ["Home visits and shadowing", "low"], ["Personas, journey, insights", "low"], ["Ecosystem, IA and flows", "water"],
-  ["Three directions, scored", "water"], ["System and eight screens", "lime"], ["Prototype and study plan", "lime"],
-];
-const appPlan = sec(shead("s-plan", "Plan", "Six weeks, start to prototype", "From desk research to a working prototype, before the installs began.") + `
-        <div class="h2-scroll reveal"><div class="gantt" role="img" aria-label="Six week plan: research in weeks 1 and 2, structure in weeks 3 and 4, design and proof in weeks 5 and 6">
-          ${G.map(([t, a, b, tone]) => `<p class="gantt-phase gantt-phase--${tone}" style="grid-column:${a} / ${b + 1}"><span>Phase ${G.findIndex((g) => g[0] === t) + 1}</span>${e(t)}</p>`).join("")}
-          ${GW.map((_, i) => `<p class="gantt-wk" style="grid-column:${i + 1}">W${i + 1}</p>`).join("")}
-          ${GW.map(([t, tone], i) => `<div class="gantt-cell" style="grid-column:${i + 1}"><span class="gantt-block gantt-block--${tone}${i === 3 ? " gantt-block--hatch" : ""}"></span><span class="gantt-label">${e(t)}</span></div>`).join("")}
-        </div></div>` +
-  bx([
-    P("w7 t12", mono("in scope") + `<ul class="p-check">${["Automatic, Manual and Smart","8 screens and 2 alerts","Design system","Hardware architecture","Watch and smart home","HTML prototype"].map((i) => `<li>${e(i)}</li>`).join("")}</ul>`),
-    P("w5 t12", mono("left out on purpose") + `<ul class="p-check p-check--out">${["First run pairing","Multiple properties","Billing","Hindi UI","Trained ML models"].map((i) => `<li>${e(i)}</li>`).join("")}</ul>`, "hatch"),
-  ]));
+// Decision 4: one reading, three ways, with the two levels.
+const tankDiagram = (() => {
+  const T = { x: 60, y: 20, w: 150, h: 360 }, lv = (p) => T.y + T.h * (1 - p / 100);
+  const lead = (p, big, small, col) => `<line x1="${T.x + T.w + 8}" y1="${lv(p)}" x2="${T.x + T.w + 48}" y2="${lv(p)}" stroke="${col}" stroke-width="2"/><text x="${T.x + T.w + 58}" y="${lv(p) + 7}" font-size="22" font-weight="700" fill="${V.ink}">${big}</text><text x="${T.x + T.w + 58}" y="${lv(p) + 32}" font-size="16" fill="${V.dim}">${small}</text>`;
+  return `<svg class="vz-svg vz-tank" viewBox="0 0 560 400" role="img" aria-label="A tank at 78 percent: 1,560 of 2,000 litres, full in 12 minutes. The motor stops at 90 percent, 1,800 litres, and starts at 25 percent, 500 litres." font-family="Archivo, system-ui, sans-serif">
+    <defs><clipPath id="vzTank"><rect x="${T.x}" y="${T.y}" width="${T.w}" height="${T.h}" rx="30"/></clipPath></defs>
+    <rect x="${T.x}" y="${T.y}" width="${T.w}" height="${T.h}" rx="30" fill="#1b1e24"/>
+    <rect x="${T.x}" y="${lv(78)}" width="${T.w}" height="${T.y + T.h - lv(78)}" fill="${V.water}" clip-path="url(#vzTank)"/>
+    <line x1="${T.x}" y1="${lv(90)}" x2="${T.x + T.w}" y2="${lv(90)}" stroke="${V.ink}" stroke-width="2" stroke-dasharray="6 6"/>
+    <line x1="${T.x}" y1="${lv(25)}" x2="${T.x + T.w}" y2="${lv(25)}" stroke="${V.ink}" stroke-width="2" stroke-dasharray="6 6"/>
+    ${lead(90, "Stops at 90%", "1,800 L", V.dim)}
+    <line x1="${T.x + T.w + 8}" y1="${lv(78) + 4}" x2="${T.x + T.w + 48}" y2="${lv(78) + 4}" stroke="${V.water}" stroke-width="2"/>
+    <text x="${T.x + T.w + 58}" y="${lv(78) + 52}" font-size="64" font-weight="700" fill="${V.ink}" letter-spacing="-2">78%</text>
+    <text x="${T.x + T.w + 58}" y="${lv(78) + 84}" font-size="20" font-weight="600" fill="${V.ink}">1,560 of 2,000 L</text>
+    <text x="${T.x + T.w + 58}" y="${lv(78) + 110}" font-size="18" fill="${V.dim}">Full in 12 min</text>
+    ${lead(25, "Starts at 25%", "500 L", V.dim)}
+  </svg>`;
+})();
+
+// Decision 5: what the review found, and what happened to it.
+const issueBar = (() => {
+  const segs = [["Major", 4, V.crit], ["Moderate", 17, V.low], ["Minor", 13, "#6c7079"]], total = 34;
+  return `<div class="ib" role="img" aria-label="34 issues: 4 major, 17 moderate, 13 minor">
+    <div class="ib-bar">${segs.map(([n, c, col]) => `<span style="flex:${c};background:${col}"></span>`).join("")}</div>
+    <div class="ib-key">${segs.map(([n, c, col]) => `<p><i style="background:${col}"></i><b>${c}</b> ${n.toLowerCase()}</p>`).join("")}</div>
+  </div>`;
+})();
+const stagesRow = (items) => `<ol class="st">${items.map(([n, t]) => `<li><b>${e(n)}</b><span>${e(t)}</span></li>`).join("")}</ol>`;
+
+// How it was built: one source of screens, everything else rendered from it.
+const pipeline = `<div class="pl" role="img" aria-label="build-screens.js holds the eleven screens as code. From it come the screenshots, the four light-mode previews, the hero covers, the component sheet and the walkthrough film. build-h2o.js puts them together into this page.">
+  <div class="pl-src"><b>build-screens.js</b><span>The eleven screens, as code</span></div>
+  <ul class="pl-out">${[["Screenshots", "11 screens"], ["Light mode", "4 previews"], ["Hero covers", "3 phones"], ["Component sheet", "Design system"], ["Walkthrough film", "Live screens"]].map(([a, b]) => `<li><b>${a}</b><span>${b}</span></li>`).join("")}</ul>
+  <div class="pl-src pl-src--end"><b>build-h2o.js</b><span>Puts them into this page</span></div>
+</div>`;
+
+// The system: what lives where, and how fast it answers.
+const archDiagram = `<div class="ar" role="img" aria-label="On the device: dry-run, overflow and thermal cut-offs, answering in under 200 milliseconds and needing no internet. On the phone: mode, levels, start and stop, in under a second over the home network. In the cloud: history and the pattern Smart learns, over 30 days or more; if it slows down, nothing fails.">
+  ${[["On the device", "<200", "ms", "Cut-offs for dry run, overflow and heat. No internet needed.", "lime"], ["On the phone", "<1", "s", "Mode, levels, start and stop, over home Wi‑Fi.", "water"], ["In the cloud", "30+", "days", "History and the pattern Smart learns. Slow is fine.", "dim"]].map(([t, n, u, p, tone]) => `<div class="ar-n ar-n--${tone}"><h3>${t}</h3><p class="ar-v">${n}<small>${u}</small></p><p>${e(p)}</p></div>`).join('<span class="ar-a" aria-hidden="true"></span>')}
+</div>`;
+
+// The mess, as a status list.
+const messList = (rows) => `<ul class="ms">${rows.map(([st, tone, t, p]) => `<li><span class="ms-s ms-s--${tone}">${e(st)}</span><div><h3>${e(t)}</h3><p>${e(p)}</p></div></li>`).join("")}</ul>`;
+
+// Targets set before the study, none measured yet.
+const heartBoard = (rows) => `<div class="hb">${rows.map(([d, n, t]) => `<div class="hb-r"><p class="hb-d">${e(d)}</p><p class="hb-n">${e(n)}</p><p class="hb-t">${e(t)}</p><span class="hb-m">Not measured</span></div>`).join("")}</div>`;
+
+// The job and the forces on switching (assumptions from desk research).
+const forces = (items) => `<div class="fo">${items.map(([dir, name, quote, answer]) => `<div class="fo-c fo-c--${dir}"><p class="fo-k"><i aria-hidden="true"></i>${e(name)}</p><p class="fo-q">${e(quote)}</p><p class="fo-a">${e(answer)}</p></div>`).join("")}</div>`;
+
+// Dark and light, side by side.
+const pairCard = (k, title, capText) => `
+            <figure class="shot-card pair-card">
+              <div class="h2-stage h2-stage--water pair-stage">${phone(`screen-${k}.jpg`, `${title} in dark mode`, 720, 1558, ' loading="lazy"')}${phone(`screen-${k}-light.jpg`, `${title} in light mode`, 720, 1558, ' loading="lazy"')}</div>
+              <figcaption><h3 class="p-t">${e(title)}</h3><p class="p-s">${e(capText)}</p></figcaption>
+            </figure>`;
 
 // 07 Hardware
-const secSystem = sec(shead("s-system", "System", "The kit it runs on", "A sonar sensor on the tank and a display unit beside the motor switch, built with Dwaj‑Tech and installed in about 100 homes. It works with the tank, pump and switch a home already has.") +
+const secSystem = sec(shead("s-system", "System", "The kit it runs on", "A sonar sensor on the lid and a unit beside the motor switch, built with Dwaj‑Tech. It works with the tank, pump and switch a home already has.") +
   bx([
     P("w7 h2 t12", `<figure class="h2-proto-photo">
             <img src="${A}prototype-unit.webp" alt="Working prototype of the H2o Connect display and control unit: a white wall box with a small display reading level 75 percent, volume 748 litres and motor off, a Manual and Auto toggle switch, a red ON and OFF button, and Powered by Dwaj Tech" width="1024" height="1024" loading="lazy" decoding="async" />
@@ -265,26 +251,22 @@ const secSystem = sec(shead("s-system", "System", "The kit it runs on", "A sonar
             <span class="h2-pin" style="left:42%;top:60.5%">3</span>
             <span class="h2-pin" style="left:94%;top:69.5%">4</span>
           </figure>`, "light photo"),
-    P("w5 t12", `${mono("working prototype · final design in progress")}<ol class="h2-pins">
+    P("w5 t12", `${pt("The working prototype")}<ol class="h2-pins">
               <li><b>Display</b><span>Level, volume and motor state, without a phone.</span></li>
               <li><b>Manual and Auto switch</b><span>Manual always wins, in hardware.</span></li>
               <li><b>ON and OFF button</b><span>Works with the phone or router down.</span></li>
               <li><b>Wiring</b><span>Enters beside the existing switch.</span></li>
             </ol>`),
-    P("w5 t12", `<div class="p-split"><div>${mono("zero contact sensing")}${num("0", "corrosion")}${ps("Sonar reads the air gap. Nothing touches the water.")}</div><div>${mono("automated motor control")}${num("20 to 40", "%")}${ps("lower energy bills, estimated for large facilities.")}</div></div>`, "blue"),
+    P("w5 t12", `<div class="p-split"><div>${num("0", "corrosion")}${ps("Sonar reads the air gap. Nothing touches the water.")}</div><div>${num("20 to 40", "%")}${ps("lower energy bills, estimated for large facilities.")}</div></div>`, "blue"),
   ]) +
-  bx([
-    ["safety · on the device", "<200", "ms", "Dry run, overflow and thermal cut offs. Needs no internet.", "lime"],
-    ["control · on the phone", "<1", "s", "Mode, levels, start and stop over the home network.", ""],
-    ["memory · in the cloud", "30+", "days", "History and the pattern Smart learns. Slows down, never fails.", "hatch"],
-  ].map(([k_, n, u, p, m]) => P("w4 t12", mono(k_) + num(n, u) + ps(p), m))) +
+  archDiagram +
   bx([
     ["tank", "Tank sensor", "In use", "Sonar under the lid, magnetic mount."],
     ["unit", "Display unit", "In use", "Switches the motor, confirms it by current."],
     ["sump", "Sump sensor", "Planned", "A dry run guard on the sump."],
     ["valve", "Inlet valve", "Planned", "Lets Smart close the inlet on a leak."],
-  ].map(([ic, t, st, p]) => P("w3 t6", `<span class="p-glyph" aria-hidden="true">${icons[ic]}</span>${pt(t)}${ps(p)}<p class="p-tag${st === "Planned" ? " p-tag--mute" : ""}">${st}</p>`, st === "Planned" ? "hatch" : "")).concat([
-    P("w12", `<div class="p-strip">${[["20", "min", "to install"], ["1", "step", "needs an electrician"], ["0", "", "drilling or rewiring"]].map(([n, u, t]) => `<div>${num(n, u)}${ps(t)}</div>`).join("")}<div>${mono("joins the home over Matter")}${chips(["Apple Home", "Alexa", "Google Home", "SmartThings"])}</div></div>`),
+  ].map(([ic, t, st, p]) => P("w3 t6", `${pt(t)}${ps(p)}<p class="vz-src">${st}</p>`, st === "Planned" ? "hatch" : "")).concat([
+    P("w12", `<div class="p-strip">${[["20", "min", "to install"], ["1", "step", "needs an electrician"], ["0", "", "drilling or rewiring"]].map(([n, u, t]) => `<div>${num(n, u)}${ps(t)}</div>`).join("")}<div>${pt("Joins the home over Matter")}${list(["Apple Home", "Alexa", "Google Home", "SmartThings"])}</div></div>`),
   ])));
 
 // 08 Structure: IA tree + three flows
@@ -296,11 +278,11 @@ const iaIcons = {
   settings: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1" stroke-linecap="round"/></svg>',
 };
 const IA = [
-  ["home", "Home", "Tab 1", ["Level, litres, time to full", "Motor status", "This week", "Active alert"], true, false],
-  ["motor", "Motor", "Tab 2", ["Start and stop", "Power, run time, cost", "Faults", "Bypass at the switch"], true, false],
-  ["modes", "Modes", "Tab 3", ["Automatic", "Manual", "Smart", "Back to Manual"], false, false],
-  ["history", "Usage", "Tab 4", ["Every fill and its cost", "Event log", "Leak records", "Export"], false, false],
-  ["settings", "Settings", "Top bar", ["Tanks and sensors", "Members", "Matter link", "Text size, language"], false, true],
+  ["home", "Home", "Tab 1", ["Level, litres, time to full", "Motor panel with Stop", "This week", "Active alert"], false, false],
+  ["history", "Usage", "Tab 2", ["Every fill and its cost", "Event log", "Leak records", "Export"], false, false],
+  ["motor", "Motor", "Tab 3", ["Start and stop", "Power, run time, cost", "Faults", "Bypass at the switch"], false, false],
+  ["modes", "Modes", "Tab 4", ["Automatic", "Manual", "Smart", "Back to Manual"], false, false],
+  ["settings", "Settings", "Tank menu", ["Tanks and sensors", "Members", "Matter link", "Text size, language"], false, true],
 ];
 const flIcons = {
   trigger: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
@@ -312,114 +294,88 @@ const flow = (num_, title, mode, metric, nodes) => {
   return `
         <div class="h2-card fl reveal">
           <div class="fl-head">
-            <span class="fl-num">${num_}</span>
-            <div class="fl-title"><h3>${e(title)}</h3></div>
-            <div class="fl-tags"><span class="fl-mode">${e(mode)}</span><span class="fl-metric">${e(metric)}</span></div>
+            <div class="fl-title"><h3>${e(title)}</h3><p class="fl-sub">${e(mode)} · ${e(metric)}</p></div>
           </div>
           <div class="h2-scroll fl-scroll"><ol class="fl-track" style="--n:${nodes.length}">${nodes.map(([kind, label, text, opts]) => {
-            const dot = kind === "step" ? String(++step) : flIcons[kind];
-            return `<li class="fl-step fl-step--${kind}"><span class="fl-dot"><span>${dot}</span></span><span class="fl-label">${e(kind === "step" ? "Step " + step : label)}</span><b>${e(text)}</b>${opts ? `<span class="fl-opts">${opts.map((o) => `<i>${e(o)}</i>`).join("")}</span>` : ""}</li>`;
+            const dot = kind === "step" ? "" : flIcons[kind];
+            return `<li class="fl-step fl-step--${kind}"><span class="fl-dot"><span>${dot}</span></span>${kind === "step" ? "" : `<span class="fl-label">${e(label)}</span>`}<b>${e(text)}</b>${opts ? `<span class="fl-opts">${opts.map((o) => `<i>${e(o)}</i>`).join("")}</span>` : ""}</li>`;
           }).join("")}</ol></div>
         </div>`;
 };
-const appStructure = sec(shead("s-structure", "Structure", "Five destinations, one level deep", "The information architecture, and the three flows that carry the product.") +
-  `<div class="reveal"><div class="h2-scroll ia-scroll"><div class="ia" role="group" aria-label="Information architecture: H2o Connect with five destinations">
-          <div class="ia-root"><img src="${A}app-icon.svg" alt="" width="36" height="36" /><div><b>H2o Connect</b><small>Five destinations, one level deep</small></div></div>
+// The structure map and the three flows, used as evidence inside the decisions.
+const iaMap = `<div class="reveal"><div class="h2-scroll ia-scroll"><div class="ia" role="group" aria-label="Information architecture: H2o Connect with four tabs and a tank menu">
+          <div class="ia-root"><img src="${A}app-icon.svg" alt="" width="36" height="36" /><div><b>H2o Connect</b><small>Four tabs and a tank menu</small></div></div>
           <ol class="ia-l1">${IA.map(([ic, t, where, leaves, fab, deep]) => `
             <li class="ia-branch ia-branch--${ic}">
-              <div class="ia-node"><span class="ia-ico">${iaIcons[ic]}</span><div><b>${t}</b><small>${where}</small></div>${fab ? '<span class="ia-fab">Fill now</span>' : ""}</div>
+              <div class="ia-node"><span class="ia-ico">${iaIcons[ic]}</span><div><b>${t}</b><small>${where}</small></div></div>
               <ul class="ia-leaves${deep ? " ia-leaves--deep" : ""}">${leaves.map((l) => `<li><span>${e(l)}</span></li>`).join("")}</ul>
             </li>`).join("")}
           </ol>
-          <div class="ia-legend" aria-hidden="true"><span><i class="ia-key ia-key--node"></i>Destination</span><span><i class="ia-key ia-key--leaf"></i>Content and actions</span><span><i class="ia-key ia-key--deep"></i>Opens a sub page</span><span><i class="ia-key ia-key--fab"></i>Fill now, a floating action</span></div>
-        </div></div>${scrollHint("map")}</div>` +
-  `<div class="h2-block" style="gap:clamp(0.9rem,2vw,1.25rem)">` +
-  flow("01", "The daily fill, with nobody watching", "Automatic", "Zero taps", [
-    ["trigger", "Trigger", "Level drops below 25%"],
-    ["step", "", "Checks quiet hours and tariff"],
-    ["step", "", "Motor starts, confirmed by current"],
-    ["step", "", "Home shows level and time to full"],
-    ["step", "", "Stops at 90%"],
-    ["outcome", "Outcome", "Receipt: 440 L · 22 min · ₹2.10"],
-  ]) +
-  flow("02", "Something the system can't explain", "Smart", "One decision", [
-    ["trigger", "Trigger", "42 L lost overnight, taps closed"],
-    ["step", "", "Compared with 34 days of history"],
-    ["step", "", "One notification at 5:04 AM"],
-    ["decision", "Evidence", "What Smart saw"],
-    ["decision", "Decision", "Two choices", ["Pause automatic filling", "That was us"]],
-    ["outcome", "Outcome", "Logged, and the pattern updates"],
-  ]) +
-  flow("03", "Taking it back", "Any mode", "One tap · under 200 ms", [
-    ["trigger", "Trigger", "Any screen, any mode"],
-    ["step", "", "One tap on Stop, no dialog"],
-    ["step", "", "Relay responds in under 200 ms"],
-    ["step", "", "“Manual until you switch back”"],
-    ["outcome", "Outcome", "Automatic resumes only when asked"],
-  ]) + `</div>`);
-
-// 09 Directions: wireframes, three explorations, the scorecard
-const exp = (img, dir, name, verdict, alt, tone) => `
-            <figure class="shot-card">
-              <div class="h2-stage h2-stage--${tone}">${phone(img, alt, 720, 1558, ' loading="lazy"')}</div>
-              <figcaption>${mono(dir)}<h3 class="p-t">${e(name)}</h3><p class="p-s">${e(verdict)}</p></figcaption>
-            </figure>`;
-const score = [
-  ["State before controls", "hold", "hold", "break", "hold"],
-  ["Every action leaves a receipt", "break", "break", "hold", "hold"],
-  ["Colour means something", "hold", "break", "none", "hold"],
-  ["The wall switch always wins", "break", "break", "hold", "hold"],
-];
-const markTxt = { hold: "Holds", break: "Breaks", none: "Not attempted" };
-const cols = ["A · Ambient dark", "B · Bento", "C · Platform native", "Final"];
-const explorations = `<div class="shots h2-gallery h2-gallery--explore reveal" data-shots style="--cols:3;margin:0"><div class="shots-track">` +
-  exp("exp-a.jpg", "direction a", "Ambient dark", "Readable from across the room, but nothing could ever look urgent. Kept: the colour discipline.", "Direction A, ambient dark: a glowing blue tank at 78% with motor, eco and boost cards below", "water") +
-  exp("exp-b.jpg", "direction b", "Bento", "Clear hierarchy, but colour was spent on decoration. Kept: the card structure.", "Direction B, bento: saturated blue and lime blocks for overview, tank level and weekly usage", "lime") +
-  exp("exp-c.jpg", "direction c", "Platform native", "Nothing to learn, and nothing to remember. Kept: the plain labels.", "Direction C, platform native: a light iOS style settings layout with tank, motor toggle and automation rows", "water") +
-  `</div></div>`;
-const appDirections = sec(shead("s-directions", "Directions", "Wireframes and the scorecard", "Greyscale wireframes fixed the hierarchy before any colour. The three visual directions in decision 1 were scored against the four principles like this.") +
-  `<div class="reveal"><div class="h2-scroll"><figure class="h2-sheet"><img src="${A}wireframes.webp" alt="Six greyscale wireframes: Home, the whole state on one screen; Fill range, two levels on one screen; Modes, Smart as an equal, not an upgrade; Alert, evidence before the question; Motor, confirmed rather than assumed; History, who or what acted" width="2280" height="725" loading="lazy" decoding="async" /></figure></div>${scrollHint("sheet")}</div>` +
-  card(`${mono("scored against the four principles")}<div class="h2-scroll"><table class="h2-table h2-table--stack"><thead><tr><th scope="col">Principle</th>${cols.map((c) => `<th scope="col">${e(c)}</th>`).join("")}</tr></thead><tbody>${score.map(([p, ...m]) => `<tr><th scope="row">${e(p)}</th>${m.map((v, i) => `<td data-label="${e(cols[i])}"><span class="h2-mark h2-mark--${v}">${markTxt[v]}</span></td>`).join("")}</tr>`).join("")}</tbody></table></div>`, "reveal"));
+          <div class="ia-legend" aria-hidden="true"><span><i class="ia-key ia-key--node"></i>Destination</span><span><i class="ia-key ia-key--leaf"></i>Content and actions</span><span><i class="ia-key ia-key--deep"></i>Opens a sub page</span></div>
+        </div></div>${scrollHint("map")}</div>`;
+const flowDaily = flow("01", "The daily fill, with nobody watching", "Automatic", "Zero taps", [
+  ["trigger", "Trigger", "Level drops below 25%"],
+  ["step", "", "Checks quiet hours and tariff"],
+  ["step", "", "Motor starts, confirmed by current"],
+  ["step", "", "Home shows level and time to full"],
+  ["step", "", "Stops at 90%"],
+  ["outcome", "Outcome", "Receipt: 440 L · 22 min · ₹2.10"],
+]);
+const flowLeak = flow("02", "Something the system can't explain", "Smart", "One decision", [
+  ["trigger", "Trigger", "42 L lost overnight, taps closed"],
+  ["step", "", "Compared with 34 days of history"],
+  ["step", "", "One notification at 5:04 AM"],
+  ["decision", "Evidence", "What Smart saw"],
+  ["decision", "Decision", "Two choices", ["Pause automatic filling", "That was us"]],
+  ["outcome", "Outcome", "Logged, and the pattern updates"],
+]);
+const flowStop = flow("03", "Taking it back", "Any mode", "One tap · under 200 ms", [
+  ["trigger", "Trigger", "Any screen, any mode"],
+  ["step", "", "One tap on Stop, no dialog"],
+  ["step", "", "Relay responds in under 200 ms"],
+  ["step", "", "“Manual until you switch back”"],
+  ["outcome", "Outcome", "Automatic resumes only when asked"],
+]);
 
 // 10 Design system: palette blocks, type, components, icon
 const PAL = [
-  ["Lime · the motor", "#CBF848", "203, 248, 72", "16.2 : 1", "AAA", "pal--lime"],
+  ["Lime · the running motor", "#CBF848", "203, 248, 72", "16.0 : 1", "AAA", "pal--lime"],
   ["Water", "#2F6BFF", "47, 107, 255", "4.4 : 1", "Large only", "pal--water"],
-  ["Text", "#FFFFFF", "255, 255, 255", "19.9 : 1", "AAA", "pal--white"],
-  ["Alert · low", "#FFA53D", "255, 165, 61", "10.2 : 1", "AAA", "pal--low"],
+  ["Chalk · text and actions", "#F4F2EC", "244, 242, 236", "17.6 : 1", "AAA", "pal--white"],
+  ["Alert · low or stale", "#FFA53D", "255, 165, 61", "10.0 : 1", "AAA", "pal--low"],
   ["Alert · critical", "#FF4D5E", "255, 77, 94", "6.1 : 1", "AA", "pal--crit"],
-  ["Text · muted", "#99A1AE", "153, 161, 174", "7.6 : 1", "AAA", "pal--muted"],
-  ["Text · faint", "#626A77", "98, 106, 119", "3.6 : 1", "Restricted", "pal--faint"],
+  ["Text · secondary", "#A3A8B0", "163, 168, 176", "8.2 : 1", "AAA", "pal--muted"],
+  ["Text · inactive", "#80868F", "128, 134, 143", "5.4 : 1", "AA", "pal--faint"],
 ];
 const ramp = [
-  ["F/Hero", "52 / 56 · Bold", "78%", "font-size:52px;font-weight:700;letter-spacing:-0.03em"],
-  ["F/Number", "34 / 38 · Bold", "04:12", "font-size:34px;font-weight:700"],
-  ["F/Headline", "26 / 32 · SemiBold", "Possible leak", "font-size:26px;font-weight:600"],
-  ["F/Title", "18 / 24 · SemiBold", "Tonight's plan", "font-size:18px;font-weight:600"],
-  ["F/Body", "14 / 20 · Regular", "1,560 of 2,000 litres", "font-size:14px;font-weight:400"],
-  ["F/Label", "12 / 16 · Medium", "Filling · 12 min left", "font-size:12px;font-weight:500"],
+  ["Number", "64 / 61 · Bold", "78%", "font-size:52px;font-weight:700;letter-spacing:-0.045em"],
+  ["Title", "28 / 31 · Bold", "Possible leak", "font-size:28px;font-weight:700;letter-spacing:-0.02em"],
+  ["Lead", "17 / 22 · SemiBold", "Tonight’s plan", "font-size:17px;font-weight:600"],
+  ["Body", "15 / 22 · Regular", "1,560 of 2,000 L", "font-size:15px;font-weight:400"],
+  ["Meta", "13 / 17 · Medium", "Live · updated 9:41", "font-size:13px;font-weight:500"],
 ];
-const secDesign = sec(shead("s-design", "Design system", "Colour that means something", "Five colour roles, one typeface and six component sets, with contrast measured against the app background.") +
+const secDesign = sec(shead("s-design", "Design system", "Colour that means something", "Two surfaces and no outlines, one typeface in five sizes, and colour roles that each mean one thing, measured against the app background.") +
   `<div class="pal reveal" role="list" aria-label="Colour palette">${PAL.map(([n, h, rgb, r, g, cls]) => `<div class="pal-b ${cls}" role="listitem"><p class="pal-n">${e(n)}</p><dl class="pal-v"><div><dt>HEX</dt><dd>${h}</dd></div><div><dt>RGB</dt><dd>${rgb}</dd></div><div><dt>Contrast</dt><dd>${r} · ${e(g)}</dd></div></dl></div>`).join("")}</div>` +
   bx([
     P("w5 h2 t12", pimg("icon-mockup.jpg", "An iPhone home screen showing the H2o Connect app icon, a water drop inside a house on a blue squircle, labelled H2o Connect", 736, 736, "On the home screen"), "photo"),
-    P("w7 t12", `${mono("type · archivo")}<dl class="h2-type">${ramp.map(([n, s, t, st]) => `<div><dt>${n}<small>${s}</small></dt><dd style="${st}">${e(t)}</dd></div>`).join("")}</dl>`),
-    P("w7 t12", `${mono("app icon · ios, watchos, wear os")}<div class="h2-icon-row">${[["app-icon.svg", 120, "Home screen"], ["app-icon.svg", 60, "Spotlight"], ["app-icon-round.svg", 88, "Apple Watch"], ["app-icon-round.svg", 64, "Galaxy Watch"]].map(([f, s, l]) => `<figure><img src="${A}${f}" alt="" width="${s}" height="${s}" loading="lazy" /><figcaption>${l}</figcaption></figure>`).join("")}</div>${mono("system rules")}${chips(["48 px targets, 56 px for Stop", "28 px card radius", "800 ms level easing", "160 ms state change", "No colour only states", "No confirm on Stop"])}`),
-    P("w12", `${mono("components · six sets, twenty variants")}<div class="h2-scroll"><figure class="h2-sheet h2-sheet--dark ds-sheet" style="--sheet-min:62rem"><img src="${A}ds-components.webp" alt="Component sheet. Tank: level drives colour and fill height, and only the critical state uses red. Button: action, neutral and stop. Toggle: on and off always labelled. Setting row: the building block of every settings screen. Tab bar: four destinations plus Fill now on top." width="2208" height="340" loading="lazy" decoding="async" /></figure></div>`),
+    P("w7 t12", `${pt("Archivo, in five sizes")}<dl class="h2-type">${ramp.map(([n, s, t, st]) => `<div><dt>${n}<small>${s}</small></dt><dd style="${st}">${e(t)}</dd></div>`).join("")}</dl>`),
+    P("w7 t12", `${pt("App icon")}<div class="h2-icon-row">${[["app-icon.svg", 120, "Home screen"], ["app-icon.svg", 60, "Spotlight"], ["app-icon-round.svg", 88, "Apple Watch"], ["app-icon-round.svg", 64, "Galaxy Watch"]].map(([f, s, l]) => `<figure><img src="${A}${f}" alt="" width="${s}" height="${s}" loading="lazy" /><figcaption>${l}</figcaption></figure>`).join("")}</div><h3 class="p-t" style="margin-top:1.1rem">Rules</h3>${list(["Two surfaces, no outlines", "Lime only while the motor runs", "48 px targets, 56 px for Stop", "24 px panel radius", "No colour only states", "No confirm on Stop"])}`),
+    P("w12", `${pt("Components, built in code with the screens")}<div class="h2-scroll"><figure class="h2-sheet h2-sheet--dark ds-sheet" style="--sheet-min:62rem"><img src="${A}ds-components.webp" alt="Component sheet. Tank: water, low and stale. Buttons: main in chalk, secondary on the raised surface, and a text link. The motor panel: lime while the motor runs, with Stop inside it. Toggle on and off. The segmented control for modes. The tab bar: four plain tabs." width="2208" height="400" loading="lazy" decoding="async" /></figure></div>`),
   ]));
 
 // 11 The product
 const F = [
-  ["Home", "The tank is the largest element and the only thing in blue. A live line says how fresh the reading is.", "Home: tank at 78%, 1,560 of 2,000 litres, live and updated 9:41, filling with 12 minutes left; motor running automatically for 04:12 with a labelled Stop button; 1,240 litres this week; labelled tabs, with Fill now dimmed while the tank fills", "water"],
-  ["Fill range", "Two levels, set once, in litres as well as percent.", "Fill range: stop filling at 90% (1,800 L), start filling at 25% (500 L), dragged on the tank itself", "water"],
-  ["Motor", "“Running” is confirmed by current draw. Stop never asks twice.", "Motor: running automatically, 04:12 of about 18 minutes, 22 L/min, 0.75 kW, dry run protection on, and a Stop motor button", "lime"],
-  ["Modes", "Three equal modes, one tap apart. Quiet hours never clash with Smart.", "Modes: Automatic selected, explaining that the motor starts at 25% and turns off at 90%, with eco mode, boost and quiet hours from 9 PM to 1 AM", "lime"],
-  ["Low water alert", "Manual mode warns, but never acts.", "Low water alert in manual mode: tank at 22%, motor off, with Start motor and Remind me in 15 minutes", "low"],
-  ["Usage", "Every run shows what it cost and what started it.", "Usage: 1,240 litres and 8.4 units this week, a daily bar chart, and recent motor runs with their cost and cause, marked auto or manual", "water"],
+  ["Home", "The tank leads. The lime panel appears only while the motor runs, with Stop inside it.", "Home: the overhead tank at 78%, 1,560 of 2,000 litres, full in 12 minutes, live and updated 9:41; a lime panel saying the motor is running automatically for 04:12, with a Stop button; 1,240 litres used this week; four tabs", "water"],
+  ["Fill range", "Both levels dragged on the tank, each labelled in percent and litres.", "Fill range: handles on the tank at stop 90% (1,800 L) and start 25% (500 L), labelled beside each handle, and Save range", "water"],
+  ["Motor", "“Running” is confirmed by current draw. Stop never asks twice.", "Motor: a lime panel, running automatically, 04:12 of about 18 minutes with a progress bar and a full-width Stop motor button; 22 L/min, 0.75 kW, 3 runs today; dry-run protection on", "lime"],
+  ["Modes", "Three equal modes, one tap apart. Quiet hours never clash with Smart.", "Modes: Automatic selected, keeping the tank between 25% and 90%, with eco mode on, boost off and quiet hours from 9 PM to 1 AM", "lime"],
+  ["Low water alert", "Manual mode warns, but never acts.", "Low water alert in manual mode at 6:42 AM: an orange tank at 22%, the motor off, with Start motor, Remind me in 15 minutes, and Switch to Automatic", "low"],
+  ["Usage", "Every run shows what it cost and what started it.", "Usage: 1,240 litres and 8.4 units of electricity this week, a daily bar chart, and recent runs with their minutes, litres, cost and cause, marked auto or manual", "water"],
   ["Smart mode", "Every prediction shows its confidence.", "Smart mode: reaching 25% at 4:10 PM tomorrow, learned from 34 days at 92% confidence; tonight's plan fills 01:40 to 02:05 off peak, after quiet hours, saving 38%", "lime"],
-  ["Smart insight", "Evidence first, then only what the installed kit can do.", "Smart insight: possible leak, 42 litres lost overnight, expected versus actual chart, then Pause automatic filling or That was us", "crit"],
-  ["Sensor not reporting", "Automatic holds off until the sensor is back. The unit's cut-offs still protect the motor.", "Sensor not reporting: the tank greyed at its last reading from 2 hours ago, with Check sensor and Start motor", "low"],
-  ["No internet", "The unit keeps running on its own, and Stop still works on home Wi‑Fi.", "No internet: an offline bar, the tank greyed at its last update at 9:12 AM, a note that the unit runs on its own, and the motor card with Stop still active", "water"],
+  ["Smart insight", "Evidence first, then only what the installed kit can do.", "Smart insight: possible leak noticed at 5:04 AM, 42 litres lost overnight while every tap was closed, an expected versus actual chart, then Pause automatic filling or That was us", "crit"],
+  ["Sensor not reporting", "Automatic holds off until the sensor is back. The unit's cut-offs still protect the motor.", "Sensor not reporting: the tank greyed at its last reading 2 hours ago, a note that Automatic won't start the motor, with Check sensor and Start motor", "low"],
+  ["No internet", "The unit keeps running on its own, and Stop still works on home Wi‑Fi.", "No internet: an offline bar, the tank greyed at its last update at 9:12 AM, a note that the unit runs on its own, and the lime motor panel with Stop still active", "water"],
+  ["Settings", "Appearance follows the phone, or stays dark or light.", "Settings: Appearance set to System, Dark or Light; tanks and sensors, members, the Matter link, and language and text size", "water"],
 ];
 // A final screen as a gallery card. Stories pass their own caption.
 const screenCard = (i, cap) => {
@@ -434,7 +390,7 @@ const screens = (cards, cols, bar, cls) => `<div class="shots h2-gallery${cls ? 
           </div>${bar ? `
           <div class="shots-bar"><p class="shots-hint">Click any screen to enlarge</p></div>` : ""}
         </div>`;
-const secProduct = sec(shead("s-product", "Product", "The ten screens", "Every screen answers “what's happening?” before it offers an action, including when the sensor or the internet drops out.") +
+const secProduct = sec(shead("s-product", "", "The eleven screens", "Each one says what's happening before it offers an action, including when the sensor or the internet drops.") +
   screens(F.map((_, i) => screenCard(i)), 5, true));
 
 // 12 Dynamic Island
@@ -447,11 +403,11 @@ const alertCol = (tone, title, action) => `<div style="--tone:var(--h2-${tone})"
 const secIsland = sec(shead("s-island", "Dynamic Island", "The tank leaves the app with you", "A Live Activity keeps the level and the countdown beside the camera, with the motor one tap away.") +
   bx([
     P("w4 h3 t6 m12", live, "flat h2-live"),
-    P("w4 t6 m12", mono("compact · beside the camera") + pt("Level and time left") + ps("A ring fills with the tank on one side of the camera and the countdown runs on the other. It turns orange when the tank runs low.")),
-    P("w4 t6 m12", mono("expanded · one tap") + pt("Stop, start, switch mode") + ps("Auto, Manual and Smart sit beside the motor button. Each change confirms in the line under the timer, so the island never jumps away.")),
-    P("w8 t6 m12", mono("alerts · grow out of the island, then fold back") + `<div class="h2-alerts">${alertCol("low", "Water is low", "Start motor, or Later") + alertCol("lime", "Tank full", "Stopped at 90%, 1,800 L") + alertCol("crit", "Possible leak", "Close inlet, or That was us")}</div>`),
-    P("w4 t6 m12", mono("from any app") + num("2", "taps") + ps("to stop the motor: the island, then Stop."), "lime"),
-    P("w4 t6 m12", mono("rules it keeps") + `<ol class="h2-rules">${["Only outside the app, as on iOS", "Auto on a low tank starts the motor", "Stop never asks twice"].map((r) => `<li>${e(r)}</li>`).join("")}</ol>`, "hatch"),
+    P("w4 t6 m12", pt("Level and time left") + ps("A ring fills with the tank on one side of the camera and the countdown runs on the other. It turns orange when the tank runs low.")),
+    P("w4 t6 m12", pt("Stop, start, switch mode") + ps("Auto, Manual and Smart sit beside the motor button. Each change confirms in the line under the timer, so the island never jumps away.")),
+    P("w8 t6 m12", pt("Alerts grow out of the island") + `<div class="h2-alerts">${alertCol("low", "Water is low", "Start motor, or Later") + alertCol("lime", "Tank full", "Stopped at 90%, 1,800 L") + alertCol("crit", "Possible leak", "Close inlet, or That was us")}</div>`),
+    P("w4 t6 m12", num("2", "taps") + ps("to stop the motor: the island, then Stop."), "lime"),
+    P("w4 t6 m12", pt("Rules it keeps") + `<ol class="h2-rules">${["Only outside the app, as on iOS", "Auto on a low tank starts the motor", "Stop never asks twice"].map((r) => `<li>${e(r)}</li>`).join("")}</ol>`, "hatch"),
   ]) + fine("On an iPhone this is a Live Activity whose buttons run App Intents (iOS 17 and later). There a tap opens the app and a long press expands the island; the prototype expands on a tap so it works in a browser."));
 
 // 13 Beyond the phone
@@ -472,150 +428,227 @@ const secDevices = sec(shead("s-devices", "Beyond the phone", "Every screen in t
     shot("dev-nest.jpg", 776, 582, "Nest Hub showing H2o: the overhead tank at 78% with the pump switched on, 3 runs today, and a suggested off peak routine", "Nest Hub · Google Home", "Status on the counter, with an off peak routine."),
   ]) + fine("Anyone at home can check the level and stop the pump from any surface. Safety settings only change in the app."));
 
-// Status: what is real, what is designed, and what a study would measure
-const secStatus = sec(shead("s-status", "Status", "What's real, and what's next", "The kit and app are in about 100 homes, but nothing here has been measured in a study yet. The numbers below are targets, set before the study so they can't be chosen afterwards.") +
-  bx([
-    P("w6 t12", mono("in homes now") + num("~100", "homes") + ps("Kit and app installed and tested with Dwaj‑Tech in Visakhapatnam, Narsapuram and Hyderabad."), "lime"),
-    P("w6 t12", mono("not done yet") + `<ul class="p-check p-check--out">${["A usability study with households", "Measured results from the installs", "The sump sensor and the inlet valve", "Telugu and Android versions, for where the kit is installed"].map((i) => `<li>${e(i)}</li>`).join("")}</ul>`, "hatch"),
-  ]) +
-  bx([
-    ["48", "px", "minimum touch target"], ["56", "px", "for Stop, never confirmed"], ["200", "%", "text size without breaking"], ["0", "", "states shown by colour alone"],
-  ].map(([n, u, t]) => P("w3 t6", mono("accessibility") + num(n, u) + ps(t)))) +
-  bx([
-    P("w4 t12", mono("edge states designed") + num("11") + ps("What the app shows, and what the system does, when something goes wrong."), "hatch"),
-    P("w8 t12", `<ol class="p-states">${[["Sensor silent","warn"],["Battery low","warn"],["Power cut mid fill","cut"],["Running, not filling","cut"],["Two people act at once","info"],["Smart still learning","info"],["Tank drained on purpose","info"],["Water in quiet hours","info"],["No internet","warn"],["Motor overheats","cut"],["Phone replaced","info"]].map(([t, s], i) => `<li class="sev--${s}"><p class="p-k">${String(i + 1).padStart(2, "0")}</p>${e(t)}</li>`).join("")}</ol><ul class="p-legend"><li class="sev--cut">cuts power on the device</li><li class="sev--warn">warns and waits</li><li class="sev--info">informs, nothing stops</li></ul>`),
-  ]) +
-  bx([
-    ["happiness", "4 of 5", "would leave it running unattended by week 4"],
-    ["engagement", "<3", "app opens a week by week 6. Designed to fall."],
-    ["adoption", "85%", "reach a first automatic fill within 24 hours"],
-    ["retention", "70%", "still automatic at day 60, after a fault"],
-    ["task success", "<3 s", "median time to stop the motor"],
-  ].map(([d, n, t], i) => P("w4 t6", mono("target · " + d) + num(n) + ps(t), i === 4 ? "blue" : "")).concat([
-    P("w4 t6", mono("planned study") + `<div class="p-strip">${[["8", "households"], ["6", "tasks"], ["2", "week diary"]].map(([n, t]) => `<div>${num(n)}${ps(t)}</div>`).join("")}</div>`),
-  ])) + fine("None of these targets have been measured yet. The 20 to 40% energy figure is an estimate."));
-
 // ---------- the four decision stories ----------
 // Each runs title, hook, before, decision, after, result. The "before" states are
 // described in words: only the final screens exist as images.
 const label = (t) => `<p class="h2-step reveal">${e(t)}</p>`;
 const xl = (t) => `<p class="p-xl">${e(t)}</p>`;
 
-// The options weighed for a decision: name, then why it lost (or "Chosen").
-const opts = (rows) => P("w6 t12", mono("options I weighed") + `<dl class="p-dl">${rows.map(([a, b]) => `<div><dt>${e(a)}</dt><dd>${e(b)}</dd></div>`).join("")}</dl>`);
-const tradeoff = (t, p) => P("w4 t12", mono("trade-off") + pt(t) + ps(p));
-const decision = (big, p) => P("w8 t12", mono("decision") + xl(big) + ps(p), "blue");
+// The design and decision journey: one line per phase, as on a transit map, as in the
+// Saaf Safar case study. Each stop is the phase's main decision and links to where it's told.
+const JOURNEY = [
+  ["frame", "F", "Frame", "#s-job", "A witness that can act", "The job, the options I weighed, four rules"],
+  ["kit", "K", "Kit", "#s-system", "Safety lives on the device", "Sonar on the lid, cut-offs in the unit"],
+  ["design", "D", "Design", "#s-evolve", "Hierarchy first, colour last", "Wireframes, three directions, Stop, the leak alert"],
+  ["install", "I", "Install", "#s-evolve", "Into about 100 homes", "Kit and app, tested with Dwaj‑Tech"],
+  ["review", "R", "Review", "#s-d5", "34 problems, then a redesign", "One system, in dark and light"],
+];
+const secJourney = `
+        <nav class="dj reveal" aria-labelledby="dj-h">
+          <h2 class="dj-title" id="dj-h">The design and decision journey</h2>
+          <ol class="dj-line">${JOURNEY.map(([k_, letter, phase, href, decision, what]) => `
+            <li class="dj-stop dj-stop--${k_}">
+              <a href="${href}">
+                <span class="dj-dot" aria-hidden="true">${letter}</span>
+                <span class="dj-phase">${phase}</span>
+                <span class="dj-decision">${e(decision)}</span>
+                <span class="dj-what">${e(what)}</span>
+              </a>
+            </li>`).join("")}
+          </ol>
+        </nav>`;
 
-const d1 = sec(shead(STORIES[0][0], STORIES[0][1], STORIES[0][2], "Most apps want a daily open. This one works when the person who runs the pump stops climbing up to check the tank.") +
+// How the screens took shape: the design journey, version by version.
+const evStep = (k_, phase, title, text, media, wide) => `
+          <li class="ev-step ev-step--${k_}${wide ? " ev-step--wide" : ""}">
+            <div class="ev-text"><span class="dj-phase">${phase}</span><h3>${e(title)}</h3><p>${e(text)}</p></div>
+            <div class="ev-media">${media}</div>
+          </li>`;
+const evPhone = (img, alt, capText) => `<figure class="ev-phone">${phone(img, alt, 720, 1558, ' loading="lazy"')}${capText ? `<figcaption>${e(capText)}</figcaption>` : ""}</figure>`;
+const secEvolve = sec(shead("s-evolve", "", "How the screens took shape", "Each version kept something from the one before.") +
+  `<ol class="ev reveal">` +
+  evStep("design", "Design", "Hierarchy in grey", "Six wireframes before any colour. The tank leads every screen.",
+    `<figure class="ev-sheet"><img src="${A}wireframes.webp" alt="Six greyscale wireframes: Home, Fill range, Modes, Alert, Motor and History" width="2280" height="725" loading="lazy" decoding="async" /></figure>`, true) +
+  evStep("design", "Design", "Three directions, one idea from each", "None worked whole. I kept the colour discipline, the card structure and the plain labels.",
+    `<div class="ev-row">${evPhone("exp-a.jpg", "Direction A, ambient dark: a glowing blue tank with motor, eco and boost cards", "Ambient: colour discipline")}${evPhone("exp-b.jpg", "Direction B, bento: saturated blue and lime blocks for overview, tank and weekly usage", "Bento: card structure")}${evPhone("exp-c.jpg", "Direction C, platform native: a light iOS-style settings layout", "Native: plain labels")}</div>`) +
+  evStep("install", "Install", "The first app", "What went into about 100 homes. Icon-only tabs and a bare square for Stop.",
+    `<div class="ev-row ev-row--one">${evPhone("v1-screen-f1.jpg", "The original Home screen: tank at 78%, a lime motor card with an unlabelled square stop button, and a tab bar of five icons with no labels")}</div>`) +
+  evStep("review", "Review", "A first fix that kept the look", "Twelve fixes from my review. Labels arrived, but every screen still had three things shouting.",
+    `<div class="ev-row ev-row--one">${evPhone("v2-screen-f1.jpg", "The patched Home screen: labelled tabs and Stop, a live line, but three large numbers inside outlined cards")}</div>`) +
+  evStep("review", "Review", "One system, in dark and light", "Two surfaces, five type sizes, and lime only while the motor runs.",
+    `<div class="ev-row ev-row--two">${evPhone("screen-f1.jpg", F[0][2], "Dark")}${evPhone("screen-f1-light.jpg", "Home in light mode", "Light")}</div>`) +
+  `</ol>`);
+
+// ---------- the story ----------
+const secProblem = sec(shead("s-problem", "", "Water comes for two hours a day. Nobody can see the tank.", "Homes store it in a rooftop tank and pump it up by hand, with no gauge and no warning.") +
   bx([
-    P("w6 t12", mono("before") + pt("A remote control for the motor") + ps("The float switches and app controllers on sale could start and stop a pump. None could say what the tank was about to do, or prove what it had just done. So people kept checking by hand: listening for the overflow, climbing to the roof, switching off early.")),
-    opts([
-      ["A remote for the motor", "What the products on sale already do. It saves the walk to the switch, not the climb to the roof."],
-      ["A fully automatic black box", "Nothing to learn and nothing to trust. The first silent failure sends people back to checking."],
-      ["A witness that can act", "Chosen. It shows what it is about to do, proves what it did, and stops in one tap."],
-    ]),
-    decision("Not a controller. A witness that can act.", "State and evidence come first, controls second. Every automatic action leaves a receipt, and one tap takes control back. Four principles hold every screen to that."),
-    tradeoff("More to show, less magic", "Every automatic action now needs evidence and a receipt on screen. That costs space and design time a plain remote would not."),
+    P("w12", `<div class="h2-scroll"><div class="vz-day">${dayChart}</div></div>` + cap("A typical day. The times are an example; the two-hour window is what most town homes get.")),
+    P("w4 t6", num("2", "hrs") + ps("of piped water on a normal day in most town homes.") + `<p class="vz-src">World Bank</p>`),
+    P("w4 t6", num("<6", "hrs") + ps("of supply a day in many Indian cities.") + `<p class="vz-src">MIT Tata Center</p>`),
+    P("w4 t12", num("73.9", "%") + ps("of rural homes now have a tap, so the problem has moved indoors.") + `<p class="vz-src">Jal Jeevan Mission, 2024</p>`),
+    P("w7 t12", pimg("overflow-splash.jpg", "Water gushing over the rim of an overfilled storage tank", 800, 450, "Every overflow is water the household already paid to pump."), "photo"),
+    P("w5 t12", `<p class="p-xl">${e("People check the tank because nothing tells them what it's doing.")}</p>` + ps("I worked from desk research, then the kit went into about 100 homes with Dwaj‑Tech."), "blue"),
+  ]));
+
+const secJob = sec(shead("s-job", "", "What people are really trying to do", "When the water comes, they want the tank filled without overflowing or running the pump dry, so they can stop checking.") +
+  forces([
+    ["push", "Pushes away from the switch", "“Every overflow is water we already paid to pump.”", "Answered by: the motor stops at 90% on its own."],
+    ["pull", "Pulls toward H2o", "“I want to know without climbing up there.”", "Answered by: the level, live, on Home."],
+    ["anxiety", "Anxiety", "“What if it fails while nobody's watching?”", "Answered by: cut-offs on the device and two failure screens."],
+    ["habit", "Habit", "“I know the sound it makes when it's nearly full.”", "Answered by: the wall switch always wins."],
+  ]) + fine("These are assumptions from desk research, not interviews. People switch when the push and the pull beat the anxiety and the habit."));
+
+// The four principles every screen is checked against. They come out of decision 1.
+const principles = `<ol class="pr reveal">${[
+  ["State before controls", "No home screen that opens on a power button."],
+  ["Every action leaves a receipt", "No silent schedules."],
+  ["Colour means something", "No colour used to fill space."],
+  ["The wall switch always wins", "No flow that traps a household in the app."],
+].map(([t, r]) => `<li><h3>${t}</h3><p>${r}</p></li>`).join("")}</ol>`;
+
+// Each decision is told in six parts: title, hook (the section head), before, decision,
+// after, result. The options I weighed are drawn, not written, wherever they can be.
+const before = (t, p) => P("w5 t12", `<p class="st-k">Before</p>` + pt(t) + ps(p));
+const decide = (big, p) => P("w7 t12", `<p class="st-k">Decision</p>` + xl(big) + ps(p), "blue");
+const result = (t, p, tone) => bx([P("w12", `<p class="st-k">Result</p>` + pt(t) + ps(p), tone)]);
+
+// How it works, in four steps a recruiter can follow without reading the rest.
+const hwIco = (d) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const HOW = [
+  ["Sense", hwIco('<path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.1 19.1 19"/>'), "A sonar sensor on the lid reads the level. It never touches the water."],
+  ["Decide", hwIco('<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>'), "The unit by the switch starts the motor at 25% and stops it at 90%, off-peak when it can."],
+  ["Protect", hwIco('<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>'), "If the sump runs dry or the motor overheats, it cuts power in under 200 ms, with or without internet."],
+  ["Show", hwIco('<rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/>'), "The app shows the level live, keeps a receipt for every run, and stops the motor in one tap."],
+];
+const secHow = sec(shead("s-how", "", "How it works", "A kit that fits the tank, pump and switch a home already has, and an app that tells you what it's doing.") +
+  `<div class="hw reveal">
+    <ol class="hw-steps">${HOW.map(([t, ico, p]) => `<li><span class="hw-ico">${ico}</span><h3>${t}</h3><p>${e(p)}</p></li>`).join("")}</ol>
+    <div class="hw-phone">${phone("screen-f1.jpg", F[0][2], 720, 1558, ' loading="lazy"')}</div>
+  </div>`);
+
+// What it saves. Design behaviour, in-app examples and one estimate, each labelled as such.
+const secImpact = sec(shead("s-impact", "", "What it saves", "Water that used to run over the top, and power that used to run at the wrong hour.") +
+  `<div class="im reveal">
+    <div class="im-c im-c--water">
+      <p class="im-k">${hwIco('<path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"/>')}Water</p>
+      <p class="im-n">Never past <b>90%</b></p>
+      <p class="im-p">The motor stops at 1,800 of 2,000 litres, so the tank doesn't overflow.</p>
+      <ul class="im-l">
+        <li><b>42 L</b><span>lost overnight, flagged by the leak alert the next morning (the app's example)</span></li>
+        <li><b>500 L</b><span>is where a refill starts, so the tank never sits empty waiting for someone</span></li>
+      </ul>
+    </div>
+    <div class="im-c im-c--power">
+      <p class="im-k">${hwIco('<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>')}Power</p>
+      <p class="im-n"><b>20 to 40%</b> lower bills</p>
+      <p class="im-p">Estimated for large facilities, from filling only as needed and at off-peak hours.</p>
+      <ul class="im-l">
+        <li><b>38%</b><span>cheaper for tonight's fill, moved to the off-peak tariff (the app's example)</span></li>
+        <li><b>&lt;200 ms</b><span>to cut the motor on a dry run, before it burns out</span></li>
+      </ul>
+    </div>
+  </div>` + fine("None of this is measured in the homes yet. The study will report real litres and units saved."));
+
+const d1 = sec(shead(STORIES[0][0], "", STORIES[0][2], "Most apps want a daily open. This one works when the person who runs the pump stops climbing up to the roof.") +
+  bx([
+    before("A remote for the motor", "The controllers on sale could start and stop a pump. None could say what the tank would do next, or prove what it had done."),
+    decide("A witness that can act.", "State and proof come first, controls second. It costs screen space a plain remote wouldn't need."),
+    P("w12", optionGrid + cap("The three options I weighed. Only one shows the tank and proves what it did.")),
   ]) +
-  principles +
-  label("Three visual directions were scored against the principles. None held all four, so the final design keeps one thing from each.") +
-  explorations +
+  label("Four rules hold every screen to that.") + principles +
   label("After: the tank first, the controls second.") +
   screens([
-    screenCard(0, "Opens on the tank: level, litres, time to full, and how fresh the reading is. The motor card says what it is doing."),
-    screenCard(5, "Every run is logged with what it cost and what started it."),
-    screenCard(6, "Smart says what it plans to do tonight, and how sure it is."),
+    screenCard(0, "Opens on the tank, with how fresh the reading is."),
+    screenCard(5, "Every run has a cost and a cause."),
+    screenCard(6, "Smart says what it plans tonight, and how sure it is."),
   ], 3, false, "h2-gallery--strip") +
-  bx([P("w12", mono("result") + pt("In about 100 homes, with the app") + ps("Installed and tested with Dwaj‑Tech. The target is fewer than three app opens a week by week six, which would mean people have stopped checking. It has not been measured yet."), "lime")]));
+  result("In about 100 homes", "My target is fewer than three app opens a week by week six, which would mean people stopped checking. Not measured yet.", "lime"));
 
-const d2 = sec(shead(STORIES[1][0], STORIES[1][1], STORIES[1][2], "Stop is the button people reach for when something already looks wrong. A confirmation dialog there costs seconds, and trust.") +
+const d2 = sec(shead(STORIES[1][0], "", STORIES[1][2], "People reach for Stop when something already looks wrong, so every second counts.") +
   bx([
-    P("w6 t12", mono("before") + pt("Stop sat below the fold") + ps("In my own review of the first layout, Stop needed a scroll on small phones, and it followed the usual pattern of confirming a destructive action. For a motor that may be running dry, both are a delay.")),
-    opts([
-      ["Confirm before stopping", "The standard for destructive actions. It costs seconds when the motor may be running dry."],
-      ["Stop, then offer undo", "Kinder to mis-taps, but restarting a pump is not a neutral undo, and the bar covers the reading."],
-      ["One tap, no dialog, and the wall switch wins", "Chosen. A mis-tap costs one restart; a slow stop can cost a motor."],
-    ]),
-    decision("One tap, no dialog, and the wall switch always wins.", "Stop sits in the motor card on Home and runs full width on the Motor screen, labelled, in one style. The relay answers in under 200 ms, the app says “Manual until you switch back”, and the Manual switch on the unit overrides the app in hardware."),
-    tradeoff("Accidental stops can happen", "A stray tap stops the motor and switches to Manual. I accepted that: restarting is one tap, and the app says why it stopped."),
+    before("Below the fold, behind a dialog", "On small phones Stop needed a scroll, and it asked for confirmation like any destructive action."),
+    decide("One tap, no dialog. The wall switch always wins.", "A stray tap can stop the motor. Restarting is one tap, and the app says why it stopped."),
+    P("w12", stopSteps + cap("What stands between “that looks wrong” and a stopped motor.")),
+  ]) +
+  label("After: Stop is one tap on every surface.") + surfaces + flowStop +
+  bx([
     P("w4 h2 t6 m12", phone("screen-f3.jpg", F[2][2], 720, 1558, ' loading="lazy"'), "flat h2-live tall"),
-    P("w8 t6 m12", mono("after · stop from every surface") + `<dl class="p-dl">${[
-      ["Phone", "In the motor card on Home, full width on the Motor screen"],
-      ["Dynamic Island", "Two taps from any app"],
-      ["Watch", "Where the thumb lands"],
-      ["Kitchen display", "“Alexa, stop the pump”"],
-      ["The unit", "A red ON and OFF button, and a Manual switch that overrides the app"],
-    ].map(([a, b]) => `<div><dt>${e(a)}</dt><dd>${e(b)}</dd></div>`).join("")}</dl>`),
-    P("w8 t6 m12", mono("result") + pt("Target: under 3 seconds to stop") + ps("The median time to stop the motor in a planned study, not measured yet. On the unit itself, the ON and OFF button and the Manual switch work with the phone or router down."), "lime"),
+    P("w8 t6 m12", `<p class="st-k">Result</p>` + pt("Target: stopped in under 3 seconds") + ps("Measured as the median in a planned study. The unit's button and Manual switch work with the phone or router down."), "lime"),
+    P("w8 t6 m12", pt("Why no undo") + ps("Restarting a pump isn't a neutral undo, and an undo bar would cover the reading.")),
   ]));
 
-const d3 = sec(shead(STORIES[2][0], STORIES[2][1], STORIES[2][2], "An alert that asks “Close the valve?” before it shows why gets dismissed, or believed without a reason.") +
+const d3 = sec(shead(STORIES[2][0], "", STORIES[2][2], "An alert that asks before it explains gets dismissed, or believed for no reason.") +
   bx([
-    P("w6 t12", mono("before") + pt("The question came first") + ps("My first version led with the two buttons and put the evidence underneath. Reviewing it, I was asking people to act on a claim the app had not shown yet.")),
-    opts([
-      ["Ask first, explain below", "My first version. Quick to act on, but it asks for trust before it earns it."],
-      ["Act on its own", "Shut off water without asking. Fast, but a false alarm at 5 AM leaves the family with no water."],
-      ["Evidence first, then two choices", "Chosen. Slower by one glance, and every answer teaches Smart."],
-    ]),
-    decision("If Smart can't explain why, it doesn't act. It asks.", "The chart of expected against actual comes first, then two choices. “That was us” is a full answer: it logs the event and teaches Smart the household's pattern. Smart is a rule engine over 30 days of the home's own data, not a chatbot or a trained model."),
-    tradeoff("Slower by one glance", "The chart takes a moment to read before the buttons. For a possible leak, a few seconds matter less than a wrong shut-off."),
+    before("The question came first", "My first version led with two buttons and put the evidence underneath."),
+    decide("If Smart can't explain why, it asks.", "The chart comes before the choices, so it takes one glance longer. A wrong shut-off at 5 AM costs far more."),
+  ]) +
+  label("After: what Smart saw, then two choices.") + flowLeak +
+  bx([
     P("w4 h2 t6 m12", phone("screen-f8.jpg", F[7][2], 720, 1558, ' loading="lazy"'), "flat h2-live tall"),
-    P("w8 t6 m12", mono("the mess · a part that isn't built") + pt("I designed for a valve the kit doesn't have") + ps("The first alert's main button was “Close the inlet valve”. The valve is still planned hardware, so in the homes where the kit is installed that button could never work. The alert now offers what the kit can do, pause automatic filling, with an undo. Homes with a valve will get “Close the inlet valve”."), "hatch"),
-    P("w8 t6 m12", mono("result") + pt("Not measured yet") + ps("Every answer is logged, so a study can count how often households agree with what Smart saw.")),
+    P("w8 t6 m12", pt("Only what the kit can do") + ps("The main choice pauses automatic filling, with Resume. The inlet valve is still planned, so “Close the valve” waits for it.")),
+    P("w8 t6 m12", `<p class="st-k">Result</p>` + pt("Not measured yet") + ps("Every answer is logged, so a study can count how often households agree with Smart.")),
   ]));
 
-const d4 = sec(shead(STORIES[3][0], STORIES[3][1], STORIES[3][2], "“78%” means little at the tap. “1,560 of 2,000 litres, full in 12 minutes” answers the question people actually ask.") +
+const d4 = sec(shead(STORIES[3][0], "", STORIES[3][2], "Nobody fills a bucket in percent.") +
   bx([
-    P("w6 t12", mono("before") + pt("One big percentage") + ps("Early screens led with a single percentage. In my own review, every reading needed a conversion: how many buckets is that, and how long until it's full? The Automatic card had the same gap: it said “Automatic” without saying what it would do.")),
-    opts([
-      ["Percent only", "Compact, and what most tank apps show. But nobody fills a bucket in percent."],
-      ["Litres only", "Concrete, but meaningless without knowing the size of the tank."],
-      ["Both, with time to full", "Chosen. Percent for the shape of the tank, litres and minutes for the question at the tap."],
-    ]),
-    decision("Litres and minutes at equal weight, and settings that say what they will do.", "Home shows litres beside the percentage and time to full in minutes. The fill range is set on the tank itself, and the Automatic card spells out both levels."),
-    tradeoff("More numbers on Home", "Three readings where there was one. I keep them in one block so they read as a single answer."),
+    before("One big percentage", "Every reading needed a sum: how many buckets is that, and how long until it's full?"),
+    decide("Percent, litres and minutes, read as one answer.", "Three numbers where there was one, so they sit together in one block."),
+    P("w12", tankDiagram + cap("One reading three ways, with the two levels the motor works between.")),
   ]) +
+  label("After: litres and minutes everywhere, down to the receipt for each fill.") + flowDaily +
   screens([
-    screenCard(1, "Both levels dragged on the tank, in percent and litres, with a line on what the choice costs."),
-    screenCard(3, "The Automatic card spells out both levels: the motor starts at 25% and stops at 90%."),
+    screenCard(1, "Each level labelled in percent and litres, beside its handle."),
+    screenCard(3, "Automatic says exactly when the motor starts and stops."),
   ]) +
-  bx([P("w12", mono("result") + pt("Nothing left to convert") + ps("On Home and Fill range every percentage sits beside litres, and every wait is in minutes. Not measured in a study yet."))]));
+  result("Nothing left to convert", "Every percentage sits beside litres and every wait is in minutes. Not measured in a study yet."));
 
-// Decision 5 is the journey back through my own work: the original screens against the rebuilt ones.
-const vCard = (img, tag, title, cap, alt, tone) => `
-            <figure class="shot-card">
-              <div class="h2-stage h2-stage--${tone}">${phone(img, alt, 720, 1558, ' loading="lazy"')}</div>
-              <figcaption>${mono(tag)}<h3 class="p-t">${e(title)}</h3><p class="p-s">${e(cap)}</p></figcaption>
-            </figure>`;
-const d5 = sec(shead(STORIES[4][0], STORIES[4][1], STORIES[4][2], "With the kit in about 100 homes, I went back through every screen against Nielsen's ten heuristics and the Laws of UX. The polish was hiding problems.") +
+const d5 = sec(shead(STORIES[4][0], "", STORIES[4][2], "After the installs I went back through every screen against Nielsen's heuristics and the Laws of UX. My first fix didn't go far enough.") +
   bx([
-    P("w6 t12", mono("before") + pt("A polished app with quiet contradictions") + ps("Quiet hours banned the motor at night while Smart planned a 1:40 AM fill. The tabs were icons with no labels. Stop on Home was a bare square. The leak alert offered a valve the kit doesn't have, and nothing showed whether the reading was live.")),
-    opts([
-      ["Rebuild to the letter of the review", "Fix all 34, including the lime colour and every number. Weeks of work, and the app would lose the look households already know."],
-      ["Leave it", "It works in homes today. But these contradictions are exactly what erodes trust."],
-      ["Fix what breaks trust, keep the signature", "Chosen. Twelve fixes, two new screens, three things kept on purpose."],
-    ]),
-    decision("Fix what breaks trust. Keep what people already recognise.", "Labels on every tab, a labelled Stop in one style, a live line on the reading, a cost and a cause on every run, a leak action the kit can actually do, and quiet hours that Smart never breaks."),
-    tradeoff("Three things I kept", "The lime running card, Stop inside it, and the existing numbers. Lime now means “the motor”, not “press this”, and the numbers still don't fully reconcile across screens. Both are on my list."),
+    before("Polished, with quiet contradictions", "Quiet hours banned night fills while Smart planned one at 1:40 AM. Tabs had no labels, and Stop was a bare square."),
+    decide("One lead per screen, and colour that means one thing.", "The lime card every screen leaned on now shows only while the motor runs. People who knew the old app will need a moment."),
+    P("w12", issueBar + stagesRow([["34", "issues found in the review"], ["12", "fixed in a first pass that kept the old look"], ["11", "screens redesigned on one system"]])),
   ]) +
-  label("Before and after: the original screens, then the rebuilt ones.") +
-  screens([
-    vCard("v1-screen-f1.jpg", "before", "Home", "Icon-only tabs, a bare square for Stop, and no sign of whether 78% was live.", "The original Home screen: tank at 78%, a lime motor card with an unlabelled square stop button, and a tab bar of five icons with no labels", "water"),
-    vCard("screen-f1.jpg", "after", "Home", "Labelled tabs, a labelled Stop, a live line, and Fill now dimmed while the tank fills.", F[0][2], "water"),
-    vCard("v1-screen-f8.jpg", "before", "Possible leak", "The main button closed a valve the installed kit doesn't have.", "The original leak alert, with Close the inlet valve and That was us, ignore it", "crit"),
-    vCard("screen-f8.jpg", "after", "Possible leak", "Pause automatic filling, which the kit can do, and a shorter second choice.", F[7][2], "crit"),
-  ], 4) +
-  label("And two states the app never had: when the sensor goes quiet, and when the internet drops.") +
+  label("After: four tabs, one level deep. Settings sit behind the tank menu.") + iaMap +
+  label("Two states the app never had: a silent sensor and no internet.") +
   screens([screenCard(8), screenCard(9)]) +
-  bx([P("w12", mono("result") + pt("34 issues found, 4 of them major. 12 fixes built.") + ps("The two new screens answer the fear behind the whole product: automatic things break when nobody's watching. Not tested with households yet."), "lime")]));
+  result("Eleven screens on one system", "The failure screens answer the fear behind the product: automatic things break when nobody's watching. Not tested with households yet.", "lime"));
 
-// ---------- appendix ----------
-const appendix = `
-        <details class="h2-appx reveal" id="s-appendix">
-          <summary><span class="h2-chip-n">Appendix</span><span class="h2-appx-t">Process: people, journey, plan, structure and directions</span><span class="h2-appx-chev" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></summary>
-          <div class="h2-appx-body">${appPeople}${appJourney}${appPlan}${appStructure}${appDirections}</div>
-        </details>`;
+const secAI = sec(shead("s-ai", "", "How I built it with AI", "I made the calls; Claude Code wrote and rendered the code. Change a screen once and everything below follows.") +
+  pipeline +
+  bx([
+    P("w6 t12", pt("I decided") + `<ul class="p-check">${["The principles, and every decision on the journey", "Which review findings to fix, and what to keep", "When a version wasn't good enough, my own included"].map((i) => `<li>${e(i)}</li>`).join("")}</ul>`),
+    P("w6 t12", pt("The AI did") + `<ul class="p-check">${["Wrote the screens in HTML and CSS", "Audited them against heuristics and anti-slop rules", "Rendered every image and built the film"].map((i) => `<li>${e(i)}</li>`).join("")}</ul>`),
+  ]));
 
+const secMess = sec(shead("s-mess", "", "What went wrong", "Mistakes I caught late, compromises I kept, and what isn't finished.") +
+  messList([
+    ["Changed", "low", "I designed for a valve the kit doesn't have", "The first leak alert offered to close it. It now pauses automatic filling instead."],
+    ["Redesigned", "low", "My first fix didn't fix the feel", "Twelve fixes later the screens still looked busy, so I rebuilt the system (decision 5)."],
+    ["Kept", "dim", "Some numbers don't add up", "Flow, run times and energy come from different stages. I kept them rather than invent new ones."],
+    ["Not measured", "dim", "No study yet", "Every result here is a target, set before the study."],
+    ["Not built", "crit", "English and iPhone only", "The homes are in Andhra Pradesh and Telangana, where most phones run Android and many people read Telugu."],
+  ]));
+
+const secStatus = sec(shead("s-status", "", "Targets, set before the study", "So they can't be picked afterwards. The kit and app are in about 100 homes; none of this is measured yet.") +
+  heartBoard([
+    ["Happiness", "4 of 5", "would leave it running unattended by week 4"],
+    ["Engagement", "<3 a week", "app opens by week 6. Meant to fall."],
+    ["Adoption", "85%", "reach a first automatic fill within 24 hours"],
+    ["Retention", "70%", "still on Automatic at day 60, after a fault"],
+    ["Task success", "<3 s", "median time to stop the motor"],
+  ]) +
+  bx([
+    ["48", "px", "smallest touch target"], ["56", "px", "for Stop, never confirmed"], ["200", "%", "text size without breaking"], ["0", "", "states shown by colour alone"],
+  ].map(([n, u, t]) => P("w3 t6", num(n, u) + ps(t)))) +
+  fine("The planned study: 8 households, 6 tasks and a two-week diary. The 20 to 40% energy saving is an estimate."));
+
+const secThemes = sec(shead("s-themes", "", "Dark and light", "Picked in Settings › Appearance, or left to follow the phone. Lime, water blue and the Stop pill look the same in both.") +
+  screens([
+    pairCard("f1", "Home", "The tank and the motor panel."),
+    pairCard("f3", "Motor", "Lime reads the same on either ground."),
+    pairCard("f8", "Possible leak", "The chart keeps its contrast in daylight."),
+    pairCard("f11", "Settings", "Where the choice lives."),
+  ], 2));
 
 // Closing
 const secClose = `
@@ -627,7 +660,7 @@ const secClose = `
               <p class="h2-p">H2o Connect &middot; Domestic water management &middot; A product by Dwaj&#8209;Tech &middot; 2026</p>
               <dl class="case-meta">
                 <div><dt>Role</dt><dd>End to end UX and UI, sole designer</dd></div>
-                <div><dt>Built with</dt><dd>Figma &middot; HTML, CSS and JavaScript prototype</dd></div>
+                <div><dt>Built with</dt><dd>Figma &middot; HTML, CSS and JavaScript &middot; Claude Code</dd></div>
                 <div><dt>Contact</dt><dd><a href="mailto:sthita.ksp2709@gmail.com">sthita.ksp2709@gmail.com</a></dd></div>
               </dl>
             </div>
@@ -635,9 +668,9 @@ const secClose = `
           </div>
         </section>`;
 
-// Page order: the problem, the four decisions, then the product in full, and
-// the process last, folded away.
-S.push(secProblem, secToc, d1, d2, d3, d4, d5, secSystem, secProduct, secIsland, secDevices, secDesign, secStatus, appendix, secClose);
+// Page order: the decision map and the film first, then the problem, the five decision
+// stories, how it was built, the mess, and the product in full.
+S.push(secProblem, secJob, secHow, secImpact, d1, d2, d3, d4, secEvolve, d5, secAI, secMess, secSystem, secProduct, secIsland, secDevices, secDesign, secThemes, secStatus, secClose);
 
 // ---------- next project ----------
 const next = `
@@ -720,8 +753,12 @@ const BEATS = [
   ["Usage", ["Every run", "leaves a receipt."], "Litres and electricity side by side, with what each run cost and what started it."],
   ["Decision 3 · Leak", ["Evidence first.", "Then a choice."], "The only alert that interrupts shows what Smart saw before it asks anything."],
   ["Decision 5 · Failsafes", ["Built for", "the bad day."], "Sensor silent: Automatic holds off. Internet down: the unit runs on its own, and Stop still works at home."],
+  ["The whole app", ["Ten screens, one tank."], ""],
   ["A product by Dwaj‑Tech", ["H2o Connect"], "Shows what the pump is about to do, proves what it did, and hands control back in one tap."],
 ];
+// Big outlined figures behind the phone, one per chapter; film.js counts them up.
+const NUMS = 8;
+const DROP = '<path d="M12 2.5c-.6 3-2.4 5.7-4.7 7.6C5.6 11.6 4.6 13.5 4.6 15.6a7.4 7.4 0 0 0 14.8 0c0-2.1-1-4-2.7-5.5C14.4 8.2 12.6 5.5 12 2.5z" fill="currentColor"/>';
 const beat = ([k, lines, sub], i) => `<div class="mg-beat" data-b="${i}"><p class="mg-k">${e(k)}</p><p class="mg-h">${lines.map((l) => `<span class="mg-l">${l.split(" ").map((w) => `<span class="mg-w"><span>${e(w)}</span></span>`).join(" ")}</span>`).join("")}</p><p class="mg-p">${e(sub)}</p></div>`;
 // Details that lift out of the phone: [kicker, title, sub].
 const CALLOUTS = [
@@ -736,22 +773,24 @@ const callout = ([k, t, s], i) => `<div class="mg-co" data-c="${i}"><i class="mg
 
 const ic = (d, cls) => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 const I_VOL = '<path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"/>';
-const FILM_CH = [["Home", 0, 9.5], ["Range", 9.5, 16], ["Stop", 16, 23.5], ["Alerts", 23.5, 28.5], ["Modes", 28.5, 35], ["Usage", 35, 41.5], ["Leak", 41.5, 50], ["Failsafes", 50, 62]];
+const FILM_CH = [["Home", 0, 9.5], ["Range", 9.5, 16], ["Stop", 16, 23.5], ["Alerts", 23.5, 28.5], ["Modes", 28.5, 35], ["Usage", 35, 41.5], ["Leak", 41.5, 50], ["Failsafes", 50, 57], ["The app", 57, 70]];
 const film = `
         <header class="h2-head h2-head--solo" id="s-film">
           <div>
-            <div class="h2-chips"><span class="h2-chip-n">Walkthrough</span></div>
             <h2 class="h2-title">See it in motion</h2>
-            <p class="h2-intro">${e("One minute of the app in use: the tank, the fill range, Stop, the alerts, the three modes, usage, the leak alert and the two failure states.")}</p>
+            <p class="h2-intro">${e("Seventy seconds of the app in use: the tank, the fill range, Stop, the alerts, the three modes, usage, the leak alert and the two failure states.")}</p>
           </div>
         </header>
         <div class="h2-card mo mg reveal" data-film>
-          <p class="sr-only">${e("Animated walkthrough of the H2o Connect app on a phone. The app opens on Home and the tank fills to 78%, 1,560 of 2,000 litres, with a live reading. A tap on the tank opens the fill range, where both levels are dragged to 90% and 25%, shown in litres too. On the Motor tab, one tap on Stop stops the motor with no confirmation and the app says it stays in Manual. A low water notification opens the alert, which offers to start the motor and to switch to Automatic. In Modes, a tap on Smart shows its prediction, learned from 34 days, and tonight’s off-peak plan. Usage shows the week’s water and electricity and every motor run with its cost and what started it. A possible leak notification opens the alert: the chart of expected and actual levels comes first, then 42 litres lost overnight, then two choices, and pausing automatic filling shows a toast with Resume. Finally Home shows Sensor not reporting and then No internet.")}</p>
+          <p class="sr-only">${e("Animated walkthrough of the H2o Connect app on a phone. The app opens on Home and the tank fills to 78%, 1,560 of 2,000 litres, with a live reading. A tap on the tank opens the fill range, where both levels are dragged to 90% and 25%, shown in litres too. On the Motor tab, one tap on Stop stops the motor with no confirmation and the app says it stays in Manual. A low water notification opens the alert, which offers to start the motor and to switch to Automatic. In Modes, a tap on Smart shows its prediction, learned from 34 days, and tonight’s off-peak plan. Usage shows the week’s water and electricity and every motor run with its cost and what started it. A possible leak notification opens the alert: the chart of expected and actual levels comes first, then 42 litres lost overnight, then two choices, and pausing automatic filling shows a toast with Resume. Home then shows Sensor not reporting and No internet, and all ten screens turn together in an arc before the end card.")}</p>
           <div class="mo-stage">
             <div class="mg-vis" aria-hidden="true">
-              <div class="mg-panel"></div>
+              <svg class="mg-water" preserveAspectRatio="none"><path class="mg-wave mg-wave--b" /><path class="mg-wave mg-wave--f" /></svg>
+              ${Array.from({ length: NUMS }, (_, i) => `<p class="mg-num" data-n="${i}"></p>`).join("")}
+              <svg class="mg-drop" viewBox="0 0 24 24">${DROP}</svg><i class="mg-rip"></i>
               <div class="mg-type">${BEATS.map(beat).join("")}</div>
               ${CALLOUTS.map(callout).join("")}
+              <div class="mg-wall">${SCREENS.ORDER.map((k) => `<div class="mg-card"><img src="${A}screen-${k}.jpg" alt="" width="720" height="1558" loading="lazy" decoding="async" /></div>`).join("")}</div>
               <div class="mg-phone"><div class="mg-screen"><div class="mg-app"></div></div><i class="mg-island"></i></div>
             </div>
           </div>
@@ -768,7 +807,7 @@ const skip = `
           <a class="h2-skip" href="#s-product" aria-describedby="h2-skip-note"><span class="h2-skip-label">Skip to the final design</span><span class="h2-skip-chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></a>
           <p class="h2-skip-note" id="h2-skip-note">Jumps past the decisions to the ten screens</p>
         </div>`;
-S.unshift(sec(film + skip));
+S.unshift(sec(film + skip), sec(secJourney));
 
 const html = head + `  <main id="top" class="case-h2o">` + hero + `
 
