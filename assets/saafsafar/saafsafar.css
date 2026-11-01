@@ -26,11 +26,9 @@
   --surface-hi: rgba(138, 156, 255, 0.1);
   --surface-edge: rgba(138, 156, 255, 0.3);
   --ghost-ink: rgba(138, 156, 255, 0.12);
-  --nav-bg: rgba(16, 17, 20, 0.78);
+  --nav-bg: rgba(16, 17, 20, 0.98);
   --nav-bg-solid: rgba(16, 17, 20, 0.96);
   --outline-soft: rgba(138, 156, 255, 0.35);
-  --dot-rgb: 37, 71, 232;
-  --dot-strength: 0.6;
   --pollen: #5b76ff;
 
   --ss-royal: #2547e8;
@@ -60,11 +58,9 @@
   --surface-hi: rgba(16, 17, 20, 0.07);
   --surface-edge: rgba(16, 17, 20, 0.2);
   --ghost-ink: rgba(0, 75, 224, 0.1);
-  --nav-bg: rgba(238, 241, 250, 0.84);
+  --nav-bg: rgba(238, 241, 250, 0.98);
   --nav-bg-solid: rgba(238, 241, 250, 0.97);
   --outline-soft: rgba(16, 17, 20, 0.3);
-  --dot-rgb: 0, 86, 255;
-  --dot-strength: 0.35;
 }
 
 /* Site chrome in Royal Blue */

@@ -56,9 +56,10 @@
   --blue-gradient-wide: linear-gradient(100deg, #050a1f 0%, #001b6b 30%, #002fa7 62%, #8ea6ff 100%);
   --focus: var(--blue-ink);
 
-  /* Roles */
-  --bg:          var(--primary);
-  --bg-deep:     var(--primary);
+  /* Roles. The page is a very dark grey cutting mat rather than black. */
+  --mat:         #0d0d0d;
+  --bg:          var(--mat);
+  --bg-deep:     var(--mat);
   --bg-card:     var(--gray-dark);
   --bg-light:    var(--white);
   --bg-light-2:  rgba(167, 167, 167, 0.16);
@@ -92,15 +93,18 @@
   --surface-hi:   rgba(249, 249, 249, 0.1);
   --surface-edge: rgba(249, 249, 249, 0.28);
   --ghost-ink:    rgba(249, 249, 249, 0.15);
-  --nav-bg:       rgba(0, 0, 0, 0.76);
-  --nav-bg-solid: rgba(0, 0, 0, 0.96);
+  --nav-bg:       rgba(13, 13, 13, 0.98);
+  --nav-bg-solid: rgba(13, 13, 13, 0.98);
   --outline-soft: rgba(249, 249, 249, 0.3);
   --tile-a:       var(--gray-dark);
   --tile-b:       var(--primary);
   --tile-ink:     rgba(249, 249, 249, 0.24);
-  /* Read by the canvas dot field. */
-  --dot-rgb:      255, 255, 255;
-  --dot-strength: 1;
+  /* Cutting mat, the page surface (see the html rule). A 16px grid, a
+     heavier line every fifth, a diamond where the heavy lines cross, and a
+     fine grain. Each theme carries its own tiles, since a data URI can't
+     read custom properties. */
+  --mat-grid:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%23fff'%3E%3Cpath opacity='0.028' d='M16 0h1v80h-1zM0 16h80v1H0zM32 0h1v80h-1zM0 32h80v1H0zM48 0h1v80h-1zM0 48h80v1H0zM64 0h1v80h-1zM0 64h80v1H0z'/%3E%3Cpath opacity='0.06' d='M0 0h1v80H0zM0 0h80v1H0z'/%3E%3Cpath opacity='0.11' d='M0.5 -2.5L3.5 0.5L0.5 3.5L-2.5 0.5ZM0.5 77.5L3.5 80.5L0.5 83.5L-2.5 80.5ZM80.5 -2.5L83.5 0.5L80.5 3.5L77.5 0.5ZM80.5 77.5L83.5 80.5L80.5 83.5L77.5 80.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  --mat-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.09 0 0 0 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 
   --font-display: "Bricolage Grotesque", "Arial Black", "Helvetica Neue", sans-serif;
   --font-body:    "Lato", system-ui, "Segoe UI", Arial, sans-serif;
@@ -132,8 +136,10 @@
    including the .section-light remap, so nothing else needs a light variant. */
 
 [data-theme="light"] {
-  --bg:          var(--white);
-  --bg-deep:     var(--white);
+  /* Warm off-white mat. */
+  --mat:         #f4f1ea;
+  --bg:          var(--mat);
+  --bg-deep:     var(--mat);
   --bg-card:     #e8e8e8;
   --bg-light-2:  rgba(0, 0, 0, 0.05);
 
@@ -154,8 +160,8 @@
   --surface-hi:   rgba(0, 0, 0, 0.08);
   --surface-edge: rgba(0, 0, 0, 0.18);
   --ghost-ink:    rgba(0, 0, 0, 0.13);
-  --nav-bg:       rgba(249, 249, 249, 0.82);
-  --nav-bg-solid: rgba(249, 249, 249, 0.97);
+  --nav-bg:       rgba(244, 241, 234, 0.98);
+  --nav-bg-solid: rgba(244, 241, 234, 0.98);
   --outline-soft: rgba(0, 0, 0, 0.3);
   --tile-a:       #d9d9d9;
   --tile-b:       #bcbcbc;
@@ -169,8 +175,8 @@
   --hairline:      rgba(0, 0, 0, 0.12);
   --hairline-dark: rgba(0, 0, 0, 0.12);
 
-  --dot-rgb:      0, 0, 0;
-  --dot-strength: 0.34;
+  --mat-grid:  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cg fill='%233d3020'%3E%3Cpath opacity='0.045' d='M16 0h1v80h-1zM0 16h80v1H0zM32 0h1v80h-1zM0 32h80v1H0zM48 0h1v80h-1zM0 48h80v1H0zM64 0h1v80h-1zM0 64h80v1H0z'/%3E%3Cpath opacity='0.09' d='M0 0h1v80H0zM0 0h80v1H0z'/%3E%3Cpath opacity='0.16' d='M0.5 -2.5L3.5 0.5L0.5 3.5L-2.5 0.5ZM0.5 77.5L3.5 80.5L0.5 83.5L-2.5 80.5ZM80.5 -2.5L83.5 0.5L80.5 3.5L77.5 0.5ZM80.5 77.5L83.5 80.5L80.5 83.5L77.5 80.5Z'/%3E%3C/g%3E%3C/svg%3E");
+  --mat-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.24 0 0 0 0 0.24 0.1 0 0 0 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
 
   --bau-red:    #d42e12;
   --bau-yellow: #9c7400;
@@ -214,7 +220,14 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
-html { background: var(--bg); }
+/* The mat sits on <html>, so it scrolls with the page like work sliding
+   across a real one. Sections are transparent over it. */
+html {
+  background-color: var(--bg);
+  background-image: var(--mat-grain), var(--mat-grid);
+  background-size: 180px 180px, 80px 80px;
+  background-position: 0 0, center top;
+}
 
 body {
   margin: 0;
@@ -264,19 +277,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   outline: 2px solid var(--focus);
   outline-offset: 4px;
   border-radius: 2px;
-}
-
-/* ---------- Interactive dot field ---------- */
-
-/* Behind every section, above the page colour. The light sections are opaque,
-   so the field reads through the dark ones only. */
-.dot-field {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
 }
 
 /* ---------- Primitives ---------- */
@@ -437,15 +437,12 @@ ul { margin: 0; padding: 0; list-style: none; }
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  transition: background-color 0.4s var(--ease), backdrop-filter 0.4s var(--ease),
-              border-color 0.4s var(--ease);
+  transition: background-color 0.4s var(--ease), border-color 0.4s var(--ease);
   border-bottom: 1px solid transparent;
 }
 
 .nav.is-stuck {
   background: var(--nav-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
   border-bottom-color: var(--hairline);
 }
 
@@ -537,7 +534,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink-dim);
   transition: color 0.25s var(--ease);
 }
-.nav-links a:hover { color: var(--ink); }
+.nav-links a:hover,
+.nav-links a[aria-current="page"] { color: var(--ink); }
 
 .nav-pill {
   display: inline-flex;
@@ -639,7 +637,9 @@ ul { margin: 0; padding: 0; list-style: none; }
   display: none;
   background: none;
   border: 0;
-  padding: 0.5rem;
+  /* 44px square around the 22 x 16 bars. */
+  padding: 14px 11px;
+  margin-right: -11px;
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 28 28'%3E%3Cdefs%3E%3ClinearGradient id='pl' x1='0.1' y1='0' x2='0.8' y2='1'%3E%3Cstop offset='0' stop-color='%23ffffff'/%3E%3Cstop offset='1' stop-color='%23dedede'/%3E%3C/linearGradient%3E%3ClinearGradient id='pd' x1='0' y1='0' x2='0.6' y2='1'%3E%3Cstop offset='0' stop-color='%23b0b0b0'/%3E%3Cstop offset='1' stop-color='%237d7d7d'/%3E%3C/linearGradient%3E%3Cfilter id='pi' x='-25%25' y='-25%25' width='150%25' height='150%25'%3E%3CfeOffset dx='0.3' dy='0.7' in='SourceAlpha' result='o'/%3E%3CfeGaussianBlur in='o' stdDeviation='0.8' result='b'/%3E%3CfeComposite operator='out' in='SourceAlpha' in2='b' result='inv'/%3E%3CfeFlood flood-color='%23000000' flood-opacity='0.35' result='c'/%3E%3CfeComposite operator='in' in='c' in2='inv' result='sh'/%3E%3CfeComposite operator='over' in='sh' in2='SourceGraphic'/%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23pi)'%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='url(%23pl)'/%3E%3Cpath d='M3 3.6 L13.8 16.9 L7.2 26 Z' fill='url(%23pd)'/%3E%3C/g%3E%3Cpath d='M3 3.6 L25.6 12.2 L13.8 16.9 L7.2 26 Z' fill='none' stroke='%231c1c1c' stroke-width='1.15' stroke-linejoin='round'/%3E%3Cpath d='M3 3.6 L13.8 16.9' stroke='%231c1c1c' stroke-width='0.95' stroke-linecap='round'/%3E%3C/svg%3E") 4 4, pointer;
   color: var(--ink);
 }
@@ -693,6 +693,13 @@ ul { margin: 0; padding: 0; list-style: none; }
 .theme-toggle:focus-visible .theme-toggle-rail {
   filter: saturate(1.15) brightness(1.06);
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* The rail is 36px tall; this widens the tap area to 44px around it. */
+.theme-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
 }
 
 .theme-toggle:focus-visible { outline: none; }
@@ -803,7 +810,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 .hero {
   position: relative;
-  /* Transparent so the dot field shows through; <html> supplies the black. */
+  /* Transparent so the mat on <html> shows through. */
   background: transparent;
   padding-top: clamp(6.5rem, 13vh, 9.5rem);
   padding-bottom: clamp(2.5rem, 6vh, 4.5rem);
@@ -1002,6 +1009,20 @@ ul { margin: 0; padding: 0; list-style: none; }
   }
 }
 
+.skip-link {
+  position: fixed;
+  left: var(--gutter);
+  top: -4rem;
+  z-index: 200;
+  padding: 0.6rem 1rem;
+  border-radius: var(--r-pill);
+  background: var(--blue);
+  color: var(--chalk);
+  font-weight: 700;
+  transition: top 0.2s var(--ease);
+}
+.skip-link:focus { top: 1rem; }
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1026,6 +1047,9 @@ ul { margin: 0; padding: 0; list-style: none; }
 .scroll-cue {
   display: grid;
   place-items: center;
+  /* Grows the tap area to 44px; the negative margin keeps the layout. */
+  padding: 0.6rem 0.4rem;
+  margin: -0.6rem -0.4rem;
   animation: cueBreathe 3s ease-in-out infinite;
 }
 
@@ -1054,7 +1078,7 @@ ul { margin: 0; padding: 0; list-style: none; }
    ============================================================ */
 
 .marquee-band {
-  /* Transparent so the dot field shows through; <html> supplies the black. */
+  /* Transparent so the mat on <html> shows through. */
   background: transparent;
   border-block: 1px solid var(--hairline);
   /* The band is one moving line now that the label is gone, so it only needs
@@ -1113,8 +1137,8 @@ ul { margin: 0; padding: 0; list-style: none; }
   overflow: hidden;
 }
 
-/* Formerly a white band. Now transparent so <html>'s black and the dot field
-   run unbroken from the hero to the footer. The "ink on light" roles are
+/* Formerly a white band. Now transparent so the mat on <html> runs unbroken
+   from the hero to the footer. The "ink on light" roles are
    redefined here, which flips every descendant rule that referenced them;
    the few that can't invert cleanly are overridden at the end of this file. */
 .section-light {
@@ -1711,34 +1735,21 @@ ul { margin: 0; padding: 0; list-style: none; }
   --card-arrow:  #8ea6ff;
 }
 
-/* The panel: blur lives on the wrapper, colour on its backdrop layer, so the
-   two transition independently (a backdrop-filter under opacity:0 is
-   unreliable across engines). */
+/* The panel: a solid surface one step off the mat, with the accent bloom
+   on its own layer (.foot-glass) so it can fade in on hover. */
 .project-foot {
   position: relative;
   isolation: isolate;
   flex: 1;
-  /* Resting glass. The card is nearly transparent, so the dot field shows
-     through it; blurring that field under the text is what makes the panel
-     read as frosted rather than as a flat grey box. */
-  background: linear-gradient(160deg, var(--foot-glass-a) 0%, var(--foot-glass-b) 100%);
-  border-top: 1px solid var(--foot-glass-edge);
-  box-shadow: inset 0 1px 0 var(--foot-glass-lip);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  transition: -webkit-backdrop-filter 0.5s var(--ease),
-              backdrop-filter 0.5s var(--ease);
+  background: var(--foot-panel);
+  border-top: 1px solid var(--foot-edge);
 
-  --foot-glass-a:    rgba(255, 255, 255, 0.075);
-  --foot-glass-b:    rgba(255, 255, 255, 0.02);
-  --foot-glass-edge: rgba(255, 255, 255, 0.09);
-  --foot-glass-lip:  rgba(255, 255, 255, 0.07);
+  --foot-panel: #191919;
+  --foot-edge:  rgba(255, 255, 255, 0.09);
 }
 [data-theme="light"] .project-foot {
-  --foot-glass-a:    rgba(255, 255, 255, 0.62);
-  --foot-glass-b:    rgba(255, 255, 255, 0.28);
-  --foot-glass-edge: rgba(0, 0, 0, 0.07);
-  --foot-glass-lip:  rgba(255, 255, 255, 0.9);
+  --foot-panel: #fbfaf6;
+  --foot-edge:  rgba(0, 0, 0, 0.08);
 }
 
 /* The panel. Holds the base gradient (which stays put) and clips the two
@@ -1803,10 +1814,6 @@ ul { margin: 0; padding: 0; list-style: none; }
   to   { transform: translate3d(-10%, 8%, 0) scale(1); }
 }
 
-.project[data-accent]:hover .project-foot {
-  -webkit-backdrop-filter: blur(18px) saturate(150%);
-  backdrop-filter: blur(18px) saturate(150%);
-}
 .project[data-accent]:hover .foot-glass { opacity: 1; }
 /* Paused until hovered, so idle cards composite nothing — and the motion
    resumes where it left off instead of snapping back to the start. */
@@ -1992,7 +1999,7 @@ ul { margin: 0; padding: 0; list-style: none; }
    ============================================================ */
 
 /* A header in the page voice, then the CV itself on one opaque sheet so the
-   dot field stays out from under the reading text. */
+   mat's grid stays out from under the reading text. */
 .cv-hero {
   padding-top: clamp(7rem, 15vh, 10rem);
   padding-bottom: clamp(1.75rem, 4vw, 3rem);
@@ -2251,7 +2258,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 /* One composition closes every page: the "Let's build something" headline,
    the channels and the "Contact me" watermark, all in a single card. */
 .footer {
-  /* Transparent so the dot field shows through; <html> supplies the black. */
+  /* Transparent so the mat on <html> shows through. */
   background: transparent;
   padding-top: clamp(3rem, 7vw, 6rem);
   /* Room under the card for the day/night switch parked in the corner. */
@@ -2482,11 +2489,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
   .nav-toggle { display: block; }
 
-  .nav.is-open {
-    background: var(--nav-bg-solid);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
+  .nav.is-open { background: var(--nav-bg-solid); }
 
   .nav.is-open .nav-links {
     display: flex;
@@ -2503,8 +2506,6 @@ ul { margin: 0; padding: 0; list-style: none; }
     /* This panel sits below the nav's own box, so it cannot inherit that
        background — it needs its own or the links sit on the hero photo. */
     background: var(--nav-bg-solid);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
   }
 
   .hero-band { aspect-ratio: 5 / 4; }
@@ -3370,7 +3371,7 @@ ul { margin: 0; padding: 0; list-style: none; }
    PHOTOGRAPHY — stacked infinite reels
    ============================================================ */
 
-/* Nothing but photographs: no dot field, no footer, and the reels run edge to
+/* Nothing but photographs: no footer, and the reels run edge to
    edge, so the page drops the usual .wrap gutter below the nav. */
 .page-gallery .gallery {
   padding-top: calc(4.5rem + clamp(1rem, 3vw, 2rem));
@@ -5903,7 +5904,7 @@ body.is-locked { overflow: hidden; }
 
 /* ---- Bee theme: the whole Parag page in yellow, black and white ----
    The page opts in with <html data-page="parag">. Only roles move, so the
-   shared nav, footer, toggle and dot field follow without their own rules.
+   shared nav, footer, toggle and mat follow without their own rules.
    Light is comb cream with black ink (ink-dim 11:1, honey text 6.1:1); dark
    is warm black with Pollen yellow. Red survives in one place: danger to
    bees inside the app, where it is backed by an icon and a shape change. */
@@ -5930,11 +5931,9 @@ body.is-locked { overflow: hidden; }
   --surface-hi: rgba(246, 193, 14, 0.1);
   --surface-edge: rgba(246, 193, 14, 0.3);
   --ghost-ink: rgba(246, 193, 14, 0.13);
-  --nav-bg: rgba(11, 10, 7, 0.78);
+  --nav-bg: rgba(11, 10, 7, 0.98);
   --nav-bg-solid: rgba(11, 10, 7, 0.96);
   --outline-soft: rgba(246, 193, 14, 0.35);
-  --dot-rgb: 246, 193, 14;
-  --dot-strength: 0.7;
   --pg-bee-y: #f6c10e;
 }
 [data-page="parag"][data-theme="light"] {
@@ -5952,11 +5951,9 @@ body.is-locked { overflow: hidden; }
   --surface-hi: rgba(13, 13, 14, 0.08);
   --surface-edge: rgba(13, 13, 14, 0.2);
   --ghost-ink: rgba(122, 88, 0, 0.14);
-  --nav-bg: rgba(255, 248, 220, 0.84);
+  --nav-bg: rgba(255, 248, 220, 0.98);
   --nav-bg-solid: rgba(255, 248, 220, 0.97);
   --outline-soft: rgba(13, 13, 14, 0.3);
-  --dot-rgb: 170, 120, 0;
-  --dot-strength: 0.5;
   --pg-bee-y: #e5a500;
 }
 
