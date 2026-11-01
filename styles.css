@@ -9953,3 +9953,19 @@ body.is-locked { overflow: hidden; }
 .hw-steps li + li::before { content: ""; position: absolute; left: calc(1.25rem + 1.3rem - 1px); top: -6px; width: 2px; height: calc(1.2rem + 6px); background: #3a3e46; }
 .im-l li { grid-template-columns: 6.6rem minmax(0, 1fr); }
 .im-l b { white-space: nowrap; }
+
+/* ==========================================================
+   Portfolio anti-slop pass. Shared across the case studies:
+   flat blue instead of a gradient, tags as plain text instead
+   of pills, small labels in sentence case instead of tracked
+   caps or mono, and no divider rules between metrics.
+   (Saaf Safar keeps its signage caps: they are its identity.)
+   ========================================================== */
+:root { --blue-gradient: #002fa7; }
+:root .p-pills { gap: 0.35rem 1.1rem; }
+:root .p-pills li, :root .p-pills--lime li, :root .p-pills--mute li { padding: 0; border-radius: 0; background: none; box-shadow: none; outline: 0; }
+:root .p-pills li::before { content: ""; display: inline-block; width: 5px; height: 5px; margin: 0 0.5rem 0.15em 0; border-radius: 50%; background: currentColor; opacity: 0.5; vertical-align: middle; }
+:root .p-pills--lime li { color: inherit; }
+:root :is(.ds2-name span, .pg-phase, .pg-line, .pg-lab-dl dt, .ap-plan-lab, .pg-process-tools span, .pg-cluster h3 small, .pg-metrics small, .ads-t-h4u, .ads-card-foot .ads-what, .ads-stats span, .ec-step-n, .ec-kit-k, .ec-metric small, .ec-flags-k, .mg-k, .mg-co-k) { text-transform: none; letter-spacing: 0; font-family: var(--font-body); }
+:root .ec-j-decision::before { text-transform: none; letter-spacing: 0; }
+:root .pg-metrics li + li { border-left: 0; }
