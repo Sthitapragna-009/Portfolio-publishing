@@ -534,8 +534,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   color: var(--ink-dim);
   transition: color 0.25s var(--ease);
 }
-.nav-links a:hover,
-.nav-links a[aria-current="page"] { color: var(--ink); }
+.nav-links a:hover { color: var(--ink); }
 
 .nav-pill {
   display: inline-flex;
@@ -680,7 +679,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   justify-content: space-between;
   /* Width is fixed rather than content-sized: the knob's travel is derived
      from it, and an auto width would desync the two. */
-  width: 13rem;
+  width: 14.75rem;
   height: 2.25rem;
   padding-inline: 0.5rem;
   border-radius: var(--r-pill);
@@ -752,7 +751,7 @@ ul { margin: 0; padding: 0; list-style: none; }
   background: var(--white);
   color: var(--primary);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
-  /* rail 13 - knob 1.75 - inset 0.5 = 10.75rem of travel */
+  /* rail 14.75 - knob 1.75 - inset 0.5 = 12.5rem of travel */
   transition: transform 0.45s var(--ease);
   /* --seat is where the knob rests; the breath nudges it off that seat towards
      the end you would swipe to, then settles back. Holding the rest position
@@ -766,7 +765,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* Unchecked = dark theme; the knob sits at the moon and leans back left. */
 .theme-toggle[aria-checked="false"] .theme-toggle-knob {
-  --seat: 10.75rem;
+  --seat: 12.5rem;
   --lean: -0.75rem;
 }
 

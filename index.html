@@ -27,6 +27,9 @@
     })();
   </script>
 
+  <link rel="icon" href="favicon.ico" sizes="32x32" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -42,10 +45,9 @@
       </a>
 
       <nav class="nav-links" aria-label="Primary">
-        <a href="#top" aria-current="page">Home</a>
         <a href="resume.html">Resume</a>
         <a class="nav-pill nav-pill--quiet" href="#work">Design Projects</a>
-        <a class="nav-pill nav-pill--photo" href="photography.html">Photography Page <svg class="nav-ico" width="12" height="12" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></a>
+        <a class="nav-pill nav-pill--photo" href="photography.html" target="_blank" rel="noopener">Photography Page <svg class="nav-ico" width="12" height="12" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
       </nav>
 
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
@@ -60,10 +62,10 @@
     <div class="wrap hero-inner">
       <div class="hero-band">
         <figure class="hero-panel hero-panel--portrait">
-          <img src="assets/night.jpg" alt="Lying back on a motorcycle under the Milky Way" fetchpriority="high" />
+          <img src="assets/night.webp" alt="Lying back on a motorcycle under the Milky Way" fetchpriority="high" />
         </figure>
         <figure class="hero-panel hero-panel--wide">
-          <img src="assets/hero.jpg" alt="KSP on a motorcycle at dusk" fetchpriority="high" />
+          <img src="assets/hero.webp" alt="KSP on a motorcycle at dusk" fetchpriority="high" />
         </figure>
 
         <h1 class="display hero-title">
@@ -131,7 +133,7 @@
         <p class="as-ghost" aria-hidden="true">About me</p>
 
         <div class="as-panel" aria-hidden="true">
-          <img src="assets/portrait.jpg" width="1200" height="1600" alt="" />
+          <img src="assets/portrait.webp" width="1200" height="1600" alt="" />
           <div class="as-shade"></div>
           <p class="as-name">
             <span class="as-name-iam"><span>I am</span></span>
@@ -142,7 +144,7 @@
 
         <div class="wrap as-grid">
           <figure class="as-slot">
-            <img src="assets/portrait.jpg" width="1200" height="1600" alt="Sthitapragna standing in the brick arches at IIT Roorkee" />
+            <img src="assets/portrait.webp" width="1200" height="1600" alt="Sthitapragna standing in the brick arches at IIT Roorkee" />
             <figcaption class="as-slot-name" aria-hidden="true">
               <span class="as-name-iam"><span>I am</span></span>
               <span class="as-name-line"><span>Sthitapragna</span></span>
@@ -240,7 +242,7 @@
       <div class="work-grid">
         <a class="project reveal" data-accent="h2o" href="projects/h2o-connect.html" data-disciplines="interaction industrial" data-order-industrial="6" data-order-interaction="1">
           <div class="project-media">
-            <img src="assets/h2o-connect.jpg" alt="H2O Connect app running on a phone held in front of rooftop water tanks" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/h2o-connect.webp" alt="H2O Connect app running on a phone held in front of rooftop water tanks" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -266,7 +268,7 @@
 
         <a class="project reveal" data-delay="1" data-accent="easycms" href="projects/easy-cms.html" data-disciplines="interaction" data-order-interaction="2">
           <div class="project-media">
-            <img src="assets/easycms/card.jpg" alt="Easy CMS: the editor with a helper-filled announcement and its live preview, beside a phone showing the reviewer's approval screen, on a deep blue board" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/easycms/card.webp" alt="Easy CMS: the editor with a helper-filled announcement and its live preview, beside a phone showing the reviewer's approval screen, on a deep blue board" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -294,7 +296,7 @@
 
         <a class="project reveal" data-accent="saafsafar" href="projects/saaf-safar.html" data-disciplines="interaction" data-order-interaction="3">
           <div class="project-media">
-            <img src="assets/saafsafar/card.jpg" alt="Saaf Safar: the cart iPad showing a Go now task for the gents washroom near gate 14, beside a phone with a Time Sensitive alert, on a dark board with the title The washroom that needs you, right now" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/saafsafar/card.webp" alt="Saaf Safar: the cart iPad showing a Go now task for the gents washroom near gate 14, beside a phone with a Time Sensitive alert, on a dark board with the title The washroom that needs you, right now" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -322,7 +324,7 @@
 
         <a class="project reveal" data-accent="parag" href="projects/paraga-mitra.html" data-disciplines="interaction" data-order-interaction="4">
           <div class="project-media">
-            <img src="assets/parag/card.jpg" alt="Paraga Mitra: the four-petal mark and wordmark over a field visit with a beekeeper beside his hives, and a hand holding a phone with the farmer app open on mustard flowers and five bee boxes to book, against a honeycomb yellow panel" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/parag/card.webp" alt="Paraga Mitra: the four-petal mark and wordmark over a field visit with a beekeeper beside his hives, and a hand holding a phone with the farmer app open on mustard flowers and five bee boxes to book, against a honeycomb yellow panel" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -350,7 +352,7 @@
 
         <a class="project reveal" data-delay="1" data-accent="pathang" href="projects/pathang-mobility.html" data-disciplines="industrial interaction" data-order-industrial="2" data-order-interaction="5">
           <div class="project-media">
-            <img src="assets/pathang/card.jpg" alt="Pathang Mobility: the three-wheel delta pod shown front, side and rear" loading="lazy" decoding="async" width="1435" height="805" />
+            <img src="assets/pathang/card.webp" alt="Pathang Mobility: the three-wheel delta pod shown front, side and rear" loading="lazy" decoding="async" width="1435" height="805" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -380,7 +382,7 @@
 
         <a class="project reveal" data-accent="aeroform" href="projects/aeroform-009.html" data-disciplines="industrial interaction" data-order-industrial="1" data-order-interaction="6">
           <div class="project-media">
-            <img src="assets/aeroform/cover.jpg" alt="AeroForm 009 handheld vacuum cleaner render: white matte body, black rubberised loop handle and orange control dial" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/aeroform/cover.webp" alt="AeroForm 009 handheld vacuum cleaner render: white matte body, black rubberised loop handle and orange control dial" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -406,7 +408,7 @@
 
         <a class="project reveal" data-delay="1" data-accent="atomic" href="projects/atomic-design.html" data-disciplines="interaction">
           <div class="project-media">
-            <img src="assets/atomic/card.jpg" alt="Atomic UI Design title board: the redesigned JetPhotos home page on lilac, peach and green iMacs" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/atomic/card.webp" alt="Atomic UI Design title board: the redesigned JetPhotos home page on lilac, peach and green iMacs" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -454,7 +456,7 @@
 
         <a class="project reveal" data-delay="1" data-accent="etikoppaka" href="projects/etikoppaka-chess.html" data-disciplines="industrial" data-order-industrial="3">
           <div class="project-media">
-            <img src="assets/etikoppaka/cover.jpg" alt="Etikoppaka Chess title plate: an artisan&rsquo;s hands holding a freshly lacquered red and yellow chess piece" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/etikoppaka/cover.webp" alt="Etikoppaka Chess title plate: an artisan&rsquo;s hands holding a freshly lacquered red and yellow chess piece" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -529,7 +531,7 @@
 
         <a class="project reveal" data-accent="convocation" href="projects/convocation-2026.html" data-disciplines="visual">
           <div class="project-media">
-            <img src="assets/convocation/card.jpg" alt="A row of Convocation 2026 banners at IIT Roorkee in violet and yellow, patterned with the convocation motif, the nearest carrying the institute seal" loading="lazy" decoding="async" width="1600" height="1000" />
+            <img src="assets/convocation/card.webp" alt="A row of Convocation 2026 banners at IIT Roorkee in violet and yellow, patterned with the convocation motif, the nearest carrying the institute seal" loading="lazy" decoding="async" width="1600" height="1000" />
           </div>
           <div class="project-foot">
             <span class="foot-glass" aria-hidden="true"></span>
@@ -705,7 +707,7 @@
         <svg class="icon-sun" width="14" height="14" viewBox="0.57 0.57 22.86 22.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.14" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
       </span>
       <span class="theme-toggle-words">
-        <span class="theme-toggle-word">Swipe to change mode</span>
+        <span class="theme-toggle-word">Tap or swipe for dark/light</span>
       </span>
       <span class="theme-toggle-end theme-toggle-end--moon">
         <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
