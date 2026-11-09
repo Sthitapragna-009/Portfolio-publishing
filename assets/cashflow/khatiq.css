@@ -1,0 +1,1015 @@
+/* Khatiq case study. Loaded after cashflow.css.
+   Minimal black and white in Epilogue; colour only in the data and one row of tiles.
+   Solid surfaces only (no translucent cards), no pills or chips, no side borders.
+   Everything is scoped to <main>: the site header and footer keep the portfolio type. */
+
+[data-page="cashflow"] main {
+  --kq-font: "Epilogue", system-ui, "Segoe UI", sans-serif;
+  --kq-bg: #0b0b0b;
+  --kq-card: #151515;
+  --kq-card-2: #1e1e1e;
+  --kq-line: #2a2a2a;
+  --kq-ink: #f3f3f1;
+  --kq-dim: #a8a8a6;
+  --kq-faint: #747472;
+  --kq-bar: #3b3b3b;
+  --kq-hot: #ff8f78;
+  --kq-gap: clamp(1rem, 2vw, 1.5rem);
+  --kq-r: 14px;
+  /* the shared tokens older blocks read, made solid */
+  --ink: var(--kq-ink);
+  --ink-dim: var(--kq-dim);
+  --ink-faint: var(--kq-faint);
+  --surface: var(--kq-card);
+  --surface-hi: var(--kq-card-2);
+  --surface-edge: var(--kq-line);
+  --cf-tile: var(--kq-card);
+  --cf-sans: var(--kq-font);
+  --cf-serif: var(--kq-font);
+  --cf-display: var(--kq-font);
+  --cf-radius: var(--kq-r);
+  background: var(--kq-bg);
+  color: var(--kq-ink);
+  font-family: var(--kq-font);
+}
+[data-page="cashflow"][data-theme="light"] main {
+  --kq-bg: #f3f3f1;
+  --kq-card: #ffffff;
+  --kq-card-2: #ebebe8;
+  --kq-line: #d9d9d5;
+  --kq-ink: #0b0b0b;
+  --kq-dim: #474745;
+  --kq-faint: #767674;
+  --kq-bar: #cbcbc7;
+  --kq-hot: #c2412a;
+}
+/* the case study sits on a plain canvas, not the site grid */
+[data-page="cashflow"] main .section {
+  background: var(--kq-bg);
+}
+[data-page="cashflow"] main a {
+  color: inherit;
+}
+
+/* ---------- hero ---------- */
+.kq-top .case-back {
+  font-family: var(--kq-font);
+}
+.kq-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: end;
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+.kq-label {
+  margin: 0;
+  font: 500 0.9rem/1.4 var(--kq-font);
+  letter-spacing: 0.01em;
+  color: var(--kq-faint);
+}
+.kq-name {
+  margin: 0.6rem 0 0;
+  font: 700 clamp(5rem, 13vw, 11.5rem) / 0.82 var(--kq-font);
+  letter-spacing: -0.06em;
+  color: var(--kq-ink);
+}
+.kq-hook {
+  margin: 1.4rem 0 0;
+  font: 600 clamp(1.4rem, 2.3vw, 2rem) / 1.15 var(--kq-font);
+  letter-spacing: -0.02em;
+  color: var(--kq-ink);
+}
+.kq-desc {
+  margin: 1.1rem 0 0;
+  max-width: 44ch;
+  font: 400 clamp(1.02rem, 1.3vw, 1.15rem) / 1.6 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-origin {
+  margin: 0.9rem 0 0;
+  font: 400 0.92rem/1.5 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 2rem;
+  margin: 2rem 0 0;
+}
+.kq-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  font: 600 1rem/1 var(--kq-font);
+  color: var(--kq-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+}
+.kq-link.is-primary,
+.kq-link:hover {
+  text-decoration-thickness: 2px;
+}
+.kq-photo {
+  margin: 0;
+  border-radius: var(--kq-r);
+  overflow: hidden;
+  background: #000;
+}
+.kq-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.kq-hero-photo {
+  aspect-ratio: 4 / 5;
+}
+.kq-hero-photo img {
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.32);
+  transform-origin: 52% 46%;
+}
+
+/* ---------- numbers: a rule above, colour only as a small square ---------- */
+[data-page="cashflow"] main .cf-stats {
+  list-style: none;
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding: 1.6rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--kq-gap);
+  border-top: 1px solid var(--kq-line);
+}
+.kq-story .cf-stats {
+  margin-top: 0 !important;
+}
+[data-page="cashflow"] main .cf-stats li {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  min-height: 0;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: var(--kq-ink);
+}
+[data-page="cashflow"] main .cf-stats b {
+  font: 700 clamp(2.4rem, 4vw, 3.6rem) / 1 var(--kq-font);
+  letter-spacing: -0.045em;
+}
+[data-page="cashflow"] main .cf-stats span {
+  display: flex;
+  gap: 0.55rem;
+  align-items: baseline;
+  max-width: 24ch;
+  font: 400 0.98rem/1.45 var(--kq-font);
+  color: var(--kq-dim);
+}
+[data-page="cashflow"] main .cf-stats span::before {
+  content: "";
+  flex: none;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--tile);
+}
+.kq-cap {
+  margin: 1rem 0 0;
+  font: 400 0.86rem/1.45 var(--kq-font);
+  color: var(--kq-faint);
+}
+
+/* ---------- meta and contents ---------- */
+.kq-meta {
+  margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+  padding: 1.4rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--kq-gap);
+  border-top: 1px solid var(--kq-line);
+}
+.kq-meta dt {
+  font: 500 0.82rem/1.2 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-meta dd {
+  margin: 0.45rem 0 0;
+  font: 500 1rem/1.4 var(--kq-font);
+  color: var(--kq-ink);
+}
+.kq-toc ol {
+  list-style: none;
+  margin: 2rem 0 0;
+  padding: 1.1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 2.2rem;
+  border-top: 1px solid var(--kq-line);
+  border-bottom: 1px solid var(--kq-line);
+}
+.kq-toc a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  min-height: 32px;
+  font: 500 1rem/1.6 var(--kq-font);
+  color: var(--kq-ink);
+  text-decoration: none;
+}
+.kq-toc a span {
+  font-size: 0.82rem;
+  color: var(--kq-faint);
+  font-variant-numeric: tabular-nums;
+}
+.kq-toc a:hover,
+.kq-toc a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.3em;
+}
+
+/* ---------- story rhythm ---------- */
+.kq-story .wrap {
+  gap: 0;
+}
+.kq-story .wrap > * {
+  margin-top: var(--kq-gap);
+}
+.kq-ch {
+  margin-top: clamp(6rem, 11vw, 9rem) !important;
+  margin-bottom: clamp(1rem, 2vw, 1.6rem);
+  scroll-margin-top: 6rem;
+}
+.kq-story .wrap > .kq-ch:first-child {
+  margin-top: 0 !important;
+}
+.kq-ch-k {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  margin: 0;
+  font: 500 0.95rem/1 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-ch-k span {
+  font-variant-numeric: tabular-nums;
+  color: var(--kq-ink);
+}
+.kq-ch-title {
+  margin: 1rem 0 0;
+  max-width: 17ch;
+  font: 700 clamp(2.4rem, 5.2vw, 4.4rem) / 0.98 var(--kq-font);
+  letter-spacing: -0.045em;
+  color: var(--kq-ink);
+  text-wrap: balance;
+}
+.kq-ch-intro {
+  margin: 1.2rem 0 0;
+  max-width: 56ch;
+  font: 400 clamp(1.05rem, 1.35vw, 1.2rem) / 1.6 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-sub {
+  margin-top: clamp(3.5rem, 6vw, 5rem) !important;
+  scroll-margin-top: 6rem;
+}
+.kq-sub h3 {
+  margin: 0;
+  font: 700 clamp(1.35rem, 2vw, 1.75rem) / 1.15 var(--kq-font);
+  letter-spacing: -0.025em;
+  color: var(--kq-ink);
+}
+.kq-sub p {
+  margin: 0.55rem 0 0;
+  max-width: 60ch;
+  font: 400 1rem/1.6 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-panel {
+  margin: 0;
+  padding: clamp(1.2rem, 3vw, 2.4rem);
+  border-radius: var(--kq-r);
+  background: var(--kq-card);
+}
+.kq-panel figcaption {
+  margin-top: 1.1rem;
+  font: 400 0.88rem/1.5 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-photo--wide {
+  margin-top: var(--kq-gap);
+}
+
+/* ---------- gap chart (story.js), monochrome with two accents ---------- */
+.cf-gc {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.cf-gc-bar {
+  fill: var(--kq-bar);
+}
+.cf-gc-bar.is-today {
+  fill: var(--kq-ink);
+}
+.cf-gc-bar.is-short {
+  fill: var(--hue-coral);
+}
+.cf-gc-bar.is-pay {
+  fill: var(--hue-mint);
+}
+.cf-gc-band {
+  fill: color-mix(in srgb, var(--hue-coral) 12%, transparent);
+}
+.cf-gc-zero {
+  stroke: var(--kq-faint);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 6;
+}
+.cf-gc text {
+  font-family: var(--kq-font);
+  fill: var(--kq-dim);
+}
+.cf-gc-day {
+  font-size: 15px;
+  font-weight: 500;
+  text-anchor: middle;
+}
+.cf-gc text.cf-gc-month {
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--kq-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.cf-gc-axis {
+  font-size: 13px;
+}
+.cf-gc .cf-gc-note text {
+  font-size: 22px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--kq-ink);
+}
+.cf-gc .cf-gc-note.is-short text {
+  fill: var(--kq-hot);
+}
+.cf-gc .cf-gc-note text.cf-gc-sub {
+  font-size: 15px;
+  font-weight: 500;
+  fill: var(--kq-dim);
+}
+
+/* ---------- what I made: the one row of colour ---------- */
+.kq-made {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--kq-gap);
+}
+.kq-made li {
+  display: grid;
+  grid-template-rows: 1fr auto auto;
+  gap: 0.55rem;
+  min-height: 15rem;
+  padding: 1.6rem;
+  border-radius: var(--kq-r);
+  background: var(--tile);
+  color: #0b0b0b;
+}
+.kq-made-n {
+  font: 500 0.95rem/1 var(--kq-font);
+}
+.kq-made b {
+  font: 700 1.6rem/1.08 var(--kq-font);
+  letter-spacing: -0.035em;
+}
+.kq-made span:last-child {
+  font: 400 1rem/1.5 var(--kq-font);
+}
+
+/* ---------- today's loop ---------- */
+.kq-loop {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  height: auto;
+  margin: 0 auto;
+  overflow: visible;
+}
+.kq-loop-arc {
+  fill: none;
+  stroke: var(--kq-faint);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 6;
+}
+.kq-loop-head {
+  fill: var(--kq-faint);
+}
+.kq-loop-node circle {
+  fill: var(--kq-ink);
+}
+.kq-loop-node.is-hot circle {
+  fill: var(--hue-coral);
+}
+.kq-loop text {
+  font-family: var(--kq-font);
+}
+.kq-loop-n {
+  font-size: 15px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--kq-bg);
+}
+.kq-loop-node.is-hot .kq-loop-n {
+  fill: #0b0b0b;
+}
+.kq-loop-t {
+  font-size: 18px;
+  font-weight: 600;
+  fill: var(--kq-ink);
+}
+.kq-loop-s {
+  font-size: 15px;
+  fill: var(--kq-dim);
+}
+.kq-loop-big {
+  font-size: 64px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-anchor: middle;
+  fill: var(--kq-ink);
+}
+.kq-loop-sub {
+  font-size: 16px;
+  text-anchor: middle;
+  fill: var(--kq-dim);
+}
+
+/* ---------- before / after (story.js), solid ---------- */
+[data-page="cashflow"] main .cf-ba {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--kq-gap);
+}
+[data-page="cashflow"] main .cf-ba-col,
+[data-page="cashflow"] main .cf-ba-col.is-after {
+  padding: clamp(1.4rem, 3vw, 2.2rem);
+  border-radius: var(--kq-r);
+  background: var(--kq-card);
+}
+[data-page="cashflow"] main .cf-ba-k {
+  margin: 0 0 1.2rem;
+  font: 500 0.88rem/1 var(--kq-font);
+  color: var(--kq-faint);
+  letter-spacing: 0;
+  text-transform: none;
+}
+[data-page="cashflow"] main .cf-sms {
+  max-width: 30rem;
+  padding: 1rem 1.2rem;
+  border-radius: 18px 18px 18px 4px;
+  background: var(--kq-card-2);
+  font: 400 0.98rem/1.5 var(--kq-font);
+  color: var(--kq-ink);
+}
+[data-page="cashflow"] main .cf-sms p {
+  margin: 0.4rem 0;
+}
+[data-page="cashflow"] main .cf-sms-from,
+[data-page="cashflow"] main .cf-sms-time {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--kq-faint);
+}
+[data-page="cashflow"] main .cf-card-demo {
+  max-width: 30rem;
+  padding: 1.2rem 1.3rem;
+  border-radius: 20px;
+  background: #1c1c1e;
+  color: #f4f4f2;
+}
+[data-page="cashflow"] main .cf-card-k {
+  font: 500 0.85rem/1.2 system-ui, sans-serif;
+  color: #ff8f78;
+}
+[data-page="cashflow"] main .cf-card-demo p {
+  margin: 0.6rem 0 1rem;
+  font: 600 1.15rem/1.35 system-ui, sans-serif;
+}
+[data-page="cashflow"] main .cf-card-pill {
+  display: inline-flex;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  background: #0f6e66;
+  color: #fff;
+  font: 600 0.9rem/1 system-ui, sans-serif;
+}
+[data-page="cashflow"] main .cf-ba ul {
+  margin: 1.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  font: 500 1rem/1.4 var(--kq-font);
+  color: var(--kq-ink);
+}
+[data-page="cashflow"] main .cf-ba ul li {
+  display: flex;
+  gap: 0.6rem;
+  align-items: baseline;
+}
+[data-page="cashflow"] main .cf-ba ul li::before {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0;
+  background: var(--hue-coral);
+}
+[data-page="cashflow"] main .cf-ba .is-after ul li::before {
+  background: var(--hue-mint);
+}
+
+/* ---------- jobs, constraints, fixes, reflection: text on rules ---------- */
+.kq-jobs,
+.kq-fixes,
+.kq-reflect {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0 var(--kq-gap);
+  border-top: 1px solid var(--kq-line);
+}
+.kq-jobs {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.kq-fixes,
+.kq-reflect {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.kq-jobs li,
+.kq-fixes li,
+.kq-reflect li {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 1.4rem 0 1.6rem;
+}
+.kq-fixes li,
+.kq-reflect li {
+  border-bottom: 1px solid var(--kq-line);
+}
+.kq-jobs span {
+  font: 500 0.88rem/1 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-jobs p {
+  margin: 0;
+  font: 600 1.3rem/1.3 var(--kq-font);
+  letter-spacing: -0.02em;
+  color: var(--kq-ink);
+}
+.kq-fixes b,
+.kq-reflect b {
+  font: 600 1.15rem/1.25 var(--kq-font);
+  color: var(--kq-ink);
+}
+.kq-fixes span,
+.kq-reflect span {
+  max-width: 48ch;
+  font: 400 1rem/1.55 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-reflect {
+  counter-reset: kq;
+}
+.kq-reflect li::before {
+  counter-increment: kq;
+  content: "0" counter(kq);
+  font: 500 0.88rem/1 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-constraints {
+  margin-top: 2.2rem !important;
+  max-width: 70ch;
+  font: 400 1rem/1.6 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-constraints b {
+  font-weight: 600;
+  color: var(--kq-ink);
+  margin-right: 0.4rem;
+}
+
+/* ---------- journey map (infographics.js), monochrome ---------- */
+[data-page="cashflow"] main .cf-ig {
+  border-radius: var(--kq-r);
+}
+[data-page="cashflow"] main .cf-jm-phases b {
+  font: 600 1.2rem/1.2 var(--kq-font);
+  letter-spacing: -0.015em;
+}
+[data-page="cashflow"] main .cf-jm-truth {
+  display: block;
+  margin-top: 0.3rem;
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  font: 500 0.8rem/1.2 var(--kq-font);
+  font-style: normal;
+  color: var(--kq-hot);
+}
+[data-page="cashflow"] main .cf-jm-row {
+  font-family: var(--kq-font);
+}
+[data-page="cashflow"] main .cf-jm-pain .cf-jm-cell {
+  color: var(--kq-hot);
+}
+[data-page="cashflow"] main .cf-jm-today {
+  stroke: var(--kq-faint);
+}
+[data-page="cashflow"] main .cf-jm-app {
+  stroke: var(--hue-mint);
+}
+
+/* ---------- emotion curve (story.js) ---------- */
+.cf-ec {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.cf-ec text {
+  font-family: var(--kq-font);
+  text-anchor: middle;
+}
+.cf-ec text.cf-ec-k {
+  text-anchor: start;
+  font-size: 13px;
+  font-weight: 600;
+  fill: var(--kq-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.cf-ec-line {
+  fill: none;
+  stroke: var(--hue-mint);
+  stroke-width: 4;
+  stroke-linecap: round;
+}
+.cf-ec-fill {
+  fill: color-mix(in srgb, var(--hue-mint) 10%, transparent);
+}
+.cf-ec-today {
+  fill: none;
+  stroke: var(--kq-faint);
+  stroke-width: 2.5;
+  stroke-dasharray: 2 8;
+  stroke-linecap: round;
+}
+.cf-ec-dot {
+  fill: var(--kq-ink);
+  stroke: var(--kq-card);
+  stroke-width: 4;
+}
+.cf-ec-emo {
+  font-size: 20px;
+  font-weight: 700;
+  fill: var(--kq-ink);
+}
+.cf-ec-m {
+  font-size: 15px;
+  fill: var(--kq-dim);
+}
+.cf-ec-t {
+  font-size: 14px;
+  fill: var(--kq-faint);
+}
+.cf-ec-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  align-items: center;
+  margin: 1rem 0 0;
+  font: 400 0.9rem/1.3 var(--kq-font);
+  color: var(--kq-dim);
+}
+.cf-ec-legend span {
+  display: inline-block;
+  width: 1.6rem;
+  height: 0.25rem;
+  margin-right: 0.5rem;
+  background: var(--hue-mint);
+  vertical-align: middle;
+}
+.cf-ec-legend span.is-today {
+  background: repeating-linear-gradient(90deg, var(--kq-faint) 0 3px, transparent 3px 8px);
+}
+
+/* ---------- mind map ---------- */
+.kq-mm {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.kq-mm text {
+  font-family: var(--kq-font);
+}
+.kq-mm-trunk,
+.kq-mm-twig {
+  fill: none;
+  stroke: var(--kq-faint);
+  stroke-width: 1.4;
+}
+.kq-mm-branch {
+  fill: var(--kq-card-2);
+}
+.kq-mm-bt {
+  font-size: 16px;
+  font-weight: 600;
+  text-anchor: middle;
+  fill: var(--kq-ink);
+}
+.kq-mm-core {
+  fill: var(--kq-ink);
+}
+.kq-mm-ct {
+  font-size: 18px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--kq-bg);
+}
+.kq-mm-dot {
+  fill: var(--kq-ink);
+}
+.kq-mm-dot.is-parked {
+  fill: none;
+  stroke: var(--kq-faint);
+  stroke-width: 1.4;
+  stroke-dasharray: 2 2;
+}
+.kq-mm-leaf {
+  font-size: 15px;
+  fill: var(--kq-ink);
+}
+.kq-mm-leaf.is-parked {
+  fill: var(--kq-faint);
+  font-style: italic;
+}
+.kq-key {
+  display: flex;
+  gap: 0.5rem 1.6rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 1rem 0 0;
+  font: 400 0.88rem/1.3 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-key span {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  margin-right: 0.45rem;
+  border-radius: 50%;
+  background: var(--kq-ink);
+  vertical-align: middle;
+}
+.kq-key span.is-parked {
+  background: none;
+  border: 1.4px dashed var(--kq-faint);
+}
+
+/* ---------- decision timeline ---------- */
+.kq-tl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--kq-gap);
+  position: relative;
+}
+.kq-tl::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 2.15rem;
+  height: 1px;
+  background: var(--kq-line);
+}
+.kq-tl li {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 0.55rem;
+}
+.kq-tl-day {
+  font: 500 0.88rem/1 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-tl-dot {
+  position: relative;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: 0.35rem 0 0.6rem;
+  border-radius: 50%;
+  background: var(--kq-ink);
+  box-shadow: 0 0 0 5px var(--kq-bg);
+}
+.kq-tl li:nth-child(3) .kq-tl-dot {
+  background: var(--hue-coral);
+}
+.kq-tl-was {
+  margin: 0;
+  font: 400 0.95rem/1.35 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-tl-now {
+  margin: 0;
+  font: 600 1.2rem/1.2 var(--kq-font);
+  letter-spacing: -0.02em;
+  color: var(--kq-ink);
+}
+.kq-tl-why {
+  margin: 0.2rem 0 0;
+  font: 400 0.95rem/1.5 var(--kq-font);
+  color: var(--kq-dim);
+}
+
+/* ---------- the four-step flow ---------- */
+.kq-flow {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--kq-gap);
+}
+.kq-flow li {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  padding: 1.2rem;
+  border-radius: var(--kq-r);
+  background: var(--kq-card);
+}
+.kq-flow-n {
+  font: 500 0.88rem/1 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-flow b {
+  margin-top: -0.4rem;
+  font: 600 1.15rem/1 var(--kq-font);
+  color: var(--kq-ink);
+}
+.kq-flow img {
+  justify-self: center;
+  width: 100%;
+  height: auto;
+  clip-path: inset(0.34% 0.72% round 15.1% / 7.2%);
+}
+
+/* ---------- targets (story.js), monochrome rings ---------- */
+[data-page="cashflow"] main .cf-targets {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--kq-gap);
+}
+[data-page="cashflow"] main .cf-targets li {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  text-align: center;
+  gap: 0.4rem;
+}
+[data-page="cashflow"] main .cf-targets svg {
+  width: min(8.5rem, 100%);
+  height: auto;
+}
+[data-page="cashflow"] main .cf-tg-track {
+  fill: none;
+  stroke: var(--kq-card-2);
+  stroke-width: 10;
+}
+[data-page="cashflow"] main .cf-tg-fill {
+  fill: none;
+  stroke: var(--kq-ink);
+  stroke-width: 10;
+  stroke-linecap: butt;
+}
+[data-page="cashflow"] main .cf-tg-n {
+  font: 700 24px var(--kq-font);
+  fill: var(--kq-ink);
+  text-anchor: middle;
+}
+[data-page="cashflow"] main .cf-tg-of {
+  font: 400 12px var(--kq-font);
+  fill: var(--kq-faint);
+  text-anchor: middle;
+}
+[data-page="cashflow"] main .cf-targets b {
+  font: 600 1rem/1.25 var(--kq-font);
+  color: var(--kq-ink);
+}
+[data-page="cashflow"] main .cf-targets span {
+  font: 400 0.9rem/1.4 var(--kq-font);
+  color: var(--kq-dim);
+}
+
+/* ---------- galleries, design system and live frame: solid, quiet ---------- */
+[data-page="cashflow"] main .shot-card figcaption,
+[data-page="cashflow"] main .cf-eco figcaption {
+  font: 400 0.88rem/1.4 var(--kq-font);
+  color: var(--kq-dim);
+}
+[data-page="cashflow"] main .cf-tile {
+  border-radius: var(--kq-r);
+  background: var(--kq-card);
+}
+[data-page="cashflow"] main .cf-tile-k {
+  font-family: var(--kq-font);
+  color: var(--kq-faint);
+}
+[data-page="cashflow"] main .cf-type {
+  --cf-serif: "New York", ui-serif, "Noto Serif", Georgia, serif;
+  --cf-sans: -apple-system, BlinkMacSystemFont, "Noto Sans", sans-serif;
+}
+[data-page="cashflow"] main .cf-live {
+  border-radius: var(--kq-r);
+}
+
+/* ---------- credits ---------- */
+.kq-credits {
+  margin-top: clamp(5rem, 9vw, 7rem) !important;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--kq-line);
+  font: 400 0.82rem/1.55 var(--kq-font);
+  color: var(--kq-faint);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1100px) {
+  .kq-meta {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .kq-tl {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    row-gap: 2rem;
+  }
+  .kq-tl::before {
+    display: none;
+  }
+}
+@media (max-width: 820px) {
+  .kq-hero,
+  [data-page="cashflow"] main .cf-ba,
+  .kq-made,
+  .kq-jobs,
+  .kq-fixes,
+  .kq-reflect {
+    grid-template-columns: 1fr;
+  }
+  [data-page="cashflow"] main .cf-stats,
+  .kq-flow,
+  [data-page="cashflow"] main .cf-targets,
+  .kq-meta,
+  .kq-tl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .kq-made li {
+    min-height: 11rem;
+  }
+  .kq-hero-photo {
+    aspect-ratio: 1 / 1.05;
+  }
+  .kq-chart,
+  .kq-ec-wrap,
+  .kq-mm-wrap,
+  .kq-loop-wrap {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+  }
+  .cf-gc,
+  .cf-ec,
+  .kq-mm {
+    min-width: 760px;
+  }
+  .kq-loop {
+    min-width: 640px;
+  }
+}
+@media (max-width: 480px) {
+  .kq-meta,
+  .kq-tl {
+    grid-template-columns: 1fr;
+  }
+}
