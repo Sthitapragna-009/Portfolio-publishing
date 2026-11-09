@@ -31,6 +31,7 @@
   <link rel="stylesheet" href="../styles.css" />
   <link rel="stylesheet" href="../assets/cashflow/cashflow.css" />
   <link rel="stylesheet" href="../assets/cashflow/khatiq.css" />
+  <link rel="stylesheet" href="../assets/cashflow/ds.css" />
 </head>
 <body>
 
@@ -64,7 +65,7 @@
         <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
         <div class="kq-hero reveal">
           <div class="kq-hero-text">
-            <p class="kq-label">Banking concept · iOS, iPadOS, watchOS · 1 week, solo</p>
+            <p class="kq-label">Banking concept · iPhone, iPad, Apple Watch · 1 week, solo</p>
             <h1 class="kq-name">Khatiq</h1>
             <p class="kq-hook">Know before it bounces.</p>
             <p class="kq-desc">Khatiq is a money app for India. It reads your salary, bills and accounts across banks, and tells you three days ahead when a payment is about to bounce. Then it shows calm ways to fix it: move money from savings, pay on salary day, or talk to a person.</p>
@@ -79,13 +80,9 @@
         <dl class="kq-meta reveal">
           <div><dt>Role</dt><dd>Solo: research plan, UX, UI, prototype</dd></div>
           <div><dt>Timeline</dt><dd>1 week</dd></div>
-          <div><dt>Platforms</dt><dd>iPhone, iPhone Duo, iPad, Apple Watch</dd></div>
-          <div><dt>Status</dt><dd>Concept, not user-tested yet</dd></div>
-          <div><dt>Built with</dt><dd>React, TypeScript, Motion, Apple HIG</dd></div>
+          <div><dt>Built with</dt><dd>Claude Code: React, TypeScript, Motion</dd></div>
+          <div><dt>Principles</dt><dd>Warn early. Say it plainly. A person is one tap away.</dd></div>
         </dl>
-        <nav class="kq-toc reveal" aria-label="Chapters">
-          <ol><li><a href="#s-overview"><span>01</span>Overview</a></li><li><a href="#s-challenge"><span>02</span>Challenge</a></li><li><a href="#s-process"><span>03</span>Process</a></li><li><a href="#s-solution"><span>04</span>Solution</a></li><li><a href="#s-impact"><span>05</span>Impact</a></li><li><a href="#s-reflection"><span>06</span>Reflection</a></li></ol>
-        </nav>
       </div>
     </section>
 
@@ -169,6 +166,20 @@
   </div></div>
         
         <div class="kq-sub reveal">
+          <h3>What already exists</h3>
+          <p>People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.</p>
+        </div>
+        <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
+          <thead><tr><th scope="col">Signal</th><th scope="col">When it arrives</th><th scope="col">What you learn</th></tr></thead>
+          <tbody>
+            <tr><td>Pre-debit notice for a card or UPI autopay</td><td>About a day before</td><td>A payment is coming. Not whether your balance covers it.</td></tr>
+            <tr><td>Low-balance alert</td><td>When the balance drops below a set amount</td><td>Your balance is low. Not which bill is at risk, or that salary lands in two days.</td></tr>
+            <tr><td>Bounce SMS</td><td>After the payment fails</td><td>That it already failed.</td></tr>
+            <tr class="is-us"><td>Khatiq</td><td>Three days before</td><td>How short, for how long, and three ways out with their costs.</td></tr>
+          </tbody>
+        </table></div>
+        
+        <div class="kq-sub reveal">
           <h3>What people need from that moment</h3>
           <p>Written as jobs to be done. Interviews in India come first in the research plan.</p>
         </div>
@@ -177,13 +188,14 @@
           <li><span>Emotional job</span><p>Help me feel in control, not judged or alarmed.</p></li>
           <li><span>Related job</span><p>Show me this is really my bank, and that a person is reachable.</p></li>
         </ol>
+        <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
         
         <div class="kq-sub reveal">
           <h3>What published surveys suggest</h3>
           <p>Directional only: mostly US and UK, several run by vendors.</p>
         </div>
         <div class="reveal"><ul class="cf-stats"><li style="--tile:var(--hue-lavender)"><b>14%</b><span>fully trust AI with money advice; 72% want a human involved</span></li><li style="--tile:var(--hue-sky)"><b>84%</b><span>accept extra security steps if they stop fraud</span></li><li style="--tile:var(--hue-coral)"><b>55%</b><span>who ignored a real fraud alert thought it was a scam</span></li><li style="--tile:var(--hue-sun)"><b>1 in 2</b><span>say jargon stops them growing their money</span></li></ul><p class="kq-cap">Addition Wealth (US) · Experian 2026 · fraud study summary · Zopa (UK).</p></div>
-        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, any bank as a white label, rupees in lakh grouping, Hindi and English.</p>
+        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
 
         
         <header class="kq-ch reveal" id="s-process">
@@ -271,9 +283,9 @@
         <div class="reveal"><ol class="kq-tl"><li>
       <span class="kq-tl-day">Day 2</span>
       <span class="kq-tl-dot" aria-hidden="true"></span>
-      <p class="kq-tl-was"><s>IBM Carbon components</s></p>
-      <p class="kq-tl-now">Apple’s HIG and Liquid Glass</p>
-      <p class="kq-tl-why">Carbon’s square cards felt cold for a money worry. iOS’s rounded, quiet patterns fit.</p>
+      <p class="kq-tl-was"><s>Square, dense components</s></p>
+      <p class="kq-tl-now">Rounded, quiet components</p>
+      <p class="kq-tl-why">Sharp cards and heavy lines felt cold for a money worry. Soft shapes and fewer lines felt calmer.</p>
     </li><li>
       <span class="kq-tl-day">Day 3</span>
       <span class="kq-tl-dot" aria-hidden="true"></span>
@@ -297,7 +309,7 @@
       <span class="kq-tl-dot" aria-hidden="true"></span>
       <p class="kq-tl-was"><s>Bright colour everywhere</s></p>
       <p class="kq-tl-now">Black canvas, colour only in data</p>
-      <p class="kq-tl-why">Apple Watch’s 60-30-10: colour stays under 10%, so it means something.</p>
+      <p class="kq-tl-why">Colour stays under 10% of any screen, so the one coral number stands out.</p>
     </li></ol></div>
         
         <div class="kq-sub reveal">
@@ -337,25 +349,21 @@
 
         
         <div class="kq-sub reveal">
-          <h3>The same moment on every Apple device</h3>
-          <p>Built from Apple’s guidance for each: a trailing rail on iPhone Duo, a split view on iPad, complications on Apple Watch.</p>
+          <h3>The same moment, wherever you look</h3>
+          <p>Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.</p>
         </div>
         <figure class="kq-photo kq-photo--wide reveal"><img src="../assets/cashflow/mk-duo-open.webp" alt="iPhone Duo held open in two hands: the all-money home beside Ways to cover rent, with the tab bar in the rail" width="1000" height="667" loading="lazy" decoding="async" /></figure>
-        <div class="cf-eco cf-eco-wide reveal">
-          <figure><img src="../assets/cashflow/mk-duo-trio.webp" alt="iPhone Duo open and upright between two other iPhone Duo phones, showing the all-money home" width="1000" height="640" loading="lazy" decoding="async" /><figcaption>iPhone Duo, open and upright</figcaption></figure>
-          <figure><img src="../assets/cashflow/bz-ipad.webp" alt="iPad Air in landscape: the tab bar on top, the all-money home on the left and Ways to cover rent on the right" width="603" height="437" loading="lazy" decoding="async" /><figcaption>iPad: tab bar on top, split view below</figcaption></figure>
+        <p class="kq-cap kq-credit reveal">Credits: Apple, iPhone Duo</p>
+        <div class="cf-eco kq-eco-strip reveal">
+          <figure><img src="../assets/cashflow/bz-watch-face.webp" alt="Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Watch: on the face</figcaption></figure>
+          <figure><img src="../assets/cashflow/bz-watch-confirm.webp" alt="Confirm ₹1,500 on Apple Watch, double tap to confirm" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Watch: Double Tap confirms</figcaption></figure>
+          <figure class="is-wide"><img src="../assets/cashflow/bz-ipad.webp" alt="iPad Air in landscape: the tab bar on top, the all-money home on the left and Ways to cover rent on the right" width="603" height="437" loading="lazy" decoding="async" /><figcaption>iPad: split view</figcaption></figure>
         </div>
-        <div class="cf-eco cf-eco-watch reveal">
-          <figure><img src="../assets/cashflow/bz-watch-face.webp" alt="Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings" width="210" height="330" loading="lazy" decoding="async" /><figcaption>On the face</figcaption></figure>
-          <figure><img src="../assets/cashflow/bz-watch-aod.webp" alt="Always On: amounts hidden" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Always On hides amounts</figcaption></figure>
-          <figure><img src="../assets/cashflow/bz-watch-alert.webp" alt="₹1,059 short for 2 days, Move ₹1,500 or Later" width="210" height="330" loading="lazy" decoding="async" /><figcaption>One fact, one action</figcaption></figure>
-          <figure><img src="../assets/cashflow/bz-watch-confirm.webp" alt="Confirm ₹1,500, double tap to confirm" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Double Tap confirms</figcaption></figure>
-          <figure><img src="../assets/cashflow/bz-watch-done.webp" alt="Rent covered, next: salary 3 Nov" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Covered</figcaption></figure>
-        </div>
+        <p class="kq-cap kq-credit reveal">Credits: Apple, Apple Watch and iPad</p>
 
         
         <div class="kq-sub reveal">
-          <h3>Data, the way Apple Watch shows it</h3>
+          <h3>Data you can read at a glance</h3>
           <p>Colour lives inside the marks: a histogram for the month, a gauge for rent, rings for goals, bars with one month picked out.</p>
         </div>
         
@@ -370,96 +378,139 @@
 
         
         <div class="kq-sub reveal">
-          <h3>Around the moment, a whole bank</h3>
-          <p>Onboarding, accounts across banks, UPI, insights, Seth the assistant, and linking banks through the Account Aggregator.</p>
+          <h3>What makes it trustworthy</h3>
+          <p>Money is about trust, so the warning explains itself, a person is always one tap away, and you decide what each bank shares.</p>
         </div>
         
         <div class="shots cf-phones  reveal" data-shots style="--cols: 4">
           <div class="shots-track">
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/onb-welcome.webp" alt="Welcome to Khatiq: Know early. Act calmly." width="430" height="902" loading="lazy" decoding="async" /><figcaption>Welcome</figcaption></figure>
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/pay-hub.webp" alt="Pay: people, bills and autopays" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Pay</figcaption></figure>
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/ai-chat.webp" alt="Seth answers marked Sure, Not sure and Can’t do this" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Seth</figcaption></figure>
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/link-consent.webp" alt="Share Malabar data with Deccan? What, how long, how often, why" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Consent</figcaption></figure>
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/link-done.webp" alt="Malabar is linked, in its own colours" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Linked</figcaption></figure>
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-why.webp" alt="Why am I seeing this? What we looked at and what we never use" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Why</figcaption></figure>
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-handoff.webp" alt="A person will take it from here" width="430" height="902" loading="lazy" decoding="async" /><figcaption>A person</figcaption></figure>
-            <figure class="shot-card cf-phone"><img src="../assets/cashflow/pro-profile.webp" alt="Profile, behind the avatar" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Profile</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-why.webp" alt="Why am I seeing this? What we looked at and what we never use" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Why you’re seeing it</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-handoff.webp" alt="A person will take it from here, and sees what you saw" width="430" height="902" loading="lazy" decoding="async" /><figcaption>A person, one tap away</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/link-consent.webp" alt="Share Malabar data? What, how far back, how often, until when, and why" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Consent you control</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-error.webp" alt="Couldn’t move the money; another way still works" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Errors with a way out</figcaption></figure>
           </div>
         </div>
 
         
         <div class="kq-sub reveal">
           <h3>The design system</h3>
-          <p>Read from the prototype’s own tokens, so the page can’t drift from the app.</p>
+          <p>Drawn from the prototype’s own tokens, so the page can’t drift from the app.</p>
         </div>
-        
-        <div class="cf-bento reveal">
-          <section class="cf-tile cf-span-12" aria-label="Bank palettes">
-            <p class="cf-tile-k">Every bank brings its own palette · button, ink, tint, colour field and Seth’s glow</p>
-            <div class="cf-banks">
-              <div class="cf-bank">
-                <div class="cf-bank-field" style="background:#0f2a2e;--a:#2f5c8f;--b:#b8742e;--c:#1d6c6a"><span class="cf-bank-mark" style="background:#0f6e66">De</span></div>
-                <b>Deccan Co-operative Bank</b><span>Co-operative bank</span>
-                <div class="cf-bank-chips"><i style="background:#0f6e66" title="Button #0f6e66"></i><i style="background:#86d6cb" title="Ink on dark #86d6cb"></i><i style="background:#e0f1ee" title="Tint #e0f1ee"></i><i style="background:#7ff0dc" title="Seth glow #7ff0dc"></i></div>
-                <code>#0f6e66</code>
-              </div><div class="cf-bank">
-                <div class="cf-bank-field" style="background:#1d1840;--a:#5a3a9e;--b:#c47d5c;--c:#3e35a8"><span class="cf-bank-mark" style="background:#4b3fc4">Ko</span></div>
-                <b>Konkan Bank</b><span>Private bank</span>
-                <div class="cf-bank-chips"><i style="background:#4b3fc4" title="Button #4b3fc4"></i><i style="background:#b9b3ff" title="Ink on dark #b9b3ff"></i><i style="background:#ebe9ff" title="Tint #ebe9ff"></i><i style="background:#c9c3ff" title="Seth glow #c9c3ff"></i></div>
-                <code>#4b3fc4</code>
-              </div><div class="cf-bank">
-                <div class="cf-bank-field" style="background:#341608;--a:#7a2e14;--b:#d08a2e;--c:#5b2a4a"><span class="cf-bank-mark" style="background:#b0441a">Ma</span></div>
-                <b>Malabar Bank</b><span>Private bank</span>
-                <div class="cf-bank-chips"><i style="background:#b0441a" title="Button #b0441a"></i><i style="background:#ffb48f" title="Ink on dark #ffb48f"></i><i style="background:#fbe8de" title="Tint #fbe8de"></i><i style="background:#ffcaa8" title="Seth glow #ffcaa8"></i></div>
-                <code>#b0441a</code>
-              </div><div class="cf-bank">
-                <div class="cf-bank-field" style="background:#12260f;--a:#2e6a2e;--b:#a39a36;--c:#1e4f4a"><span class="cf-bank-mark" style="background:#2e6a2e">Ka</span></div>
-                <b>Kaveri Small Finance Bank</b><span>Small finance bank</span>
-                <div class="cf-bank-chips"><i style="background:#2e6a2e" title="Button #2e6a2e"></i><i style="background:#a8dca2" title="Ink on dark #a8dca2"></i><i style="background:#e3f2e0" title="Tint #e3f2e0"></i><i style="background:#c6f2ba" title="Seth glow #c6f2ba"></i></div>
-                <code>#2e6a2e</code>
-              </div><div class="cf-bank">
-                <div class="cf-bank-field" style="background:#0d1c36;--a:#1d5daa;--b:#6a4fb0;--c:#2a8a9a"><span class="cf-bank-mark" style="background:#1d5daa">Na</span></div>
-                <b>Narmada Bank</b><span>Public sector bank</span>
-                <div class="cf-bank-chips"><i style="background:#1d5daa" title="Button #1d5daa"></i><i style="background:#a2c6ff" title="Ink on dark #a2c6ff"></i><i style="background:#e3edfb" title="Tint #e3edfb"></i><i style="background:#bcd6ff" title="Seth glow #bcd6ff"></i></div>
-                <code>#1d5daa</code>
-              </div><div class="cf-bank">
-                <div class="cf-bank-field" style="background:#2c0e1c;--a:#9a2b58;--b:#c06a3a;--c:#4a2a6a"><span class="cf-bank-mark" style="background:#9a2b58">Vi</span></div>
-                <b>Vindhya Co-operative Bank</b><span>Co-operative bank</span>
-                <div class="cf-bank-chips"><i style="background:#9a2b58" title="Button #9a2b58"></i><i style="background:#f6a8c8" title="Ink on dark #f6a8c8"></i><i style="background:#f9e4ec" title="Tint #f9e4ec"></i><i style="background:#ffc4dd" title="Seth glow #ffc4dd"></i></div>
-                <code>#9a2b58</code>
-              </div>
-            </div>
-            <p class="cf-tile-note">Palettes live in data, not CSS: a bank linked through the Account Aggregator arrives with its colours. Every button fill passes 4.5:1 with white text.</p>
-          </section>
+        <div class="ds reveal">
+    <section class="ds-tile ds-w6" aria-label="Colour">
+      <p class="ds-k">Colour · 60 / 30 / 10</p>
+      <div class="ds-6030"><span style="flex:60;background:#000">60 black</span><span style="flex:30;background:#1c1c1e">30 graphite</span><span style="flex:10;background:#0f6e66">10</span></div>
+      <ul class="ds-hues"><li><i style="background:#7ee8c2"></i><b>Mint</b><span>money in</span></li><li><i style="background:#ff8f78"></i><b>Coral</b><span>money out</span></li><li><i style="background:#ffd65a"></i><b>Sun</b><span>savings</span></li><li><i style="background:#b8b2ff"></i><b>Lavender</b><span>people</span></li><li><i style="background:#84cbff"></i><b>Sky</b><span>banks</span></li><li><i style="background:#c8f06e"></i><b>Lime</b><span>paying</span></li></ul>
+    </section>
 
-          <section class="cf-tile cf-span-7" aria-label="Type">
-            <p class="cf-tile-k">Type · the system font: SF Pro and New York on Apple devices, Noto Sans and Noto Serif everywhere else</p>
-            <div class="cf-type">
-              <div class="cf-type-row"><small>Large title 34</small><span class="cf-serif" style="font-size:2.6rem;line-height:1.1">Know early.</span></div>
-              <div class="cf-type-row"><small>Balance 46</small><span class="cf-serif" style="font-size:2.6rem;line-height:1.1"><span class="cf-sym">₹</span>31,240<span class="cf-dim">.50</span></span></div>
-              <div class="cf-type-row"><small>Title 28</small><span class="cf-serif" style="font-size:1.75rem">Ways to cover rent</span></div>
-              <div class="cf-type-row"><small>Body 17</small><span style="font-size:1.06rem">Your account will be a little short.</span></div>
-              <div class="cf-type-row"><small>Footnote 13</small><span style="font-size:0.81rem">3 Nov · salary arrives</span></div>
-            </div>
-            <p class="cf-tile-note">iOS’s scale: Large Title 34, Title 28, Headline and Body 17, Subheadline 15, Footnote 13, with tracking that tightens as size grows. Apple’s fonts are never shipped in the web build, since their licence covers apps on Apple platforms; on iPhone the system draws them. The ₹ sits smaller with its own space, paise are dimmed, and Noto Sans Devanagari sets Hindi in the same family.</p>
-          </section>
-          <section class="cf-tile cf-span-5" aria-label="Bright accents">
-            <p class="cf-tile-k">Colour · 60-30-10, the Watch black way</p>
-            <div class="cf-hues"><div class="cf-hue"><i style="background:#7ee8c2"></i><b>Mint</b><span>done, money in, safe</span></div><div class="cf-hue"><i style="background:#ff8f78"></i><b>Coral</b><span>money out, the cost of doing nothing</span></div><div class="cf-hue"><i style="background:#ffd65a"></i><b>Sunflower</b><span>savings and goals</span></div><div class="cf-hue"><i style="background:#b8b2ff"></i><b>Lavender</b><span>people and Seth</span></div><div class="cf-hue"><i style="background:#84cbff"></i><b>Sky</b><span>linked banks, data and trust</span></div><div class="cf-hue"><i style="background:#c8f06e"></i><b>Lime</b><span>paying someone</span></div></div>
-            <p class="cf-tile-note">60 black canvas, 30 graphite surfaces, 10 colour: the bank’s tint on the one action, and these six hues only inside data marks and their labels. Measured from every capture: colour at or under 10% on 49 of 54 screens; the five over it are the covered, welcome and linked moments, and the multi-bank account lists.</p>
-          </section>
+    <section class="ds-tile ds-w6" aria-label="Type">
+      <p class="ds-k">Type · a serif for money and titles, a sans for everything else</p>
+      <div class="ds-type">
+        <p><small>Large title 34</small><span class="ds-serif" style="font-size:34px">Ways to cover rent</span></p>
+        <p><small>Balance 46</small><span class="ds-serif" style="font-size:44px"><span class="ds-sym">₹</span>31,240<span class="ds-dim">.50</span></span></p>
+        <p><small>Headline 17</small><span style="font-size:17px;font-weight:600">Rent leaves 1 Nov.</span></p>
+        <p><small>Body 17</small><span style="font-size:17px">You’ll be ₹1,059 short for 2 days.</span></p>
+        <p><small>Footnote 13</small><span style="font-size:13px;color:var(--ds-dim)">Salary 3 Nov · No fee</span></p>
+      </div>
+    </section>
 
-          <section class="cf-tile cf-span-6" aria-label="Grid and spacing">
-            <p class="cf-tile-k">Layout · iPhone margins, rounded shapes</p>
-            <div class="cf-grid-demo"><span style="width:16px">16</span><span style="width:12px">12</span><span style="width:32px">32</span></div>
-            <p class="cf-tile-note">16 pt layout margin, 12 between related tiles, 32 between sections. Cards round at 26, inset lists at 22, controls are capsules, sheets 34, continuous corners where the browser supports them. Every target is 44 pt or more.</p>
-          </section>
-          <section class="cf-tile cf-span-6" aria-label="Motion">
-            <p class="cf-tile-k">Motion and material · Liquid Glass on the controls only</p>
-            <p class="cf-tile-big">Springs, 0.3 s</p>
-            <p class="cf-tile-note">Critically damped springs answer on press, never on release. Glass sits on the functional layer only: the floating tab bar, back buttons and sheets, never on content and never glass on glass. Reduce Transparency turns it solid; Reduce Motion turns movement into fades.</p>
-          </section>
-        </div>
+    <section class="ds-tile ds-w4" aria-label="Buttons">
+      <p class="ds-k">Buttons</p>
+      <div class="ds-stack">
+        <span class="ds-btn is-primary">Review the move</span>
+        <span class="ds-btn">Talk to a person</span>
+        <span class="ds-btn is-quiet">Move it back to savings</span>
+        <span class="ds-btn is-danger">Stop this autopay</span>
+        <span class="ds-pill">See 3 ways to fix it <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </div>
+    </section>
+
+    <section class="ds-tile ds-w4" aria-label="Controls">
+      <p class="ds-k">Controls</p>
+      <div class="ds-stack">
+        <span class="ds-seg"><b>Money out</b><span>Money in</span><span>Saved</span></span>
+        <span class="ds-row-inline"><span class="ds-switch is-on"><i></i></span><span class="ds-switch"><i></i></span><span class="ds-check">✓</span><span class="ds-radio"></span></span>
+        <span class="ds-chips"><b>All money</b><span><i class="ds-mark" style="background:#0f6e66">De</i>Deccan</span><span>+</span></span>
+        <span class="ds-search">Name, UPI ID or mobile number</span>
+      </div>
+    </section>
+
+    <section class="ds-tile ds-w4" aria-label="Navigation">
+      <p class="ds-k">Navigation</p>
+      <div class="ds-stack">
+        <span class="ds-tabbar"><span class="is-on"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg><small>Home</small></span><span><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V5a2 2 0 0 0-2-2H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg><small>Accounts</small></span><span class="ds-scan"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M7 12h10"/></svg></span><span><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12M6 8h12M6 13l8.5 8M6 13h3c6.67 0 6.67-10 0-10"/></svg><small>Pay</small></span><span><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="m19 9-5 5-4-4-3 3"/></svg><small>Insights</small></span></span>
+        <span class="ds-row-inline"><span class="ds-round"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.27 21a2 2 0 0 0 3.46 0M3.26 15.33A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.67C19.41 13.96 18 12.5 18 8A6 6 0 0 0 6 8c0 4.5-1.41 5.96-2.74 7.33"/></svg><em>2</em></span><span class="ds-round is-avatar">AM</span><span class="ds-round is-back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span></span>
+      </div>
+    </section>
+
+    <section class="ds-tile ds-w6" aria-label="Lists">
+      <p class="ds-k">Inset grouped list</p>
+      <ul class="ds-list">
+        <li><i class="ds-ring"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10M7 17 17 7"/></svg></i><span><b>Rent (UPI autopay)</b><small>1 Nov · may fail</small></span><em class="is-out">−₹32,000</em></li>
+        <li><i class="ds-ring"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 7 7 17M17 17H7V7"/></svg></i><span><b>Salary from Kite Labs</b><small>3 Nov</small></span><em class="is-in">+₹68,500</em></li>
+        <li><i class="ds-ring"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></i><span><b>Autopays</b><small>4 active</small></span><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></li>
+      </ul>
+    </section>
+
+    <section class="ds-tile ds-w6" aria-label="Alert card">
+      <p class="ds-k">The alert card</p>
+      <div class="ds-card">
+        <p class="ds-card-k"><i class="ds-mark" style="background:#0f6e66">De</i>Deccan · one thing to sort</p>
+        <div class="ds-card-main"><p>Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days.</p><figure class="ds-gauge" style="width:64px"><svg viewBox="0 0 76 76" width="64" height="64" aria-hidden="true">
+    <circle cx="38" cy="38" r="30" fill="none" stroke="var(--ds-track)" stroke-width="5" stroke-linecap="round" stroke-dasharray="141.4 999" transform="rotate(135 38 38)"/>
+    <circle cx="38" cy="38" r="30" fill="none" stroke="#ff8f78" stroke-width="5" stroke-linecap="round" stroke-dasharray="137.1 999" transform="rotate(135 38 38)"/></svg>
+    <b>97%</b><figcaption>of rent</figcaption></figure></div>
+        <svg class="ds-hist" viewBox="0 0 140 46" aria-hidden="true"><line x1="0" x2="140" y1="34" y2="34" stroke="var(--ds-track)"/><rect x="2" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#f3f3f1"/><rect x="12" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#55555a"/><rect x="22" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#55555a"/><rect x="32" y="36" width="6" height="8" rx="3" fill="#ff8f78"/><rect x="42" y="36" width="6" height="8" rx="3" fill="#ff8f78"/><rect x="52" y="5.285714285714285" width="6" height="28.714285714285715" rx="3" fill="#7ee8c2"/><rect x="62" y="5.285714285714285" width="6" height="28.714285714285715" rx="3" fill="#55555a"/><rect x="72" y="6.571428571428573" width="6" height="27.428571428571427" rx="3" fill="#55555a"/><rect x="82" y="6.571428571428573" width="6" height="27.428571428571427" rx="3" fill="#55555a"/><rect x="92" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="102" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="112" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="122" y="8.285714285714288" width="6" height="25.71428571428571" rx="3" fill="#55555a"/><rect x="132" y="8.285714285714288" width="6" height="25.71428571428571" rx="3" fill="#55555a"/></svg>
+        <span class="ds-pill">See 3 ways to fix it <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></span>
+      </div>
+    </section>
+
+    <section class="ds-tile ds-w12" aria-label="Data">
+      <p class="ds-k">Data at a glance</p>
+      <div class="ds-data">
+        <div><figure class="ds-gauge" style="width:88px"><svg viewBox="0 0 76 76" width="88" height="88" aria-hidden="true">
+    <circle cx="38" cy="38" r="30" fill="none" stroke="var(--ds-track)" stroke-width="5" stroke-linecap="round" stroke-dasharray="141.4 999" transform="rotate(135 38 38)"/>
+    <circle cx="38" cy="38" r="30" fill="none" stroke="#ff8f78" stroke-width="5" stroke-linecap="round" stroke-dasharray="137.1 999" transform="rotate(135 38 38)"/></svg>
+    <b>97%</b><figcaption>of rent</figcaption></figure><small>Arc gauge</small></div>
+        <div><figure class="ds-gauge" style="width:88px"><svg viewBox="0 0 64 64" width="88" height="88" aria-hidden="true"><line x1="32.0" y1="7.0" x2="32.0" y2="2.0" stroke="#7ee8c2" stroke-width="2.4" stroke-linecap="round"/><line x1="37.2" y1="7.5" x2="38.2" y2="2.7" stroke="#7ee8c2" stroke-width="2.4" stroke-linecap="round"/><line x1="42.2" y1="9.2" x2="44.2" y2="4.6" stroke="#7ee8c2" stroke-width="2.4" stroke-linecap="round"/><line x1="46.7" y1="11.8" x2="49.6" y2="7.7" stroke="#7ee8c2" stroke-width="2.4" stroke-linecap="round"/><line x1="50.6" y1="15.3" x2="54.3" y2="11.9" stroke="#7ee8c2" stroke-width="2.4" stroke-linecap="round"/><line x1="53.7" y1="19.5" x2="58.0" y2="17.0" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="55.8" y1="24.3" x2="60.5" y2="22.7" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="56.9" y1="29.4" x2="61.8" y2="28.9" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="56.9" y1="34.6" x2="61.8" y2="35.1" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="55.8" y1="39.7" x2="60.5" y2="41.3" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="53.7" y1="44.5" x2="58.0" y2="47.0" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="50.6" y1="48.7" x2="54.3" y2="52.1" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="46.7" y1="52.2" x2="49.6" y2="56.3" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="42.2" y1="54.8" x2="44.2" y2="59.4" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="37.2" y1="56.5" x2="38.2" y2="61.3" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="32.0" y1="57.0" x2="32.0" y2="62.0" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="26.8" y1="56.5" x2="25.8" y2="61.3" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="21.8" y1="54.8" x2="19.8" y2="59.4" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="17.3" y1="52.2" x2="14.4" y2="56.3" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="13.4" y1="48.7" x2="9.7" y2="52.1" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="10.3" y1="44.5" x2="6.0" y2="47.0" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="8.2" y1="39.7" x2="3.5" y2="41.3" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="7.1" y1="34.6" x2="2.2" y2="35.1" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="7.1" y1="29.4" x2="2.2" y2="28.9" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="8.2" y1="24.3" x2="3.5" y2="22.7" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="10.3" y1="19.5" x2="6.0" y2="17.0" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="13.4" y1="15.3" x2="9.7" y2="11.9" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="17.3" y1="11.8" x2="14.4" y2="7.7" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="21.8" y1="9.2" x2="19.8" y2="4.6" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/><line x1="26.8" y1="7.5" x2="25.8" y2="2.7" stroke="var(--ds-track)" stroke-width="2.4" stroke-linecap="round"/></svg><b>5</b><figcaption>days</figcaption></figure><small>Countdown ring</small></div>
+        <div class="ds-wide"><svg class="ds-hist" viewBox="0 0 140 46" aria-hidden="true"><line x1="0" x2="140" y1="34" y2="34" stroke="var(--ds-track)"/><rect x="2" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#f3f3f1"/><rect x="12" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#55555a"/><rect x="22" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#55555a"/><rect x="32" y="36" width="6" height="8" rx="3" fill="#ff8f78"/><rect x="42" y="36" width="6" height="8" rx="3" fill="#ff8f78"/><rect x="52" y="5.285714285714285" width="6" height="28.714285714285715" rx="3" fill="#7ee8c2"/><rect x="62" y="5.285714285714285" width="6" height="28.714285714285715" rx="3" fill="#55555a"/><rect x="72" y="6.571428571428573" width="6" height="27.428571428571427" rx="3" fill="#55555a"/><rect x="82" y="6.571428571428573" width="6" height="27.428571428571427" rx="3" fill="#55555a"/><rect x="92" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="102" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="112" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="122" y="8.285714285714288" width="6" height="25.71428571428571" rx="3" fill="#55555a"/><rect x="132" y="8.285714285714288" width="6" height="25.71428571428571" rx="3" fill="#55555a"/></svg><small>Histogram</small></div>
+        <div class="ds-wide"><span class="ds-stackbar"><i style="flex:76;background:#7ee8c2"></i><i style="flex:12;background:#84cbff"></i><i style="flex:12;background:#ff8f78"></i></span><small>Stacked bar</small></div>
+        <div class="ds-wide"><span class="ds-meter"><i style="background:#ffd65a"></i><i style="background:#ffd65a"></i><i style="background:#ffd65a"></i><i style="background:#ffd65a"></i><i style="background:#ffd65a"></i><i style="background:#ffd65a"></i><i style="background:#ffd65a"></i><i style="background:#ffd65a"></i><i style="background:var(--ds-track)"></i><i style="background:var(--ds-track)"></i><i style="background:var(--ds-track)"></i><i style="background:var(--ds-track)"></i></span><small>Segment meter</small></div>
+        <div class="ds-wide"><span class="ds-cap"><i style="width:67%"></i></span><small>Progress capsule</small></div>
+      </div>
+    </section>
+
+    <section class="ds-tile ds-w8" aria-label="Bank palettes">
+      <p class="ds-k">Each linked bank keeps its own colours</p>
+      <ul class="ds-banks"><li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, #2f5c8f, transparent 60%), radial-gradient(circle at 85% 90%, #b8742e, transparent 55%), #0f2a2e"><i class="ds-mark is-lg" style="background:#0f6e66">De</i></span><b>Deccan</b><span class="ds-sw"><i style="background:#0f6e66"></i><i style="background:#86d6cb"></i><i style="background:#e0f1ee"></i></span></li><li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, #5a3a9e, transparent 60%), radial-gradient(circle at 85% 90%, #c47d5c, transparent 55%), #1d1840"><i class="ds-mark is-lg" style="background:#4b3fc4">Ko</i></span><b>Konkan</b><span class="ds-sw"><i style="background:#4b3fc4"></i><i style="background:#b9b3ff"></i><i style="background:#ebe9ff"></i></span></li><li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, #7a2e14, transparent 60%), radial-gradient(circle at 85% 90%, #d08a2e, transparent 55%), #341608"><i class="ds-mark is-lg" style="background:#b0441a">Ma</i></span><b>Malabar</b><span class="ds-sw"><i style="background:#b0441a"></i><i style="background:#ffb48f"></i><i style="background:#fbe8de"></i></span></li><li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, #2e6a2e, transparent 60%), radial-gradient(circle at 85% 90%, #a39a36, transparent 55%), #12260f"><i class="ds-mark is-lg" style="background:#2e6a2e">Ka</i></span><b>Kaveri</b><span class="ds-sw"><i style="background:#2e6a2e"></i><i style="background:#a8dca2"></i><i style="background:#e3f2e0"></i></span></li><li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, #1d5daa, transparent 60%), radial-gradient(circle at 85% 90%, #6a4fb0, transparent 55%), #0d1c36"><i class="ds-mark is-lg" style="background:#1d5daa">Na</i></span><b>Narmada</b><span class="ds-sw"><i style="background:#1d5daa"></i><i style="background:#a2c6ff"></i><i style="background:#e3edfb"></i></span></li><li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, #9a2b58, transparent 60%), radial-gradient(circle at 85% 90%, #c06a3a, transparent 55%), #2c0e1c"><i class="ds-mark is-lg" style="background:#9a2b58">Vi</i></span><b>Vindhya</b><span class="ds-sw"><i style="background:#9a2b58"></i><i style="background:#f6a8c8"></i><i style="background:#f9e4ec"></i></span></li></ul>
+    </section>
+
+    <section class="ds-tile ds-w4" aria-label="Watch">
+      <p class="ds-k">Watch complications</p>
+      <div class="ds-watch">
+        <div class="ds-comp-c"><figure class="ds-gauge" style="width:54px"><svg viewBox="0 0 76 76" width="54" height="54" aria-hidden="true">
+    <circle cx="38" cy="38" r="30" fill="none" stroke="var(--ds-track)" stroke-width="5" stroke-linecap="round" stroke-dasharray="141.4 999" transform="rotate(135 38 38)"/>
+    <circle cx="38" cy="38" r="30" fill="none" stroke="#ff8f78" stroke-width="5" stroke-linecap="round" stroke-dasharray="137.1 999" transform="rotate(135 38 38)"/></svg>
+    <b>97</b><figcaption>RENT</figcaption></figure></div>
+        <div class="ds-comp-r"><b>RENT 1 NOV <em>₹1,059 SHORT</em></b><svg class="ds-hist" viewBox="0 0 140 46" aria-hidden="true"><line x1="0" x2="140" y1="34" y2="34" stroke="var(--ds-track)"/><rect x="2" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#f3f3f1"/><rect x="12" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#55555a"/><rect x="22" y="20.714285714285715" width="6" height="13.285714285714285" rx="3" fill="#55555a"/><rect x="32" y="36" width="6" height="8" rx="3" fill="#ff8f78"/><rect x="42" y="36" width="6" height="8" rx="3" fill="#ff8f78"/><rect x="52" y="5.285714285714285" width="6" height="28.714285714285715" rx="3" fill="#7ee8c2"/><rect x="62" y="5.285714285714285" width="6" height="28.714285714285715" rx="3" fill="#55555a"/><rect x="72" y="6.571428571428573" width="6" height="27.428571428571427" rx="3" fill="#55555a"/><rect x="82" y="6.571428571428573" width="6" height="27.428571428571427" rx="3" fill="#55555a"/><rect x="92" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="102" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="112" y="7.428571428571431" width="6" height="26.57142857142857" rx="3" fill="#55555a"/><rect x="122" y="8.285714285714288" width="6" height="25.71428571428571" rx="3" fill="#55555a"/><rect x="132" y="8.285714285714288" width="6" height="25.71428571428571" rx="3" fill="#55555a"/></svg></div>
+      </div>
+    </section>
+
+    <section class="ds-tile ds-w12" aria-label="Space and shape">
+      <p class="ds-k">Space and shape</p>
+      <div class="ds-tokens">
+        <span><i style="width:16px"></i>16 margin</span>
+        <span><i style="width:12px"></i>12 tiles</span>
+        <span><i style="width:32px"></i>32 sections</span>
+        <span><i class="ds-rad" style="border-radius:22px"></i>22 lists</span>
+        <span><i class="ds-rad" style="border-radius:26px"></i>26 cards</span>
+        <span><i class="ds-rad" style="border-radius:34px"></i>34 sheets</span>
+        <span><i class="ds-rad" style="border-radius:999px"></i>Capsule controls</span>
+        <span><i class="ds-rad is-target"></i>44 pt targets</span>
+        <span><i class="ds-rad is-spring"></i>Springs, 0.3 s</span>
+      </div>
+    </section>
+  </div>
 
         
         <header class="kq-ch reveal" id="s-impact">
@@ -488,7 +539,7 @@
           <h3>What exists today</h3>
           
         </div>
-        <div class="reveal"><ul class="cf-stats"><li style="--tile:var(--hue-mint)"><b>64</b><span>screens in a working prototype</span></li><li style="--tile:var(--hue-sky)"><b>4</b><span>Apple devices, each to its guidelines</span></li><li style="--tile:var(--hue-sun)"><b>57 of 64</b><span>screens inside the 10% colour budget</span></li><li style="--tile:var(--hue-coral)"><b>0</b><span>people tested so far. That’s next.</span></li></ul></div>
+        <div class="reveal"><ul class="cf-stats"><li style="--tile:var(--hue-mint)"><b>64</b><span>screens in a working prototype</span></li><li style="--tile:var(--hue-sky)"><b>4</b><span>screen sizes, from watch to tablet</span></li><li style="--tile:var(--hue-sun)"><b>57 of 64</b><span>screens inside the 10% colour budget</span></li><li style="--tile:var(--hue-coral)"><b>0</b><span>people tested so far. That’s next.</span></li></ul></div>
 
         
         <header class="kq-ch reveal" id="s-reflection">
@@ -503,7 +554,7 @@
           <li><b>Next</b><span>Five to eight interviews in India, then the card in front of 8 to 10 people against the targets above.</span></li>
         </ol>
 
-        <p class="kq-credits">Image credits: iPhone Duo photographs (upright trio), Apple. iPhone mockups: Mockup Cloud (on the sofa), akoya (in hand). Open iPhone Duo in hands: source to be added. Device frames: Apple Design Resources. App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
+        <p class="kq-credits">Credits: Apple, iPhone Duo, Apple Watch and iPad. Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
       </div>
     </section>
   </main>

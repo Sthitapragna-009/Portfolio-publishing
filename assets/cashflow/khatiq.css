@@ -11,7 +11,7 @@
   --kq-line: #2a2a2a;
   --kq-ink: #f3f3f1;
   --kq-dim: #a8a8a6;
-  --kq-faint: #747472;
+  --kq-faint: #8c8c8a;
   --kq-bar: #3b3b3b;
   --kq-hot: #ff8f78;
   --kq-gap: clamp(1rem, 2vw, 1.5rem);
@@ -39,7 +39,7 @@
   --kq-line: #d9d9d5;
   --kq-ink: #0b0b0b;
   --kq-dim: #474745;
-  --kq-faint: #767674;
+  --kq-faint: #676765;
   --kq-bar: #cbcbc7;
   --kq-hot: #c2412a;
 }
@@ -185,8 +185,10 @@
 .kq-meta {
   margin: clamp(2.5rem, 5vw, 4rem) 0 0;
   padding: 1.4rem 0 0;
+  padding-bottom: 1.4rem;
+  border-bottom: 1px solid var(--kq-line);
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--kq-gap);
   border-top: 1px solid var(--kq-line);
 }
@@ -959,7 +961,7 @@
 /* ---------- responsive ---------- */
 @media (max-width: 1100px) {
   .kq-meta {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .kq-tl {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1011,5 +1013,100 @@
   .kq-meta,
   .kq-tl {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- what already exists: a plain table on a solid panel ---------- */
+.kq-table-wrap {
+  overflow-x: auto;
+}
+.kq-table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font: 400 1rem/1.5 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-table th {
+  padding: 0 1rem 0.8rem 0;
+  text-align: left;
+  font: 500 0.85rem/1.2 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-table td {
+  padding: 1rem 1rem 1rem 0;
+  border-top: 1px solid var(--kq-line);
+  vertical-align: top;
+}
+.kq-table td:first-child {
+  width: 34%;
+  font-weight: 500;
+  color: var(--kq-ink);
+}
+.kq-table .is-us td {
+  color: var(--kq-ink);
+  font-weight: 600;
+}
+.kq-table .is-us td:first-child::before {
+  content: '';
+  display: inline-block;
+  width: 0.55rem;
+  height: 0.55rem;
+  margin-right: 0.55rem;
+  background: var(--hue-mint);
+}
+/* ---------- one compact devices strip ---------- */
+.kq-eco-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr 2.6fr;
+  gap: var(--kq-gap);
+  align-items: end;
+}
+@media (max-width: 820px) {
+  .kq-eco-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+  .kq-eco-strip .is-wide {
+    grid-column: span 2;
+  }
+}
+
+/* ---------- chapter heads: one line, full-width justified text, less air above ---------- */
+[data-page="cashflow"] .kq-story {
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+}
+.kq-ch {
+  margin-top: clamp(4rem, 7vw, 6rem) !important;
+}
+.kq-ch-title {
+  max-width: none;
+  font-size: clamp(2.2rem, 4.4vw, 3.9rem);
+  line-height: 1;
+  text-wrap: nowrap;
+}
+.kq-ch-intro,
+.kq-sub p,
+.kq-constraints {
+  max-width: none;
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto;
+}
+.kq-sub {
+  margin-top: clamp(2.8rem, 5vw, 4rem) !important;
+}
+.kq-credit {
+  margin-top: 0.6rem !important;
+}
+@media (max-width: 820px) {
+  .kq-ch-title {
+    text-wrap: balance;
+    font-size: clamp(2rem, 8vw, 2.6rem);
+  }
+  .kq-ch-intro,
+  .kq-sub p,
+  .kq-constraints {
+    text-align: left;
+    hyphens: manual;
   }
 }

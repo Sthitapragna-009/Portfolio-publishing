@@ -34,7 +34,7 @@ head = head
     '<meta name="description" content="Khatiq: a money app for India that warns you three days before a payment bounces and shows calm ways to fix it. Journey map, emotional design, an AI assistant called Seth with ten emotions, Account Aggregator linking, per-bank palettes and a working prototype."',
   )
   .replace("&display=swap\" rel=\"stylesheet\" />", "&family=Epilogue:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Serif:wght@400;500&display=swap\" rel=\"stylesheet\" />")
-  .replace('<link rel="stylesheet" href="../styles.css" />', '<link rel="stylesheet" href="../styles.css" />\n  <link rel="stylesheet" href="../assets/cashflow/cashflow.css" />\n  <link rel="stylesheet" href="../assets/cashflow/khatiq.css" />');
+  .replace('<link rel="stylesheet" href="../styles.css" />', '<link rel="stylesheet" href="../styles.css" />\n  <link rel="stylesheet" href="../assets/cashflow/cashflow.css" />\n  <link rel="stylesheet" href="../assets/cashflow/khatiq.css" />\n  <link rel="stylesheet" href="../assets/cashflow/ds.css" />');
 let tail = src.slice(src.indexOf("  <!-- ===================== LIGHTBOX"));
 tail = tail.replace('  <script src="../assets/parag/parag.js"></script>\n', "");
 
@@ -144,6 +144,7 @@ const designSystem = () => `
 // ---------- page ----------
 const st = require("./story.js");
 const pr = require("./process.js");
+const ds = require("./ds.js");
 
 const chapter = (id, n, kicker, title, intro) => `
         <header class="kq-ch reveal" id="${id}">
@@ -172,7 +173,7 @@ const main = `<main id="top">
         <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
         <div class="kq-hero reveal">
           <div class="kq-hero-text">
-            <p class="kq-label">Banking concept · iOS, iPadOS, watchOS · 1 week, solo</p>
+            <p class="kq-label">Banking concept · iPhone, iPad, Apple Watch · 1 week, solo</p>
             <h1 class="kq-name">Khatiq</h1>
             <p class="kq-hook">Know before it bounces.</p>
             <p class="kq-desc">Khatiq is a money app for India. It reads your salary, bills and accounts across banks, and tells you three days ahead when a payment is about to bounce. Then it shows calm ways to fix it: move money from savings, pay on salary day, or talk to a person.</p>
@@ -187,13 +188,9 @@ const main = `<main id="top">
         <dl class="kq-meta reveal">
           <div><dt>Role</dt><dd>Solo: research plan, UX, UI, prototype</dd></div>
           <div><dt>Timeline</dt><dd>1 week</dd></div>
-          <div><dt>Platforms</dt><dd>iPhone, iPhone Duo, iPad, Apple Watch</dd></div>
-          <div><dt>Status</dt><dd>Concept, not user-tested yet</dd></div>
-          <div><dt>Built with</dt><dd>React, TypeScript, Motion, Apple HIG</dd></div>
+          <div><dt>Built with</dt><dd>Claude Code: React, TypeScript, Motion</dd></div>
+          <div><dt>Principles</dt><dd>Warn early. Say it plainly. A person is one tap away.</dd></div>
         </dl>
-        <nav class="kq-toc reveal" aria-label="Chapters">
-          <ol>${CHAPTERS.map(([id, t], i) => `<li><a href="#${id}"><span>0${i + 1}</span>${t}</a></li>`).join("")}</ol>
-        </nav>
       </div>
     </section>
 
@@ -211,12 +208,23 @@ const main = `<main id="top">
         ${chapter("s-challenge", "02", "Challenge", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
         <figure class="kq-panel kq-loop-wrap reveal">${pr.loop()}<figcaption>Today’s loop, every month the dates don’t line up.</figcaption></figure>
         <div class="reveal">${st.beforeAfter()}</div>
+        ${sub("What already exists", "People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.")}
+        <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
+          <thead><tr><th scope="col">Signal</th><th scope="col">When it arrives</th><th scope="col">What you learn</th></tr></thead>
+          <tbody>
+            <tr><td>Pre-debit notice for a card or UPI autopay</td><td>About a day before</td><td>A payment is coming. Not whether your balance covers it.</td></tr>
+            <tr><td>Low-balance alert</td><td>When the balance drops below a set amount</td><td>Your balance is low. Not which bill is at risk, or that salary lands in two days.</td></tr>
+            <tr><td>Bounce SMS</td><td>After the payment fails</td><td>That it already failed.</td></tr>
+            <tr class="is-us"><td>Khatiq</td><td>Three days before</td><td>How short, for how long, and three ways out with their costs.</td></tr>
+          </tbody>
+        </table></div>
         ${sub("What people need from that moment", "Written as jobs to be done. Interviews in India come first in the research plan.")}
         <ol class="kq-jobs reveal">
           <li><span>Main job</span><p>Tell me early if I won’t be okay this month.</p></li>
           <li><span>Emotional job</span><p>Help me feel in control, not judged or alarmed.</p></li>
           <li><span>Related job</span><p>Show me this is really my bank, and that a person is reachable.</p></li>
         </ol>
+        <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
         ${sub("What published surveys suggest", "Directional only: mostly US and UK, several run by vendors.")}
         <div class="reveal">${st.stats([
           ["14%", "fully trust AI with money advice; 72% want a human involved", "lavender"],
@@ -224,7 +232,7 @@ const main = `<main id="top">
           ["55%", "who ignored a real fraud alert thought it was a scam", "coral"],
           ["1 in 2", "say jargon stops them growing their money", "sun"],
         ])}<p class="kq-cap">Addition Wealth (US) · Experian 2026 · fraud study summary · Zopa (UK).</p></div>
-        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, any bank as a white label, rupees in lakh grouping, Hindi and English.</p>
+        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
 
         ${chapter("s-process", "03", "Process", "Seven days, five decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
         ${fig(ig.journeyMap(), "Arjun, Bengaluru. Two moments of truth: the SMS from the bank, and how it ends.", "cf-ig--wide kq-panel")}
@@ -234,11 +242,11 @@ const main = `<main id="top">
         <figure class="kq-panel kq-mm-wrap reveal">${pr.mindMap()}</figure>
         ${sub("The decisions that shaped it", "")}
         <div class="reveal">${pr.timeline([
-          ["Day 2", "IBM Carbon components", "Apple’s HIG and Liquid Glass", "Carbon’s square cards felt cold for a money worry. iOS’s rounded, quiet patterns fit."],
+          ["Day 2", "Square, dense components", "Rounded, quiet components", "Sharp cards and heavy lines felt cold for a money worry. Soft shapes and fewer lines felt calmer."],
           ["Day 3", "One bank’s home", "A home for all your money", "Most people use two or three banks. The warning belongs above any one of them."],
           ["Day 4", "A red “may bounce” banner", "One calm sentence, three ways out", "Say what happens and by how much, then how to fix it."],
           ["Day 5", "A big white button", "A small link", "The card informs. The action is there when you want it."],
-          ["Day 6", "Bright colour everywhere", "Black canvas, colour only in data", "Apple Watch’s 60-30-10: colour stays under 10%, so it means something."],
+          ["Day 6", "Bright colour everywhere", "Black canvas, colour only in data", "Colour stays under 10% of any screen, so the one coral number stands out."],
         ])}</div>
         ${sub("A review before anyone tests it", "Heuristic evaluation, an information-architecture check and a design critique. Eight findings, each fixed. Four of them:")}
         <ul class="kq-fixes reveal">
@@ -263,21 +271,17 @@ const main = `<main id="top">
           <p class="kq-cap">Invented data. <a href="../prototypes/cash-flow-gap/index.html" target="_blank" rel="noopener">Open with all controls<span class="sr-only"> (new tab)</span></a>: four lenses, two banks, light and dark, iPhone Duo, iPad and Apple Watch.</p>
         </div>
 
-        ${sub("The same moment on every Apple device", "Built from Apple’s guidance for each: a trailing rail on iPhone Duo, a split view on iPad, complications on Apple Watch.")}
+        ${sub("The same moment, wherever you look", "Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.")}
         ${photo("mk-duo-open.webp", "iPhone Duo held open in two hands: the all-money home beside Ways to cover rent, with the tab bar in the rail", "kq-photo--wide")}
-        <div class="cf-eco cf-eco-wide reveal">
-          <figure>${img("mk-duo-trio.webp", "iPhone Duo open and upright between two other iPhone Duo phones, showing the all-money home")}<figcaption>iPhone Duo, open and upright</figcaption></figure>
-          <figure>${img("bz-ipad.webp", "iPad Air in landscape: the tab bar on top, the all-money home on the left and Ways to cover rent on the right")}<figcaption>iPad: tab bar on top, split view below</figcaption></figure>
+        <p class="kq-cap kq-credit reveal">Credits: Apple, iPhone Duo</p>
+        <div class="cf-eco kq-eco-strip reveal">
+          <figure>${img("bz-watch-face.webp", "Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings")}<figcaption>Watch: on the face</figcaption></figure>
+          <figure>${img("bz-watch-confirm.webp", "Confirm ₹1,500 on Apple Watch, double tap to confirm")}<figcaption>Watch: Double Tap confirms</figcaption></figure>
+          <figure class="is-wide">${img("bz-ipad.webp", "iPad Air in landscape: the tab bar on top, the all-money home on the left and Ways to cover rent on the right")}<figcaption>iPad: split view</figcaption></figure>
         </div>
-        <div class="cf-eco cf-eco-watch reveal">
-          <figure>${img("bz-watch-face.webp", "Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings")}<figcaption>On the face</figcaption></figure>
-          <figure>${img("bz-watch-aod.webp", "Always On: amounts hidden")}<figcaption>Always On hides amounts</figcaption></figure>
-          <figure>${img("bz-watch-alert.webp", "₹1,059 short for 2 days, Move ₹1,500 or Later")}<figcaption>One fact, one action</figcaption></figure>
-          <figure>${img("bz-watch-confirm.webp", "Confirm ₹1,500, double tap to confirm")}<figcaption>Double Tap confirms</figcaption></figure>
-          <figure>${img("bz-watch-done.webp", "Rent covered, next: salary 3 Nov")}<figcaption>Covered</figcaption></figure>
-        </div>
+        <p class="kq-cap kq-credit reveal">Credits: Apple, Apple Watch and iPad</p>
 
-        ${sub("Data, the way Apple Watch shows it", "Colour lives inside the marks: a histogram for the month, a gauge for rent, rings for goals, bars with one month picked out.")}
+        ${sub("Data you can read at a glance", "Colour lives inside the marks: a histogram for the month, a gauge for rent, rings for goals, bars with one month picked out.")}
         ${phones([
           ["gap-bank.webp", "The bank home: a 30-day histogram with two short days below the line and an arc gauge, 97% of rent", "Histogram and gauge"],
           ["ins-insights.webp", "Insights: six months of spending with October in coral and a dashed average", "One month picked out"],
@@ -285,20 +289,16 @@ const main = `<main id="top">
           ["acc-linked.webp", "Accounts across three banks, each in its own colours", "Banks in their colours"],
         ])}
 
-        ${sub("Around the moment, a whole bank", "Onboarding, accounts across banks, UPI, insights, Seth the assistant, and linking banks through the Account Aggregator.")}
+        ${sub("What makes it trustworthy", "Money is about trust, so the warning explains itself, a person is always one tap away, and you decide what each bank shares.")}
         ${phones([
-          ["onb-welcome.webp", "Welcome to Khatiq: Know early. Act calmly.", "Welcome"],
-          ["pay-hub.webp", "Pay: people, bills and autopays", "Pay"],
-          ["ai-chat.webp", "Seth answers marked Sure, Not sure and Can’t do this", "Seth"],
-          ["link-consent.webp", "Share Malabar data with Deccan? What, how long, how often, why", "Consent"],
-          ["link-done.webp", "Malabar is linked, in its own colours", "Linked"],
-          ["gap-why.webp", "Why am I seeing this? What we looked at and what we never use", "Why"],
-          ["gap-handoff.webp", "A person will take it from here", "A person"],
-          ["pro-profile.webp", "Profile, behind the avatar", "Profile"],
+          ["gap-why.webp", "Why am I seeing this? What we looked at and what we never use", "Why you’re seeing it"],
+          ["gap-handoff.webp", "A person will take it from here, and sees what you saw", "A person, one tap away"],
+          ["link-consent.webp", "Share Malabar data? What, how far back, how often, until when, and why", "Consent you control"],
+          ["gap-error.webp", "Couldn’t move the money; another way still works", "Errors with a way out"],
         ])}
 
-        ${sub("The design system", "Read from the prototype’s own tokens, so the page can’t drift from the app.")}
-        ${designSystem()}
+        ${sub("The design system", "Drawn from the prototype’s own tokens, so the page can’t drift from the app.")}
+        ${ds.designSystem(banks)}
 
         ${chapter("s-impact", "05", "Impact", "What it has to prove", "Nothing has been tested yet. These are the bars it must clear with 8 to 10 people, written down now so they can’t drift.")}
         <div class="kq-panel reveal">${st.targets([
@@ -311,7 +311,7 @@ const main = `<main id="top">
         ${sub("What exists today", "")}
         <div class="reveal">${st.stats([
           ["64", "screens in a working prototype", "mint"],
-          ["4", "Apple devices, each to its guidelines", "sky"],
+          ["4", "screen sizes, from watch to tablet", "sky"],
           ["57 of 64", "screens inside the 10% colour budget", "sun"],
           ["0", "people tested so far. That’s next.", "coral"],
         ])}</div>
@@ -324,7 +324,7 @@ const main = `<main id="top">
           <li><b>Next</b><span>Five to eight interviews in India, then the card in front of 8 to 10 people against the targets above.</span></li>
         </ol>
 
-        <p class="kq-credits">Image credits: iPhone Duo photographs (upright trio), Apple. iPhone mockups: Mockup Cloud (on the sofa), akoya (in hand). Open iPhone Duo in hands: source to be added. Device frames: Apple Design Resources. App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
+        <p class="kq-credits">Credits: Apple, iPhone Duo, Apple Watch and iPad. Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
       </div>
     </section>
   </main>
