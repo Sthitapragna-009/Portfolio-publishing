@@ -13,6 +13,11 @@ const ICON = {
   out: '<path d="M7 7h10v10M7 17 17 7"/>',
   repeat: '<path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/>',
   chev: '<path d="m9 18 6-6-6-6"/>',
+  xcircle: '<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/>',
+  triangle: '<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4M12 17h.01"/>',
+  check: '<circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/>',
+  info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
+  alert: '<circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/>',
 };
 const ico = (k, s = 18) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[k]}</svg>`;
 
@@ -45,13 +50,17 @@ const hist = () => {
     .join("")}</svg>`;
 };
 
+/** A notice as in the app: tinted fill, full 1px edge, icon and title. Never a side stripe. */
+const notice = (tone, icon, title, text, action) =>
+  `<div class="ds-notice is-${tone}">${ico(icon, 19)}<p><b>${e(title)}</b><span>${e(text)}</span>${action ? `<em>${e(action)}</em>` : ""}</p></div>`;
+
 function designSystem(banks) {
   const order = ["riverbend", "northgate", "kesari", "pragati", "nila", "sahyog"];
   const hues = [
     ["#7ee8c2", "Mint", "money in"],
     ["#ff8f78", "Coral", "money out"],
     ["#ffd65a", "Sun", "savings"],
-    ["#b8b2ff", "Lavender", "people"],
+    ["#b8b2ff", "Lavender", "shortcuts, Seth"],
     ["#84cbff", "Sky", "banks"],
     ["#c8f06e", "Lime", "paying"],
   ];
@@ -80,7 +89,7 @@ function designSystem(banks) {
         <span class="ds-btn">Talk to a person</span>
         <span class="ds-btn is-quiet">Move it back to savings</span>
         <span class="ds-btn is-danger">Stop this autopay</span>
-        <span class="ds-pill">See 3 ways to fix it ${ico("chev", 15)}</span>
+        <span class="ds-row-inline"><span class="ds-pill">See 3 ways to fix it ${ico("chev", 15)}</span><span class="ds-pill is-lav">Fix now</span></span>
       </div>
     </section>
 
@@ -117,7 +126,22 @@ function designSystem(banks) {
         <p class="ds-card-k"><i class="ds-mark" style="background:${banks.riverbend.palette.brand}">${e(banks.riverbend.mark)}</i>${e(banks.riverbend.short)} · one thing to sort</p>
         <div class="ds-card-main"><p>Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days.</p>${gauge(0.97, "#ff8f78", "97%", "of rent", 64)}</div>
         ${hist()}
-        <span class="ds-pill">See 3 ways to fix it ${ico("chev", 15)}</span>
+        <span class="ds-row-inline"><span class="ds-pill">See 3 ways to fix it ${ico("chev", 15)}</span><span class="ds-pill is-lav">Fix now</span></span>
+      </div>
+    </section>
+
+    <section class="ds-tile ds-w12" aria-label="States">
+      <p class="ds-k">States · an icon and a title every time, never colour alone</p>
+      <div class="ds-states">
+        <div><small>Error · something failed, and what still works</small>${notice("stop", "xcircle", "No answer from Vindhya", "Nothing was shared. Your other banks still work.")}</div>
+        <div><small>Warning · what goes wrong if nothing changes</small>${notice("warn", "triangle", "Rent will be ₹3,059 short", "Rent leaves by autopay on 1 Nov. You can still pay.", "See ways to cover rent")}</div>
+        <div><small>Success · what finished</small>${notice("good", "check", "Rent is covered", "₹1,500 moved from your savings pot.")}</div>
+        <div><small>Info · a fact that changes what you’d do</small>${notice("info", "info", "Read-only account", "To move money here, use Narmada’s app.")}</div>
+      </div>
+      <div class="ds-fields">
+        <div><small>Field</small><span class="ds-field-in"><i>₹</i>2,000</span><span class="ds-help">From Main account · ₹31,240.50 available</span></div>
+        <div><small>Field, error</small><span class="ds-field-in is-error"><i>₹</i>99,999</span><span class="ds-help is-error">${ico("alert", 14)} That’s more than your main account has.</span></div>
+        <div><small>PIN, wrong</small><span class="ds-pin">${"<i></i>".repeat(4)}</span><span class="ds-help is-error is-center">Wrong PIN. 2 tries left.</span></div>
       </div>
     </section>
 

@@ -15,7 +15,6 @@ const src = fs.readFileSync(SITE + "/projects/paraga-mitra.html", "utf8");
 // ---------- data from the prototype itself ----------
 const { banks } = require(APP + "/src/data/banks.ts");
 // scenario.ts imports without extensions (Vite style), which Node can't resolve; the one figure needed is mirrored here.
-const member = { bounceCharge: 590 };
 const inr = (n) => "₹" + n.toLocaleString("en-IN");
 
 // Text escape. Straight apostrophes become typographic ones.
@@ -33,8 +32,8 @@ head = head
     /<meta name="description" content="[^"]*"/,
     '<meta name="description" content="Khatiq: a money app for India that warns you three days before a payment bounces and shows calm ways to fix it. Journey map, emotional design, an AI assistant called Seth with ten emotions, Account Aggregator linking, per-bank palettes and a working prototype."',
   )
-  .replace("&display=swap\" rel=\"stylesheet\" />", "&family=Epilogue:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Serif:wght@400;500&display=swap\" rel=\"stylesheet\" />")
-  .replace('<link rel="stylesheet" href="../styles.css" />', '<link rel="stylesheet" href="../styles.css" />\n  <link rel="stylesheet" href="../assets/cashflow/cashflow.css" />\n  <link rel="stylesheet" href="../assets/cashflow/khatiq.css" />\n  <link rel="stylesheet" href="../assets/cashflow/ds.css" />');
+  .replace("&display=swap\" rel=\"stylesheet\" />", "&family=Epilogue:wght@400;500;600;700;800&family=Caveat:wght@500;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Serif:wght@400;500&display=swap\" rel=\"stylesheet\" />")
+  .replace('<link rel="stylesheet" href="../styles.css" />', '<link rel="stylesheet" href="../styles.css" />\n  <link rel="stylesheet" href="../assets/cashflow/cashflow.css" />\n  <link rel="stylesheet" href="../assets/cashflow/khatiq.css" />\n  <link rel="stylesheet" href="../assets/cashflow/ds.css" />\n  <link rel="stylesheet" href="../assets/cashflow/tl.css" />');
 let tail = src.slice(src.indexOf("  <!-- ===================== LIGHTBOX"));
 tail = tail.replace('  <script src="../assets/parag/parag.js"></script>\n', "");
 
@@ -80,6 +79,19 @@ const step = (n, label, title, text, why, shot) => `
             </div>
             <div class="cf-step-shot">${shot}</div>
           </div>`;
+/** Screen library: one labelled, sideways-scrolling row per flow. */
+const library = (groups) =>
+  groups
+    .map(
+      ([title, kind, items]) => `<section class="kq-lib-group" aria-label="${e(title)}">
+          <h4 class="kq-lib-h">${e(title)} <span>${items.length}</span></h4>
+          <div class="kq-lib-row is-${kind}">
+            ${items.map(([file, cap]) => `<figure class="kq-lib-item">${img(file + ".webp", title + ": " + cap)}<figcaption>${e(cap)}</figcaption></figure>`).join("")}
+          </div>
+        </section>`,
+    )
+    .join("")
+
 const one = (file, alt) => `<figure class="cf-phone cf-phone--one">${img(file, alt)}</figure>`;
 const fig = (inner, caption, cls = "") => `<figure class="cf-ig${cls ? " " + cls : ""} reveal">${inner}${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
 
@@ -145,6 +157,9 @@ const designSystem = () => `
 const st = require("./story.js");
 const pr = require("./process.js");
 const ds = require("./ds.js");
+const sk = require("./sketches.js");
+const pp = require("./proto-page.js");
+const tl = require("./tl.js");
 
 const chapter = (id, n, kicker, title, intro) => `
         <header class="kq-ch reveal" id="${id}">
@@ -179,7 +194,7 @@ const main = `<main id="top">
             <p class="kq-desc">Khatiq is a money app for India. It reads your salary, bills and accounts across banks, and tells you three days ahead when a payment is about to bounce. Then it shows calm ways to fix it: move money from savings, pay on salary day, or talk to a person.</p>
             <p class="kq-origin">From <i>khata</i> (खाता), Hindi for an account ledger.</p>
             <p class="kq-links">
-              <a class="kq-link is-primary" href="#kq-try">Try the prototype <span aria-hidden="true">→</span></a>
+              <a class="kq-link is-primary" href="khatiq-prototype.html">Try the prototype <span aria-hidden="true">→</span></a>
               <a class="kq-link" href="#s-overview">Read the case study <span aria-hidden="true">↓</span></a>
             </p>
           </div>
@@ -197,7 +212,7 @@ const main = `<main id="top">
     <section class="section case-plates kq-story">
       <div class="wrap">
 
-        ${chapter("s-overview", "01", "Overview", "The gap, in one picture", "Arjun has ₹31,241 today. Rent of ₹32,000 leaves by autopay on 1 Nov; his salary lands on the 3rd. For two days he’s ₹1,058 short, and the bank charges ₹590 when rent bounces.")}
+        ${chapter("s-overview", "01", "Overview", "The gap, in one picture", "Arjun has ₹31,241 today. Rent of ₹32,000 leaves by autopay on 1 Nov; his salary lands on the 3rd. For two days he’s ₹1,058 short, and if the autopay bounces, bank charges and a late fee follow.")}
         <figure class="kq-panel kq-chart reveal">${st.gapChart()}<figcaption>The prototype’s own 14-day projection. The two short days drop below the line; salary day is mint.</figcaption></figure>
         <ul class="kq-made reveal">
           <li style="--tile:var(--hue-mint)"><span class="kq-made-n">01</span><b>A home for all your money</b><span>One line says whether you’re okay, across every bank you use.</span></li>
@@ -207,7 +222,7 @@ const main = `<main id="top">
 
         ${chapter("s-challenge", "02", "Challenge", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
         <figure class="kq-panel kq-loop-wrap reveal">${pr.loop()}<figcaption>Today’s loop, every month the dates don’t line up.</figcaption></figure>
-        <div class="reveal">${st.beforeAfter()}</div>
+        <div class="reveal">${st.beforeAfter(img("alert-card.webp", "The real card from the Khatiq app: Deccan, one thing to sort. Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days. A 30-day chart with two short days, and See 3 ways to fix it"))}</div>
         ${sub("What already exists", "People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.")}
         <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
           <thead><tr><th scope="col">Signal</th><th scope="col">When it arrives</th><th scope="col">What you learn</th></tr></thead>
@@ -234,15 +249,21 @@ const main = `<main id="top">
         ])}<p class="kq-cap">Addition Wealth (US) · Experian 2026 · fraud study summary · Zopa (UK).</p></div>
         <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
 
+        <p class="kq-insight reveal">The warning already exists. What’s missing is the maths, and a way out.</p>
+
         ${chapter("s-process", "03", "Process", "Seven days, five decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
-        ${fig(ig.journeyMap(), "Arjun, Bengaluru. Two moments of truth: the SMS from the bank, and how it ends.", "cf-ig--wide kq-panel")}
+        <figure class="kq-panel reveal">${tl.projectTimeline("03/")}</figure>
+        <figure class="kq-panel reveal">${tl.journeyMap("03/")}<figcaption>Two moments of truth: the SMS from the bank, and how it ends.</figcaption></figure>
         ${sub("Emotional design: the right feeling at the right moment", "In banking, emotional design isn’t delight. It’s confidence when things are fine, reassurance and control when they aren’t, trust when money moves, and progress after.")}
         <figure class="kq-panel kq-ec-wrap reveal">${st.emotionCurve()}<figcaption>A design intention, to be tested. Framework: <a href="https://www.theuxda.com/blog/emotionally-intelligent-ux-power-next-gen-digital-banking">UXDA, emotionally intelligent UX in digital banking</a>.</figcaption></figure>
         ${sub("Brainstorm", "One idea, six directions. Filled ideas are in the prototype; dashed ones were parked or rejected.")}
         <figure class="kq-panel kq-mm-wrap reveal">${pr.mindMap()}</figure>
+        ${sub("Rough screens", "What I drew first. Most of it was wrong, and each wrong turn pointed at the next one.")}
+        <figure class="kq-sketch reveal">${sk.sketches()}<figcaption>Pencil sketches from the week, redrawn for this page.</figcaption></figure>
+        <figure class="kq-panel reveal">${tl.iaMap("03/")}<figcaption>Five tabs for what you do every week. Settings sit behind the avatar, and help is one tap from any card.</figcaption></figure>
         ${sub("The decisions that shaped it", "")}
         <div class="reveal">${pr.timeline([
-          ["Day 2", "Square, dense components", "Rounded, quiet components", "Sharp cards and heavy lines felt cold for a money worry. Soft shapes and fewer lines felt calmer."],
+          ["Day 3", "Square, dense components", "Rounded, quiet components", "Sharp cards and heavy lines felt cold for a money worry. Soft shapes and fewer lines felt calmer."],
           ["Day 3", "One bank’s home", "A home for all your money", "Most people use two or three banks. The warning belongs above any one of them."],
           ["Day 4", "A red “may bounce” banner", "One calm sentence, three ways out", "Say what happens and by how much, then how to fix it."],
           ["Day 5", "A big white button", "A small link", "The card informs. The action is there when you want it."],
@@ -260,7 +281,7 @@ const main = `<main id="top">
         ${photo("mk-sofa.webp", "Someone on a sofa holding an iPhone with Deccan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days", "kq-photo--wide")}
         <ol class="kq-flow reveal">
           <li><span class="kq-flow-n">1</span><b>See it</b>${img("gap-home.webp", "Home: one thing needs you before 1 Nov, with the gap card")}</li>
-          <li><span class="kq-flow-n">2</span><b>Choose</b>${img("gap-compare.webp", "Ways to cover rent: ₹590 if you do nothing, then three ways with their costs")}</li>
+          <li><span class="kq-flow-n">2</span><b>Choose</b>${img("gap-compare.webp", "Ways to cover rent: what doing nothing costs, then three ways out with their costs")}</li>
           <li><span class="kq-flow-n">3</span><b>Confirm</b>${img("gap-confirm.webp", "Confirm: after this move, ₹32,740.50, 100% of rent covered")}</li>
           <li><span class="kq-flow-n">4</span><b>Done</b>${img("gap-done.webp", "Rent is covered. Next date to watch, 3 Nov. You sorted this 3 days before it was due.")}</li>
         </ol>
@@ -270,6 +291,7 @@ const main = `<main id="top">
           <iframe src="../prototypes/cash-flow-gap/index.html?embed" title="Khatiq prototype" loading="lazy"></iframe>
           <p class="kq-cap">Invented data. <a href="../prototypes/cash-flow-gap/index.html" target="_blank" rel="noopener">Open with all controls<span class="sr-only"> (new tab)</span></a>: four lenses, two banks, light and dark, iPhone Duo, iPad and Apple Watch.</p>
         </div>
+        <p class="kq-proto-cta reveal"><a class="kq-btn" href="khatiq-prototype.html">Open the prototype in its own page <span aria-hidden="true">→</span></a></p>
 
         ${sub("The same moment, wherever you look", "Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.")}
         ${photo("mk-duo-open.webp", "iPhone Duo held open in two hands: the all-money home beside Ways to cover rent, with the tab bar in the rail", "kq-photo--wide")}
@@ -297,6 +319,21 @@ const main = `<main id="top">
           ["gap-error.webp", "Couldn’t move the money; another way still works", "Errors with a way out"],
         ])}
 
+        ${sub("Every screen", "Everything the story above skips, grouped by flow. Scroll each row sideways.")}
+        <div class="kq-lib reveal">${library([
+          ["Onboarding", "phone", [["onb-welcome", "Welcome to Khatiq"], ["onb-bank", "Where does your salary land?"], ["onb-phone", "Your mobile number"], ["onb-otp", "Enter the code"], ["onb-pin", "Set an app PIN"], ["onb-notify", "Turn on notifications"]]],
+          ["The gap, step by step", "phone", [["gap-stepup", "A passkey for a large move"], ["gap-waiting", "Moving, with named steps"], ["gap-covered", "Home after: rent is covered"], ["gap-jargon", "Bank words, rewritten"]]],
+          ["Accounts and activity", "phone", [["acc-all", "Accounts by bank"], ["acc-detail", "Main account"], ["acc-nila", "A linked, read-only account"], ["act-list", "Activity with filters"], ["act-txn", "One payment"]]],
+          ["Pay", "phone", [["pay-hub", "Pay"], ["pay-scan", "Scan a QR"], ["pay-amount", "Enter an amount"], ["pay-pin", "UPI PIN"], ["pay-done", "Paid"], ["pay-rent", "The rent autopay"]]],
+          ["Linking another bank", "phone", [["link-pick", "Pick a bank"], ["link-otp", "Approve the consent"], ["link-search", "Finding accounts"], ["link-found", "Choose accounts"], ["link-done", "Linked"], ["link-failed", "When a bank doesn’t answer"], ["link-consents", "Linked banks and consents"]]],
+          ["Seth, the assistant", "phone", [["ai-optin", "Off until you turn it on"], ["ai-chat", "Answers marked Sure, Not sure, Can’t do"], ["ai-sheet", "What each face means"], ["ai-home", "Seth on the bank home"]]],
+          ["Profile and settings", "phone", [["pro-profile", "Profile"], ["pro-inbox", "Notifications"], ["pro-cards", "Cash-flow card settings"], ["pro-security", "PIN and fingerprint"]]],
+          ["For a small business", "phone", [["biz-home", "Cash position, three weeks"], ["biz-approve", "Approve a move"]]],
+          ["Light mode and another bank", "phone", [["theme-light", "Light mode"], ["theme-light-ins", "Insights, light"], ["theme-meru", "In Konkan’s colours"], ["theme-meru-acc", "Konkan accounts"]]],
+          ["Folding phone and iPad", "wide", [["duo-outer-home", "Closed: home"], ["duo-outer-compare", "Closed: ways to cover rent"], ["duo-inner-accounts", "Open: accounts beside an account"], ["duo-inner-activity", "Open: activity beside a payment"], ["duo-book-home", "Folded like a book"], ["ipad-accounts", "iPad: accounts"], ["ipad-bank", "iPad: the bank home"]]],
+          ["Apple Watch", "watch", [["watch-face", "The face"], ["watch-aod", "Always On hides amounts"], ["watch-stack", "Smart Stack"], ["watch-alert", "The alert"], ["watch-confirm", "Confirm"], ["watch-done", "Done"]]],
+        ])}</div>
+
         ${sub("The design system", "Drawn from the prototype’s own tokens, so the page can’t drift from the app.")}
         ${ds.designSystem(banks)}
 
@@ -308,13 +345,7 @@ const main = `<main id="top">
           [9, 10, "Find a person in 10 seconds", "Talk to a person, from the card", "mint"],
           [7, 10, "Feel calm after", "One question, five words", "mint"],
         ])}</div>
-        ${sub("What exists today", "")}
-        <div class="reveal">${st.stats([
-          ["64", "screens in a working prototype", "mint"],
-          ["4", "screen sizes, from watch to tablet", "sky"],
-          ["57 of 64", "screens inside the 10% colour budget", "sun"],
-          ["0", "people tested so far. That’s next.", "coral"],
-        ])}</div>
+        
 
         ${chapter("s-reflection", "06", "Reflection", "What I’d keep, and what’s next", "")}
         <ol class="kq-reflect reveal">
@@ -333,3 +364,5 @@ const main = `<main id="top">
 const out = head + main + tail;
 fs.writeFileSync(SITE + "/projects/cash-flow-gap.html", out);
 console.log("wrote projects/cash-flow-gap.html", Math.round(out.length / 1024) + " KB");
+fs.writeFileSync(SITE + "/projects/khatiq-prototype.html", pp.protoPage());
+console.log("wrote projects/khatiq-prototype.html");

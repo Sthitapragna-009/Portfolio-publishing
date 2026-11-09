@@ -1,0 +1,337 @@
+/* Khatiq case study: the timeline style, after the user's reference.
+   Square-type headings with a rule, dashed column guides, black rounded bars,
+   small grey labels, round-dot lists. Applied to the timeline, journey map and
+   information architecture, and carried into every chart and table on the page.
+   Loaded last. Light: black bars on white. Dark: the same, inverted. */
+
+[data-page="cashflow"] main {
+  --kqt-font: var(--kq-font);
+  --kqt-bar: #ececea;
+  --kqt-on-bar: #111111;
+  --kqt-guide: #3d3d3d;
+}
+[data-page="cashflow"][data-theme="light"] main {
+  --kqt-bar: #222222;
+  --kqt-on-bar: #ffffff;
+  --kqt-guide: #c4c4c0;
+}
+
+/* ---------- panel header ---------- */
+.kqt-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  margin-bottom: 1.8rem;
+  border-bottom: 1px solid var(--kqt-guide);
+}
+.kqt-eyebrow {
+  margin: 0;
+  font: 400 0.95rem/1.3 var(--kqt-font);
+  color: var(--kq-dim);
+}
+[data-page="cashflow"] main .kqt-title {
+  margin: 0.25rem 0 0;
+  font: 500 clamp(1.7rem, 2.8vw, 2.25rem) / 1.1 var(--kqt-font);
+  letter-spacing: 0;
+  color: var(--kq-ink);
+}
+.kqt-num {
+  font: 600 clamp(1.5rem, 2.4vw, 2rem) / 1 var(--kqt-font);
+  color: var(--kq-ink);
+}
+
+/* ---------- the grid ---------- */
+.kqt-scroll {
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.kqt-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  row-gap: 0.6rem;
+  min-width: var(--min);
+  padding-bottom: 0.4rem;
+}
+.kqt-guide {
+  justify-self: start;
+  width: 0;
+  border-left: 1.5px dashed var(--kqt-guide);
+  pointer-events: none;
+}
+.kqt-bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem;
+  min-height: 2.9rem;
+  padding: 0.7rem 1.1rem;
+  border-radius: 16px;
+  background: var(--kqt-bar);
+  color: var(--kqt-on-bar);
+  font: 500 1.05rem/1.2 var(--kq-font);
+}
+.kqt-bar small {
+  font: 400 0.82rem/1.3 var(--kqt-font);
+  text-align: right;
+  opacity: 0.72;
+}
+.kqt-date {
+  justify-self: center;
+  padding: 0 0.4rem;
+  font: 400 0.88rem/1.3 var(--kqt-font);
+  color: var(--kq-faint);
+  text-align: center;
+}
+.kqt-list {
+  list-style: none;
+  margin: 0.8rem 0 0;
+  padding: 0 0.8rem 0 1.1rem;
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+}
+.kqt-list li {
+  position: relative;
+  padding-left: 1rem;
+  font: 400 0.93rem/1.35 var(--kqt-font);
+  color: var(--kq-ink);
+}
+.kqt-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.48em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--kq-ink);
+}
+.kqt-list small {
+  display: block;
+  margin-bottom: 0.1rem;
+  font: 500 0.72rem/1.2 var(--kq-font);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--kq-faint);
+}
+.kqt--journey .kqt-list li:nth-child(2) {
+  color: var(--kq-dim);
+}
+
+/* feeling strip in the journey map */
+.kqt-strip {
+  position: relative;
+  z-index: 1;
+}
+.kqt-feel {
+  padding: 0.6rem 0 0;
+}
+.kqt-feel-k {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin: 0 0 0.3rem 1.1rem;
+  font: 400 0.82rem/1.2 var(--kqt-font);
+  color: var(--kq-faint);
+}
+.kqt-feel-k span:first-child {
+  color: var(--kq-ink);
+  font-weight: 500;
+}
+.kqt-feel-k i {
+  display: inline-block;
+  width: 1.4rem;
+  height: 3px;
+  margin-right: 0.45rem;
+  vertical-align: middle;
+  background: var(--kq-ink);
+  border-radius: 2px;
+}
+.kqt-feel-k i.is-today {
+  background: repeating-linear-gradient(90deg, var(--kq-faint) 0 3px, transparent 3px 7px);
+}
+.kqt-feel svg {
+  display: block;
+  width: 100%;
+  height: 110px;
+  overflow: visible;
+}
+.kqt-feel-zero {
+  stroke: var(--kqt-guide);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+  vector-effect: non-scaling-stroke;
+}
+.kqt-feel-app {
+  fill: none;
+  stroke: var(--kq-ink);
+  stroke-width: 3;
+  vector-effect: non-scaling-stroke;
+}
+.kqt-feel-today {
+  fill: none;
+  stroke: var(--kq-faint);
+  stroke-width: 2.2;
+  stroke-dasharray: 2 7;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+.kqt-feel-dot-app {
+  fill: var(--kq-ink);
+}
+.kqt-feel-dot-today {
+  fill: var(--kq-card);
+  stroke: var(--kq-faint);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+/* =====================================================================
+ * The same style on every other chart and table
+ * ===================================================================== */
+
+/* gap chart: dashed day guides, square-type labels */
+.cf-gc-guide {
+  stroke: var(--kqt-guide);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 6;
+}
+.cf-gc text.cf-gc-day,
+.cf-gc text.cf-gc-axis,
+.cf-gc text.cf-gc-month {
+  font-family: var(--kqt-font);
+}
+.cf-gc-band {
+  fill: none;
+}
+
+/* emotion curve: ink line, black tags, dashed guides */
+.cf-ec-guide {
+  stroke: var(--kqt-guide);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 6;
+}
+.cf-ec-line {
+  stroke: var(--kq-ink);
+  stroke-width: 3;
+}
+.cf-ec-fill {
+  fill: none;
+}
+.cf-ec-dot {
+  fill: var(--kq-ink);
+  stroke: var(--kq-card);
+  stroke-width: 4;
+}
+.cf-ec-tag {
+  fill: var(--kqt-bar);
+}
+.cf-ec text.cf-ec-emo {
+  font: 500 16px var(--kq-font);
+  fill: var(--kqt-on-bar);
+}
+.cf-ec text.cf-ec-m,
+.cf-ec text.cf-ec-t,
+.cf-ec text.cf-ec-k {
+  font-family: var(--kqt-font);
+}
+.cf-ec-legend {
+  font-family: var(--kqt-font);
+}
+.cf-ec-legend span {
+  background: var(--kq-ink);
+  height: 3px;
+}
+
+/* brainstorm: black rounded branches, dashed twigs */
+.kq-mm-branch,
+.kq-mm-core {
+  fill: var(--kqt-bar);
+}
+.kq-mm text.kq-mm-bt,
+.kq-mm text.kq-mm-ct {
+  fill: var(--kqt-on-bar);
+}
+.kq-mm-trunk,
+.kq-mm-twig {
+  stroke: var(--kqt-guide);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+.kq-mm text.kq-mm-leaf {
+  font-family: var(--kqt-font);
+}
+
+/* the monthly loop */
+.kq-loop text.kq-loop-s {
+  font-family: var(--kqt-font);
+}
+
+/* decisions: a black bar per day, dashed guides between them */
+.kq-tl::before {
+  display: none;
+}
+.kq-tl {
+  gap: 0;
+}
+.kq-tl li {
+  padding: 0 1rem 0.4rem;
+  border-left: 1.5px dashed var(--kqt-guide);
+}
+.kq-tl li:last-child {
+  border-right: 1.5px dashed var(--kqt-guide);
+}
+.kq-tl-day {
+  justify-self: stretch;
+  margin: 0 -0.4rem 0.5rem;
+  padding: 0.7rem 1rem;
+  border-radius: 16px;
+  background: var(--kqt-bar);
+  color: var(--kqt-on-bar);
+  font: 500 1rem/1.2 var(--kq-font);
+}
+.kq-tl-dot {
+  display: none;
+}
+.kq-tl-was {
+  font-family: var(--kqt-font);
+}
+
+/* tables: square-type header, dashed rows */
+.kq-table th {
+  font: 400 0.9rem/1.2 var(--kqt-font);
+  color: var(--kq-faint);
+}
+.kq-table td {
+  border-top: 1.5px dashed var(--kqt-guide);
+}
+.kq-table thead tr {
+  border-bottom: 1px solid var(--kqt-guide);
+}
+
+/* targets: ink rings */
+[data-page="cashflow"] main .cf-tg-fill {
+  stroke: var(--kq-ink);
+}
+[data-page="cashflow"] main .cf-tg-n,
+[data-page="cashflow"] main .cf-tg-of {
+  font-family: var(--kqt-font);
+}
+
+@media (max-width: 760px) {
+  .kq-tl li {
+    border-right: 0;
+    padding: 0 0 1.2rem 1rem;
+  }
+  .kq-tl li:last-child {
+    border-right: 0;
+  }
+  .kqt-head {
+    margin-bottom: 1.2rem;
+  }
+}

@@ -12,7 +12,7 @@ function loop() {
     ["Salary lands on the 3rd", "two days later", ""],
     ["The autopay bounces", "on the 1st, before anyone notices", "is-hot"],
     ["An SMS arrives", "“NACH mandate returned unpaid”", ""],
-    ["₹590 charge, a late fee", "and a call to the landlord", "is-hot"],
+    ["Bank charges, a late fee", "and a call to the landlord", "is-hot"],
     ["Next month, same dates", "nothing has changed", ""],
   ];
   const at = (i) => {
@@ -38,11 +38,11 @@ function loop() {
         <text class="kq-loop-s" x="${tx.toFixed(1)}" y="${(ty + 22).toFixed(1)}" text-anchor="${side}">${e(s)}</text></g>`;
     })
     .join("");
-  return `<svg class="kq-loop" viewBox="0 0 1120 600" role="img" aria-label="Today's loop, every month the dates don't line up: rent autopay is set for the 1st; salary lands on the 3rd; the autopay bounces; an SMS arrives about a NACH mandate returned unpaid; a ₹590 charge and a late fee follow; next month the same dates repeat.">
+  return `<svg class="kq-loop" viewBox="0 0 1120 600" role="img" aria-label="Today's loop, every month the dates don't line up: rent autopay is set for the 1st; salary lands on the 3rd; the autopay bounces; an SMS arrives about a NACH mandate returned unpaid; bank charges and a late fee follow; next month the same dates repeat.">
     <defs><marker id="kq-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="kq-loop-head" /></marker></defs>
     ${arcs}
-    <text class="kq-loop-big" x="${cx}" y="${cy + 6}">₹590</text>
-    <text class="kq-loop-sub" x="${cx}" y="${cy + 36}">every time it bounces</text>
+    <text class="kq-loop-big" x="${cx}" y="${cy + 6}">2 days</text>
+    <text class="kq-loop-sub" x="${cx}" y="${cy + 36}">short, every month</text>
     ${marks}
   </svg>`;
 }

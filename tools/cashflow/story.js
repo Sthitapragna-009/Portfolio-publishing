@@ -41,8 +41,13 @@ function gapChart() {
       <text class="cf-gc-day" x="${(x + bw / 2).toFixed(1)}" y="${H - 18}">${e(d.split(" ")[0])}</text>`;
   }).join("");
   const xAt = (i) => left + i * step + step / 2;
+  const guides = DAYS.map((_, i) => left + i * step)
+    .concat([left + DAYS.length * step])
+    .map((x) => `<line class="cf-gc-guide" x1="${x.toFixed(1)}" x2="${x.toFixed(1)}" y1="${top - 30}" y2="${H - 40}" />`)
+    .join("");
   return `<svg class="cf-gc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Balance over the next 14 days. ₹31,241 today. Rent of ₹32,000 leaves on 1 November, so the account is ₹1,058 short on 1 and 2 November. Salary of ₹68,500 lands on 3 November and the balance recovers to about ₹67,000.">
     <rect class="cf-gc-band" x="${(xAt(3) - step / 2).toFixed(1)}" y="${top - 20}" width="${(step * 2).toFixed(1)}" height="${zero - top + 140}" rx="18" />
+    ${guides}
     <line class="cf-gc-zero" x1="${left - 10}" x2="${W - 20}" y1="${zero + 2}" y2="${zero + 2}" />
     <text class="cf-gc-axis" x="${left - 18}" y="${zero + 7}" text-anchor="end">₹0</text>
     <text class="cf-gc-axis" x="${left - 18}" y="${top + 6}" text-anchor="end">₹70k</text>
@@ -72,7 +77,7 @@ function emotionCurve() {
     ["Covered", "Progress", 92],
   ];
   const today = [70, 70, 16, 10, 30];
-  const todayLabels = ["Nothing to see", "Nothing to see", "Autopay bounces", "SMS: NACH return charges", "₹590 later"];
+  const todayLabels = ["Nothing to see", "Nothing to see", "Autopay bounces", "SMS: NACH return charges", "A late fee"];
   const W = 1120;
   const H = 380;
   const x0 = 90;
@@ -92,6 +97,7 @@ function emotionCurve() {
   return `<svg class="cf-ec" viewBox="0 0 ${W} ${H}" role="img" aria-label="How the five moments should feel with Khatiq: confidence opening the app, reassurance when a gap appears, control choosing a fix, trust moving money, progress once covered. Today the same days dip to stress when the autopay bounces and an SMS about NACH return charges arrives.">
     <text class="cf-ec-k" x="10" y="${y(100) + 4}">Calm</text>
     <text class="cf-ec-k" x="10" y="${y(0) + 4}">Stress</text>
+    ${pts.map((_, i) => `<line class="cf-ec-guide" x1="${x0 + i * dx}" x2="${x0 + i * dx}" y1="${y(100) - 30}" y2="${H - 30}" />`).join("")}
     <path class="cf-ec-today" d="${smooth(today)}" />
     <path class="cf-ec-fill" d="${smooth(pts.map((p) => p[2]))} L${x0 + 4 * dx},${y(0)} L${x0},${y(0)} Z" />
     <path class="cf-ec-line" d="${smooth(pts.map((p) => p[2]))}" />
@@ -99,7 +105,8 @@ function emotionCurve() {
       .map(([m, emo, v], i) => {
         const x = x0 + i * dx;
         return `<g><circle class="cf-ec-dot" style="--dot:var(--hue-${hues[i]})" cx="${x}" cy="${y(v)}" r="11" />
-        <text class="cf-ec-emo" x="${x}" y="${y(v) - 24}">${e(emo)}</text>
+        <rect class="cf-ec-tag" x="${x - (emo.length * 9.4 + 28) / 2}" y="${y(v) - 54}" width="${emo.length * 9.4 + 28}" height="34" rx="12" />
+        <text class="cf-ec-emo" x="${x}" y="${y(v) - 31.5}">${e(emo)}</text>
         <text class="cf-ec-m" x="${x}" y="${H - 6}">${e(m)}</text>
         ${today[i] < 40 ? `<text class="cf-ec-t" x="${x}" y="${y(today[i]) + 30}">${e(todayLabels[i])}</text>` : ""}</g>`;
       })
@@ -136,19 +143,17 @@ function targets(rows) {
     .join("")}</ul>`;
 }
 
-/** Today's SMS against the card, side by side. */
-function beforeAfter() {
+/** Today's SMS against the real card from the app, side by side. Plain sentences, no bullet lists. */
+function beforeAfter(cardImg) {
   return `<div class="cf-ba">
-    <div class="cf-ba-col is-before">
-      <p class="cf-ba-k">Today · after the fact</p>
-      <div class="cf-sms"><span class="cf-sms-from">AD-DCBANK</span><p>Dear Customer, NACH mandate debit of INR 32,000.00 returned unpaid due to insufficient funds. Return charges of INR 590 + GST applicable. -DCB</p><span class="cf-sms-time">1 Nov, 7:02 am</span></div>
-      <ul><li>Arrives after the bounce</li><li>Jargon: NACH, mandate, returned</li><li>No way out, no person</li></ul>
-    </div>
-    <div class="cf-ba-col is-after">
-      <p class="cf-ba-k">Khatiq · 3 days before</p>
-      <div class="cf-card-demo"><span class="cf-card-k">Deccan · one thing to sort</span><p>Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days.</p><span class="cf-card-pill">See 3 ways to fix it ›</span></div>
-      <ul><li>Arrives while there’s time</li><li>One plain sentence</li><li>Three ways out, with costs; a person is one of them</li></ul>
-    </div>
+    <figure class="cf-ba-col is-before">
+      <div class="cf-sms"><span class="cf-sms-from">AD-DCBANK · 1 Nov, 7:02 am</span><p>Dear Customer, NACH mandate debit of INR 32,000.00 returned unpaid due to insufficient funds. Return charges of INR 500 + GST applicable. -DCB</p></div>
+      <figcaption><b>Today.</b> It arrives after the payment has already failed, in bank words, with nowhere to go next.</figcaption>
+    </figure>
+    <figure class="cf-ba-col is-after">
+      <div class="cf-ba-shot">${cardImg}</div>
+      <figcaption><b>With Khatiq.</b> Three days earlier, one sentence, and a way out you can tap.</figcaption>
+    </figure>
   </div>`;
 }
 

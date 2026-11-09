@@ -194,6 +194,13 @@ async function main() {
     await crop(name);
   }
 
+  // The real alert card, cropped from the app home, for the case study's before/after.
+  if (!ONLY || ONLY.startsWith('alert')) {
+    await fresh();
+    await js("go(['home']); await wait(1000);");
+    await crop('alert-card', '.ah-alert', 0);
+  }
+
   // The developer lens: the partner sandbox beside the phone.
   if (!ONLY || ONLY.startsWith('dev')) {
     await fresh();

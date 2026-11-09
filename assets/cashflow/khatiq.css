@@ -1130,3 +1130,305 @@
     gap: 2rem;
   }
 }
+
+/* ---------- anti-slop pass: no square markers anywhere ---------- */
+[data-page="cashflow"] main .cf-stats span::before,
+.kq-table .is-us td:first-child::before {
+  display: none;
+}
+[data-page="cashflow"] main .cf-stats span {
+  display: block;
+}
+
+/* ---------- before / after: the real SMS and the real card ---------- */
+[data-page="cashflow"] main .cf-ba-col {
+  margin: 0;
+  display: grid;
+  align-content: start;
+  gap: 1.2rem;
+}
+[data-page="cashflow"] main .cf-ba-col figcaption {
+  font: 400 1rem/1.55 var(--kq-font);
+  color: var(--kq-dim);
+}
+[data-page="cashflow"] main .cf-ba-col figcaption b {
+  font-weight: 600;
+  color: var(--kq-ink);
+}
+.cf-ba-shot {
+  max-width: 26rem;
+}
+.cf-ba-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+/* ---------- the insight that links the problem to the process ---------- */
+.kq-insight {
+  margin-top: clamp(3.5rem, 6vw, 5rem) !important;
+  font: 600 clamp(1.6rem, 3vw, 2.4rem) / 1.2 var(--kq-font);
+  letter-spacing: -0.03em;
+  color: var(--kq-ink);
+}
+
+/* ---------- rough screens: pencil on paper ---------- */
+.kq-sketch {
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 2rem);
+  border-radius: var(--kq-r);
+  background: #f6f3ec;
+}
+.kq-sketch figcaption {
+  margin-top: 0.6rem;
+  font: 400 0.88rem/1.4 var(--kq-font);
+  color: #6b675e;
+}
+.sk {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.sk path {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.sk .kqs-ink { stroke: #2a2925; stroke-width: 1.6; }
+.sk .kqs-soft { stroke: #8f8a7e; stroke-width: 1.3; }
+.sk .kqs-shade { stroke: #c9c3b5; stroke-width: 1.1; }
+.sk .kqs-solid { stroke: #2a2925; stroke-width: 3; }
+.sk .kqs-red { stroke: #d2432d; stroke-width: 2.4; }
+.sk .kqs-red-soft { stroke: #f0b4a8; stroke-width: 1.4; }
+.sk .kqs-green { stroke: #1f7a5c; stroke-width: 2.4; }
+.sk text {
+  transform: none;
+  font-family: "Caveat", "Segoe Print", cursive;
+  fill: #2a2925;
+}
+.sk .kqs-title { font-size: 25px; font-weight: 700; }
+.sk .kqs-note { font-size: 23px; fill: #d2432d; }
+.sk .kqs-note.is-green { fill: #1f7a5c; }
+.sk .kqs-hand { font-size: 20px; font-weight: 700; }
+.sk .kqs-hand.is-small { font-size: 16px; }
+.sk .kqs-hand.is-red { fill: #d2432d; }
+.sk .kqs-hand.is-white { fill: #f6f3ec; }
+.sk .kqs-hand.is-margin { font-size: 26px; fill: #2a2925; }
+@media (max-width: 820px) {
+  .kq-sketch { overflow-x: auto; }
+  .sk { min-width: 720px; }
+}
+
+/* ---------- the Khatiq row: a round mint mark with a tick, instead of a square bullet ---------- */
+.kq-table .is-us td:first-child::before {
+  content: "";
+  display: inline-block;
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0 0.65rem 0 0;
+  vertical-align: -0.38em;
+  border-radius: 50%;
+  background: var(--hue-mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b0b0b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 62% no-repeat;
+}
+
+/* ---------- button to the prototype page: solid, rectangular, plain ---------- */
+.kq-proto-cta {
+  margin-top: 1rem !important;
+}
+.kq-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.3rem;
+  border-radius: 10px;
+  background: var(--kq-ink);
+  color: var(--kq-bg) !important;
+  font: 600 1rem/1 var(--kq-font);
+  text-decoration: none;
+}
+.kq-btn:hover {
+  opacity: 0.88;
+}
+.kq-btn:focus-visible {
+  outline: 2px solid var(--kq-ink);
+  outline-offset: 3px;
+}
+
+/* ---------- every screen: one sideways row per flow ---------- */
+.kq-lib {
+  display: grid;
+  gap: 2.4rem;
+}
+.kq-lib-h {
+  margin: 0 0 0.9rem;
+  font: 600 1.05rem/1.2 var(--kq-font);
+  color: var(--kq-ink);
+}
+.kq-lib-h span {
+  margin-left: 0.4rem;
+  font-weight: 400;
+  color: var(--kq-faint);
+}
+.kq-lib-row {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 168px;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  padding-bottom: 0.6rem;
+  scrollbar-width: thin;
+}
+.kq-lib-row.is-wide {
+  grid-auto-columns: 360px;
+  align-items: end;
+}
+.kq-lib-row.is-watch {
+  grid-auto-columns: 132px;
+}
+.kq-lib-item {
+  margin: 0;
+  scroll-snap-align: start;
+}
+.kq-lib-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.kq-lib-row.is-phone .kq-lib-item img {
+  clip-path: inset(0.34% 0.72% round 15.1% / 7.2%);
+}
+.kq-lib-item figcaption {
+  margin-top: 0.5rem;
+  font: 400 0.84rem/1.35 var(--kq-font);
+  color: var(--kq-dim);
+}
+
+/* ---------- the prototype page ---------- */
+.kq-proto-grid {
+  display: grid;
+  grid-template-columns: minmax(16rem, 22rem) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  align-items: start;
+  margin-top: 1.5rem;
+}
+.kq-proto-title {
+  margin: 0;
+  font: 700 clamp(2rem, 3.2vw, 2.8rem) / 1 var(--kq-font);
+  letter-spacing: -0.04em;
+  color: var(--kq-ink);
+}
+.kq-proto-lede {
+  margin: 0.8rem 0 0;
+  font: 400 1rem/1.55 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-dev {
+  margin: 1.8rem 0 0;
+  padding: 0;
+  border: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+.kq-dev legend {
+  margin-bottom: 0.6rem;
+  font: 500 0.85rem/1 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-dev label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border-radius: 10px;
+  background: var(--kq-card);
+  font: 500 1rem/1 var(--kq-font);
+  color: var(--kq-ink);
+  cursor: pointer;
+}
+.kq-dev input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin: 0;
+  accent-color: var(--kq-ink);
+}
+.kq-dev label:has(input:checked) {
+  background: var(--kq-ink);
+  color: var(--kq-bg);
+}
+.kq-dev label:has(input:focus-visible) {
+  outline: 2px solid var(--kq-ink);
+  outline-offset: 2px;
+}
+.kq-proto-h2 {
+  margin: 2rem 0 0;
+  font: 600 1.1rem/1.2 var(--kq-font);
+  color: var(--kq-ink);
+}
+.kq-proto-steps {
+  margin: 0.8rem 0 0;
+  padding-left: 1.3rem;
+  display: grid;
+  gap: 0.6rem;
+  font: 400 0.98rem/1.5 var(--kq-font);
+  color: var(--kq-dim);
+}
+.kq-proto-steps b {
+  font-weight: 600;
+  color: var(--kq-ink);
+}
+.kq-proto-more {
+  margin: 1.6rem 0 0;
+  font: 400 0.9rem/1.5 var(--kq-font);
+  color: var(--kq-faint);
+}
+.kq-proto-more a {
+  color: var(--kq-ink);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.kq-proto-stage {
+  display: grid;
+  place-items: start center;
+  min-width: 0;
+  padding: 1rem;
+  border-radius: var(--kq-r);
+  background: var(--kq-card);
+}
+.kq-proto-frame {
+  position: relative;
+  overflow: hidden;
+}
+.kq-proto-frame iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  transform-origin: 0 0;
+  background: transparent;
+}
+@media (max-width: 900px) {
+  .kq-proto-grid {
+    grid-template-columns: 1fr;
+  }
+  .kq-proto-stage {
+    order: -1;
+  }
+  .kq-dev {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+/* the prototype page clears the fixed site header the same way the case study does */
+.kq-proto.section {
+  padding-top: 126px;
+}
+@media (max-width: 820px) {
+  .kq-proto.section {
+    padding-top: 96px;
+  }
+}
