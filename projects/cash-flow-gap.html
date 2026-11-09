@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en" data-page="cashflow">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Khatiq — Know before it bounces | Sthitapragna Kollepara</title>
+  <meta name="description" content="Khatiq: a money app for India that warns you three days before a payment bounces and shows calm ways to fix it. Journey map, emotional design, an AI assistant called Seth with ten emotions, Account Aggregator linking, per-bank palettes and a working prototype." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Archivo:wght@400;500;600;700;800&family=Lato:wght@300;400;700;900&family=Noto+Sans:wght@300;400;500;600;700&family=Noto+Sans+Devanagari:wght@500;600;700&family=Epilogue:wght@400;500;600;700;800&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Serif:wght@400;500&display=swap" rel="stylesheet" />
+
+  <script>
+    // Inline and blocking on purpose: setting this after first paint shows a
+    // flash of the wrong theme.
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = saved === "dark" ? "dark" : "light";
+      } catch (e) {
+        document.documentElement.dataset.theme = "light";
+      }
+    })();
+  </script>
+
+  <link rel="icon" href="../favicon.ico" sizes="32x32" />
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../assets/cashflow/cashflow.css" />
+  <link rel="stylesheet" href="../assets/cashflow/khatiq.css" />
+</head>
+<body>
+
+
+  <!-- ===================== NAV ===================== -->
+  <header class="nav" id="nav">
+    <div class="wrap nav-row">
+      <a class="wordmark" href="../index.html" aria-label="Sthitapragna Kollepara — home">
+        <span class="glyph ring-pill" aria-hidden="true">KSP</span>
+        <span class="wordmark-name">Sthitapragna Kollepara</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="../index.html">Home</a>
+        <a href="../resume.html">Resume</a>
+        <a class="nav-pill nav-pill--quiet" href="../index.html#work">Design Projects</a>
+        <a class="nav-pill nav-pill--photo" href="../photography.html" target="_blank" rel="noopener">Photography Page <svg class="nav-ico" width="12" height="12" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+      </nav>
+
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+
+
+  <main id="top">
+    <section class="section case-head kq-top" id="cf-top">
+      <div class="wrap">
+        <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
+        <div class="kq-hero reveal">
+          <div class="kq-hero-text">
+            <p class="kq-label">Banking concept · iOS, iPadOS, watchOS · 1 week, solo</p>
+            <h1 class="kq-name">Khatiq</h1>
+            <p class="kq-hook">Know before it bounces.</p>
+            <p class="kq-desc">Khatiq is a money app for India. It reads your salary, bills and accounts across banks, and tells you three days ahead when a payment is about to bounce. Then it shows calm ways to fix it: move money from savings, pay on salary day, or talk to a person.</p>
+            <p class="kq-origin">From <i>khata</i> (खाता), Hindi for an account ledger.</p>
+            <p class="kq-links">
+              <a class="kq-link is-primary" href="#kq-try">Try the prototype <span aria-hidden="true">→</span></a>
+              <a class="kq-link" href="#s-overview">Read the case study <span aria-hidden="true">↓</span></a>
+            </p>
+          </div>
+          <figure class="kq-photo kq-hero-photo reveal"><img src="../assets/cashflow/mk-hand.webp" alt="A hand holding an iPhone showing Khatiq’s home: good morning, Arjun; one thing needs you before 1 Nov; ₹88,720.50 across Deccan and Narmada; a card saying rent leaves 1 Nov and you’ll be ₹1,059 short for 2 days" width="600" height="777" loading="lazy" decoding="async" /></figure>
+        </div>
+        <dl class="kq-meta reveal">
+          <div><dt>Role</dt><dd>Solo: research plan, UX, UI, prototype</dd></div>
+          <div><dt>Timeline</dt><dd>1 week</dd></div>
+          <div><dt>Platforms</dt><dd>iPhone, iPhone Duo, iPad, Apple Watch</dd></div>
+          <div><dt>Status</dt><dd>Concept, not user-tested yet</dd></div>
+          <div><dt>Built with</dt><dd>React, TypeScript, Motion, Apple HIG</dd></div>
+        </dl>
+        <nav class="kq-toc reveal" aria-label="Chapters">
+          <ol><li><a href="#s-overview"><span>01</span>Overview</a></li><li><a href="#s-challenge"><span>02</span>Challenge</a></li><li><a href="#s-process"><span>03</span>Process</a></li><li><a href="#s-solution"><span>04</span>Solution</a></li><li><a href="#s-impact"><span>05</span>Impact</a></li><li><a href="#s-reflection"><span>06</span>Reflection</a></li></ol>
+        </nav>
+      </div>
+    </section>
+
+    <section class="section case-plates kq-story">
+      <div class="wrap">
+
+        
+        <header class="kq-ch reveal" id="s-overview">
+          <p class="kq-ch-k"><span>01</span>Overview</p>
+          <h2 class="kq-ch-title">The gap, in one picture</h2>
+          <p class="kq-ch-intro">Arjun has ₹31,241 today. Rent of ₹32,000 leaves by autopay on 1 Nov; his salary lands on the 3rd. For two days he’s ₹1,058 short, and the bank charges ₹590 when rent bounces.</p>
+        </header>
+        <figure class="kq-panel kq-chart reveal"><svg class="cf-gc" viewBox="0 0 1120 570" role="img" aria-label="Balance over the next 14 days. ₹31,241 today. Rent of ₹32,000 leaves on 1 November, so the account is ₹1,058 short on 1 and 2 November. Salary of ₹68,500 lands on 3 November and the balance recovers to about ₹67,000.">
+    <rect class="cf-gc-band" x="288.6" y="110" width="145.7" height="400" rx="18" />
+    <line class="cf-gc-zero" x1="60" x2="1100" y1="392" y2="392" />
+    <text class="cf-gc-axis" x="52" y="397" text-anchor="end">₹0</text>
+    <text class="cf-gc-axis" x="52" y="136" text-anchor="end">₹70k</text>
+    <rect class="cf-gc-bar is-today" x="83.8" y="274.0" width="45.2" height="116.0" rx="17.4" />
+      <text class="cf-gc-day" x="106.4" y="552">29</text><rect class="cf-gc-bar " x="156.7" y="275.1" width="45.2" height="114.9" rx="17.4" />
+      <text class="cf-gc-day" x="179.3" y="552">30</text><rect class="cf-gc-bar " x="229.6" y="275.1" width="45.2" height="114.9" rx="17.4" />
+      <text class="cf-gc-day" x="252.1" y="552">31</text><rect class="cf-gc-bar is-short" x="302.4" y="394.0" width="45.2" height="44.0" rx="17.4" />
+      <text class="cf-gc-day" x="325.0" y="552">1</text><rect class="cf-gc-bar is-short" x="375.3" y="394.0" width="45.2" height="44.0" rx="17.4" />
+      <text class="cf-gc-day" x="397.9" y="552">2</text><rect class="cf-gc-bar is-pay" x="448.1" y="139.5" width="45.2" height="250.5" rx="17.4" />
+      <text class="cf-gc-day" x="470.7" y="552">3</text><rect class="cf-gc-bar " x="521.0" y="139.5" width="45.2" height="250.5" rx="17.4" />
+      <text class="cf-gc-day" x="543.6" y="552">4</text><rect class="cf-gc-bar " x="593.8" y="152.3" width="45.2" height="237.7" rx="17.4" />
+      <text class="cf-gc-day" x="616.4" y="552">5</text><rect class="cf-gc-bar " x="666.7" y="152.3" width="45.2" height="237.7" rx="17.4" />
+      <text class="cf-gc-day" x="689.3" y="552">6</text><rect class="cf-gc-bar " x="739.6" y="161.2" width="45.2" height="228.8" rx="17.4" />
+      <text class="cf-gc-day" x="762.1" y="552">7</text><rect class="cf-gc-bar " x="812.4" y="161.2" width="45.2" height="228.8" rx="17.4" />
+      <text class="cf-gc-day" x="835.0" y="552">8</text><rect class="cf-gc-bar " x="885.3" y="161.2" width="45.2" height="228.8" rx="17.4" />
+      <text class="cf-gc-day" x="907.9" y="552">9</text><rect class="cf-gc-bar " x="958.1" y="165.6" width="45.2" height="224.4" rx="17.4" />
+      <text class="cf-gc-day" x="980.7" y="552">10</text><rect class="cf-gc-bar " x="1031.0" y="165.6" width="45.2" height="224.4" rx="17.4" />
+      <text class="cf-gc-day" x="1053.6" y="552">11</text>
+    <g class="cf-gc-note is-today"><text x="106.42857142857143" y="257.962">₹31,241 today</text></g>
+    <g class="cf-gc-note is-short"><text x="361.4" y="480">₹1,058 short</text><text class="cf-gc-sub" x="361.4" y="502">for 2 days</text></g>
+    <g class="cf-gc-note is-pay"><text x="456.1428571428572" y="68" text-anchor="start">Salary lands</text><text class="cf-gc-sub" x="456.1428571428572" y="90" text-anchor="start">+₹68,500 on 3 Nov</text></g>
+    <text class="cf-gc-month" x="70" y="568">Oct</text>
+    <text class="cf-gc-month" x="288.57142857142856" y="568">Nov</text>
+  </svg><figcaption>The prototype’s own 14-day projection. The two short days drop below the line; salary day is mint.</figcaption></figure>
+        <ul class="kq-made reveal">
+          <li style="--tile:var(--hue-mint)"><span class="kq-made-n">01</span><b>A home for all your money</b><span>One line says whether you’re okay, across every bank you use.</span></li>
+          <li style="--tile:var(--hue-sun)"><span class="kq-made-n">02</span><b>One calm card, 3 days early</b><span>The amount, the days, and three ways out with their costs.</span></li>
+          <li style="--tile:var(--hue-coral)"><span class="kq-made-n">03</span><b>The same moment everywhere</b><span>iPhone, both screens of iPhone Duo, iPad and Apple Watch.</span></li>
+        </ul>
+
+        
+        <header class="kq-ch reveal" id="s-challenge">
+          <p class="kq-ch-k"><span>02</span>Challenge</p>
+          <h2 class="kq-ch-title">Rent leaves before salary lands</h2>
+          <p class="kq-ch-intro">Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.</p>
+        </header>
+        <figure class="kq-panel kq-loop-wrap reveal"><svg class="kq-loop" viewBox="0 0 1120 600" role="img" aria-label="Today's loop, every month the dates don't line up: rent autopay is set for the 1st; salary lands on the 3rd; the autopay bounces; an SMS arrives about a NACH mandate returned unpaid; a ₹590 charge and a late fee follow; next month the same dates repeat.">
+    <defs><marker id="kq-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="kq-loop-head" /></marker></defs>
+    <path class="kq-loop-arc" d="M596.3,113.5 A190,190 0 0 1 703.4,175.3" marker-end="url(#kq-arrow)" /><path class="kq-loop-arc" d="M739.6,238.1 A190,190 0 0 1 739.6,361.9" marker-end="url(#kq-arrow)" /><path class="kq-loop-arc" d="M703.4,424.7 A190,190 0 0 1 596.3,486.5" marker-end="url(#kq-arrow)" /><path class="kq-loop-arc" d="M523.7,486.5 A190,190 0 0 1 416.6,424.7" marker-end="url(#kq-arrow)" /><path class="kq-loop-arc" d="M380.4,361.9 A190,190 0 0 1 380.4,238.1" marker-end="url(#kq-arrow)" /><path class="kq-loop-arc" d="M416.6,175.3 A190,190 0 0 1 523.7,113.5" marker-end="url(#kq-arrow)" />
+    <text class="kq-loop-big" x="560" y="306">₹590</text>
+    <text class="kq-loop-sub" x="560" y="336">every time it bounces</text>
+    <g class="kq-loop-node "><circle cx="560.0" cy="110.0" r="20" /><text class="kq-loop-n" x="560.0" y="115.0">1</text>
+        <text class="kq-loop-t" x="560.0" y="66.0" text-anchor="middle">Rent autopay is set</text>
+        <text class="kq-loop-s" x="560.0" y="88.0" text-anchor="middle">for the 1st of every month</text></g><g class="kq-loop-node "><circle cx="724.5" cy="205.0" r="20" /><text class="kq-loop-n" x="724.5" y="210.0">2</text>
+        <text class="kq-loop-t" x="758.5" y="201.0" text-anchor="start">Salary lands on the 3rd</text>
+        <text class="kq-loop-s" x="758.5" y="223.0" text-anchor="start">two days later</text></g><g class="kq-loop-node is-hot"><circle cx="724.5" cy="395.0" r="20" /><text class="kq-loop-n" x="724.5" y="400.0">3</text>
+        <text class="kq-loop-t" x="758.5" y="391.0" text-anchor="start">The autopay bounces</text>
+        <text class="kq-loop-s" x="758.5" y="413.0" text-anchor="start">on the 1st, before anyone notices</text></g><g class="kq-loop-node "><circle cx="560.0" cy="490.0" r="20" /><text class="kq-loop-n" x="560.0" y="495.0">4</text>
+        <text class="kq-loop-t" x="560.0" y="542.0" text-anchor="middle">An SMS arrives</text>
+        <text class="kq-loop-s" x="560.0" y="564.0" text-anchor="middle">“NACH mandate returned unpaid”</text></g><g class="kq-loop-node is-hot"><circle cx="395.5" cy="395.0" r="20" /><text class="kq-loop-n" x="395.5" y="400.0">5</text>
+        <text class="kq-loop-t" x="361.5" y="391.0" text-anchor="end">₹590 charge, a late fee</text>
+        <text class="kq-loop-s" x="361.5" y="413.0" text-anchor="end">and a call to the landlord</text></g><g class="kq-loop-node "><circle cx="395.5" cy="205.0" r="20" /><text class="kq-loop-n" x="395.5" y="210.0">6</text>
+        <text class="kq-loop-t" x="361.5" y="201.0" text-anchor="end">Next month, same dates</text>
+        <text class="kq-loop-s" x="361.5" y="223.0" text-anchor="end">nothing has changed</text></g>
+  </svg><figcaption>Today’s loop, every month the dates don’t line up.</figcaption></figure>
+        <div class="reveal"><div class="cf-ba">
+    <div class="cf-ba-col is-before">
+      <p class="cf-ba-k">Today · after the fact</p>
+      <div class="cf-sms"><span class="cf-sms-from">AD-DCBANK</span><p>Dear Customer, NACH mandate debit of INR 32,000.00 returned unpaid due to insufficient funds. Return charges of INR 590 + GST applicable. -DCB</p><span class="cf-sms-time">1 Nov, 7:02 am</span></div>
+      <ul><li>Arrives after the bounce</li><li>Jargon: NACH, mandate, returned</li><li>No way out, no person</li></ul>
+    </div>
+    <div class="cf-ba-col is-after">
+      <p class="cf-ba-k">Khatiq · 3 days before</p>
+      <div class="cf-card-demo"><span class="cf-card-k">Deccan · one thing to sort</span><p>Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days.</p><span class="cf-card-pill">See 3 ways to fix it ›</span></div>
+      <ul><li>Arrives while there’s time</li><li>One plain sentence</li><li>Three ways out, with costs; a person is one of them</li></ul>
+    </div>
+  </div></div>
+        
+        <div class="kq-sub reveal">
+          <h3>What people need from that moment</h3>
+          <p>Written as jobs to be done. Interviews in India come first in the research plan.</p>
+        </div>
+        <ol class="kq-jobs reveal">
+          <li><span>Main job</span><p>Tell me early if I won’t be okay this month.</p></li>
+          <li><span>Emotional job</span><p>Help me feel in control, not judged or alarmed.</p></li>
+          <li><span>Related job</span><p>Show me this is really my bank, and that a person is reachable.</p></li>
+        </ol>
+        
+        <div class="kq-sub reveal">
+          <h3>What published surveys suggest</h3>
+          <p>Directional only: mostly US and UK, several run by vendors.</p>
+        </div>
+        <div class="reveal"><ul class="cf-stats"><li style="--tile:var(--hue-lavender)"><b>14%</b><span>fully trust AI with money advice; 72% want a human involved</span></li><li style="--tile:var(--hue-sky)"><b>84%</b><span>accept extra security steps if they stop fraud</span></li><li style="--tile:var(--hue-coral)"><b>55%</b><span>who ignored a real fraud alert thought it was a scam</span></li><li style="--tile:var(--hue-sun)"><b>1 in 2</b><span>say jargon stops them growing their money</span></li></ul><p class="kq-cap">Addition Wealth (US) · Experian 2026 · fraud study summary · Zopa (UK).</p></div>
+        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, any bank as a white label, rupees in lakh grouping, Hindi and English.</p>
+
+        
+        <header class="kq-ch reveal" id="s-process">
+          <p class="kq-ch-k"><span>03</span>Process</p>
+          <h2 class="kq-ch-title">Seven days, five decisions</h2>
+          <p class="kq-ch-intro">I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.</p>
+        </header>
+        <figure class="cf-ig cf-ig--wide kq-panel reveal"><div class="cf-jm" role="group" aria-label="Journey map: Arjun, rent due two days before salary">
+    <div class="cf-jm-row cf-jm-phases">
+      <span class="cf-jm-label">Phase</span>
+      <span class="cf-jm-cell"><b>Notice</b></span><span class="cf-jm-cell"><b>Worry</b><em class="cf-jm-truth">Moment of truth</em></span><span class="cf-jm-cell"><b>Decide</b></span><span class="cf-jm-cell"><b>Act</b></span><span class="cf-jm-cell"><b>Relief</b><em class="cf-jm-truth">Moment of truth</em></span>
+    </div>
+    
+    <div class="cf-jm-row ">
+      <span class="cf-jm-label">Does</span>
+      <span class="cf-jm-cell">Checks the balance on the 29th</span><span class="cf-jm-cell">Opens the bank SMS about NACH</span><span class="cf-jm-cell">Weighs savings, a loan app, asking a friend</span><span class="cf-jm-cell">Moves money, or calls the landlord</span><span class="cf-jm-cell">Rent clears on the 1st</span>
+    </div>
+    
+    <div class="cf-jm-row cf-jm-think">
+      <span class="cf-jm-label">Thinks</span>
+      <span class="cf-jm-cell">Will rent clear before salary?</span><span class="cf-jm-cell">What does ‘return charges’ mean?</span><span class="cf-jm-cell">Which one costs me least?</span><span class="cf-jm-cell">Did it actually go through?</span><span class="cf-jm-cell">Will this happen again next month?</span>
+    </div>
+    <div class="cf-jm-row cf-jm-feel">
+      <span class="cf-jm-label">Feels<span class="cf-jm-key"><i class="k-today"></i>Today<i class="k-app"></i>With the app</span></span>
+      <div class="cf-jm-curve-wrap"><svg class="cf-jm-curve" viewBox="0 0 1000 150" preserveAspectRatio="none" role="img" aria-label="Feeling at each phase. Today it falls to its lowest at Worry and only recovers to neutral. With the app it stays at or above neutral and ends at its highest, relief.">
+      <line x1="0" x2="1000" y1="75" y2="75" class="cf-jm-zero" />
+      <path d="M100,95 C200,95 200,135 300,135 C400,135 400,115 500,115 C600,115 600,95 700,95 C800,95 800,75 900,75" class="cf-jm-today" />
+      <path d="M100,55 C200,55 200,75 300,75 C400,75 400,55 500,55 C600,55 600,35 700,35 C800,35 800,15 900,15" class="cf-jm-app" />
+      <circle cx="100" cy="95" r="6" class="cf-jm-dot-today" /><circle cx="300" cy="135" r="6" class="cf-jm-dot-today" /><circle cx="500" cy="115" r="6" class="cf-jm-dot-today" /><circle cx="700" cy="95" r="6" class="cf-jm-dot-today" /><circle cx="900" cy="75" r="6" class="cf-jm-dot-today" />
+      <circle cx="100" cy="55" r="7" class="cf-jm-dot-app" /><circle cx="300" cy="75" r="7" class="cf-jm-dot-app" /><circle cx="500" cy="55" r="7" class="cf-jm-dot-app" /><circle cx="700" cy="35" r="7" class="cf-jm-dot-app" /><circle cx="900" cy="15" r="7" class="cf-jm-dot-app" />
+    </svg></div>
+    </div>
+    
+    <div class="cf-jm-row cf-jm-pain">
+      <span class="cf-jm-label">Pain</span>
+      <span class="cf-jm-cell">Doing the maths across two apps</span><span class="cf-jm-cell">Decoding jargon under stress</span><span class="cf-jm-cell">Comparing costs nobody shows</span><span class="cf-jm-cell">Waiting with no status</span><span class="cf-jm-cell">No memory of what worked</span>
+    </div>
+    
+    <div class="cf-jm-row cf-jm-opp">
+      <span class="cf-jm-label">Opportunity</span>
+      <span class="cf-jm-cell">Surface the gap before she goes looking</span><span class="cf-jm-cell">Say it in one plain sentence</span><span class="cf-jm-cell">Show every option’s cost before choosing</span><span class="cf-jm-cell">Specific time and steps, never a spinner</span><span class="cf-jm-cell">Close with the next date to watch</span>
+    </div>
+  </div><figcaption>Arjun, Bengaluru. Two moments of truth: the SMS from the bank, and how it ends.</figcaption></figure>
+        
+        <div class="kq-sub reveal">
+          <h3>Emotional design: the right feeling at the right moment</h3>
+          <p>In banking, emotional design isn’t delight. It’s confidence when things are fine, reassurance and control when they aren’t, trust when money moves, and progress after.</p>
+        </div>
+        <figure class="kq-panel kq-ec-wrap reveal"><svg class="cf-ec" viewBox="0 0 1120 380" role="img" aria-label="How the five moments should feel with Khatiq: confidence opening the app, reassurance when a gap appears, control choosing a fix, trust moving money, progress once covered. Today the same days dip to stress when the autopay bounces and an SMS about NACH return charges arrives.">
+    <text class="cf-ec-k" x="10" y="54">Calm</text>
+    <text class="cf-ec-k" x="10" y="324">Stress</text>
+    <path class="cf-ec-today" d="M90,131 C207.5,131.0 207.5,131.0 325.0,131.0 C442.5,131.0 442.5,276.8 560.0,276.8 C677.5,276.8 677.5,293.0 795.0,293.0 C912.5,293.0 912.5,239.0 1030.0,239.0" />
+    <path class="cf-ec-fill" d="M90,104 C207.5,104.0 207.5,152.6 325.0,152.6 C442.5,152.6 442.5,120.2 560.0,120.2 C677.5,120.2 677.5,109.4 795.0,109.4 C912.5,109.4 912.5,71.6 1030.0,71.6 L1030,320 L90,320 Z" />
+    <path class="cf-ec-line" d="M90,104 C207.5,104.0 207.5,152.6 325.0,152.6 C442.5,152.6 442.5,120.2 560.0,120.2 C677.5,120.2 677.5,109.4 795.0,109.4 C912.5,109.4 912.5,71.6 1030.0,71.6" />
+    <g><circle class="cf-ec-dot" style="--dot:var(--hue-mint)" cx="90" cy="104" r="11" />
+        <text class="cf-ec-emo" x="90" y="80">Confidence</text>
+        <text class="cf-ec-m" x="90" y="374">Opening the app</text>
+        </g><g><circle class="cf-ec-dot" style="--dot:var(--hue-sky)" cx="325" cy="152.6" r="11" />
+        <text class="cf-ec-emo" x="325" y="128.6">Reassurance</text>
+        <text class="cf-ec-m" x="325" y="374">A gap appears</text>
+        </g><g><circle class="cf-ec-dot" style="--dot:var(--hue-lavender)" cx="560" cy="120.19999999999999" r="11" />
+        <text class="cf-ec-emo" x="560" y="96.19999999999999">Control</text>
+        <text class="cf-ec-m" x="560" y="374">Choosing a fix</text>
+        <text class="cf-ec-t" x="560" y="306.8">Autopay bounces</text></g><g><circle class="cf-ec-dot" style="--dot:var(--hue-sun)" cx="795" cy="109.39999999999998" r="11" />
+        <text class="cf-ec-emo" x="795" y="85.39999999999998">Trust</text>
+        <text class="cf-ec-m" x="795" y="374">Moving money</text>
+        <text class="cf-ec-t" x="795" y="323">SMS: NACH return charges</text></g><g><circle class="cf-ec-dot" style="--dot:var(--hue-mint)" cx="1030" cy="71.6" r="11" />
+        <text class="cf-ec-emo" x="1030" y="47.599999999999994">Progress</text>
+        <text class="cf-ec-m" x="1030" y="374">Covered</text>
+        <text class="cf-ec-t" x="1030" y="269">₹590 later</text></g>
+  </svg>
+  <p class="cf-ec-legend"><span class="is-now"></span>With Khatiq, as designed <span class="is-today"></span>Today, an SMS after the bounce</p><figcaption>A design intention, to be tested. Framework: <a href="https://www.theuxda.com/blog/emotionally-intelligent-ux-power-next-gen-digital-banking">UXDA, emotionally intelligent UX in digital banking</a>.</figcaption></figure>
+        
+        <div class="kq-sub reveal">
+          <h3>Brainstorm</h3>
+          <p>One idea, six directions. Filled ideas are in the prototype; dashed ones were parked or rejected.</p>
+        </div>
+        <figure class="kq-panel kq-mm-wrap reveal"><svg class="kq-mm" viewBox="-110 0 1340 560" role="img" aria-label="Brainstorm around know early, act calmly. Built: warn 3 days before in one plain sentence with why; ways out by moving from the savings pot, paying on salary day or talking to a person; trust through a passkey above ₹25,000, undo, and never a link or OTP; across banks through the Account Aggregator, an all-money home and each bank's colours; everywhere on iPhone Duo, iPad and Apple Watch; an assistant that answers with sources and never moves money alone. Parked: a partner salary advance and a lock-screen widget. Rejected: streaks and rewards."><path class="kq-mm-trunk" d="M470,270 C460,270 460,90 360,90" /><rect class="kq-mm-branch" x="210" y="70" width="150" height="40" rx="10" /><text class="kq-mm-bt" x="285" y="96">Warn early</text><path class="kq-mm-twig" d="M210,90 C188,90 188,60 166,60" /><circle class="kq-mm-dot " cx="166" cy="60" r="4" /><text class="kq-mm-leaf " x="154" y="65" text-anchor="end">3 days before</text><path class="kq-mm-twig" d="M210,90 C188,90 188,90 166,90" /><circle class="kq-mm-dot " cx="166" cy="90" r="4" /><text class="kq-mm-leaf " x="154" y="95" text-anchor="end">One plain sentence</text><path class="kq-mm-twig" d="M210,90 C188,90 188,120 166,120" /><circle class="kq-mm-dot " cx="166" cy="120" r="4" /><text class="kq-mm-leaf " x="154" y="125" text-anchor="end">Why am I seeing this?</text><path class="kq-mm-trunk" d="M470,270 C460,270 460,270 360,270" /><rect class="kq-mm-branch" x="210" y="250" width="150" height="40" rx="10" /><text class="kq-mm-bt" x="285" y="276">Offer ways out</text><path class="kq-mm-twig" d="M210,270 C188,270 188,225 166,225" /><circle class="kq-mm-dot " cx="166" cy="225" r="4" /><text class="kq-mm-leaf " x="154" y="230" text-anchor="end">Move from savings pot</text><path class="kq-mm-twig" d="M210,270 C188,270 188,255 166,255" /><circle class="kq-mm-dot " cx="166" cy="255" r="4" /><text class="kq-mm-leaf " x="154" y="260" text-anchor="end">Pay on salary day</text><path class="kq-mm-twig" d="M210,270 C188,270 188,285 166,285" /><circle class="kq-mm-dot " cx="166" cy="285" r="4" /><text class="kq-mm-leaf " x="154" y="290" text-anchor="end">Talk to a person</text><path class="kq-mm-twig" d="M210,270 C188,270 188,315 166,315" /><circle class="kq-mm-dot is-parked" cx="166" cy="315" r="4" /><text class="kq-mm-leaf is-parked" x="154" y="320" text-anchor="end">Salary advance from a partner</text><path class="kq-mm-trunk" d="M470,270 C460,270 460,450 360,450" /><rect class="kq-mm-branch" x="210" y="430" width="150" height="40" rx="10" /><text class="kq-mm-bt" x="285" y="456">Keep trust</text><path class="kq-mm-twig" d="M210,450 C188,450 188,420 166,420" /><circle class="kq-mm-dot " cx="166" cy="420" r="4" /><text class="kq-mm-leaf " x="154" y="425" text-anchor="end">Passkey above ₹25,000</text><path class="kq-mm-twig" d="M210,450 C188,450 188,450 166,450" /><circle class="kq-mm-dot " cx="166" cy="450" r="4" /><text class="kq-mm-leaf " x="154" y="455" text-anchor="end">Undo after a move</text><path class="kq-mm-twig" d="M210,450 C188,450 188,480 166,480" /><circle class="kq-mm-dot " cx="166" cy="480" r="4" /><text class="kq-mm-leaf " x="154" y="485" text-anchor="end">Never a link or an OTP</text><path class="kq-mm-trunk" d="M650,270 C660,270 660,90 760,90" /><rect class="kq-mm-branch" x="760" y="70" width="150" height="40" rx="10" /><text class="kq-mm-bt" x="835" y="96">Across banks</text><path class="kq-mm-twig" d="M910,90 C932,90 932,60 954,60" /><circle class="kq-mm-dot " cx="954" cy="60" r="4" /><text class="kq-mm-leaf " x="966" y="65" text-anchor="start">Account Aggregator</text><path class="kq-mm-twig" d="M910,90 C932,90 932,90 954,90" /><circle class="kq-mm-dot " cx="954" cy="90" r="4" /><text class="kq-mm-leaf " x="966" y="95" text-anchor="start">All-money home</text><path class="kq-mm-twig" d="M910,90 C932,90 932,120 954,120" /><circle class="kq-mm-dot " cx="954" cy="120" r="4" /><text class="kq-mm-leaf " x="966" y="125" text-anchor="start">Each bank in its colours</text><path class="kq-mm-trunk" d="M650,270 C660,270 660,270 760,270" /><rect class="kq-mm-branch" x="760" y="250" width="150" height="40" rx="10" /><text class="kq-mm-bt" x="835" y="276">Everywhere</text><path class="kq-mm-twig" d="M910,270 C932,270 932,225 954,225" /><circle class="kq-mm-dot " cx="954" cy="225" r="4" /><text class="kq-mm-leaf " x="966" y="230" text-anchor="start">iPhone Duo rail</text><path class="kq-mm-twig" d="M910,270 C932,270 932,255 954,255" /><circle class="kq-mm-dot " cx="954" cy="255" r="4" /><text class="kq-mm-leaf " x="966" y="260" text-anchor="start">iPad split view</text><path class="kq-mm-twig" d="M910,270 C932,270 932,285 954,285" /><circle class="kq-mm-dot " cx="954" cy="285" r="4" /><text class="kq-mm-leaf " x="966" y="290" text-anchor="start">Watch complications</text><path class="kq-mm-twig" d="M910,270 C932,270 932,315 954,315" /><circle class="kq-mm-dot is-parked" cx="954" cy="315" r="4" /><text class="kq-mm-leaf is-parked" x="966" y="320" text-anchor="start">Lock-screen widget</text><path class="kq-mm-trunk" d="M650,270 C660,270 660,450 760,450" /><rect class="kq-mm-branch" x="760" y="430" width="150" height="40" rx="10" /><text class="kq-mm-bt" x="835" y="456">An assistant</text><path class="kq-mm-twig" d="M910,450 C932,450 932,420 954,420" /><circle class="kq-mm-dot " cx="954" cy="420" r="4" /><text class="kq-mm-leaf " x="966" y="425" text-anchor="start">Answers with sources</text><path class="kq-mm-twig" d="M910,450 C932,450 932,450 954,450" /><circle class="kq-mm-dot " cx="954" cy="450" r="4" /><text class="kq-mm-leaf " x="966" y="455" text-anchor="start">Never moves money alone</text><path class="kq-mm-twig" d="M910,450 C932,450 932,480 954,480" /><circle class="kq-mm-dot is-parked" cx="954" cy="480" r="4" /><text class="kq-mm-leaf is-parked" x="966" y="485" text-anchor="start">Streaks and rewards</text><rect class="kq-mm-core" x="450" y="238" width="220" height="64" rx="14" /><text class="kq-mm-ct" x="560" y="267">Know early,</text><text class="kq-mm-ct" x="560" y="291">act calmly</text></svg>
+  <p class="kq-key"><span class="is-on"></span>In the prototype <span class="is-parked"></span>Parked or rejected</p></figure>
+        
+        <div class="kq-sub reveal">
+          <h3>The decisions that shaped it</h3>
+          
+        </div>
+        <div class="reveal"><ol class="kq-tl"><li>
+      <span class="kq-tl-day">Day 2</span>
+      <span class="kq-tl-dot" aria-hidden="true"></span>
+      <p class="kq-tl-was"><s>IBM Carbon components</s></p>
+      <p class="kq-tl-now">Apple’s HIG and Liquid Glass</p>
+      <p class="kq-tl-why">Carbon’s square cards felt cold for a money worry. iOS’s rounded, quiet patterns fit.</p>
+    </li><li>
+      <span class="kq-tl-day">Day 3</span>
+      <span class="kq-tl-dot" aria-hidden="true"></span>
+      <p class="kq-tl-was"><s>One bank’s home</s></p>
+      <p class="kq-tl-now">A home for all your money</p>
+      <p class="kq-tl-why">Most people use two or three banks. The warning belongs above any one of them.</p>
+    </li><li>
+      <span class="kq-tl-day">Day 4</span>
+      <span class="kq-tl-dot" aria-hidden="true"></span>
+      <p class="kq-tl-was"><s>A red “may bounce” banner</s></p>
+      <p class="kq-tl-now">One calm sentence, three ways out</p>
+      <p class="kq-tl-why">Say what happens and by how much, then how to fix it.</p>
+    </li><li>
+      <span class="kq-tl-day">Day 5</span>
+      <span class="kq-tl-dot" aria-hidden="true"></span>
+      <p class="kq-tl-was"><s>A big white button</s></p>
+      <p class="kq-tl-now">A small link</p>
+      <p class="kq-tl-why">The card informs. The action is there when you want it.</p>
+    </li><li>
+      <span class="kq-tl-day">Day 6</span>
+      <span class="kq-tl-dot" aria-hidden="true"></span>
+      <p class="kq-tl-was"><s>Bright colour everywhere</s></p>
+      <p class="kq-tl-now">Black canvas, colour only in data</p>
+      <p class="kq-tl-why">Apple Watch’s 60-30-10: colour stays under 10%, so it means something.</p>
+    </li></ol></div>
+        
+        <div class="kq-sub reveal">
+          <h3>A review before anyone tests it</h3>
+          <p>Heuristic evaluation, an information-architecture check and a design critique. Eight findings, each fixed. Four of them:</p>
+        </div>
+        <ul class="kq-fixes reveal">
+          <li><b>Home said too much</b><span>49 bits of text and four ways to say one fact. Now one sentence, one gauge, one link.</span></li>
+          <li><b>The gauge felt cramped</b><span>Number and label fought the ring. Now the number sits alone; the label rests in the opening.</span></li>
+          <li><b>Confirm hid the result</b><span>It repeated the amount. Now it shows the new balance and your lowest point before salary.</span></li>
+          <li><b>Profile was a tab</b><span>Rarely used, always visible. It moved to the avatar; Scan took the centre of the tab bar.</span></li>
+        </ul>
+
+        
+        <header class="kq-ch reveal" id="s-solution">
+          <p class="kq-ch-k"><span>04</span>Solution</p>
+          <h2 class="kq-ch-title">Three days early, three taps to fix</h2>
+          <p class="kq-ch-intro">One calm card on the home screen, three ways out with their costs, a confirm that shows the result, and an ending that looks forward.</p>
+        </header>
+        <figure class="kq-photo kq-photo--wide reveal"><img src="../assets/cashflow/mk-sofa.webp" alt="Someone on a sofa holding an iPhone with Deccan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days" width="585" height="390" loading="lazy" decoding="async" /></figure>
+        <ol class="kq-flow reveal">
+          <li><span class="kq-flow-n">1</span><b>See it</b><img src="../assets/cashflow/gap-home.webp" alt="Home: one thing needs you before 1 Nov, with the gap card" width="430" height="902" loading="lazy" decoding="async" /></li>
+          <li><span class="kq-flow-n">2</span><b>Choose</b><img src="../assets/cashflow/gap-compare.webp" alt="Ways to cover rent: ₹590 if you do nothing, then three ways with their costs" width="430" height="902" loading="lazy" decoding="async" /></li>
+          <li><span class="kq-flow-n">3</span><b>Confirm</b><img src="../assets/cashflow/gap-confirm.webp" alt="Confirm: after this move, ₹32,740.50, 100% of rent covered" width="430" height="902" loading="lazy" decoding="async" /></li>
+          <li><span class="kq-flow-n">4</span><b>Done</b><img src="../assets/cashflow/gap-done.webp" alt="Rent is covered. Next date to watch, 3 Nov. You sorted this 3 days before it was due." width="430" height="902" loading="lazy" decoding="async" /></li>
+        </ol>
+
+        
+        <div class="kq-sub reveal" id="kq-try">
+          <h3>Try it yourself</h3>
+          <p>The whole app runs here. Tap See 3 ways to fix it and follow it to the end.</p>
+        </div>
+        <div class="cf-live reveal">
+          <iframe src="../prototypes/cash-flow-gap/index.html?embed" title="Khatiq prototype" loading="lazy"></iframe>
+          <p class="kq-cap">Invented data. <a href="../prototypes/cash-flow-gap/index.html" target="_blank" rel="noopener">Open with all controls<span class="sr-only"> (new tab)</span></a>: four lenses, two banks, light and dark, iPhone Duo, iPad and Apple Watch.</p>
+        </div>
+
+        
+        <div class="kq-sub reveal">
+          <h3>The same moment on every Apple device</h3>
+          <p>Built from Apple’s guidance for each: a trailing rail on iPhone Duo, a split view on iPad, complications on Apple Watch.</p>
+        </div>
+        <figure class="kq-photo kq-photo--wide reveal"><img src="../assets/cashflow/mk-duo-open.webp" alt="iPhone Duo held open in two hands: the all-money home beside Ways to cover rent, with the tab bar in the rail" width="1000" height="667" loading="lazy" decoding="async" /></figure>
+        <div class="cf-eco cf-eco-wide reveal">
+          <figure><img src="../assets/cashflow/mk-duo-trio.webp" alt="iPhone Duo open and upright between two other iPhone Duo phones, showing the all-money home" width="1000" height="640" loading="lazy" decoding="async" /><figcaption>iPhone Duo, open and upright</figcaption></figure>
+          <figure><img src="../assets/cashflow/bz-ipad.webp" alt="iPad Air in landscape: the tab bar on top, the all-money home on the left and Ways to cover rent on the right" width="603" height="437" loading="lazy" decoding="async" /><figcaption>iPad: tab bar on top, split view below</figcaption></figure>
+        </div>
+        <div class="cf-eco cf-eco-watch reveal">
+          <figure><img src="../assets/cashflow/bz-watch-face.webp" alt="Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings" width="210" height="330" loading="lazy" decoding="async" /><figcaption>On the face</figcaption></figure>
+          <figure><img src="../assets/cashflow/bz-watch-aod.webp" alt="Always On: amounts hidden" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Always On hides amounts</figcaption></figure>
+          <figure><img src="../assets/cashflow/bz-watch-alert.webp" alt="₹1,059 short for 2 days, Move ₹1,500 or Later" width="210" height="330" loading="lazy" decoding="async" /><figcaption>One fact, one action</figcaption></figure>
+          <figure><img src="../assets/cashflow/bz-watch-confirm.webp" alt="Confirm ₹1,500, double tap to confirm" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Double Tap confirms</figcaption></figure>
+          <figure><img src="../assets/cashflow/bz-watch-done.webp" alt="Rent covered, next: salary 3 Nov" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Covered</figcaption></figure>
+        </div>
+
+        
+        <div class="kq-sub reveal">
+          <h3>Data, the way Apple Watch shows it</h3>
+          <p>Colour lives inside the marks: a histogram for the month, a gauge for rent, rings for goals, bars with one month picked out.</p>
+        </div>
+        
+        <div class="shots cf-phones  reveal" data-shots style="--cols: 4">
+          <div class="shots-track">
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-bank.webp" alt="The bank home: a 30-day histogram with two short days below the line and an arc gauge, 97% of rent" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Histogram and gauge</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/ins-insights.webp" alt="Insights: six months of spending with October in coral and a dashed average" width="430" height="902" loading="lazy" decoding="async" /><figcaption>One month picked out</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/ins-goals.webp" alt="Savings goals as rings, one per goal" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Rings</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/acc-linked.webp" alt="Accounts across three banks, each in its own colours" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Banks in their colours</figcaption></figure>
+          </div>
+        </div>
+
+        
+        <div class="kq-sub reveal">
+          <h3>Around the moment, a whole bank</h3>
+          <p>Onboarding, accounts across banks, UPI, insights, Seth the assistant, and linking banks through the Account Aggregator.</p>
+        </div>
+        
+        <div class="shots cf-phones  reveal" data-shots style="--cols: 4">
+          <div class="shots-track">
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/onb-welcome.webp" alt="Welcome to Khatiq: Know early. Act calmly." width="430" height="902" loading="lazy" decoding="async" /><figcaption>Welcome</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/pay-hub.webp" alt="Pay: people, bills and autopays" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Pay</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/ai-chat.webp" alt="Seth answers marked Sure, Not sure and Can’t do this" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Seth</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/link-consent.webp" alt="Share Malabar data with Deccan? What, how long, how often, why" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Consent</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/link-done.webp" alt="Malabar is linked, in its own colours" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Linked</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-why.webp" alt="Why am I seeing this? What we looked at and what we never use" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Why</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/gap-handoff.webp" alt="A person will take it from here" width="430" height="902" loading="lazy" decoding="async" /><figcaption>A person</figcaption></figure>
+            <figure class="shot-card cf-phone"><img src="../assets/cashflow/pro-profile.webp" alt="Profile, behind the avatar" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Profile</figcaption></figure>
+          </div>
+        </div>
+
+        
+        <div class="kq-sub reveal">
+          <h3>The design system</h3>
+          <p>Read from the prototype’s own tokens, so the page can’t drift from the app.</p>
+        </div>
+        
+        <div class="cf-bento reveal">
+          <section class="cf-tile cf-span-12" aria-label="Bank palettes">
+            <p class="cf-tile-k">Every bank brings its own palette · button, ink, tint, colour field and Seth’s glow</p>
+            <div class="cf-banks">
+              <div class="cf-bank">
+                <div class="cf-bank-field" style="background:#0f2a2e;--a:#2f5c8f;--b:#b8742e;--c:#1d6c6a"><span class="cf-bank-mark" style="background:#0f6e66">De</span></div>
+                <b>Deccan Co-operative Bank</b><span>Co-operative bank</span>
+                <div class="cf-bank-chips"><i style="background:#0f6e66" title="Button #0f6e66"></i><i style="background:#86d6cb" title="Ink on dark #86d6cb"></i><i style="background:#e0f1ee" title="Tint #e0f1ee"></i><i style="background:#7ff0dc" title="Seth glow #7ff0dc"></i></div>
+                <code>#0f6e66</code>
+              </div><div class="cf-bank">
+                <div class="cf-bank-field" style="background:#1d1840;--a:#5a3a9e;--b:#c47d5c;--c:#3e35a8"><span class="cf-bank-mark" style="background:#4b3fc4">Ko</span></div>
+                <b>Konkan Bank</b><span>Private bank</span>
+                <div class="cf-bank-chips"><i style="background:#4b3fc4" title="Button #4b3fc4"></i><i style="background:#b9b3ff" title="Ink on dark #b9b3ff"></i><i style="background:#ebe9ff" title="Tint #ebe9ff"></i><i style="background:#c9c3ff" title="Seth glow #c9c3ff"></i></div>
+                <code>#4b3fc4</code>
+              </div><div class="cf-bank">
+                <div class="cf-bank-field" style="background:#341608;--a:#7a2e14;--b:#d08a2e;--c:#5b2a4a"><span class="cf-bank-mark" style="background:#b0441a">Ma</span></div>
+                <b>Malabar Bank</b><span>Private bank</span>
+                <div class="cf-bank-chips"><i style="background:#b0441a" title="Button #b0441a"></i><i style="background:#ffb48f" title="Ink on dark #ffb48f"></i><i style="background:#fbe8de" title="Tint #fbe8de"></i><i style="background:#ffcaa8" title="Seth glow #ffcaa8"></i></div>
+                <code>#b0441a</code>
+              </div><div class="cf-bank">
+                <div class="cf-bank-field" style="background:#12260f;--a:#2e6a2e;--b:#a39a36;--c:#1e4f4a"><span class="cf-bank-mark" style="background:#2e6a2e">Ka</span></div>
+                <b>Kaveri Small Finance Bank</b><span>Small finance bank</span>
+                <div class="cf-bank-chips"><i style="background:#2e6a2e" title="Button #2e6a2e"></i><i style="background:#a8dca2" title="Ink on dark #a8dca2"></i><i style="background:#e3f2e0" title="Tint #e3f2e0"></i><i style="background:#c6f2ba" title="Seth glow #c6f2ba"></i></div>
+                <code>#2e6a2e</code>
+              </div><div class="cf-bank">
+                <div class="cf-bank-field" style="background:#0d1c36;--a:#1d5daa;--b:#6a4fb0;--c:#2a8a9a"><span class="cf-bank-mark" style="background:#1d5daa">Na</span></div>
+                <b>Narmada Bank</b><span>Public sector bank</span>
+                <div class="cf-bank-chips"><i style="background:#1d5daa" title="Button #1d5daa"></i><i style="background:#a2c6ff" title="Ink on dark #a2c6ff"></i><i style="background:#e3edfb" title="Tint #e3edfb"></i><i style="background:#bcd6ff" title="Seth glow #bcd6ff"></i></div>
+                <code>#1d5daa</code>
+              </div><div class="cf-bank">
+                <div class="cf-bank-field" style="background:#2c0e1c;--a:#9a2b58;--b:#c06a3a;--c:#4a2a6a"><span class="cf-bank-mark" style="background:#9a2b58">Vi</span></div>
+                <b>Vindhya Co-operative Bank</b><span>Co-operative bank</span>
+                <div class="cf-bank-chips"><i style="background:#9a2b58" title="Button #9a2b58"></i><i style="background:#f6a8c8" title="Ink on dark #f6a8c8"></i><i style="background:#f9e4ec" title="Tint #f9e4ec"></i><i style="background:#ffc4dd" title="Seth glow #ffc4dd"></i></div>
+                <code>#9a2b58</code>
+              </div>
+            </div>
+            <p class="cf-tile-note">Palettes live in data, not CSS: a bank linked through the Account Aggregator arrives with its colours. Every button fill passes 4.5:1 with white text.</p>
+          </section>
+
+          <section class="cf-tile cf-span-7" aria-label="Type">
+            <p class="cf-tile-k">Type · the system font: SF Pro and New York on Apple devices, Noto Sans and Noto Serif everywhere else</p>
+            <div class="cf-type">
+              <div class="cf-type-row"><small>Large title 34</small><span class="cf-serif" style="font-size:2.6rem;line-height:1.1">Know early.</span></div>
+              <div class="cf-type-row"><small>Balance 46</small><span class="cf-serif" style="font-size:2.6rem;line-height:1.1"><span class="cf-sym">₹</span>31,240<span class="cf-dim">.50</span></span></div>
+              <div class="cf-type-row"><small>Title 28</small><span class="cf-serif" style="font-size:1.75rem">Ways to cover rent</span></div>
+              <div class="cf-type-row"><small>Body 17</small><span style="font-size:1.06rem">Your account will be a little short.</span></div>
+              <div class="cf-type-row"><small>Footnote 13</small><span style="font-size:0.81rem">3 Nov · salary arrives</span></div>
+            </div>
+            <p class="cf-tile-note">iOS’s scale: Large Title 34, Title 28, Headline and Body 17, Subheadline 15, Footnote 13, with tracking that tightens as size grows. Apple’s fonts are never shipped in the web build, since their licence covers apps on Apple platforms; on iPhone the system draws them. The ₹ sits smaller with its own space, paise are dimmed, and Noto Sans Devanagari sets Hindi in the same family.</p>
+          </section>
+          <section class="cf-tile cf-span-5" aria-label="Bright accents">
+            <p class="cf-tile-k">Colour · 60-30-10, the Watch black way</p>
+            <div class="cf-hues"><div class="cf-hue"><i style="background:#7ee8c2"></i><b>Mint</b><span>done, money in, safe</span></div><div class="cf-hue"><i style="background:#ff8f78"></i><b>Coral</b><span>money out, the cost of doing nothing</span></div><div class="cf-hue"><i style="background:#ffd65a"></i><b>Sunflower</b><span>savings and goals</span></div><div class="cf-hue"><i style="background:#b8b2ff"></i><b>Lavender</b><span>people and Seth</span></div><div class="cf-hue"><i style="background:#84cbff"></i><b>Sky</b><span>linked banks, data and trust</span></div><div class="cf-hue"><i style="background:#c8f06e"></i><b>Lime</b><span>paying someone</span></div></div>
+            <p class="cf-tile-note">60 black canvas, 30 graphite surfaces, 10 colour: the bank’s tint on the one action, and these six hues only inside data marks and their labels. Measured from every capture: colour at or under 10% on 49 of 54 screens; the five over it are the covered, welcome and linked moments, and the multi-bank account lists.</p>
+          </section>
+
+          <section class="cf-tile cf-span-6" aria-label="Grid and spacing">
+            <p class="cf-tile-k">Layout · iPhone margins, rounded shapes</p>
+            <div class="cf-grid-demo"><span style="width:16px">16</span><span style="width:12px">12</span><span style="width:32px">32</span></div>
+            <p class="cf-tile-note">16 pt layout margin, 12 between related tiles, 32 between sections. Cards round at 26, inset lists at 22, controls are capsules, sheets 34, continuous corners where the browser supports them. Every target is 44 pt or more.</p>
+          </section>
+          <section class="cf-tile cf-span-6" aria-label="Motion">
+            <p class="cf-tile-k">Motion and material · Liquid Glass on the controls only</p>
+            <p class="cf-tile-big">Springs, 0.3 s</p>
+            <p class="cf-tile-note">Critically damped springs answer on press, never on release. Glass sits on the functional layer only: the floating tab bar, back buttons and sheets, never on content and never glass on glass. Reduce Transparency turns it solid; Reduce Motion turns movement into fades.</p>
+          </section>
+        </div>
+
+        
+        <header class="kq-ch reveal" id="s-impact">
+          <p class="kq-ch-k"><span>05</span>Impact</p>
+          <h2 class="kq-ch-title">What it has to prove</h2>
+          <p class="kq-ch-intro">Nothing has been tested yet. These are the bars it must clear with 8 to 10 people, written down now so they can’t drift.</p>
+        </header>
+        <div class="kq-panel reveal"><ul class="cf-targets"><li style="--ring:var(--hue-mint)">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" class="cf-tg-track" /><circle cx="60" cy="60" r="46" class="cf-tg-fill" stroke-dasharray="231.2 289.0" transform="rotate(-90 60 60)" /><text x="60" y="58" class="cf-tg-n">8/10</text><text x="60" y="78" class="cf-tg-of">people</text></svg>
+      <b>Get it in 5 seconds</b><span>Restate the situation and next step</span>
+    </li><li style="--ring:var(--hue-mint)">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" class="cf-tg-track" /><circle cx="60" cy="60" r="46" class="cf-tg-fill" stroke-dasharray="231.2 289.0" transform="rotate(-90 60 60)" /><text x="60" y="58" class="cf-tg-n">8/10</text><text x="60" y="78" class="cf-tg-of">people</text></svg>
+      <b>Fix it in 60 seconds</b><span>Cover a gap, unaided</span>
+    </li><li style="--ring:var(--hue-mint)">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" class="cf-tg-track" /><circle cx="60" cy="60" r="46" class="cf-tg-fill" stroke-dasharray="202.3 289.0" transform="rotate(-90 60 60)" /><text x="60" y="58" class="cf-tg-n">7/10</text><text x="60" y="78" class="cf-tg-of">people</text></svg>
+      <b>Trust it enough to act</b><span>And say where the data came from</span>
+    </li><li style="--ring:var(--hue-mint)">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" class="cf-tg-track" /><circle cx="60" cy="60" r="46" class="cf-tg-fill" stroke-dasharray="260.1 289.0" transform="rotate(-90 60 60)" /><text x="60" y="58" class="cf-tg-n">9/10</text><text x="60" y="78" class="cf-tg-of">people</text></svg>
+      <b>Find a person in 10 seconds</b><span>Talk to a person, from the card</span>
+    </li><li style="--ring:var(--hue-mint)">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="46" class="cf-tg-track" /><circle cx="60" cy="60" r="46" class="cf-tg-fill" stroke-dasharray="202.3 289.0" transform="rotate(-90 60 60)" /><text x="60" y="58" class="cf-tg-n">7/10</text><text x="60" y="78" class="cf-tg-of">people</text></svg>
+      <b>Feel calm after</b><span>One question, five words</span>
+    </li></ul></div>
+        
+        <div class="kq-sub reveal">
+          <h3>What exists today</h3>
+          
+        </div>
+        <div class="reveal"><ul class="cf-stats"><li style="--tile:var(--hue-mint)"><b>64</b><span>screens in a working prototype</span></li><li style="--tile:var(--hue-sky)"><b>4</b><span>Apple devices, each to its guidelines</span></li><li style="--tile:var(--hue-sun)"><b>57 of 64</b><span>screens inside the 10% colour budget</span></li><li style="--tile:var(--hue-coral)"><b>0</b><span>people tested so far. That’s next.</span></li></ul></div>
+
+        
+        <header class="kq-ch reveal" id="s-reflection">
+          <p class="kq-ch-k"><span>06</span>Reflection</p>
+          <h2 class="kq-ch-title">What I’d keep, and what’s next</h2>
+          
+        </header>
+        <ol class="kq-reflect reveal">
+          <li><b>Calm is mostly copy</b><span>The biggest changes were words. “May bounce” became “you’ll be ₹1,059 short”, and the fix moved into the same card.</span></li>
+          <li><b>Less on home, more on the one thing</b><span>Cutting home from 49 bits of text to a handful made the alert the obvious next step.</span></li>
+          <li><b>Design the wrist first</b><span>Apple Watch forced the shortest version of every message, and that version improved the phone.</span></li>
+          <li><b>Next</b><span>Five to eight interviews in India, then the card in front of 8 to 10 people against the targets above.</span></li>
+        </ol>
+
+        <p class="kq-credits">Image credits: iPhone Duo photographs (upright trio), Apple. iPhone mockups: Mockup Cloud (on the sofa), akoya (in hand). Open iPhone Duo in hands: source to be added. Device frames: Apple Design Resources. App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== LIGHTBOX ===================== -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" hidden>
+    <div class="lightbox-top">
+      <p class="lightbox-caption"></p>
+      <button class="lightbox-close" type="button" aria-label="Close viewer">
+        <svg width="16" height="16" viewBox="1.33 1.33 21.33 21.33" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <button class="lightbox-nav lightbox-nav--prev" type="button" aria-label="Previous photograph">
+      <svg width="20" height="20" viewBox="2.4 2.4 19.2 19.2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.76" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+
+    <figure class="lightbox-stage">
+      <img alt="" decoding="async" />
+    </figure>
+
+    <button class="lightbox-nav lightbox-nav--next" type="button" aria-label="Next photograph">
+      <svg width="20" height="20" viewBox="2.4 2.4 19.2 19.2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.76" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+    </button>
+
+    <div class="lightbox-bar">
+      <span class="lightbox-counter"></span>
+      <button class="lightbox-btn" type="button" data-lightbox-play aria-pressed="false">
+        <svg data-icon-play width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg>
+        <svg data-icon-pause width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" hidden><rect x="14" y="3" width="5" height="18" rx="1"/><rect x="5" y="3" width="5" height="18" rx="1"/></svg>
+        <span data-play-label>Slideshow</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <h2 class="display contact-title reveal">Let&rsquo;s build <span class="accent">something</span></h2>
+      <div class="contact-card reveal" data-delay="1">
+        <p class="ghost contact-ghost" aria-hidden="true">Contact me</p>
+        <div class="contact-intro">
+          <p class="contact-name">Sthitapragna Kollepara</p>
+          <p class="contact-s">Write, connect and follow along!</p>
+        </div>
+        <nav class="contact-links" aria-label="Contact">
+          <a class="contact-row" href="mailto:sthita.ksp2709@gmail.com">
+            <span class="contact-ico" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.9"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>
+            <span class="contact-txt"><small>Email</small><b>sthita.ksp2709@gmail.com</b></span>
+            <span class="dot" aria-hidden="true"><svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+          </a>
+          <a class="contact-row" href="https://www.linkedin.com/in/sthitapragna-kollepara-136a031aa" target="_blank" rel="noopener">
+            <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.6 8.75 23 10.9 23 14.1V21h-4v-6.1c0-1.46-.03-3.34-2.06-3.34-2.06 0-2.38 1.58-2.38 3.23V21h-4V9Z"/></svg></span>
+            <span class="contact-txt"><small>LinkedIn</small><b>Sthitapragna Kollepara</b></span>
+            <span class="dot" aria-hidden="true"><svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+          </a>
+          <a class="contact-row" href="https://www.instagram.com/capture_master_ksp/" target="_blank" rel="noopener">
+            <span class="contact-ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg></span>
+            <span class="contact-txt"><small>Instagram</small><b>@capture_master_ksp</b></span>
+            <span class="dot" aria-hidden="true"><svg width="11" height="11" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg></span>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
+    <span class="sr-only">Light theme</span>
+    <span class="theme-toggle-rail" aria-hidden="true">
+      <span class="theme-toggle-end theme-toggle-end--sun">
+        <svg class="icon-sun" width="14" height="14" viewBox="0.57 0.57 22.86 22.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.14" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </span>
+      <span class="theme-toggle-words">
+        <span class="theme-toggle-word">Tap or swipe for dark/light</span>
+      </span>
+      <span class="theme-toggle-end theme-toggle-end--moon">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </span>
+      <span class="theme-toggle-knob">
+        <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+        <svg class="icon-sun" width="14" height="14" viewBox="0.57 0.57 22.86 22.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.14" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+      </span>
+    </span>
+  </button>
+
+  <script src="../script.js"></script>
+  <script src="../assets/parag/parag.js"></script>
+</body>
+</html>
