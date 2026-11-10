@@ -82,10 +82,18 @@ function mindMap() {
 }
 
 /** Decisions on a day-by-day line. */
+/** Decisions as a journey of colour tiles: soft fill, deeper Day label, same family as Konkan lavender. */
+const TL_TONES = [
+  ["#dcd8ff", "#4b3fc4"],
+  ["#cfe5ff", "#1f5fa8"],
+  ["#ffd9c9", "#a84a26"],
+  ["#c9f0df", "#1b7a55"],
+  ["#ffeaa8", "#7d5b00"],
+];
 function timeline(rows) {
   return `<ol class="kq-tl">${rows
     .map(
-      ([day, was, now, why]) => `<li>
+      ([day, was, now, why], i) => `<li style="--tile:${TL_TONES[i % TL_TONES.length][0]};--tile-deep:${TL_TONES[i % TL_TONES.length][1]}">
       <span class="kq-tl-day">${e(day)}</span>
       <span class="kq-tl-dot" aria-hidden="true"></span>
       <p class="kq-tl-was"><s>${e(was)}</s></p>

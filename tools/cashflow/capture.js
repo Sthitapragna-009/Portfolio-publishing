@@ -51,7 +51,7 @@ const SCENES = [
   // the gap
   ['gap-home', `go(['home'])`],
   ['gap-bank', `go(['home','bank'])`],
-  ['gap-why', `go(['home','bank'], { why: true })`, 900],
+  ['gap-why', `go(['home','bank']); await wait(400); set({ why: true })`, 1200],
   ['gap-compare', `go(['home','compare'], { option: 'savings' })`],
   ['gap-confirm', `go(['home','compare','confirm'], { option: 'savings', amount: 1500 })`],
   ['gap-stepup', `go(['home','compare','confirm'], { option: 'savings', amount: 30000 })`],
@@ -117,8 +117,14 @@ const SCENES = [
   ['ipad-home', `set({ device: 'ipad' }); go(['home'], { option: 'savings' })`],
   ['ipad-accounts', `set({ device: 'ipad' }); go(['accounts','account'])`],
   ['ipad-bank', `set({ device: 'ipad' }); go(['home','bank'])`],
+  // rent day as a Live Activity: Lock Screen, Dynamic Island compact and expanded
+  ['live-lock', `go(['lock'])`],
+  ['live-lock-paid', `go(['lock'], { livePhase: 'paid', liveAmounts: true })`],
+  ['live-island', `go(['away'])`],
+  ['live-expanded', `go(['away'], { liveOpen: true })`, 1400],
+  ['live-expanded-ok', `go(['away'], { liveOpen: true, livePhase: 'queued' })`, 1400],
   // Apple Watch 46mm
-  ...['face', 'aod', 'stack', 'alert', 'confirm', 'done'].map((w) => [`watch-${w}`, `set({ device: 'watch', watch: '${w}' })`]),
+  ...['face', 'aod', 'stack', 'live', 'alert', 'confirm', 'done'].map((w) => [`watch-${w}`, `set({ device: 'watch', watch: '${w}' })`]),
 ];
 
 async function main() {

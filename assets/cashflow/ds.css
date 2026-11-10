@@ -243,7 +243,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  font: 600 9px/1 var(--ds-sans);
+  font: 600 9px/1 var(--kq-font);
   font-style: normal;
   color: #fff;
 }
@@ -325,7 +325,7 @@
   height: 18px;
   border-radius: 50%;
   background: var(--ds-teal);
-  font: 700 10px/1 var(--ds-sans);
+  font: 700 10px/1 var(--kq-font);
   font-style: normal;
   color: #fff;
 }
@@ -694,4 +694,36 @@
 }
 @media (max-width: 640px) {
   .ds-states, .ds-fields { grid-template-columns: 1fr; }
+}
+/* the card's quiet second action, and steps */
+.ds-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c9c3ff;
+}
+.ds-card-fix {
+  margin: -0.4rem 0 0;
+  font-size: 14px;
+  color: var(--ds-dim);
+}
+.ds-cap.is-steps {
+  background: rgb(255 255 255 / 0.18);
+}
+.ds-cap.is-steps i {
+  background: #c9c3ff;
+}
+/* one face on the page: Epilogue. The app's own font appears only in the Type specimen. */
+.ds {
+  font-family: var(--kq-font, "Epilogue", sans-serif);
+}
+.ds [aria-label="Type"] .ds-type,
+.ds .ds-app {
+  font-family: var(--ds-sans);
+}
+.ds .ds-serif {
+  font-family: var(--kq-font, "Epilogue", sans-serif);
+  font-weight: 700;
 }

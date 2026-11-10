@@ -54,7 +54,7 @@ function projectTimeline(num) {
         lists: [
           { c: 1, items: L(["Bank alerts today", "UPI autopay and NACH", "Published surveys", "Account Aggregator"]) },
           { c: 2, items: L(["Journey map", "Jobs to be done", "Emotion goals"]) },
-          { c: 3, items: L(["Brainstorm", "Rough screens", "Information architecture"]) },
+          { c: 3, items: L(["Brainstorm", "Sketches", "Information architecture"]) },
           { c: 4, span: 2, items: L(["Coded prototype", "Design system", "Folding phone, iPad, Watch"]) },
           { c: 6, span: 2, items: L(["Heuristic review", "Design critique", "Case study"]) },
         ],

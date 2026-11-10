@@ -72,10 +72,10 @@ function designSystem(banks) {
     </section>
 
     <section class="ds-tile ds-w6" aria-label="Type">
-      <p class="ds-k">Type · a serif for money and titles, a sans for everything else</p>
+      <p class="ds-k">Type · one family, the system sans: bold for titles and money, regular for reading</p>
       <div class="ds-type">
-        <p><small>Large title 34</small><span class="ds-serif" style="font-size:34px">Ways to cover rent</span></p>
-        <p><small>Balance 46</small><span class="ds-serif" style="font-size:44px"><span class="ds-sym">₹</span>31,240<span class="ds-dim">.50</span></span></p>
+        <p><small>Large title 34</small><span class="ds-app" style="font-size:34px;font-weight:700;letter-spacing:-0.02em">Ways to cover rent</span></p>
+        <p><small>Balance 46</small><span class="ds-app" style="font-size:44px;font-weight:700;letter-spacing:-0.02em"><span class="ds-sym">₹</span>31,240<span class="ds-dim">.50</span></span></p>
         <p><small>Headline 17</small><span style="font-size:17px;font-weight:600">Rent leaves 1 Nov.</span></p>
         <p><small>Body 17</small><span style="font-size:17px">You’ll be ₹1,059 short for 2 days.</span></p>
         <p><small>Footnote 13</small><span style="font-size:13px;color:var(--ds-dim)">Salary 3 Nov · No fee</span></p>
@@ -89,7 +89,7 @@ function designSystem(banks) {
         <span class="ds-btn">Talk to a person</span>
         <span class="ds-btn is-quiet">Move it back to savings</span>
         <span class="ds-btn is-danger">Stop this autopay</span>
-        <span class="ds-row-inline"><span class="ds-pill">See 3 ways to fix it ${ico("chev", 15)}</span><span class="ds-pill is-lav">Fix now</span></span>
+        <span class="ds-row-inline"><span class="ds-pill is-lav">Fix now</span><span class="ds-link">Other ways ${ico("chev", 15)}</span></span>
       </div>
     </section>
 
@@ -124,9 +124,9 @@ function designSystem(banks) {
       <p class="ds-k">The alert card</p>
       <div class="ds-card">
         <p class="ds-card-k"><i class="ds-mark" style="background:${banks.northgate.palette.brand}">${e(banks.northgate.mark)}</i>${e(banks.northgate.short)} · one thing to sort</p>
-        <div class="ds-card-main"><p>Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days.</p>${gauge(0.97, "#ff8f78", "97%", "of rent", 64)}</div>
-        ${hist()}
-        <span class="ds-row-inline"><span class="ds-pill">See 3 ways to fix it ${ico("chev", 15)}</span><span class="ds-pill is-lav">Fix now</span></span>
+        <div class="ds-card-main"><p>Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days.</p></div>
+        <p class="ds-card-fix">Move ₹1,500 from your savings pot. No fee.</p>
+        <span class="ds-row-inline"><span class="ds-pill is-lav">Fix now</span><span class="ds-link">Other ways ${ico("chev", 15)}</span></span>
       </div>
     </section>
 
@@ -148,12 +148,9 @@ function designSystem(banks) {
     <section class="ds-tile ds-w12" aria-label="Data">
       <p class="ds-k">Data at a glance</p>
       <div class="ds-data">
-        <div>${gauge(0.97, "#ff8f78", "97%", "of rent")}<small>Arc gauge</small></div>
-        <div>${ticks(5, 30, "#7ee8c2")}<small>Countdown ring</small></div>
-        <div class="ds-wide">${hist()}<small>Histogram</small></div>
-        <div class="ds-wide"><span class="ds-stackbar"><i style="flex:76;background:#7ee8c2"></i><i style="flex:12;background:#84cbff"></i><i style="flex:12;background:#ff8f78"></i></span><small>Stacked bar</small></div>
-        <div class="ds-wide"><span class="ds-meter">${Array.from({ length: 12 }, (_, i) => `<i style="background:${i < 8 ? "#ffd65a" : "var(--ds-track)"}"></i>`).join("")}</span><small>Segment meter</small></div>
-        <div class="ds-wide"><span class="ds-cap"><i style="width:67%"></i></span><small>Progress capsule</small></div>
+        <div class="ds-wide">${hist()}<small>Bars over time · mint money in, coral short</small></div>
+        <div class="ds-wide"><span class="ds-cap"><i style="width:67%"></i></span><small>Progress · one colour per kind</small></div>
+        <div class="ds-wide"><span class="ds-cap is-steps"><i style="width:33%"></i></span><small>Steps · queued, debited, paid</small></div>
       </div>
     </section>
 

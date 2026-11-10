@@ -27,23 +27,29 @@ const note = (x, y, t, anchor = "middle") => `<text class="kqf-note" x="${x}" y=
 
 /* ---------- 1. structure ---------- */
 function iaStructure(num) {
+  // A sitemap: every screen is a box. Onboarding → tab bar → five tabs and the avatar → their screens,
+  // joined by a spine and elbow connectors. The rent fix is filled in lavender.
   const id = "kqf-a1";
   const W = 1120;
   const T = [
-    ["Home", "Tab", ["All your money", "A bank’s home", "Ways to cover rent", "Confirm and done", "Bank words, explained", "Notifications"]],
+    ["Home", "Tab", ["All your money", "A bank’s home", "Ways to cover rent", "Confirm", "Moving, then done", "Bank words, explained", "Notifications"]],
     ["Accounts", "Tab", ["Accounts by bank", "An account", "Activity", "One payment", "Link a bank"]],
     ["Scan", "Centre button", ["Scan a QR", "Amount", "UPI PIN", "Paid"]],
     ["Pay", "Tab", ["People and bills", "Autopays", "The rent autopay"]],
     ["Insights", "Tab", ["Six months", "Worth a look", "Where it went", "Goals"]],
     ["Profile", "Avatar, top right", ["Cash-flow cards", "Autopays", "Banks and consents", "PIN and fingerprint", "Language", "Talk to a person"]],
   ];
-  const RENT = new Set(["Ways to cover rent", "Confirm and done"]);
+  const RENT = new Set(["Ways to cover rent", "Confirm", "Moving, then done"]);
   const cx = (i) => 90 + i * 188;
-  const top = 224;
-  const leaf0 = 330;
-  const step = 32;
-  const barY = 540;
+  const tabTop = 224;
+  const boxW = 150;
+  const boxH = 34;
+  const step = 46;
+  const first = 318;
+  const rows = Math.max(...T.map((t) => t[2].length));
+  const barY = first + rows * step + 26;
   let s = marker(id);
+  // onboarding → tab bar
   s += node(410, 10, 300, 52, "Onboarding");
   s += note(560, 86, "Welcome · salary bank · mobile number · code · app PIN · notifications");
   s += wire(`M560,96 V124`, id);
@@ -51,24 +57,29 @@ function iaStructure(num) {
   s += `<path class="kqf-wire" d="M560,176 V200 M${cx(0)},200 H${cx(5)}" />`;
   T.forEach(([name, kind, items], i) => {
     const x = cx(i);
-    s += wire(`M${x},200 V${top - 2}`, id);
-    s += node(x - 80, top, 160, 48, name);
-    s += note(x, top + 72, kind);
-    const sx = x - 66;
-    const last = leaf0 + (items.length - 1) * step;
-    s += `<path class="kqf-spine" d="M${sx},${top + 86} V${barY}" />`;
+    s += wire(`M${x},200 V${tabTop - 2}`, id);
+    s += node(x - 80, tabTop, 160, 52, name, kind);
+
+    // the spine runs down the left of the column; each screen hangs off it with an elbow
+    const sx = x - 74;
+    const bx = x - 62;
+    const lastMid = first + (items.length - 1) * step + boxH / 2;
+    s += `<path class="kqf-wire" d="M${x},${tabTop + 52} V${tabTop + 66} H${sx} V${lastMid}" />`;
     items.forEach((t, k) => {
-      const y = leaf0 + k * step;
+      const y = first + k * step;
       const on = i === 0 && RENT.has(t);
-      s += `<circle class="kqf-dot${on ? " is-on" : ""}" cx="${sx}" cy="${y - 5}" r="${on ? 5.5 : 4.5}" /><text class="kqf-leaf${on ? " is-on" : ""}" x="${sx + 14}" y="${y}">${e(t)}</text>`;
+      s += wire(`M${sx},${y + boxH / 2} H${bx - 2}`, id);
+      s += `<g class="kqf-leafbox${on ? " is-on" : ""}"><rect x="${bx}" y="${y}" width="${boxW}" height="${boxH}" rx="10" /><text x="${bx + boxW / 2}" y="${y + boxH / 2 + 4.5}">${e(t)}</text></g>`;
     });
-    void last;
+    // each column also reaches the help bar at the bottom
+    s += `<path class="kqf-spine" d="M${x + 96},${tabTop + 66} V${barY}" />`;
   });
   s += node(10, barY, W - 20, 50, "", "", "bar");
   s += `<text class="kqf-bar-t" x="34" y="${barY + 31}">From any card</text><text class="kqf-bar-s" x="${W - 34}" y="${barY + 31}">Why am I seeing this? · Ask Seth · Talk to a person</text>`;
-  s += `<g class="kqf-key"><circle class="kqf-dot is-on" cx="20" cy="${barY + 82}" r="5.5" /><text class="kqf-note" x="34" y="${barY + 87}" text-anchor="start">The rent fix: three taps from Home</text></g>`;
-  return `<div class="kqt kqt--flow">${head("Where everything lives", "Information architecture", num)}<div class="kqt-scroll"><svg class="kqf" viewBox="0 0 ${W} ${barY + 100}" style="--min:900px" role="img" aria-label="Information architecture. Onboarding (welcome, salary bank, mobile number, code, app PIN, notifications) leads to the tab bar and avatar. Home: all your money, a bank's home, ways to cover rent, confirm and done, bank words explained, notifications. Accounts: accounts by bank, an account, activity, one payment, link a bank. Scan, the centre button: scan a QR, amount, UPI PIN, paid. Pay: people and bills, autopays, the rent autopay. Insights: six months, worth a look, where it went, goals. Profile, from the avatar: cash-flow cards, autopays, banks and consents, PIN and fingerprint, language, talk to a person. From any card: why am I seeing this, ask Seth, talk to a person. The rent fix is three taps from Home.">${s}</svg></div></div>`;
+  s += `<g class="kqf-key"><rect class="kqf-key-on" x="10" y="${barY + 72}" width="22" height="14" rx="4" /><text class="kqf-note" x="42" y="${barY + 84}" text-anchor="start">The rent fix: three taps from Home</text></g>`;
+  return `<div class="kqt kqt--flow">${head("Where everything lives", "Information architecture", num)}<div class="kqt-scroll"><svg class="kqf" viewBox="0 0 ${W} ${barY + 100}" style="--min:900px" role="img" aria-label="Information architecture as a sitemap. Onboarding (welcome, salary bank, mobile number, code, app PIN, notifications) leads to the tab bar and avatar. Home: all your money, a bank's home, ways to cover rent, confirm, moving then done, bank words explained, notifications. Accounts: accounts by bank, an account, activity, one payment, link a bank. Scan, the centre button: scan a QR, amount, UPI PIN, paid. Pay: people and bills, autopays, the rent autopay. Insights: six months, worth a look, where it went, goals. Profile, from the avatar: cash-flow cards, autopays, banks and consents, PIN and fingerprint, language, talk to a person. From any card: why am I seeing this, ask Seth, talk to a person. The rent fix, ways to cover rent, confirm, moving then done, is three taps from Home.">${s}</svg></div></div>`;
 }
+
 
 /* ---------- 2. the rent task ---------- */
 function rentFlow(num) {
@@ -115,7 +126,7 @@ function rentFlow(num) {
   s += note(650, 26, "Try another way");
   // the shortcut
   s += wire(`M80,${y(r1)} V104 H750 V${y(r1) - 2}`, id, "is-short");
-  s += note(430, 96, "Fix now: straight to confirm");
+  s += note(430, 96, "Fix now, the card's one button: straight to confirm");
   return `<div class="kqt kqt--flow">${head("The rent task, start to end", "Task flow", num)}<div class="kqt-scroll"><svg class="kqf" viewBox="0 0 ${W} 450" style="--min:900px" role="img" aria-label="Task flow for rent. The card on Home appears 3 days before. It leads to ways to cover rent, with every cost shown, and a choice. Move ₹1,500 from the savings pot, then confirm with the new balance shown; if it moved, rent is covered and you see the next date to watch; if it didn't, couldn't move, another way works, and you go back to the ways to cover rent. Pay rent on 3 Nov, no fee, then review the date, which also ends with rent covered. Talk to a person, about 3 minutes, and a person helps, seeing this card. Fix now on the card goes straight to confirm.">${s}</svg></div></div>`;
 }
 

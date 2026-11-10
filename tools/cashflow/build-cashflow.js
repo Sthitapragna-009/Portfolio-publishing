@@ -161,6 +161,7 @@ const sk = require("./sketches.js");
 const pp = require("./proto-page.js");
 const tl = require("./tl.js");
 const fl = require("./flow.js");
+const fi = require("./fidelity.js");
 
 const chapter = (id, n, kicker, title, intro) => `
         <header class="kq-ch reveal" id="${id}">
@@ -259,36 +260,38 @@ const main = `<main id="top">
         <figure class="kq-panel kq-ec-wrap reveal">${st.emotionCurve()}<figcaption>A design intention, to be tested. Framework: <a href="https://www.theuxda.com/blog/emotionally-intelligent-ux-power-next-gen-digital-banking">UXDA, emotionally intelligent UX in digital banking</a>.</figcaption></figure>
         ${sub("Brainstorm", "One idea, six directions. Filled ideas are in the prototype; dashed ones were parked or rejected.")}
         <figure class="kq-panel kq-mm-wrap reveal">${pr.mindMap()}</figure>
-        ${sub("Rough screens", "What I drew first. Most of it was wrong, and each wrong turn pointed at the next one.")}
-        <figure class="kq-sketch reveal">${sk.sketches()}<figcaption>Pencil sketches from the week, redrawn for this page.</figcaption></figure>
         <figure class="kq-panel reveal">${fl.iaStructure("03/")}<figcaption>Five tabs for what you do every week. Settings sit behind the avatar, and help is one tap from any card.</figcaption></figure>
         <figure class="kq-panel reveal">${fl.rentFlow("03/")}<figcaption>Every way out ends somewhere calm, and a failed move points straight back to the others.</figcaption></figure>
+        ${sub("From sketch to screen", "Each screen went from a paper sketch to a grey wireframe to the final screen in code. Three of them, with what changed at each step and why.")}
+        ${fi.fidelity(img)}
         ${sub("The decisions that shaped it", "")}
         <div class="reveal">${pr.timeline([
           ["Day 3", "Square, dense components", "Rounded, quiet components", "Sharp cards and heavy lines felt cold for a money worry. Soft shapes and fewer lines felt calmer."],
           ["Day 3", "One bank’s home", "A home for all your money", "Most people use two or three banks. The warning belongs above any one of them."],
           ["Day 4", "A red “may bounce” banner", "One calm sentence, three ways out", "Say what happens and by how much, then how to fix it."],
-          ["Day 5", "A big white button", "A small link", "The card informs. The action is there when you want it."],
-          ["Day 6", "Bright colour everywhere", "Black canvas, colour only in data", "Colour stays under 10% of any screen, so the one coral number stands out."],
+          ["Day 5", "Two buttons side by side", "One button, one quiet link", "Fix now does the no-fee move. The other ways are a tap away."],
+          ["Day 6", "Bright colour everywhere", "Black canvas, colour with a job", "Mint for money in, coral for short, lavender for the one action. Colour stays under 10% of any screen."],
         ])}</div>
         ${sub("A review before anyone tests it", "Heuristic evaluation, an information-architecture check and a design critique. Eight findings, each fixed. Four of them:")}
         <ul class="kq-fixes reveal">
-          <li><b>Home said too much</b><span>49 bits of text and four ways to say one fact. Now one sentence, one gauge, one link.</span></li>
-          <li><b>The gauge felt cramped</b><span>Number and label fought the ring. Now the number sits alone; the label rests in the opening.</span></li>
+          <li><b>Home said too much</b><span>49 bits of text and five ways to say one fact. Now one sentence and one action.</span></li>
+          <li><b>Charts repeated each other</b><span>A gauge, bars and rings for one number. Now bars only, and each colour means one thing.</span></li>
           <li><b>Confirm hid the result</b><span>It repeated the amount. Now it shows the new balance and your lowest point before salary.</span></li>
           <li><b>Profile was a tab</b><span>Rarely used, always visible. It moved to the avatar; Scan took the centre of the tab bar.</span></li>
         </ul>
+        ${sub("Heuristics and principles, on the screen", "The project’s design principles and Nielsen’s usability heuristics, connected to the parts of the screen where they do their work.")}
+        ${fi.heuristics(img)}
 
-        ${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix", "One calm card on the home screen, three ways out with their costs, a confirm that shows the result, and an ending that looks forward.")}
+        ${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix", "One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.")}
         ${photo("mk-sofa.webp", "Someone on a sofa holding an iPhone with Konkan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days", "kq-photo--wide")}
         <ol class="kq-flow reveal">
-          <li><span class="kq-flow-n">1</span><b>See it</b>${img("gap-home.webp", "Home: one thing needs you before 1 Nov, with the gap card")}</li>
+          <li><span class="kq-flow-n">1</span><b>See it</b>${img("gap-home.webp", "Home: Konkan, one thing to sort. Rent leaves 1 Nov, ₹1,059 short for 2 days. Move ₹1,500 from your savings pot, no fee: Fix now, or other ways")}</li>
           <li><span class="kq-flow-n">2</span><b>Choose</b>${img("gap-compare.webp", "Ways to cover rent: what doing nothing costs, then three ways out with their costs")}</li>
-          <li><span class="kq-flow-n">3</span><b>Confirm</b>${img("gap-confirm.webp", "Confirm: after this move, ₹32,740.50, 100% of rent covered")}</li>
+          <li><span class="kq-flow-n">3</span><b>Confirm</b>${img("gap-confirm.webp", "Confirm: after this move, ₹32,740.50, and your lowest point before salary becomes ₹442")}</li>
           <li><span class="kq-flow-n">4</span><b>Done</b>${img("gap-done.webp", "Rent is covered. Next date to watch, 3 Nov. You sorted this 3 days before it was due.")}</li>
         </ol>
 
-        ${sub("Try it yourself", "The whole app runs here. Tap See 3 ways to fix it and follow it to the end.", "kq-try")}
+        ${sub("Try it yourself", "The whole app runs here. Tap Fix now and follow it to the end, or open Profile, Cash-flow cards to see rent day on the Lock Screen.", "kq-try")}
         <div class="cf-live reveal">
           <iframe src="../prototypes/cash-flow-gap/index.html?embed" title="Khatiq prototype" loading="lazy"></iframe>
           <p class="kq-cap">Invented data. <a href="../prototypes/cash-flow-gap/index.html" target="_blank" rel="noopener">Open with all controls<span class="sr-only"> (new tab)</span></a>: four lenses, two banks, light and dark, iPhone Duo, iPad and Apple Watch.</p>
@@ -305,11 +308,19 @@ const main = `<main id="top">
         </div>
         <p class="kq-cap kq-credit reveal">Credits: Apple, Apple Watch and iPad</p>
 
-        ${sub("Data you can read at a glance", "Colour lives inside the marks: a histogram for the month, a gauge for rent, rings for goals, bars with one month picked out.")}
+        ${sub("Rent day, outside the app", "On 1 Nov the autopay becomes a Live Activity. It starts when the autopay is queued and ends when the landlord is paid. Amounts stay hidden on the Lock Screen unless you turn them on.")}
         ${phones([
-          ["gap-bank.webp", "The bank home: a 30-day histogram with two short days below the line and an arc gauge, 97% of rent", "Histogram and gauge"],
-          ["ins-insights.webp", "Insights: six months of spending with October in coral and a dashed average", "One month picked out"],
-          ["ins-goals.webp", "Savings goals as rings, one per goal", "Rings"],
+          ["live-lock.webp", "Lock Screen on 1 Nov at 7:30: Khatiq, rent day. Rent needs a look. Autopay at 10:00. One button, Fix now", "Lock Screen, amounts hidden"],
+          ["live-island.webp", "Home Screen with the Dynamic Island showing a house glyph and Short", "Dynamic Island"],
+          ["live-expanded.webp", "The Dynamic Island expanded: rent, ₹1,059 short, ₹32,000 leaves at 10:00, and Fix now", "Touch and hold"],
+          ["live-lock-paid.webp", "Lock Screen after 10:02: rent paid, ₹32,000 to Prakash Rao, every step done", "Paid, then it ends"],
+        ])}
+
+        ${sub("Data you can read at a glance", "One chart language: bars. Mint is money in, coral is a shortfall, and each bank keeps its own colour. Every chart has a sentence that says what it means.")}
+        ${phones([
+          ["gap-bank.webp", "The bank home: 30 days of balance as bars, two short days below the line", "30 days, two short"],
+          ["ins-insights.webp", "Insights: six months of spending with October picked out and a dashed average", "One month picked out"],
+          ["ins-goals.webp", "Savings goals: one bar per goal, all in one colour, with the closest goal named", "One bar per goal"],
           ["acc-linked.webp", "Accounts across three banks, each in its own colours", "Banks in their colours"],
         ])}
 
@@ -328,12 +339,13 @@ const main = `<main id="top">
           ["Accounts and activity", "phone", [["acc-all", "Accounts by bank"], ["acc-detail", "Main account"], ["acc-nila", "A linked, read-only account"], ["act-list", "Activity with filters"], ["act-txn", "One payment"]]],
           ["Pay", "phone", [["pay-hub", "Pay"], ["pay-scan", "Scan a QR"], ["pay-amount", "Enter an amount"], ["pay-pin", "UPI PIN"], ["pay-done", "Paid"], ["pay-rent", "The rent autopay"]]],
           ["Linking another bank", "phone", [["link-pick", "Pick a bank"], ["link-otp", "Approve the consent"], ["link-search", "Finding accounts"], ["link-found", "Choose accounts"], ["link-done", "Linked"], ["link-failed", "When a bank doesn’t answer"], ["link-consents", "Linked banks and consents"]]],
+          ["Rent day Live Activity", "phone", [["live-lock", "Lock Screen, amounts hidden"], ["live-island", "Dynamic Island, compact"], ["live-expanded", "Expanded, short"], ["live-expanded-ok", "Expanded, on track"], ["live-lock-paid", "Paid, amounts shown"]]],
           ["Seth, the assistant", "phone", [["ai-optin", "Off until you turn it on"], ["ai-chat", "Answers marked Sure, Not sure, Can’t do"], ["ai-sheet", "What each face means"], ["ai-home", "Seth on the bank home"]]],
           ["Profile and settings", "phone", [["pro-profile", "Profile"], ["pro-inbox", "Notifications"], ["pro-cards", "Cash-flow card settings"], ["pro-security", "PIN and fingerprint"]]],
           ["For a small business", "phone", [["biz-home", "Cash position, three weeks"], ["biz-approve", "Approve a move"]]],
           ["Light mode and another bank", "phone", [["theme-light", "Light mode"], ["theme-light-ins", "Insights, light"], ["theme-deccan", "In Deccan’s colours"], ["theme-deccan-acc", "Deccan accounts"]]],
           ["Folding phone and iPad", "wide", [["duo-outer-home", "Closed: home"], ["duo-outer-compare", "Closed: ways to cover rent"], ["duo-inner-accounts", "Open: accounts beside an account"], ["duo-inner-activity", "Open: activity beside a payment"], ["duo-book-home", "Folded like a book"], ["ipad-accounts", "iPad: accounts"], ["ipad-bank", "iPad: the bank home"]]],
-          ["Apple Watch", "watch", [["watch-face", "The face"], ["watch-aod", "Always On hides amounts"], ["watch-stack", "Smart Stack"], ["watch-alert", "The alert"], ["watch-confirm", "Confirm"], ["watch-done", "Done"]]],
+          ["Apple Watch", "watch", [["watch-face", "The face"], ["watch-aod", "Always On hides amounts"], ["watch-stack", "Smart Stack"], ["watch-live", "Rent day Live Activity"], ["watch-alert", "The alert"], ["watch-confirm", "Confirm"], ["watch-done", "Done"]]],
         ])}</div>
 
         ${sub("The design system", "Drawn from the prototype’s own tokens, so the page can’t drift from the app.")}
