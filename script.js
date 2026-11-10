@@ -11,7 +11,12 @@
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------- Theme ---------- */
+  /* ---------- Theme ----------
+     A switch at the end of the nav: on is dark. The swap runs as a view
+     transition: one crossfade of a snapshot, done by the compositor, with
+     the knob as its own layer sliding across. Easing the colour of every
+     element instead (the theme-switching class, kept as the fallback) is a
+     page-wide repaint each frame, and it stuttered. */
   const themeToggle = document.getElementById("themeToggle");
   const root = document.documentElement;
 
@@ -30,150 +35,32 @@
     }
 
     root.dataset.theme = name;
-    if (themeToggle) {
-      themeToggle.setAttribute("aria-checked", String(name === "light"));
-      // The label names the destination, not the current state.
-      themeToggle.querySelector(".sr-only").textContent =
-        name === "light" ? "Dark theme" : "Light theme";
-    }
-    // Anything painting outside CSS (the canvas) re-reads its colours here.
+    if (themeToggle) themeToggle.setAttribute("aria-checked", String(name === "dark"));
     document.dispatchEvent(new CustomEvent("themechange", {
       detail: { animate: eased, duration: SWITCH_MS }
     }));
   };
 
-  // The inline head script already picked the starting theme; sync the button.
+  // The inline head script already picked the starting theme; sync the switch.
   applyTheme(root.dataset.theme === "dark" ? "dark" : "light", false);
 
   if (themeToggle) {
-    const setTheme = (name) => {
-      applyTheme(name, true);
+    themeToggle.addEventListener("click", () => {
+      const next = root.dataset.theme === "light" ? "dark" : "light";
+      if (!reduced && document.startViewTransition) {
+        const swap = document.startViewTransition(() => applyTheme(next, false));
+        // A swap is skipped when another one starts or the tab is hidden; the
+        // theme still changes, so the rejection is expected and not an error.
+        swap.ready.catch(() => {});
+      } else {
+        applyTheme(next, true);
+      }
       try {
-        localStorage.setItem("theme", name);
+        localStorage.setItem("theme", next);
       } catch (e) {
         /* private mode: the choice just won't survive a reload */
       }
-    };
-
-    themeToggle.addEventListener("click", () => {
-      // A drag ends in a click; that click must not undo the drag.
-      if (themeToggle.dataset.justDragged === "true") {
-        delete themeToggle.dataset.justDragged;
-        return;
-      }
-      setTheme(root.dataset.theme === "light" ? "dark" : "light");
     });
-
-    /* ---- Drag the knob ---- */
-
-    const rail = themeToggle.querySelector(".theme-toggle-rail");
-    const knob = themeToggle.querySelector(".theme-toggle-knob");
-
-    if (rail && knob && window.PointerEvent) {
-      let startX = 0;
-      let startSeat = 0;
-      let travel = 0;
-      let moved = 0;
-      let dragging = false;
-
-      // The rail is a different length at each breakpoint, so the distance the
-      // knob can cover is measured rather than assumed. offsetLeft is the
-      // knob's inset, and the same gap is left at the far end.
-      const measure = () => Math.max(
-        0,
-        rail.clientWidth - knob.offsetWidth - knob.offsetLeft * 2
-      );
-
-      const seatNow = () => (root.dataset.theme === "light" ? 0 : measure());
-
-      /* Pointers fire faster than the screen refreshes, so the position is
-         recorded on every event but written once a frame. Writing on each
-         event costs a style recalc per event and makes the drag feel gritty. */
-      let pendingAt = 0;
-      let frame = null;
-
-      const flush = () => {
-        frame = null;
-        knob.style.setProperty("--drag", pendingAt + "px");
-      };
-
-      const onMove = (event) => {
-        if (!dragging) return;
-        const dx = event.clientX - startX;
-        moved = Math.max(moved, Math.abs(dx));
-        pendingAt = Math.min(travel, Math.max(0, startSeat + dx));
-        if (frame === null) frame = requestAnimationFrame(flush);
-      };
-
-      let settleTimer = null;
-
-      const endSettle = () => {
-        clearTimeout(settleTimer);
-        themeToggle.removeAttribute("data-settling");
-        knob.style.removeProperty("--drag");
-      };
-
-      const onUp = (event) => {
-        if (!dragging) return;
-        dragging = false;
-        if (frame !== null) { cancelAnimationFrame(frame); frame = null; }
-        try { rail.releasePointerCapture(event.pointerId); } catch (e) {}
-
-        const dx = event.clientX - startX;
-        const at = Math.min(travel, Math.max(0, startSeat + dx));
-
-        // Past the midpoint picks the far end; short of it, the knob falls
-        // back to where it started.
-        const wantLight = travel === 0 ? root.dataset.theme !== "light" : at < travel / 2;
-        const next = wantLight ? "light" : "dark";
-        const target = wantLight ? 0 : travel;
-
-        // Anything more than a few pixels was a drag, not a tap, so the click
-        // that follows is suppressed.
-        if (moved > 4) themeToggle.dataset.justDragged = "true";
-
-        // Hand over from dragging to settling in one go, starting from exactly
-        // where the finger left off.
-        knob.style.setProperty("--drag", at + "px");
-        themeToggle.dataset.settling = "true";
-        themeToggle.removeAttribute("data-dragging");
-
-        if (next !== root.dataset.theme) setTheme(next);
-
-        if (Math.abs(target - at) < 0.5 || reduced) {
-          endSettle();
-        } else {
-          // A frame at the start value first, or the browser coalesces both
-          // writes and there is nothing to interpolate between.
-          requestAnimationFrame(() => {
-            knob.style.setProperty("--drag", target + "px");
-          });
-          clearTimeout(settleTimer);
-          settleTimer = setTimeout(endSettle, 520);
-        }
-      };
-
-      knob.addEventListener("transitionend", (event) => {
-        if (event.propertyName === "transform" && themeToggle.dataset.settling === "true") endSettle();
-      });
-
-      rail.addEventListener("pointerdown", (event) => {
-        // Left button or touch only.
-        if (event.button !== undefined && event.button !== 0) return;
-        travel = measure();
-        startX = event.clientX;
-        startSeat = seatNow();
-        moved = 0;
-        dragging = true;
-        themeToggle.dataset.dragging = "true";
-        knob.style.setProperty("--drag", startSeat + "px");
-        try { rail.setPointerCapture(event.pointerId); } catch (e) {}
-      });
-
-      rail.addEventListener("pointermove", onMove);
-      rail.addEventListener("pointerup", onUp);
-      rail.addEventListener("pointercancel", onUp);
-    }
   }
 
 

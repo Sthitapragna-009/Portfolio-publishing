@@ -524,6 +524,7 @@ ul { margin: 0; padding: 0; list-style: none; }
 .nav-links {
   display: flex;
   align-items: center;
+  margin-left: auto;
   gap: 2rem;
   font-size: 0.9375rem;
   font-weight: 500;
@@ -655,152 +656,95 @@ ul { margin: 0; padding: 0; list-style: none; }
 .nav.is-open .nav-toggle span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 
-/* --- Day / night switch, parked in the bottom-right corner ------------- */
+/* --- Day / night switch, at the end of the nav ------------------------- */
 
-/* A horizontal pill: sun at the left, moon at the right, the label between
-   them, and the knob riding the length. */
-.theme-toggle {
-  position: fixed;
-  right: clamp(0.9rem, 2vw, 1.75rem);
-  bottom: clamp(1rem, 2.5vw, 1.75rem);
-  z-index: 90;
+/* A solid track with a knob that slides: left and sun in light mode, right
+   and moon in dark. The knob carries the icon of the current theme. */
+.theme-switch {
+  position: relative;
+  flex: none;
+  width: 3.25rem;
+  height: 1.75rem;
+  margin-left: -0.5rem;
   padding: 0;
   border: 0;
-  background: none;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.theme-toggle-rail {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  /* Width is fixed rather than content-sized: the knob's travel is derived
-     from it, and an auto width would desync the two. */
-  width: 14.75rem;
-  height: 2.25rem;
-  padding-inline: 0.5rem;
   border-radius: var(--r-pill);
-  background: var(--ember-gradient);
-  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
-  transition: box-shadow 0.3s var(--ease), filter 0.3s var(--ease);
+  background: var(--switch-track);
+  box-shadow: inset 0 0 0 1px var(--switch-edge), inset 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: background-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  -webkit-tap-highlight-color: transparent;
+
+  /* Dark in both themes: a solid, weighty control rather than a faint
+     outline that disappears into the off-white page. */
+  --switch-track: #2a2a2a;
+  --switch-edge:  rgba(0, 0, 0, 0.3);
+  --switch-knob:  #ffffff;
+  --switch-icon:  #b83e00;
+}
+[data-theme="dark"] .theme-switch {
+  --switch-track: #2a2a2a;
+  --switch-edge:  rgba(255, 255, 255, 0.14);
+  --switch-knob:  #f4f2ec;
+  --switch-icon:  #0d0d0d;
 }
 
-.theme-toggle:hover .theme-toggle-rail,
-.theme-toggle:focus-visible .theme-toggle-rail {
-  filter: saturate(1.15) brightness(1.06);
-  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.5);
-}
-
-/* The rail is 36px tall; this widens the tap area to 44px around it. */
-.theme-toggle::after {
+/* 28px to see, 44px to hit. */
+.theme-switch::after {
   content: "";
   position: absolute;
-  inset: -4px;
+  inset: -8px -4px;
 }
 
-.theme-toggle:focus-visible { outline: none; }
-.theme-toggle:focus-visible .theme-toggle-rail {
-  outline: 2px solid var(--focus);
-  outline-offset: 3px;
-}
+.theme-switch:hover { box-shadow: inset 0 0 0 1px var(--blue-ink), inset 0 1px 3px rgba(0, 0, 0, 0.18); }
+.theme-switch:focus-visible { outline-offset: 3px; border-radius: var(--r-pill); }
 
-/* The two fixed ends. Whichever the knob is parked over is hidden, so the
-   icon never shows through the disc. */
-.theme-toggle-end {
-  flex: none;
-  display: grid;
-  place-items: center;
-  width: 1rem;
-  height: 1rem;
-  color: rgba(255, 255, 255, 0.78);
-  transition: opacity 0.35s var(--ease);
-}
-
-.theme-toggle[aria-checked="true"]  .theme-toggle-end--sun  { opacity: 0; }
-.theme-toggle[aria-checked="false"] .theme-toggle-end--moon { opacity: 0; }
-
-/* One label, centred between the ends. The knob only ever rests at the two
-   ends, so it never comes to a stop on top of it. */
-.theme-toggle-words {
-  display: grid;
-  place-items: center;
-}
-
-.theme-toggle-word {
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  white-space: nowrap;
-  /* Near-black on the orange, not white: white on this gradient measures
-     2.9:1, well under the 4.5 this needs at 11px. */
-  color: #000;
-}
-
-.theme-toggle-knob {
+.theme-switch-knob {
   position: absolute;
-  left: 0.25rem;
-  top: 0.25rem;
-  width: 1.75rem;
-  height: 1.75rem;
+  top: 0.1875rem;
+  left: 0.1875rem;
   display: grid;
   place-items: center;
+  width: 1.375rem;
+  height: 1.375rem;
   border-radius: 50%;
-  background: var(--white);
-  color: var(--primary);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35);
-  /* rail 14.75 - knob 1.75 - inset 0.5 = 12.5rem of travel */
-  transition: transform 0.45s var(--ease);
-  /* --seat is where the knob rests; the breath nudges it off that seat towards
-     the end you would swipe to, then settles back. Holding the rest position
-     in a variable keeps the animation and the state change from fighting over
-     the same transform property. */
-  --seat: 0rem;
-  --lean: 0.75rem;
-  transform: translateX(var(--seat));
-  animation: knobBreath 2.6s var(--ease) infinite;
+  background: var(--switch-knob);
+  color: var(--switch-icon);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s var(--ease), background-color 0.3s var(--ease);
 }
+/* Track 3.25 - knob 1.375 - inset 2 x 0.1875 = 1.5rem of travel. */
+[data-theme="dark"] .theme-switch-knob { transform: translateX(1.5rem); }
 
-/* Unchecked = dark theme; the knob sits at the moon and leans back left. */
-.theme-toggle[aria-checked="false"] .theme-toggle-knob {
-  --seat: 12.5rem;
-  --lean: -0.75rem;
-}
-
-@keyframes knobBreath {
-  0%, 62%, 100% { transform: translateX(var(--seat)); }
-  31%           { transform: translateX(calc(var(--seat) + var(--lean))); }
-}
-
-/* Hovering is intent enough; stop nudging and let the knob sit still. */
-.theme-toggle:hover .theme-toggle-knob,
-.theme-toggle:focus-visible .theme-toggle-knob {
-  animation-play-state: paused;
-  transform: translateX(var(--seat));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .theme-toggle-knob { animation: none; }
-}
-
-.theme-toggle-knob svg {
+.theme-switch-knob svg {
   grid-area: 1 / 1;
-  transition: opacity 0.3s var(--ease), transform 0.4s var(--ease);
+  transition: opacity 0.25s var(--ease), transform 0.35s var(--ease);
+}
+.theme-switch .icon-moon { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+[data-theme="dark"] .theme-switch .icon-moon { opacity: 1; transform: none; }
+[data-theme="dark"] .theme-switch .icon-sun { opacity: 0; transform: rotate(90deg) scale(0.6); }
+
+/* The theme swap (script.js, "Theme"): the page crossfades as one snapshot
+   while the knob, named on its own, slides between its two seats. */
+.theme-switch-knob { view-transition-name: theme-knob; }
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+  animation-timing-function: var(--ease);
+}
+::view-transition-group(theme-knob) {
+  animation-duration: 0.35s;
+  animation-timing-function: var(--ease);
+}
+/* Fallback swap: the blanket colour ease must not take over the knob's
+   slide, or it snaps across while the page fades. */
+html.theme-switching .theme-switch-knob {
+  transition-property: transform, background-color !important;
+  transition-duration: 0.3s !important;
 }
 
-.theme-toggle .theme-toggle-knob .icon-sun  { opacity: 0; transform: rotate(-90deg) scale(0.6); }
-.theme-toggle .theme-toggle-knob .icon-moon { opacity: 1; transform: none; }
-.theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-sun  { opacity: 1; transform: none; }
-.theme-toggle[aria-checked="true"] .theme-toggle-knob .icon-moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
-
-/* On phones the switch sheds its label to stay out of the way. */
 @media (max-width: 720px) {
-  .theme-toggle-rail { width: 4.5rem; }
-  .theme-toggle-words { display: none; }
-  /* rail 4.5 - knob 1.75 - inset 0.5 = 2.25rem */
-  .theme-toggle[aria-checked="false"] .theme-toggle-knob { --seat: 2.25rem; --lean: -0.6rem; }
+  /* The links fold into the menu, so the switch takes the free space. */
+  .theme-switch { margin-left: auto; }
 }
 
 /* ============================================================
@@ -3882,102 +3826,6 @@ body.is-locked { overflow: hidden; }
 .lightbox.is-slideshow .lightbox-btn svg { width: 9px; height: 9px; }
 .lightbox.is-slideshow .lightbox-btn--playing { background: rgba(0, 0, 0, 0.45); }
 .lightbox.is-slideshow .lightbox-btn:hover { background: var(--blue); border-color: var(--blue); }
-
-/* While dragging, the knob follows the pointer: the breath and the settle
-   transition both write to the same transform and would fight it. */
-.theme-toggle[data-dragging="true"] .theme-toggle-knob {
-  animation: none;
-  transition: none;
-  transform: translateX(var(--drag, 0px));
-  /* Promoted for the duration of the gesture only. */
-  will-change: transform;
-}
-
-/* Letting go used to snap: releasing restarted the breath, and a running
-   animation beats a transition on the same property, so the knob teleported
-   to its seat instead of gliding. Settling keeps the animation off and drives
-   the same --drag variable to the target, so the ease actually runs. The
-   breath is handed back once it lands. */
-.theme-toggle[data-settling="true"] .theme-toggle-knob {
-  animation: none;
-  transition: transform 0.42s var(--ease);
-  transform: translateX(var(--drag, 0px));
-  will-change: transform;
-}
-
-/* The rail is a drag surface, so the browser must not claim the gesture for
-   scrolling, nor start a text selection or an image drag. */
-.theme-toggle-rail {
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.theme-toggle[data-dragging="true"] { cursor: grabbing; }
-.theme-toggle-rail { cursor: grab; }
-
-/* ---- Swipe hint: chevrons drifting behind the label ---- */
-
-/* The chevrons run the inner length of the rail, not just the text box. Fitted
-   to the label they were almost entirely hidden behind the glyphs and only
-   flickered through the gaps between letters; given the full run they read as
-   a direction, and the label sits over the middle of it. */
-.theme-toggle-rail::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  /* Clear of the sun and moon at the ends. */
-  left: 1.6rem;
-  right: 1.6rem;
-  z-index: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='20' viewBox='0 0 34 20'%3E%3Cpath d='M9 4.5 17 10 9 15.5' fill='none' stroke='%23ffffff' stroke-width='2.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: repeat-x;
-  background-position: 0 center;
-  background-size: 34px 20px;
-  opacity: 0.12;
-  /* Drifting exactly one tile per cycle keeps the loop seamless. Both run on
-     the knob's 2.6s so the hint and the knob breathe together. */
-  animation: hintDrift 2.6s linear infinite, hintBreath 2.6s var(--ease) infinite;
-  pointer-events: none;
-}
-
-/* Everything else in the rail has to sit above the hint: a positioned
-   pseudo-element paints over plain in-flow content, so the label and the end
-   icons need their own layer. */
-.theme-toggle-words,
-.theme-toggle-end { position: relative; z-index: 1; }
-.theme-toggle-word { position: relative; z-index: 1; }
-.theme-toggle-knob { z-index: 2; }
-
-/* Unchecked is dark, with the knob parked at the moon end, so the swipe is
-   back towards the sun: mirror the tile and the drift goes with it. */
-.theme-toggle[aria-checked="false"] .theme-toggle-rail::before { transform: scaleX(-1); }
-
-@keyframes hintDrift {
-  from { background-position: 0 center; }
-  to   { background-position: 34px center; }
-}
-
-@keyframes hintBreath {
-  0%, 100% { opacity: 0.10; }
-  31%      { opacity: 0.38; }
-  62%      { opacity: 0.10; }
-}
-
-/* Dragging is the gesture itself; the hint has said its piece. */
-.theme-toggle[data-dragging="true"] .theme-toggle-rail::before,
-.theme-toggle:hover .theme-toggle-rail::before { animation-play-state: paused; }
-
-/* The compact pill has no label and barely any run; the hint would just be
-   noise behind the knob. */
-@media (max-width: 720px) {
-  .theme-toggle-rail::before { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .theme-toggle-rail::before { animation: none; opacity: 0.18; }
-}
 
 /* ============================================================
    DIAGRAMS — one language for every flow, tree and map
