@@ -55,7 +55,7 @@ const notice = (tone, icon, title, text, action) =>
   `<div class="ds-notice is-${tone}">${ico(icon, 19)}<p><b>${e(title)}</b><span>${e(text)}</span>${action ? `<em>${e(action)}</em>` : ""}</p></div>`;
 
 function designSystem(banks) {
-  const order = ["riverbend", "northgate", "kesari", "pragati", "nila", "sahyog"];
+  const order = ["northgate", "riverbend", "kesari", "pragati", "nila", "sahyog"];
   const hues = [
     ["#7ee8c2", "Mint", "money in"],
     ["#ff8f78", "Coral", "money out"],
@@ -67,7 +67,7 @@ function designSystem(banks) {
   return `<div class="ds reveal">
     <section class="ds-tile ds-w6" aria-label="Colour">
       <p class="ds-k">Colour · 60 / 30 / 10</p>
-      <div class="ds-6030"><span style="flex:60;background:#000">60 black</span><span style="flex:30;background:#1c1c1e">30 graphite</span><span style="flex:10;background:#0f6e66">10</span></div>
+      <div class="ds-6030"><span style="flex:60;background:#000">60 black</span><span style="flex:30;background:#1c1c1e">30 graphite</span><span style="flex:10;background:#4b3fc4">10</span></div>
       <ul class="ds-hues">${hues.map(([c, n, u]) => `<li><i style="background:${c}"></i><b>${n}</b><span>${u}</span></li>`).join("")}</ul>
     </section>
 
@@ -98,7 +98,7 @@ function designSystem(banks) {
       <div class="ds-stack">
         <span class="ds-seg"><b>Money out</b><span>Money in</span><span>Saved</span></span>
         <span class="ds-row-inline"><span class="ds-switch is-on"><i></i></span><span class="ds-switch"><i></i></span><span class="ds-check">✓</span><span class="ds-radio"></span></span>
-        <span class="ds-chips"><b>All money</b><span><i class="ds-mark" style="background:${banks.riverbend.palette.brand}">${e(banks.riverbend.mark)}</i>${e(banks.riverbend.short)}</span><span>+</span></span>
+        <span class="ds-chips"><b>All money</b><span><i class="ds-mark" style="background:${banks.northgate.palette.brand}">${e(banks.northgate.mark)}</i>${e(banks.northgate.short)}</span><span>+</span></span>
         <span class="ds-search">Name, UPI ID or mobile number</span>
       </div>
     </section>
@@ -123,7 +123,7 @@ function designSystem(banks) {
     <section class="ds-tile ds-w6" aria-label="Alert card">
       <p class="ds-k">The alert card</p>
       <div class="ds-card">
-        <p class="ds-card-k"><i class="ds-mark" style="background:${banks.riverbend.palette.brand}">${e(banks.riverbend.mark)}</i>${e(banks.riverbend.short)} · one thing to sort</p>
+        <p class="ds-card-k"><i class="ds-mark" style="background:${banks.northgate.palette.brand}">${e(banks.northgate.mark)}</i>${e(banks.northgate.short)} · one thing to sort</p>
         <div class="ds-card-main"><p>Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days.</p>${gauge(0.97, "#ff8f78", "97%", "of rent", 64)}</div>
         ${hist()}
         <span class="ds-row-inline"><span class="ds-pill">See 3 ways to fix it ${ico("chev", 15)}</span><span class="ds-pill is-lav">Fix now</span></span>

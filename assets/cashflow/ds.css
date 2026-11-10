@@ -8,7 +8,7 @@
   --ds-ink: #f3f3f1;
   --ds-dim: #a1a1a6;
   --ds-track: #2f2f33;
-  --ds-teal: #0f6e66;
+  --ds-teal: #4b3fc4;
   --ds-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Noto Sans", sans-serif;
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));

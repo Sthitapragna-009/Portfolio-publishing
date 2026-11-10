@@ -101,7 +101,7 @@ function sketches() {
       false,
     ],
     [
-      (x, y, w) => fill(x - 6, y - 4, w + 12, 70, "kqs-shade") + `<text class="kqs-hand" x="${x}" y="${y + 18}">Deccan</text>` + text(x, y + 34, w * 0.6, 1) + fill(x, y + 92, w, 30, "kqs-solid") + `<text class="kqs-hand is-white" x="${x + 10}" y="${y + 112}">SEE 3 WAYS →</text>` + text(x, y + 140, w, 3),
+      (x, y, w) => fill(x - 6, y - 4, w + 12, 70, "kqs-shade") + `<text class="kqs-hand" x="${x}" y="${y + 18}">Konkan</text>` + text(x, y + 34, w * 0.6, 1) + fill(x, y + 92, w, 30, "kqs-solid") + `<text class="kqs-hand is-white" x="${x + 10}" y="${y + 112}">SEE 3 WAYS →</text>` + text(x, y + 140, w, 3),
       "One bank’s home, big button",
       "button shouts; only one bank",
       false,

@@ -335,3 +335,172 @@
     margin-bottom: 1.2rem;
   }
 }
+
+/* ---------- flow charts (flow.js): information architecture and the rent task ---------- */
+.kqf {
+  display: block;
+  width: 100%;
+  min-width: var(--min, 900px);
+  height: auto;
+  overflow: visible;
+  font-family: var(--kq-font);
+}
+.kqf-node rect,
+.kqf-node path {
+  fill: var(--kqt-bar);
+}
+.kqf-node.is-line rect,
+.kqf-node.is-error rect,
+.kqf-node.is-decision path {
+  fill: var(--kq-card);
+  stroke: var(--kq-ink);
+  stroke-width: 1.5;
+}
+.kqf-node.is-error rect {
+  stroke-dasharray: 5 4;
+}
+.kqf-t {
+  font: 600 15px var(--kq-font);
+  text-anchor: middle;
+  fill: var(--kqt-on-bar);
+}
+.kqf-s {
+  font: 400 12.5px var(--kq-font);
+  text-anchor: middle;
+  fill: var(--kqt-on-bar);
+  opacity: 0.74;
+}
+.kqf-node:is(.is-line, .is-error, .is-decision) :is(.kqf-t, .kqf-s) {
+  fill: var(--kq-ink);
+}
+.kqf-node:is(.is-line, .is-error) .kqf-s {
+  fill: var(--kq-dim);
+  opacity: 1;
+}
+.kqf-wire {
+  fill: none;
+  stroke: var(--kq-ink);
+  stroke-width: 1.5;
+}
+.kqf-wire.is-back {
+  stroke: var(--kq-faint);
+  stroke-dasharray: 5 5;
+}
+.kqf-wire.is-short {
+  stroke-dasharray: 6 5;
+}
+.kqf-head {
+  fill: var(--kq-ink);
+}
+.kqf-note {
+  font: 400 13px var(--kq-font);
+  fill: var(--kq-faint);
+}
+.kqf-spine {
+  fill: none;
+  stroke: var(--kqt-guide);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 5;
+}
+.kqf-dot {
+  fill: var(--kq-card);
+  stroke: var(--kq-ink);
+  stroke-width: 1.5;
+}
+.kqf-dot.is-on {
+  fill: var(--kq-ink);
+}
+.kqf-leaf {
+  font: 400 14.5px var(--kq-font);
+  fill: var(--kq-ink);
+}
+.kqf-leaf.is-on {
+  font-weight: 700;
+}
+.kqf-bar-t {
+  font: 600 15px var(--kq-font);
+  fill: var(--kqt-on-bar);
+}
+.kqf-bar-s {
+  font: 400 13px var(--kq-font);
+  text-anchor: end;
+  fill: var(--kqt-on-bar);
+  opacity: 0.74;
+}
+.kqt--flow + .kqt--flow,
+.kq-panel + .kq-panel {
+  margin-top: var(--kq-gap);
+}
+
+/* ---------- Every screen: a wrapping grid, nothing cropped ---------- */
+[data-page="cashflow"] main .kq-lib-group {
+  min-width: 0;
+}
+[data-page="cashflow"] main .kq-lib-row {
+  grid-auto-flow: row;
+  grid-auto-columns: auto;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1.4rem 1rem;
+  overflow: visible;
+  padding-bottom: 0;
+}
+[data-page="cashflow"] main .kq-lib-row.is-wide {
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  align-items: end;
+}
+[data-page="cashflow"] main .kq-lib-row.is-watch {
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+}
+@media (max-width: 520px) {
+  [data-page="cashflow"] main .kq-lib-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  [data-page="cashflow"] main .kq-lib-row.is-wide {
+    grid-template-columns: 1fr;
+  }
+}
+.kqf-t {
+  font-size: 14px;
+}
+.kqf-node.is-decision .kqf-t {
+  font-size: 13px;
+}
+.kqf-leaf {
+  font-size: 14px;
+}
+.kqf-node:not(.is-decision) .kqf-t { font-size: 13.5px; }
+
+/* =====================================================================
+ * One type scale for the whole case study
+ *   display 166 · chapter 56 · insight 38 · hook 29 · section 25.6
+ *   statement 20 · lead 17.3 · body 16 · small 14
+ * Panel titles are section headings, so they share the section style.
+ * ===================================================================== */
+[data-page="cashflow"] main .kqt-title {
+  margin: 0.2rem 0 0;
+  font: 700 1.6rem/1.15 var(--kq-font);
+  letter-spacing: -0.02em;
+}
+[data-page="cashflow"] main .kqt-num {
+  font: 600 1.6rem/1 var(--kq-font);
+}
+/* statements */
+[data-page="cashflow"] main .kq-jobs p,
+[data-page="cashflow"] main .kq-tl-now {
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+/* lead */
+[data-page="cashflow"] main .kq-desc {
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+/* body */
+[data-page="cashflow"] main :is(.kq-tl-was, .kq-tl-why, .cf-sms p, .cf-stats span) {
+  font-size: 1rem;
+}
+/* small: every caption, source, label, eyebrow and key */
+[data-page="cashflow"] main :is(.kq-label, .kq-origin, .kq-ch-k, .kq-made-n, .kq-jobs span, .kq-cap, .kq-credits, .kqt-eyebrow, .kqt-date, .kqt-bar small, .kqt-feel-k, .cf-ec-legend, .kq-key, .kq-flow-n, .ds-k, .kq-lib-item figcaption),
+[data-page="cashflow"] main figcaption {
+  font-size: 0.875rem;
+}

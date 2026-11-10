@@ -147,7 +147,7 @@ function targets(rows) {
 function beforeAfter(cardImg) {
   return `<div class="cf-ba">
     <figure class="cf-ba-col is-before">
-      <div class="cf-sms"><span class="cf-sms-from">AD-DCBANK · 1 Nov, 7:02 am</span><p>Dear Customer, NACH mandate debit of INR 32,000.00 returned unpaid due to insufficient funds. Return charges of INR 500 + GST applicable. -DCB</p></div>
+      <div class="cf-sms"><span class="cf-sms-from">AD-KONKAN · 1 Nov, 7:02 am</span><p>Dear Customer, NACH mandate debit of INR 32,000.00 returned unpaid due to insufficient funds. Return charges of INR 500 + GST applicable. -Konkan Bank</p></div>
       <figcaption><b>Today.</b> It arrives after the payment has already failed, in bank words, with nowhere to go next.</figcaption>
     </figure>
     <figure class="cf-ba-col is-after">

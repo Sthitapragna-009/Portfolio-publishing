@@ -380,7 +380,7 @@
   padding: 1.6rem;
   border-radius: var(--kq-r);
   background: var(--tile);
-  color: #0b0b0b;
+  color: var(--tile-ink, #0b0b0b);
 }
 .kq-made-n {
   font: 500 0.95rem/1 var(--kq-font);
@@ -506,7 +506,7 @@
   display: inline-flex;
   padding: 0.5rem 0.95rem;
   border-radius: 999px;
-  background: #0f6e66;
+  background: #4b3fc4;
   color: #fff;
   font: 600 0.9rem/1 system-ui, sans-serif;
 }

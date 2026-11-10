@@ -100,8 +100,8 @@ const SCENES = [
   ['biz-approve', `lens('business'); await wait(200); go(['biz-home','biz-approval'], { bizRole: 'owner', bizOption: 'reserve', bizRequest: { status: 'pending', by: 'bookkeeper' } })`],
   ['dev-compare', `lens('developer'); await wait(200); go(['home','compare'], { option: 'partner' })`],
   // brand and appearance
-  ['theme-meru', `set({ institution: 'northgate' }); go(['home'])`],
-  ['theme-meru-acc', `set({ institution: 'northgate' }); go(['accounts'])`, 1500],
+  ['theme-deccan', `set({ institution: 'riverbend' }); go(['home'])`],
+  ['theme-deccan-acc', `set({ institution: 'riverbend' }); go(['accounts'])`, 1500],
   ['theme-light', `set({ appearance: 'light' }); go(['home'])`],
   ['theme-light-ins', `set({ appearance: 'light' }); go(['insights'])`, 1800],
   // iPhone Duo: closed (outer display) and open (inner display, flat and folded like a book)

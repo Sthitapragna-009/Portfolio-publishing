@@ -96,7 +96,7 @@ const one = (file, alt) => `<figure class="cf-phone cf-phone--one">${img(file, a
 const fig = (inner, caption, cls = "") => `<figure class="cf-ig${cls ? " " + cls : ""} reveal">${inner}${caption ? `<figcaption>${caption}</figcaption>` : ""}</figure>`;
 
 // ---------- design system ----------
-const BANK_ORDER = ["riverbend", "northgate", "kesari", "pragati", "nila", "sahyog"];
+const BANK_ORDER = ["northgate", "riverbend", "kesari", "pragati", "nila", "sahyog"];
 const HUES = [
   ["Mint", "#7ee8c2", "done, money in, safe"],
   ["Coral", "#ff8f78", "money out, the cost of doing nothing"],
@@ -160,6 +160,7 @@ const ds = require("./ds.js");
 const sk = require("./sketches.js");
 const pp = require("./proto-page.js");
 const tl = require("./tl.js");
+const fl = require("./flow.js");
 
 const chapter = (id, n, kicker, title, intro) => `
         <header class="kq-ch reveal" id="${id}">
@@ -198,7 +199,7 @@ const main = `<main id="top">
               <a class="kq-link" href="#s-overview">Read the case study <span aria-hidden="true">↓</span></a>
             </p>
           </div>
-          ${photo("mk-hand.webp", "A hand holding an iPhone showing Khatiq’s home: good morning, Arjun; one thing needs you before 1 Nov; ₹88,720.50 across Deccan and Narmada; a card saying rent leaves 1 Nov and you’ll be ₹1,059 short for 2 days", "kq-hero-photo")}
+          ${photo("mk-hand.webp", "A hand holding an iPhone showing Khatiq’s home: good morning, Arjun; one thing needs you before 1 Nov; ₹88,720.50 across Konkan and Narmada; a card saying rent leaves 1 Nov and you’ll be ₹1,059 short for 2 days", "kq-hero-photo")}
         </div>
         <dl class="kq-meta reveal">
           <div><dt>Role</dt><dd>Solo: research plan, UX, UI, prototype</dd></div>
@@ -215,14 +216,14 @@ const main = `<main id="top">
         ${chapter("s-overview", "01", "Overview", "The gap, in one picture", "Arjun has ₹31,241 today. Rent of ₹32,000 leaves by autopay on 1 Nov; his salary lands on the 3rd. For two days he’s ₹1,058 short, and if the autopay bounces, bank charges and a late fee follow.")}
         <figure class="kq-panel kq-chart reveal">${st.gapChart()}<figcaption>The prototype’s own 14-day projection. The two short days drop below the line; salary day is mint.</figcaption></figure>
         <ul class="kq-made reveal">
-          <li style="--tile:var(--hue-mint)"><span class="kq-made-n">01</span><b>A home for all your money</b><span>One line says whether you’re okay, across every bank you use.</span></li>
-          <li style="--tile:var(--hue-sun)"><span class="kq-made-n">02</span><b>One calm card, 3 days early</b><span>The amount, the days, and three ways out with their costs.</span></li>
-          <li style="--tile:var(--hue-coral)"><span class="kq-made-n">03</span><b>The same moment everywhere</b><span>iPhone, both screens of iPhone Duo, iPad and Apple Watch.</span></li>
+          <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">01</span><b>A home for all your money</b><span>One line says whether you’re okay, across every bank you use.</span></li>
+          <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">02</span><b>One calm card, 3 days early</b><span>The amount, the days, and three ways out with their costs.</span></li>
+          <li style="--tile:#c9c3ff;--tile-ink:#1d1747"><span class="kq-made-n">03</span><b>The same moment everywhere</b><span>iPhone, both screens of iPhone Duo, iPad and Apple Watch.</span></li>
         </ul>
 
         ${chapter("s-challenge", "02", "Challenge", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
         <figure class="kq-panel kq-loop-wrap reveal">${pr.loop()}<figcaption>Today’s loop, every month the dates don’t line up.</figcaption></figure>
-        <div class="reveal">${st.beforeAfter(img("alert-card.webp", "The real card from the Khatiq app: Deccan, one thing to sort. Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days. A 30-day chart with two short days, and See 3 ways to fix it"))}</div>
+        <div class="reveal">${st.beforeAfter(img("alert-card.webp", "The real card from the Khatiq app: Konkan, one thing to sort. Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days. A 30-day chart with two short days, and See 3 ways to fix it"))}</div>
         ${sub("What already exists", "People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.")}
         <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
           <thead><tr><th scope="col">Signal</th><th scope="col">When it arrives</th><th scope="col">What you learn</th></tr></thead>
@@ -260,7 +261,8 @@ const main = `<main id="top">
         <figure class="kq-panel kq-mm-wrap reveal">${pr.mindMap()}</figure>
         ${sub("Rough screens", "What I drew first. Most of it was wrong, and each wrong turn pointed at the next one.")}
         <figure class="kq-sketch reveal">${sk.sketches()}<figcaption>Pencil sketches from the week, redrawn for this page.</figcaption></figure>
-        <figure class="kq-panel reveal">${tl.iaMap("03/")}<figcaption>Five tabs for what you do every week. Settings sit behind the avatar, and help is one tap from any card.</figcaption></figure>
+        <figure class="kq-panel reveal">${fl.iaStructure("03/")}<figcaption>Five tabs for what you do every week. Settings sit behind the avatar, and help is one tap from any card.</figcaption></figure>
+        <figure class="kq-panel reveal">${fl.rentFlow("03/")}<figcaption>Every way out ends somewhere calm, and a failed move points straight back to the others.</figcaption></figure>
         ${sub("The decisions that shaped it", "")}
         <div class="reveal">${pr.timeline([
           ["Day 3", "Square, dense components", "Rounded, quiet components", "Sharp cards and heavy lines felt cold for a money worry. Soft shapes and fewer lines felt calmer."],
@@ -278,7 +280,7 @@ const main = `<main id="top">
         </ul>
 
         ${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix", "One calm card on the home screen, three ways out with their costs, a confirm that shows the result, and an ending that looks forward.")}
-        ${photo("mk-sofa.webp", "Someone on a sofa holding an iPhone with Deccan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days", "kq-photo--wide")}
+        ${photo("mk-sofa.webp", "Someone on a sofa holding an iPhone with Konkan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days", "kq-photo--wide")}
         <ol class="kq-flow reveal">
           <li><span class="kq-flow-n">1</span><b>See it</b>${img("gap-home.webp", "Home: one thing needs you before 1 Nov, with the gap card")}</li>
           <li><span class="kq-flow-n">2</span><b>Choose</b>${img("gap-compare.webp", "Ways to cover rent: what doing nothing costs, then three ways out with their costs")}</li>
@@ -319,7 +321,7 @@ const main = `<main id="top">
           ["gap-error.webp", "Couldn’t move the money; another way still works", "Errors with a way out"],
         ])}
 
-        ${sub("Every screen", "Everything the story above skips, grouped by flow. Scroll each row sideways.")}
+        ${sub("Every screen", "Everything the story above skips, grouped by flow.")}
         <div class="kq-lib reveal">${library([
           ["Onboarding", "phone", [["onb-welcome", "Welcome to Khatiq"], ["onb-bank", "Where does your salary land?"], ["onb-phone", "Your mobile number"], ["onb-otp", "Enter the code"], ["onb-pin", "Set an app PIN"], ["onb-notify", "Turn on notifications"]]],
           ["The gap, step by step", "phone", [["gap-stepup", "A passkey for a large move"], ["gap-waiting", "Moving, with named steps"], ["gap-covered", "Home after: rent is covered"], ["gap-jargon", "Bank words, rewritten"]]],
@@ -329,7 +331,7 @@ const main = `<main id="top">
           ["Seth, the assistant", "phone", [["ai-optin", "Off until you turn it on"], ["ai-chat", "Answers marked Sure, Not sure, Can’t do"], ["ai-sheet", "What each face means"], ["ai-home", "Seth on the bank home"]]],
           ["Profile and settings", "phone", [["pro-profile", "Profile"], ["pro-inbox", "Notifications"], ["pro-cards", "Cash-flow card settings"], ["pro-security", "PIN and fingerprint"]]],
           ["For a small business", "phone", [["biz-home", "Cash position, three weeks"], ["biz-approve", "Approve a move"]]],
-          ["Light mode and another bank", "phone", [["theme-light", "Light mode"], ["theme-light-ins", "Insights, light"], ["theme-meru", "In Konkan’s colours"], ["theme-meru-acc", "Konkan accounts"]]],
+          ["Light mode and another bank", "phone", [["theme-light", "Light mode"], ["theme-light-ins", "Insights, light"], ["theme-deccan", "In Deccan’s colours"], ["theme-deccan-acc", "Deccan accounts"]]],
           ["Folding phone and iPad", "wide", [["duo-outer-home", "Closed: home"], ["duo-outer-compare", "Closed: ways to cover rent"], ["duo-inner-accounts", "Open: accounts beside an account"], ["duo-inner-activity", "Open: activity beside a payment"], ["duo-book-home", "Folded like a book"], ["ipad-accounts", "iPad: accounts"], ["ipad-bank", "iPad: the bank home"]]],
           ["Apple Watch", "watch", [["watch-face", "The face"], ["watch-aod", "Always On hides amounts"], ["watch-stack", "Smart Stack"], ["watch-alert", "The alert"], ["watch-confirm", "Confirm"], ["watch-done", "Done"]]],
         ])}</div>

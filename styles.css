@@ -1640,14 +1640,14 @@ ul { margin: 0; padding: 0; list-style: none; }
 
 /* Khatiq: graphite to black, like its case study; mint from the app's money-in colour. */
 .project[data-accent="khatiq"] {
-  --glass-near:  rgba(126, 232, 194, 0.32);
-  --glass-far:   rgba(255, 143, 120, 0.2);
+  --glass-near:  rgba(185, 179, 255, 0.32);
+  --glass-far:   rgba(75, 63, 196, 0.3);
   --glass-mid:   rgba(21, 21, 21, 0.9);
   --glass-deep:  rgba(11, 11, 11, 0.95);
   --glass-body:  rgba(21, 21, 21, 0.92);
   --glass-base:  rgba(30, 30, 30, 0.94);
-  --glass-spark: rgba(126, 232, 194, 0.3);
-  --card-arrow:  #7ee8c2;
+  --glass-spark: rgba(185, 179, 255, 0.3);
+  --card-arrow:  #c9c3ff;
 }
 
 /* AeroForm 009: walnut body with the orange control dial's glow. */
