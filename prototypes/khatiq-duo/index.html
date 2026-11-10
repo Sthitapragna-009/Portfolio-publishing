@@ -28,10 +28,41 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <!-- Start the largest download early, at low priority so it never holds up the page, styles or menu. -->
-    <link rel="preload" href="./assets/iPhone_Duo_Render.usdc" as="fetch" crossorigin fetchpriority="low" />
-    <script type="module" crossorigin src="./assets/index-BSbG3yPt.js"></script>
+    <!-- Start the largest download first: nothing can be drawn until the model is in. -->
+    <link rel="preload" href="./assets/iPhone_Duo_Render.usdc.gz" as="fetch" crossorigin fetchpriority="high" />
+    <script type="module" crossorigin src="./assets/index-CMR0gbDf.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-CwhE9HZg.css">
+    <link rel="preload" as="image" href="./assets/textures/bRLlvSMXjHGTFMA.avif" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/dGXJTDPlTkOQabf.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/DRxasyqSkWckIrI.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/eLHPUXBUiNIFPvE.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/emyijVNNjxbdMoc.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/FTaCvSOaoEkwlkh.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/FTOQdACzPirfMtL.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/FusPnwQfcVrhWbQ.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/fxAdjuEBqczWSSx.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/GCFUBJEXhtlOOwh.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/hquGbaWoaoEEZtM.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/HxgKuovaIMWoJog.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/JPjlyCIBrJGaate.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/KJqLujGRCuLHVMP.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/lOidToIFtyVJmEb.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/NIkNdQidncmTXRN.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/OojuzFaMfhmMMQJ.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/osFUZiKUOMQppcQ.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/PlfJwuXpFgcfAdz.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/PxuSYzMqDrQVAED.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/QjcONWCxTjnRgmR.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/rfsQSaQvLDpPofO.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/SBLhpyPpRJBlAtY.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/SUHpVLjLHwaMAVl.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/TvJgPVlZXbHKHmC.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/TzYVtWJouKRcoEt.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/vkcFRmtsVsGOTlu.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/VTnktJhSuvwHttZ.png" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/WtnoGtLPrKgUvTg.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/yBIFDghPQEnweBt.jpg" fetchpriority="low">
+    <link rel="preload" as="image" href="./assets/textures/zzFlgBpVdJMInHJ.jpg" fetchpriority="low">
   </head>
   <body>
     <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>

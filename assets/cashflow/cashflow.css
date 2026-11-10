@@ -101,6 +101,44 @@
 }
 
 /* ---------- iPhone Duo in 3D (prototypes/khatiq-duo, built from "Actual Portfolio/khatiq duo 3d") ---------- */
+/* Title on the left, the section watermark (the site's .ghost look, set in Epilogue) on the right. */
+.kq-duo3d-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.kq-duo3d-title {
+  margin: 0;
+  font: 700 clamp(1.35rem, 2vw, 1.75rem) / 1.15 var(--kq-font);
+  letter-spacing: -0.025em;
+  color: var(--kq-ink);
+  white-space: nowrap;
+}
+.kq-duo3d-ghost {
+  margin: 0;
+  font: 800 clamp(2rem, 4vw, 3.5rem) / 0.9 var(--kq-font);
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: right;
+  white-space: nowrap;
+  color: color-mix(in srgb, var(--kq-ink) 14%, transparent);
+  user-select: none;
+}
+@media (max-width: 900px) {
+  .kq-duo3d-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .kq-duo3d-title {
+    white-space: normal;
+  }
+  .kq-duo3d-ghost {
+    font-size: clamp(1.6rem, 9vw, 2.4rem);
+    white-space: normal;
+  }
+}
 .kq-duo3d {
   margin-top: var(--kq-gap);
 }

@@ -299,9 +299,43 @@ const main = `<main id="top">
         <p class="kq-proto-cta reveal"><a class="kq-btn" href="khatiq-prototype.html">Open the prototype in its own page <span aria-hidden="true">→</span></a></p>
 
         ${sub("The same moment, wherever you look", "Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.")}
-        <div class="kq-duo3d reveal">
-          <iframe src="../prototypes/khatiq-duo/index.html" title="Khatiq on iPhone Duo, in 3D: drag to fold, or pick a pose" loading="lazy"></iframe>
+        <div class="kq-duo3d-head reveal">
+          <h3 class="kq-duo3d-title">Interactive iPhone Duo prototype</h3>
+          <p class="kq-duo3d-ghost">Designing for foldables</p>
         </div>
+        <div class="kq-duo3d reveal">
+          <iframe data-src="../prototypes/khatiq-duo/index.html" title="Khatiq on iPhone Duo, in 3D: drag to fold, or pick a pose"></iframe>
+        </div>
+        <script>
+          /* The 3D viewer is about 4 MB. Start it once the page is idle, or as soon as it is within two screens,
+             whichever comes first, so it is usually ready by the time someone scrolls to it. The viewer stops
+             drawing while it is off screen. With Data Saver on, it waits until it is close. */
+          (() => {
+            const frame = document.querySelector(".kq-duo3d iframe");
+            if (!frame) return;
+            let started = false;
+            const start = () => {
+              if (started) return;
+              started = true;
+              frame.src = frame.dataset.src;
+            };
+            const saveData = navigator.connection && navigator.connection.saveData;
+            if (!saveData) {
+              const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2500));
+              if (document.readyState === "complete") idle();
+              else addEventListener("load", idle, { once: true });
+            }
+            if ("IntersectionObserver" in window) {
+              const near = new IntersectionObserver((entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                  start();
+                  near.disconnect();
+                }
+              }, { rootMargin: "200% 0px" });
+              near.observe(frame);
+            } else start();
+          })();
+        </script>
         <p class="kq-cap kq-credit reveal">Drag the slider to fold it, drag the phone to turn it, or pick a pose. 3D model: Apple, iPhone Duo. Viewer adapted from akashtdev’s iphone-duo-animation (MIT).</p>
         <div class="cf-eco kq-eco-strip reveal">
           <figure>${img("bz-watch-face.webp", "Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings")}<figcaption>Watch: on the face</figcaption></figure>

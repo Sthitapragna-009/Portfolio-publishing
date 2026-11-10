@@ -52,6 +52,9 @@
         <a class="nav-pill nav-pill--photo" href="../photography.html" target="_blank" rel="noopener">Photography Page <svg class="nav-ico" width="12" height="12" viewBox="3.43 3.43 17.14 17.14" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.29" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
       </nav>
 
+      <button class="theme-switch" id="themeToggle" type="button" role="switch" aria-checked="false" aria-label="Dark theme" title="Dark theme">
+        <span class="theme-switch-knob" aria-hidden="true"><svg class="icon-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg><svg class="icon-moon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg></span>
+      </button>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -521,9 +524,43 @@
           <h3>The same moment, wherever you look</h3>
           <p>Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.</p>
         </div>
-        <div class="kq-duo3d reveal">
-          <iframe src="../prototypes/khatiq-duo/index.html" title="Khatiq on iPhone Duo, in 3D: drag to fold, or pick a pose" loading="lazy"></iframe>
+        <div class="kq-duo3d-head reveal">
+          <h3 class="kq-duo3d-title">Interactive iPhone Duo prototype</h3>
+          <p class="kq-duo3d-ghost">Designing for foldables</p>
         </div>
+        <div class="kq-duo3d reveal">
+          <iframe data-src="../prototypes/khatiq-duo/index.html" title="Khatiq on iPhone Duo, in 3D: drag to fold, or pick a pose"></iframe>
+        </div>
+        <script>
+          /* The 3D viewer is about 4 MB. Start it once the page is idle, or as soon as it is within two screens,
+             whichever comes first, so it is usually ready by the time someone scrolls to it. The viewer stops
+             drawing while it is off screen. With Data Saver on, it waits until it is close. */
+          (() => {
+            const frame = document.querySelector(".kq-duo3d iframe");
+            if (!frame) return;
+            let started = false;
+            const start = () => {
+              if (started) return;
+              started = true;
+              frame.src = frame.dataset.src;
+            };
+            const saveData = navigator.connection && navigator.connection.saveData;
+            if (!saveData) {
+              const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2500));
+              if (document.readyState === "complete") idle();
+              else addEventListener("load", idle, { once: true });
+            }
+            if ("IntersectionObserver" in window) {
+              const near = new IntersectionObserver((entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                  start();
+                  near.disconnect();
+                }
+              }, { rootMargin: "200% 0px" });
+              near.observe(frame);
+            } else start();
+          })();
+        </script>
         <p class="kq-cap kq-credit reveal">Drag the slider to fold it, drag the phone to turn it, or pick a pose. 3D model: Apple, iPhone Duo. Viewer adapted from akashtdev’s iphone-duo-animation (MIT).</p>
         <div class="cf-eco kq-eco-strip reveal">
           <figure><img src="../assets/cashflow/bz-watch-face.webp" alt="Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings" width="210" height="330" loading="lazy" decoding="async" /><figcaption>Watch: on the face</figcaption></figure>
@@ -875,24 +912,6 @@
     </div>
   </footer>
 
-  <button class="theme-toggle" id="themeToggle" type="button" role="switch" aria-checked="false">
-    <span class="sr-only">Light theme</span>
-    <span class="theme-toggle-rail" aria-hidden="true">
-      <span class="theme-toggle-end theme-toggle-end--sun">
-        <svg class="icon-sun" width="14" height="14" viewBox="0.57 0.57 22.86 22.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.14" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-      </span>
-      <span class="theme-toggle-words">
-        <span class="theme-toggle-word">Tap or swipe for dark/light</span>
-      </span>
-      <span class="theme-toggle-end theme-toggle-end--moon">
-        <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
-      </span>
-      <span class="theme-toggle-knob">
-        <svg class="icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.25" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
-        <svg class="icon-sun" width="14" height="14" viewBox="0.57 0.57 22.86 22.86" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.14" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-      </span>
-    </span>
-  </button>
 
   <script src="../script.js"></script>
   <script src="../assets/parag/parag.js"></script>
