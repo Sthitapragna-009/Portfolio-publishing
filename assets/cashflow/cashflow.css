@@ -100,6 +100,24 @@
   margin-top: 12%;
 }
 
+/* ---------- iPhone Duo in 3D (prototypes/khatiq-duo, built from "Actual Portfolio/khatiq duo 3d") ---------- */
+.kq-duo3d {
+  margin-top: var(--kq-gap);
+}
+.kq-duo3d iframe {
+  display: block;
+  width: 100%;
+  height: clamp(560px, 56vw, 720px);
+  border: 0;
+  border-radius: var(--kq-r);
+  background: var(--kq-card);
+}
+@media (max-width: 900px) {
+  .kq-duo3d iframe {
+    height: 640px;
+  }
+}
+
 /* ---------- live prototype ---------- */
 .cf-live iframe {
   display: block;

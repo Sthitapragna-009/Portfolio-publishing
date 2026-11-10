@@ -299,8 +299,10 @@ const main = `<main id="top">
         <p class="kq-proto-cta reveal"><a class="kq-btn" href="khatiq-prototype.html">Open the prototype in its own page <span aria-hidden="true">→</span></a></p>
 
         ${sub("The same moment, wherever you look", "Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.")}
-        ${photo("mk-duo-open.webp", "iPhone Duo held open in two hands: the all-money home beside Ways to cover rent, with the tab bar in the rail", "kq-photo--wide")}
-        <p class="kq-cap kq-credit reveal">Credits: Apple, iPhone Duo</p>
+        <div class="kq-duo3d reveal">
+          <iframe src="../prototypes/khatiq-duo/index.html" title="Khatiq on iPhone Duo, in 3D: drag to fold, or pick a pose" loading="lazy"></iframe>
+        </div>
+        <p class="kq-cap kq-credit reveal">Drag the slider to fold it, drag the phone to turn it, or pick a pose. 3D model: Apple, iPhone Duo. Viewer adapted from akashtdev’s iphone-duo-animation (MIT).</p>
         <div class="cf-eco kq-eco-strip reveal">
           <figure>${img("bz-watch-face.webp", "Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings")}<figcaption>Watch: on the face</figcaption></figure>
           <figure>${img("bz-watch-confirm.webp", "Confirm ₹1,500 on Apple Watch, double tap to confirm")}<figcaption>Watch: Double Tap confirms</figcaption></figure>
@@ -369,7 +371,7 @@ const main = `<main id="top">
           <li><b>Next</b><span>Five to eight interviews in India, then the card in front of 8 to 10 people against the targets above.</span></li>
         </ol>
 
-        <p class="kq-credits">Credits: Apple, iPhone Duo, Apple Watch and iPad. Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
+        <p class="kq-credits">Credits: Apple, iPhone Duo (including the 3D model), Apple Watch and iPad. 3D viewer adapted from akashtdev’s iphone-duo-animation (MIT). Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
       </div>
     </section>
   </main>
