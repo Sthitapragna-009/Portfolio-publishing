@@ -95,7 +95,7 @@ function sketches() {
       false,
     ],
     [
-      (x, y, w) => box(x + 30, y + 4, w - 30, 26) + text(x + 36, y + 17, w - 44, 1) + box(x, y + 40, w - 24, 44) + text(x + 6, y + 54, w - 36, 3) + box(x + 30, y + 94, w - 30, 26) + text(x + 36, y + 107, w - 44, 1) + box(x, y + 160, w, 22) + `<text class="kqs-hand is-small" x="${x + 6}" y="${y + 175}">Ask Seth…</text>`,
+      (x, y, w) => box(x + 30, y + 4, w - 30, 26) + text(x + 36, y + 17, w - 44, 1) + box(x, y + 40, w - 24, 44) + text(x + 6, y + 54, w - 36, 3) + box(x + 30, y + 94, w - 30, 26) + text(x + 36, y + 107, w - 44, 1) + box(x, y + 160, w, 22) + `<text class="kqs-hand is-small" x="${x + 6}" y="${y + 175}">Ask Khatiq…</text>`,
       "Chat first",
       "hides the answer",
       false,

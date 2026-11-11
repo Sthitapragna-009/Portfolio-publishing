@@ -135,9 +135,9 @@ function iaMap(num) {
       { labels: T.map(([, k], i) => ({ c: i + 1, text: k })) },
       { lists: T.map(([, , items], i) => ({ c: i + 1, items: items.map(e) })) },
       { gap: "0.9rem" },
-      { bars: [{ s: 1, e: 7, label: "From any card", note: "Why am I seeing this? · Ask Seth · Talk to a person" }] },
+      { bars: [{ s: 1, e: 7, label: "From any card", note: "Why am I seeing this? · Ask Khatiq · Talk to a person" }] },
     ],
-    "Information architecture. Onboarding leads into five tabs and a profile behind the avatar. Home: all your money, a bank's home, ways to cover rent, confirm, moving and done, bank words explained, notifications. Accounts: accounts by bank, an account, activity, one payment, link a bank. Scan, the centre button: scan a QR, amount, UPI PIN, paid. Pay: people and bills, autopays, the rent autopay. Insights: six months, worth a look, where it went, goals. Profile, from the avatar: cash-flow cards, autopays, linked banks and consents, app PIN and fingerprint, language, talk to a person. From any card: why am I seeing this, ask Seth, talk to a person.",
+    "Information architecture. Onboarding leads into five tabs and a profile behind the avatar. Home: all your money, a bank's home, ways to cover rent, confirm, moving and done, bank words explained, notifications. Accounts: accounts by bank, an account, activity, one payment, link a bank. Scan, the centre button: scan a QR, amount, UPI PIN, paid. Pay: people and bills, autopays, the rent autopay. Insights: six months, worth a look, where it went, goals. Profile, from the avatar: cash-flow cards, autopays, linked banks and consents, app PIN and fingerprint, language, talk to a person. From any card: why am I seeing this, Ask Khatiq, talk to a person.",
 
   )}</div>`;
 }

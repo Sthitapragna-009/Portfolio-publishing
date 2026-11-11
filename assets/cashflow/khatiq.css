@@ -1432,3 +1432,53 @@
     padding-top: 96px;
   }
 }
+
+/* ---------- reviewers' brief (Nov 2026): audience, India numbers, personas, research plan ---------- */
+.kq-desc.kq-audience {
+  margin-top: 0.8rem;
+}
+.kq-meta-wide {
+  grid-column: 1 / -1;
+}
+.kq-meta-wide dd {
+  max-width: 72ch;
+}
+/* two groups of numbers: India, then trust globally */
+.kq-statgrp + .kq-statgrp {
+  margin-top: clamp(1.8rem, 3vw, 2.4rem);
+}
+.kq-statgrp .kqan-k {
+  margin: 0 0 0.8rem;
+}
+.kq-cap a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.kq-personas li {
+  min-height: 12rem;
+}
+.kq-personas i {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: italic;
+}
+/* six decisions: one row on wide screens */
+.kq-tl {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+@media (max-width: 1100px) {
+  .kq-tl {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 820px) {
+  .kq-tl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 480px) {
+  .kq-tl {
+    grid-template-columns: 1fr;
+  }
+}

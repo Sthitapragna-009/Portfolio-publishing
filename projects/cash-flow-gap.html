@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Khatiq — Know before it bounces | Sthitapragna Kollepara</title>
-  <meta name="description" content="Khatiq: a money app for India that warns you three days before a payment bounces and shows calm ways to fix it. Journey map, emotional design, an AI assistant called Seth with ten emotions, Account Aggregator linking, per-bank palettes and a working prototype." />
+  <meta name="description" content="Khatiq: a money app for India that warns you three days before a payment bounces and shows calm ways to fix it. Journey map, emotional design, an AI assistant that says when it’s sure, not sure, or can’t help, Account Aggregator linking, per-bank palettes and a working prototype." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -73,6 +73,7 @@
             <h1 class="kq-name">Khatiq</h1>
             <p class="kq-hook">Know before it bounces.</p>
             <p class="kq-desc">Khatiq is a money app for India. It reads your salary, bills and accounts across banks, and tells you three days ahead when a payment is about to bounce. Then it shows calm ways to fix it: move money from savings, pay on salary day, or talk to a person.</p>
+            <p class="kq-desc kq-audience">For people who can afford their bills, but get caught when rent leaves on the 1st and salary lands on the 3rd.</p>
             <p class="kq-origin">From <i>khata</i> (खाता), Hindi for an account ledger.</p>
             <p class="kq-links">
               <a class="kq-link is-primary" href="khatiq-prototype.html">Try the prototype <span aria-hidden="true">→</span></a>
@@ -86,6 +87,7 @@
           <div><dt>Timeline</dt><dd>1 week</dd></div>
           <div><dt>Built with</dt><dd>Claude Code: React, TypeScript, Motion</dd></div>
           <div><dt>Principles</dt><dd>Warn early. Say it plainly. A person is one tap away.</dd></div>
+          <div class="kq-meta-wide"><dt>Platform</dt><dd>Apple-first concept. A launch in India would be Android-first; the design system carries over. Most iPhones in India are bought on EMI, so this audience is already living with autopays.</dd></div>
         </dl>
       </div>
     </section>
@@ -126,6 +128,22 @@
     <text class="cf-gc-month" x="70" y="568">Oct</text>
     <text class="cf-gc-month" x="288.57142857142856" y="568">Nov</text>
   </svg><figcaption>The prototype’s own 14-day projection. The two short days drop below the line; salary day is mint.</figcaption></figure>
+        
+        <div class="kq-sub reveal">
+          <h3>Who it’s for</h3>
+          <p>Khatiq starts with one group: salaried people aged 22–35 in Indian cities, paid on a fixed date, with money in two or more banks and three or more autopays (rent, EMIs, SIPs, card dues). They can afford their bills. The dates just don’t line up.</p>
+        </div>
+        <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
+          <thead><tr><th scope="col">Who</th><th scope="col">Why the gap hurts</th><th scope="col">In this version</th></tr></thead>
+          <tbody>
+            <tr class="is-us"><td>Salaried tenants</td><td>Debits on the 1st, salary on the 3rd, money across banks</td><td>Designed for</td></tr>
+            <tr><td>Freelancers and gig workers</td><td>Pay lands late or in pieces</td><td>Next, after interviews</td></tr>
+            <tr><td>Small business owners</td><td>Fixed supplier and loan debits, uneven income</td><td>Concept screens only</td></tr>
+            <tr><td>One person managing a household’s money</td><td>Many debits, one person’s worry</td><td>Open research question</td></tr>
+          </tbody>
+        </table></div>
+        <p class="kq-cap reveal">Defined by behaviour, not age or city: fixed debits, a fixed pay date, more than one bank.</p>
+        <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
         <ul class="kq-made reveal">
           <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">01</span><b>A home for all your money</b><span>One line says whether you’re okay, across every bank you use.</span></li>
           <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">02</span><b>One calm card, 3 days early</b><span>The amount, the days, and three ways out with their costs.</span></li>
@@ -183,6 +201,12 @@
         </table></div>
         
         <div class="kq-sub reveal">
+          <h3>Why now</h3>
+          <p>India’s rails can finally see the whole picture. 338 million accounts are linked through the Account Aggregator, and RBI is making aggregators interoperable by 31 December 2026. UPI e-mandates passed 1.8 billion a month at the top ten banks in July 2026. The data to warn early exists. Nobody yet joins salary dates to debit dates.</p>
+        </div>
+        <p class="kq-cap reveal">Sources: <a href="https://www.freepressjournal.in/business/rbi-to-make-account-aggregators-interoperable-allow-cas-bank-deposits" target="_blank" rel="noopener">Free Press Journal<span class="sr-only"> (new tab)</span></a> · <a href="https://inc42.com/buzz/npci-to-let-users-port-upi-autopay-mandates-across-apps-report/" target="_blank" rel="noopener">Inc42<span class="sr-only"> (new tab)</span></a>.</p>
+        
+        <div class="kq-sub reveal">
           <h3>What people need from that moment</h3>
           <p>Written as jobs to be done. Interviews in India come first in the research plan.</p>
         </div>
@@ -191,13 +215,13 @@
           <li><span>Emotional job</span><p>Help me feel in control, not judged or alarmed.</p></li>
           <li><span>Related job</span><p>Show me this is really my bank, and that a person is reachable.</p></li>
         </ol>
-        <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
         
         <div class="kq-sub reveal">
-          <h3>What published surveys suggest</h3>
-          <p>Directional only: mostly US and UK, several run by vendors.</p>
+          <h3>What the numbers say</h3>
+          
         </div>
-        <div class="reveal"><ul class="cf-stats"><li style="--tile:var(--hue-lavender)"><b>14%</b><span>fully trust AI with money advice; 72% want a human involved</span></li><li style="--tile:var(--hue-sky)"><b>84%</b><span>accept extra security steps if they stop fraud</span></li><li style="--tile:var(--hue-coral)"><b>55%</b><span>who ignored a real fraud alert thought it was a scam</span></li><li style="--tile:var(--hue-sun)"><b>1 in 2</b><span>say jargon stops them growing their money</span></li></ul><p class="kq-cap">Addition Wealth (US) · Experian 2026 · fraud study summary · Zopa (UK).</p></div>
+        <div class="kq-statgrp reveal"><p class="kqan-k">In India</p><ul class="cf-stats"><li style="--tile:var(--hue-coral)"><b>80%+</b><span>of salaried employees ran out of salary before month-end; 34% before mid-month</span></li><li style="--tile:var(--hue-sun)"><b>40%+</b><span>borrowed from friends or family to cover the gap</span></li><li style="--tile:var(--hue-sky)"><b>20 million</b><span>UPI AutoPay mandates are revoked every month because the balance falls short</span></li><li style="--tile:var(--hue-lavender)"><b>₹500</b><span>is a typical fixed NACH bounce charge, plus penal interest</span></li></ul><p class="kq-cap">EY–Refyne, 3,010 respondents, 2021, via <a href="https://businesstoday.in/latest/economy/story/80-employees-find-wallets-empty-before-payday-finds-ey-refyne-study-312493-2021-11-17" target="_blank" rel="noopener">Business Today<span class="sr-only"> (new tab)</span></a> and <a href="https://outlookindia.com/business/business-news-covid-19-led-to-financial-crisis-among-81-of-indian-employees-report-news-401566" target="_blank" rel="noopener">Outlook India<span class="sr-only"> (new tab)</span></a> · <a href="https://www.business-standard.com/amp/finance/news/upi-autopay-revocations-hit-20-mn-monthly-over-low-customer-balances-125090700500_1.html" target="_blank" rel="noopener">Business Standard<span class="sr-only"> (new tab)</span></a>, Sep 2025 · <a href="https://www.bajajfinserv.in/how-to-update-nach-mandate-bank-account-change" target="_blank" rel="noopener">Bajaj Finserv<span class="sr-only"> (new tab)</span></a>.</p></div>
+        <div class="kq-statgrp reveal"><p class="kqan-k">On trust, globally</p><ul class="cf-stats"><li style="--tile:var(--hue-lavender)"><b>14%</b><span>fully trust AI with money advice; 72% want a human involved</span></li><li style="--tile:var(--hue-coral)"><b>55%</b><span>who ignored a real fraud alert thought it was a scam</span></li></ul><p class="kq-cap">Addition Wealth (US) · fraud study summary.</p></div>
         <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
 
         <p class="kq-insight reveal">The warning already exists. What’s missing is the maths, and a way out.</p>
@@ -225,6 +249,16 @@
         <circle cx="100" cy="43.78378378378379" r="6.5" class="kqt-feel-dot-app" /><circle cx="300" cy="60" r="6.5" class="kqt-feel-dot-app" /><circle cx="500" cy="43.78378378378379" r="6.5" class="kqt-feel-dot-app" /><circle cx="700" cy="27.567567567567572" r="6.5" class="kqt-feel-dot-app" /><circle cx="900" cy="11.351351351351354" r="6.5" class="kqt-feel-dot-app" />
       </svg>
     </div></div><ul class="kqt-list" style="grid-column:1 / span 1;grid-row:9"><li><small>Does</small>Checks the balance</li><li><small>Thinks</small>“Will rent clear before salary?”</li><li><small>Pain</small>Doing the maths across two apps</li><li><small>Opportunity</small>Show the gap before anyone goes looking</li></ul><ul class="kqt-list" style="grid-column:2 / span 1;grid-row:9"><li><small>Does</small>Reads the bank’s SMS</li><li><small>Thinks</small>“What does ‘return charges’ mean?”</li><li><small>Pain</small>Decoding jargon under stress</li><li><small>Opportunity</small>Say it in one plain sentence</li></ul><ul class="kqt-list" style="grid-column:3 / span 1;grid-row:9"><li><small>Does</small>Weighs savings, a loan app, a friend</li><li><small>Thinks</small>“Which one costs me least?”</li><li><small>Pain</small>Comparing costs nobody shows</li><li><small>Opportunity</small>Show every cost before choosing</li></ul><ul class="kqt-list" style="grid-column:4 / span 1;grid-row:9"><li><small>Does</small>Moves money or calls the landlord</li><li><small>Thinks</small>“Did it actually go through?”</li><li><small>Pain</small>Waiting with no status</li><li><small>Opportunity</small>Named steps and a time, never a spinner</li></ul><ul class="kqt-list" style="grid-column:5 / span 1;grid-row:9"><li><small>Does</small>Salary lands, rent clears</li><li><small>Thinks</small>“Will this happen next month?”</li><li><small>Pain</small>No memory of what worked</li><li><small>Opportunity</small>End with the next date to watch</li></ul></div></div></div><figcaption>Two moments of truth: the SMS from the bank, and how it ends.</figcaption></figure>
+        
+        <div class="kq-sub reveal">
+          <h3>Who we’ll test with (assumptions, not findings)</h3>
+          
+        </div>
+        <ul class="kq-made kq-personas reveal">
+          <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">Salaried</span><b>Arjun, 27, Bengaluru</b><span>Rent on the 1st, salary on the 3rd, phone on EMI. <i>“Tell me before, not after.”</i></span></li>
+          <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">Freelance</span><b>Meera, 31, Pune</b><span>Illustrator. One client pays 45 days late; her SIP and card due don’t wait. <i>“Tell me which bill is at risk if this invoice slips.”</i></span></li>
+          <li style="--tile:#c9c3ff;--tile-ink:#1d1747"><span class="kq-made-n">Shop owner · later</span><b>Rakesh, 44, Lucknow</b><span>Pharmacy. Supplier debits and a shop-loan EMI; Hindi-first, Android. <i>“Will I cover Friday’s supplier debit?”</i></span></li>
+        </ul>
         
         <div class="kq-sub reveal">
           <h3>Emotional design: the right feeling at the right moment</h3>
@@ -270,7 +304,7 @@
         <figure class="kq-panel reveal"><div class="kqt kqt--flow"><header class="kqt-head">
     <div><p class="kqt-eyebrow">Where everything lives</p><h3 class="kqt-title">Information architecture</h3></div>
     <span class="kqt-num">03/</span>
-  </header><div class="kqt-scroll"><svg class="kqf" viewBox="0 0 1120 766" style="--min:900px" role="img" aria-label="Information architecture as a sitemap. Onboarding (welcome, salary bank, mobile number, code, app PIN, notifications) leads to the tab bar and avatar. Home: all your money, a bank's home, ways to cover rent, confirm, moving then done, bank words explained, notifications. Accounts: accounts by bank, an account, activity, one payment, link a bank. Scan, the centre button: scan a QR, amount, UPI PIN, paid. Pay: people and bills, autopays, the rent autopay. Insights: six months, worth a look, where it went, goals. Profile, from the avatar: cash-flow cards, autopays, banks and consents, PIN and fingerprint, language, talk to a person. From any card: why am I seeing this, ask Seth, talk to a person. The rent fix, ways to cover rent, confirm, moving then done, is three taps from Home."><defs>
+  </header><div class="kqt-scroll"><svg class="kqf" viewBox="0 0 1120 766" style="--min:900px" role="img" aria-label="Information architecture as a sitemap. Onboarding (welcome, salary bank, mobile number, code, app PIN, notifications) leads to the tab bar and avatar. Home: all your money, a bank's home, ways to cover rent, confirm, moving then done, bank words explained, notifications. Accounts: accounts by bank, an account, activity, one payment, link a bank. Scan, the centre button: scan a QR, amount, UPI PIN, paid. Pay: people and bills, autopays, the rent autopay. Insights: six months, worth a look, where it went, goals. Profile, from the avatar: cash-flow cards, autopays, banks and consents, PIN and fingerprint, language, talk to a person. From any card: why am I seeing this, Ask Khatiq, talk to a person. The rent fix, ways to cover rent, confirm, moving then done, is three taps from Home."><defs>
     <marker id="kqf-a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="kqf-head" /></marker>
   </defs><g class="kqf-node">
       <rect x="410" y="10" width="300" height="52" rx="14" />
@@ -308,7 +342,7 @@
       <rect x="10" y="666" width="1100" height="50" rx="14" />
       <text class="kqf-t" x="560" y="696"></text>
       
-    </g><text class="kqf-bar-t" x="34" y="697">From any card</text><text class="kqf-bar-s" x="1086" y="697">Why am I seeing this? · Ask Seth · Talk to a person</text><g class="kqf-key"><rect class="kqf-key-on" x="10" y="738" width="22" height="14" rx="4" /><text class="kqf-note" x="42" y="750" text-anchor="start">The rent fix: three taps from Home</text></g></svg></div></div><figcaption>Five tabs for what you do every week. Settings sit behind the avatar, and help is one tap from any card.</figcaption></figure>
+    </g><text class="kqf-bar-t" x="34" y="697">From any card</text><text class="kqf-bar-s" x="1086" y="697">Why am I seeing this? · Ask Khatiq · Talk to a person</text><g class="kqf-key"><rect class="kqf-key-on" x="10" y="738" width="22" height="14" rx="4" /><text class="kqf-note" x="42" y="750" text-anchor="start">The rent fix: three taps from Home</text></g></svg></div></div><figcaption>Five tabs for what you do every week. Settings sit behind the avatar, and help is one tap from any card.</figcaption></figure>
         <figure class="kq-panel reveal"><div class="kqt kqt--flow"><header class="kqt-head">
     <div><p class="kqt-eyebrow">The rent task, start to end</p><h3 class="kqt-title">Task flow</h3></div>
     <span class="kqt-num">03/</span>
@@ -396,6 +430,12 @@
       <p class="kq-tl-was"><s>Bright colour everywhere</s></p>
       <p class="kq-tl-now">Black canvas, colour with a job</p>
       <p class="kq-tl-why">Mint for money in, coral for short, lavender for the one action. Colour stays under 10% of any screen.</p>
+    </li><li style="--tile:#dcd8ff;--tile-deep:#4b3fc4">
+      <span class="kq-tl-day">After review</span>
+      <span class="kq-tl-dot" aria-hidden="true"></span>
+      <p class="kq-tl-was"><s>An assistant named Seth</s></p>
+      <p class="kq-tl-now">Ask Khatiq</p>
+      <p class="kq-tl-why">Seth reads as a moneylender to many Hindi and Gujarati speakers, and as a Western name elsewhere. The assistant became part of Khatiq itself. A name test with speakers across regions is in the research plan.</p>
     </li></ol></div>
         
         <div class="kq-sub reveal">
@@ -491,7 +531,7 @@
         <div class="kq-panel kq-table-wrap reveal"><table class="kq-table kqan-table">
           <caption class="sr-only">Nielsen’s usability heuristics and where each shows up in Khatiq</caption>
           <thead><tr><th scope="col">Heuristic</th><th scope="col">Where it shows up in Khatiq</th></tr></thead>
-          <tbody><tr><td>Visibility of system status</td><td>The Live Activity’s steps: queued, debited, paid. A move shows named steps and a time, never a spinner.</td></tr><tr><td>Match between the app and the real world</td><td>“Rent leaves 1 Nov” instead of “NACH mandate”. Rupees in lakh grouping. Bank words, explained.</td></tr><tr><td>User control and freedom</td><td>Move it back to savings. Keep rent on 1 Nov. Talk to a person from any card.</td></tr><tr><td>Consistency and standards</td><td>One button style, one chart language, each colour one meaning, familiar tab bar and lists.</td></tr><tr><td>Error prevention</td><td>Confirm shows the result first. A passkey above ₹25,000. Pay warns if it would leave rent short.</td></tr><tr><td>Recognition rather than recall</td><td>The card says what Fix now does. The next three dates sit on Home.</td></tr><tr><td>Flexibility and efficiency</td><td>Fix now for the quick path, other ways for choice. The watch and Lock Screen act without opening the app.</td></tr><tr><td>Aesthetic and minimalist design</td><td>Each fact once. No gauge, no rings, no decoration on the ending.</td></tr><tr><td>Recognise, diagnose and recover from errors</td><td>“Couldn’t move the money. Another way still works.” A wrong PIN says how many tries are left.</td></tr><tr><td>Help and documentation</td><td>“Why am I seeing this?” on the card. Seth’s answers name their sources.</td></tr></tbody>
+          <tbody><tr><td>Visibility of system status</td><td>The Live Activity’s steps: queued, debited, paid. A move shows named steps and a time, never a spinner.</td></tr><tr><td>Match between the app and the real world</td><td>“Rent leaves 1 Nov” instead of “NACH mandate”. Rupees in lakh grouping. Bank words, explained.</td></tr><tr><td>User control and freedom</td><td>Move it back to savings. Keep rent on 1 Nov. Talk to a person from any card.</td></tr><tr><td>Consistency and standards</td><td>One button style, one chart language, each colour one meaning, familiar tab bar and lists.</td></tr><tr><td>Error prevention</td><td>Confirm shows the result first. A passkey above ₹25,000. Pay warns if it would leave rent short.</td></tr><tr><td>Recognition rather than recall</td><td>The card says what Fix now does. The next three dates sit on Home.</td></tr><tr><td>Flexibility and efficiency</td><td>Fix now for the quick path, other ways for choice. The watch and Lock Screen act without opening the app.</td></tr><tr><td>Aesthetic and minimalist design</td><td>Each fact once. No gauge, no rings, no decoration on the ending.</td></tr><tr><td>Recognise, diagnose and recover from errors</td><td>“Couldn’t move the money. Another way still works.” A wrong PIN says how many tries are left.</td></tr><tr><td>Help and documentation</td><td>“Why am I seeing this?” on the card. The assistant’s answers name their sources.</td></tr></tbody>
         </table></div>
 
         
@@ -649,10 +689,10 @@
           <div class="kq-lib-row is-phone">
             <figure class="kq-lib-item"><img src="../assets/cashflow/live-lock.webp" alt="Rent day Live Activity: Lock Screen, amounts hidden" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Lock Screen, amounts hidden</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/live-island.webp" alt="Rent day Live Activity: Dynamic Island, compact" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Dynamic Island, compact</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/live-expanded.webp" alt="Rent day Live Activity: Expanded, short" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Expanded, short</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/live-expanded-ok.webp" alt="Rent day Live Activity: Expanded, on track" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Expanded, on track</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/live-lock-paid.webp" alt="Rent day Live Activity: Paid, amounts shown" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Paid, amounts shown</figcaption></figure>
           </div>
-        </section><section class="kq-lib-group" aria-label="Seth, the assistant">
-          <h4 class="kq-lib-h">Seth, the assistant <span>4</span></h4>
+        </section><section class="kq-lib-group" aria-label="Ask Khatiq, the assistant">
+          <h4 class="kq-lib-h">Ask Khatiq, the assistant <span>4</span></h4>
           <div class="kq-lib-row is-phone">
-            <figure class="kq-lib-item"><img src="../assets/cashflow/ai-optin.webp" alt="Seth, the assistant: Off until you turn it on" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Off until you turn it on</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/ai-chat.webp" alt="Seth, the assistant: Answers marked Sure, Not sure, Can’t do" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Answers marked Sure, Not sure, Can’t do</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/ai-sheet.webp" alt="Seth, the assistant: What each face means" width="430" height="902" loading="lazy" decoding="async" /><figcaption>What each face means</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/ai-home.webp" alt="Seth, the assistant: Seth on the bank home" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Seth on the bank home</figcaption></figure>
+            <figure class="kq-lib-item"><img src="../assets/cashflow/ai-optin.webp" alt="Ask Khatiq, the assistant: Off until you turn it on" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Off until you turn it on</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/ai-chat.webp" alt="Ask Khatiq, the assistant: Answers marked Sure, Not sure, Can’t do" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Answers marked Sure, Not sure, Can’t do</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/ai-sheet.webp" alt="Ask Khatiq, the assistant: What each face means" width="430" height="902" loading="lazy" decoding="async" /><figcaption>What each face means</figcaption></figure><figure class="kq-lib-item"><img src="../assets/cashflow/ai-home.webp" alt="Ask Khatiq, the assistant: Ask Khatiq on the bank home" width="430" height="902" loading="lazy" decoding="async" /><figcaption>Ask Khatiq on the bank home</figcaption></figure>
           </div>
         </section><section class="kq-lib-group" aria-label="Profile and settings">
           <h4 class="kq-lib-h">Profile and settings <span>4</span></h4>
@@ -690,7 +730,7 @@
     <section class="ds-tile ds-w6" aria-label="Colour">
       <p class="ds-k">Colour · 60 / 30 / 10</p>
       <div class="ds-6030"><span style="flex:60;background:#000">60 black</span><span style="flex:30;background:#1c1c1e">30 graphite</span><span style="flex:10;background:#4b3fc4">10</span></div>
-      <ul class="ds-hues"><li><i style="background:#7ee8c2"></i><b>Mint</b><span>money in</span></li><li><i style="background:#ff8f78"></i><b>Coral</b><span>money out</span></li><li><i style="background:#ffd65a"></i><b>Sun</b><span>savings</span></li><li><i style="background:#b8b2ff"></i><b>Lavender</b><span>shortcuts, Seth</span></li><li><i style="background:#84cbff"></i><b>Sky</b><span>banks</span></li><li><i style="background:#c8f06e"></i><b>Lime</b><span>paying</span></li></ul>
+      <ul class="ds-hues"><li><i style="background:#7ee8c2"></i><b>Mint</b><span>money in</span></li><li><i style="background:#ff8f78"></i><b>Coral</b><span>money out</span></li><li><i style="background:#ffd65a"></i><b>Sun</b><span>savings</span></li><li><i style="background:#b8b2ff"></i><b>Lavender</b><span>shortcuts, the assistant</span></li><li><i style="background:#84cbff"></i><b>Sky</b><span>banks</span></li><li><i style="background:#c8f06e"></i><b>Lime</b><span>paying</span></li></ul>
     </section>
 
     <section class="ds-tile ds-w6" aria-label="Type">
@@ -831,6 +871,17 @@
       <b>Feel calm after</b><span>One question, five words</span>
     </li></ul></div>
         
+        <div class="kq-sub reveal">
+          <h3>How it gets tested</h3>
+          
+        </div>
+        <ol class="kq-reflect kq-plan reveal">
+          <li><b>Interviews</b><span>10 people (6 salaried, 4 freelancers) about the last time a payment bounced.</span></li>
+          <li><b>Two-week SMS diary</b><span>Real bank alerts, and which ones get ignored.</span></li>
+          <li><b>Name and word test</b><span>20+ people across Hindi, English and South Indian languages, covering <i>Khatiq</i>, the assistant’s name, and words like “short” and “bounce”.</span></li>
+          <li><b>Usability test</b><span>Two rounds of five, scored against the targets above.</span></li>
+        </ol>
+        
 
         
         <header class="kq-ch reveal" id="s-reflection">
@@ -842,7 +893,7 @@
           <li><b>Calm is mostly copy</b><span>The biggest changes were words. “May bounce” became “you’ll be ₹1,059 short”, and the fix moved into the same card.</span></li>
           <li><b>Less on home, more on the one thing</b><span>Cutting home from 49 bits of text to a handful made the alert the obvious next step.</span></li>
           <li><b>Design the wrist first</b><span>Apple Watch forced the shortest version of every message, and that version improved the phone.</span></li>
-          <li><b>Next</b><span>Five to eight interviews in India, then the card in front of 8 to 10 people against the targets above.</span></li>
+          <li><b>Next</b><span>The name and word test, then ten interviews in India, then the card in front of ten people against the targets above. What the research changes will go on this page.</span></li>
         </ol>
 
         <p class="kq-credits">Credits: Apple, iPhone Duo (including the 3D model), Apple Watch and iPad. 3D viewer adapted from akashtdev’s iphone-duo-animation (MIT). Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>

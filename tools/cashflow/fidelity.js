@@ -207,7 +207,7 @@ function heuristics(img) {
     ["7", "Flexibility and efficiency", "Fix now for the quick path, other ways for choice. The watch and Lock Screen act without opening the app."],
     ["8", "Aesthetic and minimalist design", "Each fact once. No gauge, no rings, no decoration on the ending."],
     ["9", "Recognise, diagnose and recover from errors", "“Couldn’t move the money. Another way still works.” A wrong PIN says how many tries are left."],
-    ["10", "Help and documentation", "“Why am I seeing this?” on the card. Seth’s answers name their sources."],
+    ["10", "Help and documentation", "“Why am I seeing this?” on the card. The assistant’s answers name their sources."],
   ];
   return `<div class="kqan reveal">${cards.join("")}</div><script>
 (function () {

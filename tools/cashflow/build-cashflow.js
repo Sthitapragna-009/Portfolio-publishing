@@ -30,7 +30,7 @@ head = head
   .replace(/<title>[^<]*<\/title>/, "<title>Khatiq — Know before it bounces | Sthitapragna Kollepara</title>")
   .replace(
     /<meta name="description" content="[^"]*"/,
-    '<meta name="description" content="Khatiq: a money app for India that warns you three days before a payment bounces and shows calm ways to fix it. Journey map, emotional design, an AI assistant called Seth with ten emotions, Account Aggregator linking, per-bank palettes and a working prototype."',
+    '<meta name="description" content="Khatiq: a money app for India that warns you three days before a payment bounces and shows calm ways to fix it. Journey map, emotional design, an AI assistant that says when it’s sure, not sure, or can’t help, Account Aggregator linking, per-bank palettes and a working prototype."',
   )
   .replace("&display=swap\" rel=\"stylesheet\" />", "&family=Epilogue:wght@400;500;600;700;800&family=Caveat:wght@500;700&family=Noto+Sans:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600&family=Noto+Serif:wght@400;500&display=swap\" rel=\"stylesheet\" />")
   .replace('<link rel="stylesheet" href="../styles.css" />', '<link rel="stylesheet" href="../styles.css" />\n  <link rel="stylesheet" href="../assets/cashflow/cashflow.css" />\n  <link rel="stylesheet" href="../assets/cashflow/khatiq.css" />\n  <link rel="stylesheet" href="../assets/cashflow/ds.css" />\n  <link rel="stylesheet" href="../assets/cashflow/tl.css" />');
@@ -101,14 +101,14 @@ const HUES = [
   ["Mint", "#7ee8c2", "done, money in, safe"],
   ["Coral", "#ff8f78", "money out, the cost of doing nothing"],
   ["Sunflower", "#ffd65a", "savings and goals"],
-  ["Lavender", "#b8b2ff", "people and Seth"],
+  ["Lavender", "#b8b2ff", "people and the assistant"],
   ["Sky", "#84cbff", "linked banks, data and trust"],
   ["Lime", "#c8f06e", "paying someone"],
 ];
 const designSystem = () => `
         <div class="cf-bento reveal">
           <section class="cf-tile cf-span-12" aria-label="Bank palettes">
-            <p class="cf-tile-k">Every bank brings its own palette · button, ink, tint, colour field and Seth’s glow</p>
+            <p class="cf-tile-k">Every bank brings its own palette · button, ink, tint, colour field and the assistant’s glow</p>
             <div class="cf-banks">
               ${BANK_ORDER.map((id) => {
                 const b = banks[id];
@@ -116,7 +116,7 @@ const designSystem = () => `
                 return `<div class="cf-bank">
                 <div class="cf-bank-field" style="background:${p.aura[0]};--a:${p.aura[1]};--b:${p.aura[2]};--c:${p.aura[3]}"><span class="cf-bank-mark" style="background:${p.brand}">${e(b.mark)}</span></div>
                 <b>${e(b.name)}</b><span>${e(b.kind)}</span>
-                <div class="cf-bank-chips"><i style="background:${p.brand}" title="Button ${p.brand}"></i><i style="background:${p.inkDark}" title="Ink on dark ${p.inkDark}"></i><i style="background:${p.tintLight}" title="Tint ${p.tintLight}"></i><i style="background:${p.glow}" title="Seth glow ${p.glow}"></i></div>
+                <div class="cf-bank-chips"><i style="background:${p.brand}" title="Button ${p.brand}"></i><i style="background:${p.inkDark}" title="Ink on dark ${p.inkDark}"></i><i style="background:${p.tintLight}" title="Tint ${p.tintLight}"></i><i style="background:${p.glow}" title="Assistant glow ${p.glow}"></i></div>
                 <code>${p.brand}</code>
               </div>`;
               }).join("")}
@@ -194,6 +194,7 @@ const main = `<main id="top">
             <h1 class="kq-name">Khatiq</h1>
             <p class="kq-hook">Know before it bounces.</p>
             <p class="kq-desc">Khatiq is a money app for India. It reads your salary, bills and accounts across banks, and tells you three days ahead when a payment is about to bounce. Then it shows calm ways to fix it: move money from savings, pay on salary day, or talk to a person.</p>
+            <p class="kq-desc kq-audience">For people who can afford their bills, but get caught when rent leaves on the 1st and salary lands on the 3rd.</p>
             <p class="kq-origin">From <i>khata</i> (खाता), Hindi for an account ledger.</p>
             <p class="kq-links">
               <a class="kq-link is-primary" href="khatiq-prototype.html">Try the prototype <span aria-hidden="true">→</span></a>
@@ -207,6 +208,7 @@ const main = `<main id="top">
           <div><dt>Timeline</dt><dd>1 week</dd></div>
           <div><dt>Built with</dt><dd>Claude Code: React, TypeScript, Motion</dd></div>
           <div><dt>Principles</dt><dd>Warn early. Say it plainly. A person is one tap away.</dd></div>
+          <div class="kq-meta-wide"><dt>Platform</dt><dd>Apple-first concept. A launch in India would be Android-first; the design system carries over. Most iPhones in India are bought on EMI, so this audience is already living with autopays.</dd></div>
         </dl>
       </div>
     </section>
@@ -216,6 +218,18 @@ const main = `<main id="top">
 
         ${chapter("s-overview", "01", "Overview", "The gap, in one picture", "Arjun has ₹31,241 today. Rent of ₹32,000 leaves by autopay on 1 Nov; his salary lands on the 3rd. For two days he’s ₹1,058 short, and if the autopay bounces, bank charges and a late fee follow.")}
         <figure class="kq-panel kq-chart reveal">${st.gapChart()}<figcaption>The prototype’s own 14-day projection. The two short days drop below the line; salary day is mint.</figcaption></figure>
+        ${sub("Who it’s for", "Khatiq starts with one group: salaried people aged 22–35 in Indian cities, paid on a fixed date, with money in two or more banks and three or more autopays (rent, EMIs, SIPs, card dues). They can afford their bills. The dates just don’t line up.")}
+        <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
+          <thead><tr><th scope="col">Who</th><th scope="col">Why the gap hurts</th><th scope="col">In this version</th></tr></thead>
+          <tbody>
+            <tr class="is-us"><td>Salaried tenants</td><td>Debits on the 1st, salary on the 3rd, money across banks</td><td>Designed for</td></tr>
+            <tr><td>Freelancers and gig workers</td><td>Pay lands late or in pieces</td><td>Next, after interviews</td></tr>
+            <tr><td>Small business owners</td><td>Fixed supplier and loan debits, uneven income</td><td>Concept screens only</td></tr>
+            <tr><td>One person managing a household’s money</td><td>Many debits, one person’s worry</td><td>Open research question</td></tr>
+          </tbody>
+        </table></div>
+        <p class="kq-cap reveal">Defined by behaviour, not age or city: fixed debits, a fixed pay date, more than one bank.</p>
+        <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
         <ul class="kq-made reveal">
           <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">01</span><b>A home for all your money</b><span>One line says whether you’re okay, across every bank you use.</span></li>
           <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">02</span><b>One calm card, 3 days early</b><span>The amount, the days, and three ways out with their costs.</span></li>
@@ -235,20 +249,25 @@ const main = `<main id="top">
             <tr class="is-us"><td>Khatiq</td><td>Three days before</td><td>How short, for how long, and three ways out with their costs.</td></tr>
           </tbody>
         </table></div>
+        ${sub("Why now", "India’s rails can finally see the whole picture. 338 million accounts are linked through the Account Aggregator, and RBI is making aggregators interoperable by 31 December 2026. UPI e-mandates passed 1.8 billion a month at the top ten banks in July 2026. The data to warn early exists. Nobody yet joins salary dates to debit dates.")}
+        <p class="kq-cap reveal">Sources: <a href="https://www.freepressjournal.in/business/rbi-to-make-account-aggregators-interoperable-allow-cas-bank-deposits" target="_blank" rel="noopener">Free Press Journal<span class="sr-only"> (new tab)</span></a> · <a href="https://inc42.com/buzz/npci-to-let-users-port-upi-autopay-mandates-across-apps-report/" target="_blank" rel="noopener">Inc42<span class="sr-only"> (new tab)</span></a>.</p>
         ${sub("What people need from that moment", "Written as jobs to be done. Interviews in India come first in the research plan.")}
         <ol class="kq-jobs reveal">
           <li><span>Main job</span><p>Tell me early if I won’t be okay this month.</p></li>
           <li><span>Emotional job</span><p>Help me feel in control, not judged or alarmed.</p></li>
           <li><span>Related job</span><p>Show me this is really my bank, and that a person is reachable.</p></li>
         </ol>
-        <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
-        ${sub("What published surveys suggest", "Directional only: mostly US and UK, several run by vendors.")}
-        <div class="reveal">${st.stats([
+        ${sub("What the numbers say", "")}
+        <div class="kq-statgrp reveal"><p class="kqan-k">In India</p>${st.stats([
+          ["80%+", "of salaried employees ran out of salary before month-end; 34% before mid-month", "coral"],
+          ["40%+", "borrowed from friends or family to cover the gap", "sun"],
+          ["20 million", "UPI AutoPay mandates are revoked every month because the balance falls short", "sky"],
+          ["₹500", "is a typical fixed NACH bounce charge, plus penal interest", "lavender"],
+        ])}<p class="kq-cap">EY–Refyne, 3,010 respondents, 2021, via <a href="https://businesstoday.in/latest/economy/story/80-employees-find-wallets-empty-before-payday-finds-ey-refyne-study-312493-2021-11-17" target="_blank" rel="noopener">Business Today<span class="sr-only"> (new tab)</span></a> and <a href="https://outlookindia.com/business/business-news-covid-19-led-to-financial-crisis-among-81-of-indian-employees-report-news-401566" target="_blank" rel="noopener">Outlook India<span class="sr-only"> (new tab)</span></a> · <a href="https://www.business-standard.com/amp/finance/news/upi-autopay-revocations-hit-20-mn-monthly-over-low-customer-balances-125090700500_1.html" target="_blank" rel="noopener">Business Standard<span class="sr-only"> (new tab)</span></a>, Sep 2025 · <a href="https://www.bajajfinserv.in/how-to-update-nach-mandate-bank-account-change" target="_blank" rel="noopener">Bajaj Finserv<span class="sr-only"> (new tab)</span></a>.</p></div>
+        <div class="kq-statgrp reveal"><p class="kqan-k">On trust, globally</p>${st.stats([
           ["14%", "fully trust AI with money advice; 72% want a human involved", "lavender"],
-          ["84%", "accept extra security steps if they stop fraud", "sky"],
           ["55%", "who ignored a real fraud alert thought it was a scam", "coral"],
-          ["1 in 2", "say jargon stops them growing their money", "sun"],
-        ])}<p class="kq-cap">Addition Wealth (US) · Experian 2026 · fraud study summary · Zopa (UK).</p></div>
+        ])}<p class="kq-cap">Addition Wealth (US) · fraud study summary.</p></div>
         <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
 
         <p class="kq-insight reveal">The warning already exists. What’s missing is the maths, and a way out.</p>
@@ -256,6 +275,12 @@ const main = `<main id="top">
         ${chapter("s-process", "03", "Process", "Seven days, five decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
         <figure class="kq-panel reveal">${tl.projectTimeline("03/")}</figure>
         <figure class="kq-panel reveal">${tl.journeyMap("03/")}<figcaption>Two moments of truth: the SMS from the bank, and how it ends.</figcaption></figure>
+        ${sub("Who we’ll test with (assumptions, not findings)", "")}
+        <ul class="kq-made kq-personas reveal">
+          <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">Salaried</span><b>Arjun, 27, Bengaluru</b><span>Rent on the 1st, salary on the 3rd, phone on EMI. <i>“Tell me before, not after.”</i></span></li>
+          <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">Freelance</span><b>Meera, 31, Pune</b><span>Illustrator. One client pays 45 days late; her SIP and card due don’t wait. <i>“Tell me which bill is at risk if this invoice slips.”</i></span></li>
+          <li style="--tile:#c9c3ff;--tile-ink:#1d1747"><span class="kq-made-n">Shop owner · later</span><b>Rakesh, 44, Lucknow</b><span>Pharmacy. Supplier debits and a shop-loan EMI; Hindi-first, Android. <i>“Will I cover Friday’s supplier debit?”</i></span></li>
+        </ul>
         ${sub("Emotional design: the right feeling at the right moment", "In banking, emotional design isn’t delight. It’s confidence when things are fine, reassurance and control when they aren’t, trust when money moves, and progress after.")}
         <figure class="kq-panel kq-ec-wrap reveal">${st.emotionCurve()}<figcaption>A design intention, to be tested. Framework: <a href="https://www.theuxda.com/blog/emotionally-intelligent-ux-power-next-gen-digital-banking">UXDA, emotionally intelligent UX in digital banking</a>.</figcaption></figure>
         ${sub("Brainstorm", "One idea, six directions. Filled ideas are in the prototype; dashed ones were parked or rejected.")}
@@ -271,6 +296,7 @@ const main = `<main id="top">
           ["Day 4", "A red “may bounce” banner", "One calm sentence, three ways out", "Say what happens and by how much, then how to fix it."],
           ["Day 5", "Two buttons side by side", "One button, one quiet link", "Fix now does the no-fee move. The other ways are a tap away."],
           ["Day 6", "Bright colour everywhere", "Black canvas, colour with a job", "Mint for money in, coral for short, lavender for the one action. Colour stays under 10% of any screen."],
+          ["After review", "An assistant named Seth", "Ask Khatiq", "Seth reads as a moneylender to many Hindi and Gujarati speakers, and as a Western name elsewhere. The assistant became part of Khatiq itself. A name test with speakers across regions is in the research plan."],
         ])}</div>
         ${sub("A review before anyone tests it", "Heuristic evaluation, an information-architecture check and a design critique. Eight findings, each fixed. Four of them:")}
         <ul class="kq-fixes reveal">
@@ -376,7 +402,7 @@ const main = `<main id="top">
           ["Pay", "phone", [["pay-hub", "Pay"], ["pay-scan", "Scan a QR"], ["pay-amount", "Enter an amount"], ["pay-pin", "UPI PIN"], ["pay-done", "Paid"], ["pay-rent", "The rent autopay"]]],
           ["Linking another bank", "phone", [["link-pick", "Pick a bank"], ["link-otp", "Approve the consent"], ["link-search", "Finding accounts"], ["link-found", "Choose accounts"], ["link-done", "Linked"], ["link-failed", "When a bank doesn’t answer"], ["link-consents", "Linked banks and consents"]]],
           ["Rent day Live Activity", "phone", [["live-lock", "Lock Screen, amounts hidden"], ["live-island", "Dynamic Island, compact"], ["live-expanded", "Expanded, short"], ["live-expanded-ok", "Expanded, on track"], ["live-lock-paid", "Paid, amounts shown"]]],
-          ["Seth, the assistant", "phone", [["ai-optin", "Off until you turn it on"], ["ai-chat", "Answers marked Sure, Not sure, Can’t do"], ["ai-sheet", "What each face means"], ["ai-home", "Seth on the bank home"]]],
+          ["Ask Khatiq, the assistant", "phone", [["ai-optin", "Off until you turn it on"], ["ai-chat", "Answers marked Sure, Not sure, Can’t do"], ["ai-sheet", "What each face means"], ["ai-home", "Ask Khatiq on the bank home"]]],
           ["Profile and settings", "phone", [["pro-profile", "Profile"], ["pro-inbox", "Notifications"], ["pro-cards", "Cash-flow card settings"], ["pro-security", "PIN and fingerprint"]]],
           ["For a small business", "phone", [["biz-home", "Cash position, three weeks"], ["biz-approve", "Approve a move"]]],
           ["Light mode and another bank", "phone", [["theme-light", "Light mode"], ["theme-light-ins", "Insights, light"], ["theme-deccan", "In Deccan’s colours"], ["theme-deccan-acc", "Deccan accounts"]]],
@@ -395,6 +421,13 @@ const main = `<main id="top">
           [9, 10, "Find a person in 10 seconds", "Talk to a person, from the card", "mint"],
           [7, 10, "Feel calm after", "One question, five words", "mint"],
         ])}</div>
+        ${sub("How it gets tested", "")}
+        <ol class="kq-reflect kq-plan reveal">
+          <li><b>Interviews</b><span>10 people (6 salaried, 4 freelancers) about the last time a payment bounced.</span></li>
+          <li><b>Two-week SMS diary</b><span>Real bank alerts, and which ones get ignored.</span></li>
+          <li><b>Name and word test</b><span>20+ people across Hindi, English and South Indian languages, covering <i>Khatiq</i>, the assistant’s name, and words like “short” and “bounce”.</span></li>
+          <li><b>Usability test</b><span>Two rounds of five, scored against the targets above.</span></li>
+        </ol>
         
 
         ${chapter("s-reflection", "06", "Reflection", "What I’d keep, and what’s next", "")}
@@ -402,7 +435,7 @@ const main = `<main id="top">
           <li><b>Calm is mostly copy</b><span>The biggest changes were words. “May bounce” became “you’ll be ₹1,059 short”, and the fix moved into the same card.</span></li>
           <li><b>Less on home, more on the one thing</b><span>Cutting home from 49 bits of text to a handful made the alert the obvious next step.</span></li>
           <li><b>Design the wrist first</b><span>Apple Watch forced the shortest version of every message, and that version improved the phone.</span></li>
-          <li><b>Next</b><span>Five to eight interviews in India, then the card in front of 8 to 10 people against the targets above.</span></li>
+          <li><b>Next</b><span>The name and word test, then ten interviews in India, then the card in front of ten people against the targets above. What the research changes will go on this page.</span></li>
         </ol>
 
         <p class="kq-credits">Credits: Apple, iPhone Duo (including the 3D model), Apple Watch and iPad. 3D viewer adapted from akashtdev’s iphone-duo-animation (MIT). Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>

@@ -115,7 +115,7 @@ function cga() {
 function lenses() {
   const L = [
     ["Consumer", "A salaried member, rent due before payday", "Gap card · options · confirm · done", "coral"],
-    ["AI assistant", "A member who asks Seth what to do", "Sure · unsure · can’t · hand off to a person", "lavender"],
+    ["AI assistant", "A member who asks the assistant what to do", "Sure · unsure · can’t · hand off to a person", "lavender"],
     ["Business", "A bakery owner and her accountant", "Cash position · approval with two roles", "sun"],
     ["Developer", "A partner adding an action to the card", "Manifest · sandbox · guardrails", "sky"],
   ];

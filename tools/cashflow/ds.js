@@ -60,7 +60,7 @@ function designSystem(banks) {
     ["#7ee8c2", "Mint", "money in"],
     ["#ff8f78", "Coral", "money out"],
     ["#ffd65a", "Sun", "savings"],
-    ["#b8b2ff", "Lavender", "shortcuts, Seth"],
+    ["#b8b2ff", "Lavender", "shortcuts, the assistant"],
     ["#84cbff", "Sky", "banks"],
     ["#c8f06e", "Lime", "paying"],
   ];
