@@ -5381,6 +5381,20 @@ body.is-locked { overflow: hidden; }
 .rflow li:hover .rflow-ph { transform: translateY(-3px); }
 .rflow b { font: 600 0.875rem/1.2 var(--font-display); color: var(--ink); }
 .rflow small { max-width: 10rem; font-size: 0.72rem; line-height: 1.35; color: var(--ink-dim); }
+/* Pathang v2: flow strips of any length (--n on the list), an unnumbered
+   variant for sets that are not a sequence, Watch-shaped frames, and a tile
+   that shows a device shot whole on a dark ground. */
+.rflow--n { grid-template-columns: repeat(var(--n), minmax(6.5rem, 1fr)); min-width: calc(var(--n) * 7.6rem); }
+.rflow--n::before { left: calc(50% / var(--n)); right: calc(50% / var(--n)); }
+.rflow--plain::before { content: none; }
+.rflow--mid li:last-child .rflow-n { background: #fa6e26; }
+.rflow--watch .rflow-ph { max-width: 8rem; border-radius: 26px; }
+.rflow--watch .rflow-ph img, .rflow--watch .shot-card img { border-radius: 23px; }
+.p--device { display: grid; justify-items: center; align-content: center; gap: 0.9rem; background: #0d0d0f; color: #f4f2ec; }
+/* A set height and contain: the shot keeps its own proportions whatever the tile is. */
+.p--device img { display: block; width: 100%; height: clamp(16rem, 30vw, 25rem); object-fit: contain; }
+.pdev-cap { font-size: 0.8125rem; line-height: 1.35; color: rgba(244, 242, 236, 0.74); text-align: center; }
+.pux-cta { display: flex; justify-content: center; margin: clamp(1rem, 2.5vw, 1.75rem) 0; }
 .p.p--rider { min-height: clamp(26rem, 46vw, 38rem); }
 .p.p--rider .p-img { object-position: 50% 35%; }
 
