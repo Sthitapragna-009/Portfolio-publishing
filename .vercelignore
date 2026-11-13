@@ -1,0 +1,7 @@
+# Build scripts, notes and local tooling: kept in the repo, never deployed.
+tools
+serve.js
+README.md
+.gitattributes
+.gitignore
+.claude

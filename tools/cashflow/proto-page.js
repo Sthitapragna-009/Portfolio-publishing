@@ -25,6 +25,7 @@ function protoPage() {
 <body>
   <a class="back" href="cash-flow-gap.html"><span aria-hidden="true">&larr;</span> Case study</a>
   <main class="stage">
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap">Khatiq prototype</h1>
     <div class="frame" id="frame">
       <iframe id="app" src="../prototypes/cash-flow-gap/index.html?embed" title="Khatiq prototype"></iframe>
     </div>

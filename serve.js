@@ -6,6 +6,15 @@ const path = require("path");
 const root = __dirname;
 const port = Number(process.env.PORT) || 5190;
 
+// Send the same security headers Vercel does (vercel.json), so a page that
+// breaks the Content-Security-Policy breaks here first, not in production.
+let siteHeaders = {};
+try {
+  const all = JSON.parse(fs.readFileSync(path.join(root, "vercel.json"), "utf8")).headers || [];
+  const site = all.find((h) => h.source === "/(.*)");
+  if (site) for (const h of site.headers) siteHeaders[h.key] = h.value.replace("; upgrade-insecure-requests", "");
+} catch (e) {}
+
 const types = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -21,6 +30,10 @@ const types = {
   ".woff2": "font/woff2",
   ".woff": "font/woff",
   ".ico": "image/x-icon",
+  ".xml": "application/xml; charset=utf-8",
+  ".txt": "text/plain; charset=utf-8",
+  ".gz": "application/gzip",
+  ".wav": "audio/wav",
 };
 
 http

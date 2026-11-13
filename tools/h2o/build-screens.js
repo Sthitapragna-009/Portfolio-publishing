@@ -49,7 +49,7 @@ const header = (title, ctx, { back = false, bell = false, tankPicker = false } =
   <header class="hd">
     ${back ? `<span class="hd-back">${ic("back", 24)}</span>` : ""}
     <div class="hd-t">
-      <h1>${title}</h1>
+      <div class="h28 sh1" role="heading" aria-level="3">${title}</div>
       ${ctx ? `<p class="ctx">${ctx}${tankPicker ? ic("down", 18) : ""}</p>` : ""}
     </div>
     ${bell ? `<span class="ib dot">${ic("bell", 22)}</span>` : ""}
@@ -152,7 +152,7 @@ S.f5 = { title: "Low water alert", note: "Warns, offers, never acts in Manual", 
   <header class="hd hd--end"><span class="ib">${ic("close", 24)}</span></header>
   <div class="center">${tank(22, { w: 124, h: 270, tone: "low" })}</div>
   <p class="meta c"><i class="dot dot--low"></i>Manual mode · 6:42 AM</p>
-  <h1 class="c">Water is low</h1>
+  <div class="h28 sh1 c" role="heading" aria-level="3">Water is low</div>
   <p class="sub c">The overhead tank is at 22%. The motor is off.</p>
   <div class="actions">
     <span class="btn btn-p">Start motor</span>
@@ -204,7 +204,7 @@ S.f8 = { title: "Possible leak", note: "Evidence first, then two choices", cls: 
   ${statusBar}
   <header class="hd hd--end"><span class="ib">${ic("close", 24)}</span></header>
   <p class="meta"><i class="dot dot--crit"></i>Smart noticed · 5:04 AM</p>
-  <h1>Possible leak</h1>
+  <div class="h28 sh1" role="heading" aria-level="3">Possible leak</div>
   <p class="sub">The tank lost 42 L overnight while every tap was closed.</p>
   <section class="chart">
     <div class="chart-w"><span class="lbl lbl--exp">Expected</span>${leakChart}<span class="lbl lbl--act">−42 L</span></div>
@@ -376,7 +376,7 @@ h1,.h28{font:700 28px/1.12 Archivo;letter-spacing:-.02em}
 /* alerts */
 .alert{padding-bottom:0}
 .center{display:flex;justify-content:center;margin:8px 0 4px}
-.alert h1{margin-top:-8px}
+.alert .sh1{margin-top:-8px}
 .actions{position:absolute;left:20px;right:20px;bottom:40px;display:flex;flex-direction:column;gap:10px}
 .chart{flex:none;padding:18px 18px 14px;border-radius:20px;background:var(--raised);margin-top:4px}
 .chart-w{position:relative;margin-top:18px}
