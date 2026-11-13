@@ -1090,4 +1090,105 @@
     window.addEventListener("load", sync);
   });
 
+  /* ---------- Case-study section navigator ---------- */
+  // The rail Paraga Mitra has (parag.js builds its own, with phases), for every
+  // other long case study: a circle per section title down the left edge, the
+  // line filled to the section on screen. Built after load so a page that
+  // already made one keeps it. Styles: .pg-toc in styles.css.
+  window.addEventListener("load", () => {
+    const main = document.querySelector("main#top");
+    // Where the rail steps aside: the next-project block, or the footer on a
+    // page that has none.
+    const next = document.querySelector(".case-next-actions");
+    const footBlock = (next && next.closest("section")) || document.querySelector("footer");
+    if (!main || !footBlock || document.querySelector(".pg-toc")) return;
+    const titles = [...main.querySelectorAll(".section-title, .h2-title, .kq-ch-title")].filter(
+      (t) => t.offsetParent !== null && !footBlock.contains(t) && t.textContent.trim()
+    );
+    if (titles.length < 5) return;
+
+    const used = new Set();
+    const items = [{ el: main, name: "Overview", hash: "#top" }].concat(
+      titles.map((t) => {
+        if (!t.id) {
+          let id = "s-" + t.textContent.trim().toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+          while (used.has(id) || document.getElementById(id)) id += "-x";
+          t.id = id;
+        }
+        used.add(t.id);
+        t.classList.add("toc-anchor");
+        return { el: t, name: t.textContent.trim().replace(/\s+/g, " "), hash: "#" + t.id };
+      })
+    );
+
+    const nav = document.createElement("nav");
+    nav.className = "pg-toc pg-toc--auto";
+    nav.setAttribute("aria-label", "Case study sections");
+    nav.style.setProperty("--rows", String(items.length));
+    const ol = document.createElement("ol");
+    const track = document.createElement("span");
+    const fill = document.createElement("span");
+    track.className = "pg-toc-track";
+    fill.className = "pg-toc-fill";
+    ol.append(track, fill);
+    items.forEach((it) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      const dot = document.createElement("i");
+      const label = document.createElement("span");
+      a.href = it.hash;
+      dot.setAttribute("aria-hidden", "true");
+      label.textContent = it.name;
+      a.append(dot, label);
+      li.append(a);
+      ol.append(li);
+      it.a = a;
+    });
+    nav.append(ol);
+    document.body.append(nav);
+
+    const mid = (it) => it.a.parentElement.offsetTop + it.a.offsetHeight / 2;
+    let y0 = 0;
+    const measure = () => {
+      y0 = mid(items[0]);
+      track.style.top = fill.style.top = y0 + "px";
+      track.style.height = mid(items[items.length - 1]) - y0 + "px";
+    };
+    measure();
+
+    nav.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if (!a) return;
+      e.preventDefault();
+      const it = items.find((x) => x.a === a);
+      if (it.el === main) window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      else it.el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+      history.replaceState(null, "", a.hash);
+    });
+
+    let cur = -1, ticking = false;
+    const update = () => {
+      ticking = false;
+      const line = innerHeight * 0.35;
+      let k = 0;
+      items.forEach((it, i) => { if (i && it.el.getBoundingClientRect().top <= line) k = i; });
+      // On once the opening screen is behind you; off again at the next-project footer.
+      const atFoot = footBlock.getBoundingClientRect().top < innerHeight * 0.9;
+      nav.classList.toggle("is-on", scrollY > innerHeight * 0.6 && !atFoot);
+      if (k === cur) return;
+      cur = k;
+      items.forEach((it, i) => {
+        it.a.classList.toggle("is-now", i === k);
+        it.a.classList.toggle("is-past", i < k);
+        if (i === k) it.a.setAttribute("aria-current", "location");
+        else it.a.removeAttribute("aria-current");
+      });
+      fill.style.height = mid(items[k]) - y0 + "px";
+    };
+    const queue = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener("scroll", queue, { passive: true });
+    window.addEventListener("resize", () => { measure(); cur = -1; queue(); });
+    update();
+  });
+
 })();
