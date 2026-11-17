@@ -1,3 +1,13 @@
 .DS_Store
 Thumbs.db
 node_modules/
+
+# Claude Code local data (working copies, skills); never part of the site.
+.claude/
+
+# Tripper Dash case study: local only until it is ready to publish.
+# Delete these four lines to bring it into git.
+assets/tripperdash/
+projects/tripper-dash.html
+prototypes/tripper-dash/
+tools/tripperdash/
