@@ -696,10 +696,20 @@ ${F_credits}      </div>
 const PAGES = [
   ["cash-flow-gap.html", null, MAIN_STORY],
 ];
+/* Vercel caches /assets for a day (vercel.json), so a changed stylesheet or a re-captured screen would be
+   served stale next to new HTML. Every local CSS, JS and image URL gets ?v=<content hash>: a new file, a new URL. */
+const crypto = require("crypto");
+const bust = (html) =>
+  html.replace(/((?:href|src|poster|data-still)=")(\.\.\/[^"?#]+\.(?:css|js|webp|png|jpg|svg))"/g, (m, attr, url) => {
+    const p = SITE + "/" + url.replace(/^\.\.\//, "");
+    if (!fs.existsSync(p)) return m;
+    const v = crypto.createHash("md5").update(fs.readFileSync(p)).digest("hex").slice(0, 8);
+    return `${attr}${url}?v=${v}"`;
+  });
 for (const [file, meta, body] of PAGES) {
-  const h = head;
-  fs.writeFileSync(SITE + "/projects/" + file, h + body + tail);
-  console.log("wrote projects/" + file, Math.round((h + body + tail).length / 1024) + " KB");
+  const html = bust(head + body + tail);
+  fs.writeFileSync(SITE + "/projects/" + file, html);
+  console.log("wrote projects/" + file, Math.round(html.length / 1024) + " KB");
 }
 fs.writeFileSync(SITE + "/projects/khatiq-prototype.html", pp.protoPage());
 console.log("wrote projects/khatiq-prototype.html");
