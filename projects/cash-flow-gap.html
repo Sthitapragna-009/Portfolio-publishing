@@ -107,7 +107,7 @@
       <div class="wrap">
 
         
-        <nav class="kq-index reveal" aria-label="Chapters"><ol><li><a href="#s-overview"><span>01</span>Overview</a></li><li><a href="#s-challenge"><span>02</span>Research</a></li><li><a href="#s-process"><span>03</span>Process</a></li><li><a href="#s-solution"><span>04</span>Solution</a></li><li><a href="#s-system"><span>05</span>Design system</a></li><li><a href="#s-screens"><span>06</span>All screens</a></li><li><a href="#s-try"><span>07</span>Try it</a></li><li><a href="#s-impact"><span>08</span>Impact</a></li><li><a href="#s-reflection"><span>09</span>Reflection</a></li></ol></nav>
+        <nav class="kq-index reveal" aria-label="Chapters"><ol><li><a href="#s-overview"><span>01</span>Overview</a></li><li><a href="#s-solution"><span>02</span>Solution</a></li><li><a href="#s-try"><span>03</span>Try it</a></li><li><a href="#s-challenge"><span>04</span>Research</a></li><li><a href="#s-process"><span>05</span>Process</a></li><li><a href="#s-system"><span>06</span>Design system</a></li><li><a href="#s-screens"><span>07</span>All screens</a></li><li><a href="#s-impact"><span>08</span>Impact</a></li><li><a href="#s-reflection"><span>09</span>Reflection</a></li></ol></nav>
 
         <header class="kq-ch reveal" id="s-overview">
           <p class="kq-ch-k"><span>01</span>Overview</p>
@@ -159,8 +159,114 @@
         <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
 
 
+        <header class="kq-ch reveal" id="s-solution">
+          <p class="kq-ch-k"><span>02</span>Solution</p>
+          <h2 class="kq-ch-title">Three days early, three taps to fix</h2>
+          <p class="kq-ch-intro">One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.</p>
+        </header>
+        <figure class="kq-photo kq-photo--wide reveal"><img src="../assets/cashflow/mk-sofa.webp?v=3e4fe08c" alt="Someone on a sofa holding an iPhone with Konkan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days" width="585" height="390" loading="lazy" decoding="async" /></figure>
+        <ol class="kq-flow reveal">
+          <li><span class="kq-flow-n">1</span><b>See it</b><img src="../assets/cashflow/gap-home.webp?v=b2f3b53a" alt="Home: Konkan, one thing to sort. Rent leaves 1 Nov, ₹1,059 short for 2 days. Move ₹1,500 from your savings pot, no fee: Fix now, or other ways" width="430" height="902" loading="lazy" decoding="async" /></li>
+          <li><span class="kq-flow-n">2</span><b>Choose</b><img src="../assets/cashflow/gap-compare.webp?v=36440c8b" alt="Ways to cover rent: what doing nothing costs, then three ways out with their costs" width="430" height="902" loading="lazy" decoding="async" /></li>
+          <li><span class="kq-flow-n">3</span><b>Confirm</b><img src="../assets/cashflow/gap-confirm.webp?v=c5483456" alt="Confirm: after this move, ₹32,740.50, and your lowest point before salary becomes ₹442" width="430" height="902" loading="lazy" decoding="async" /></li>
+          <li><span class="kq-flow-n">4</span><b>Done</b><img src="../assets/cashflow/gap-done.webp?v=1fadd876" alt="Rent is covered. Next date to watch, 3 Nov. You sorted this 3 days before it was due." width="430" height="902" loading="lazy" decoding="async" /></li>
+        </ol>
+
+        
+        
+        <div class="kq-sub reveal">
+          <h3>Every bill, as a folder</h3>
+          <p>Rent, EMIs, SIPs, card dues and the rest fan out as folders. The one at risk is lit, with the amount it is short. Drag through them; tap one to open it.</p>
+        </div>
+        <div class="kq-folders reveal">
+          <figure class="kq-folders-phone kq-clip">
+            <img class="kq-clip-anim" src="../assets/cashflow/bills-fan-anim.webp?v=0e00d6e5" data-still="../assets/cashflow/bills-fan-poster.webp?v=68d7cd29" width="480" height="1043" loading="lazy" decoding="async" alt="Animated, recorded from the prototype: a thumb swipes through the bill folders and each one’s payments rise in as it comes forward; a flick sends the fan back to Rent, lit lavender and ₹1,059 short, and a tap closes and reopens it so its papers lift and the fix pops out" />
+            <button class="kq-clip-btn" type="button" aria-pressed="false">Pause</button>
+          </figure>
+          <figure class="kq-folders-duo"><img src="../assets/cashflow/duo-inner-bills.webp?v=dd59ca7a" alt="iPhone Duo open: the folder fan on the left and the Rent folder on the right, with Fix now" width="979" height="697" loading="lazy" decoding="async" /><figcaption>On iPhone Duo the open folder takes the second pane.</figcaption></figure>
+        </div>
+        <script>
+          /* The fan loop is an animated image (like a GIF). Pause swaps in a still frame; with Reduce Motion it starts paused. */
+          (() => {
+            const fig = document.querySelector(".kq-clip");
+            if (!fig) return;
+            const im = fig.querySelector(".kq-clip-anim");
+            const btn = fig.querySelector(".kq-clip-btn");
+            const moving = im.getAttribute("src");
+            let paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const sync = () => {
+              im.src = paused ? im.dataset.still : moving;
+              btn.textContent = paused ? "Play" : "Pause";
+              btn.setAttribute("aria-pressed", String(paused));
+            };
+            btn.addEventListener("click", () => { paused = !paused; sync(); });
+            sync();
+          })();
+        </script>
+        
+        <header class="kq-ch reveal" id="s-try">
+          <p class="kq-ch-k"><span>03</span>Try it</p>
+          <h2 class="kq-ch-title">The whole app, right here</h2>
+          
+        </header>
+
+        <div class="kq-sub reveal" id="kq-try">
+          <h3>Try it yourself</h3>
+          <p>The whole app runs here. Tap Fix now and follow it to the end, or open Profile, Cash-flow cards to see rent day on the Lock Screen.</p>
+        </div>
+        <div class="cf-live reveal">
+          <iframe src="../prototypes/cash-flow-gap/index.html?embed" title="Khatiq prototype" loading="lazy"></iframe>
+          <p class="kq-cap">Invented data. <a href="../prototypes/cash-flow-gap/index.html" target="_blank" rel="noopener">Open with all controls<span class="sr-only"> (new tab)</span></a>: four lenses, two banks, light and dark, iPhone Duo, iPad and Apple Watch.</p>
+        </div>
+        <p class="kq-proto-cta reveal"><a class="kq-btn" href="khatiq-prototype.html">Open the prototype in its own page <span aria-hidden="true">→</span></a></p>
+
+        
+        <div class="kq-sub reveal">
+          <h3>The same moment, wherever you look</h3>
+          <p>Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.</p>
+        </div>
+        <div class="kq-duo3d-head reveal">
+          <h3 class="kq-duo3d-title">Interactive iPhone Duo prototype</h3>
+          <p class="kq-duo3d-ghost">Designing for foldables</p>
+        </div>
+        <div class="kq-duo3d reveal">
+          <iframe data-src="../prototypes/khatiq-duo/index.html" title="Khatiq on iPhone Duo, in 3D: drag to fold, or pick a pose"></iframe>
+        </div>
+        <script>
+          /* The 3D viewer is about 4 MB. Start it once the page is idle, or as soon as it is within two screens,
+             whichever comes first, so it is usually ready by the time someone scrolls to it. The viewer stops
+             drawing while it is off screen. With Data Saver on, it waits until it is close. */
+          (() => {
+            const frame = document.querySelector(".kq-duo3d iframe");
+            if (!frame) return;
+            let started = false;
+            const start = () => {
+              if (started) return;
+              started = true;
+              frame.src = frame.dataset.src;
+            };
+            const saveData = navigator.connection && navigator.connection.saveData;
+            if (!saveData) {
+              const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2500));
+              if (document.readyState === "complete") idle();
+              else addEventListener("load", idle, { once: true });
+            }
+            if ("IntersectionObserver" in window) {
+              const near = new IntersectionObserver((entries) => {
+                if (entries.some((entry) => entry.isIntersecting)) {
+                  start();
+                  near.disconnect();
+                }
+              }, { rootMargin: "200% 0px" });
+              near.observe(frame);
+            } else start();
+          })();
+        </script>
+        <p class="kq-cap kq-credit reveal">Drag the slider to fold it, drag the phone to turn it, or pick a pose. 3D model: Apple, iPhone Duo. Viewer adapted from akashtdev’s iphone-duo-animation (MIT).</p>
+
+
         <header class="kq-ch reveal" id="s-challenge">
-          <p class="kq-ch-k"><span>02</span>Research</p>
+          <p class="kq-ch-k"><span>04</span>Research</p>
           <h2 class="kq-ch-title">Rent leaves before salary lands</h2>
           <p class="kq-ch-intro">Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.</p>
         </header>
@@ -247,7 +353,7 @@
         
 
         <header class="kq-ch reveal" id="s-process">
-          <p class="kq-ch-k"><span>03</span>Process</p>
+          <p class="kq-ch-k"><span>05</span>Process</p>
           <h2 class="kq-ch-title">Seven days, six decisions</h2>
           <p class="kq-ch-intro">I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.</p>
         </header>
@@ -557,54 +663,9 @@
           <li><b>No Increase Contrast</b><span>Bars turn solid with a visible edge, and secondary text goes to full strength.</span></li>
         </ul>
         <p class="kq-cap reveal">Skills: <a href="https://github.com/Sthitapragna-009/Critical_UX" target="_blank" rel="noopener">criticalUX<span class="sr-only"> (new tab)</span></a> · <a href="https://github.com/Sthitapragna-009/liqUI9" target="_blank" rel="noopener">liqUI9<span class="sr-only"> (new tab)</span></a>.</p>
-
-        <header class="kq-ch reveal" id="s-solution">
-          <p class="kq-ch-k"><span>04</span>Solution</p>
-          <h2 class="kq-ch-title">Three days early, three taps to fix</h2>
-          <p class="kq-ch-intro">One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.</p>
-        </header>
-        <figure class="kq-photo kq-photo--wide reveal"><img src="../assets/cashflow/mk-sofa.webp?v=3e4fe08c" alt="Someone on a sofa holding an iPhone with Konkan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days" width="585" height="390" loading="lazy" decoding="async" /></figure>
-        <ol class="kq-flow reveal">
-          <li><span class="kq-flow-n">1</span><b>See it</b><img src="../assets/cashflow/gap-home.webp?v=b2f3b53a" alt="Home: Konkan, one thing to sort. Rent leaves 1 Nov, ₹1,059 short for 2 days. Move ₹1,500 from your savings pot, no fee: Fix now, or other ways" width="430" height="902" loading="lazy" decoding="async" /></li>
-          <li><span class="kq-flow-n">2</span><b>Choose</b><img src="../assets/cashflow/gap-compare.webp?v=36440c8b" alt="Ways to cover rent: what doing nothing costs, then three ways out with their costs" width="430" height="902" loading="lazy" decoding="async" /></li>
-          <li><span class="kq-flow-n">3</span><b>Confirm</b><img src="../assets/cashflow/gap-confirm.webp?v=c5483456" alt="Confirm: after this move, ₹32,740.50, and your lowest point before salary becomes ₹442" width="430" height="902" loading="lazy" decoding="async" /></li>
-          <li><span class="kq-flow-n">4</span><b>Done</b><img src="../assets/cashflow/gap-done.webp?v=1fadd876" alt="Rent is covered. Next date to watch, 3 Nov. You sorted this 3 days before it was due." width="430" height="902" loading="lazy" decoding="async" /></li>
-        </ol>
-
-        
-        
-        <div class="kq-sub reveal">
-          <h3>Every bill, as a folder</h3>
-          <p>Rent, EMIs, SIPs, card dues and the rest fan out as folders. The one at risk is lit, with the amount it is short. Drag through them; tap one to open it.</p>
-        </div>
-        <div class="kq-folders reveal">
-          <figure class="kq-folders-phone kq-clip">
-            <img class="kq-clip-anim" src="../assets/cashflow/bills-fan-anim.webp?v=0e00d6e5" data-still="../assets/cashflow/bills-fan-poster.webp?v=68d7cd29" width="480" height="1043" loading="lazy" decoding="async" alt="Animated, recorded from the prototype: a thumb swipes through the bill folders and each one’s payments rise in as it comes forward; a flick sends the fan back to Rent, lit lavender and ₹1,059 short, and a tap closes and reopens it so its papers lift and the fix pops out" />
-            <button class="kq-clip-btn" type="button" aria-pressed="false">Pause</button>
-          </figure>
-          <figure class="kq-folders-duo"><img src="../assets/cashflow/duo-inner-bills.webp?v=dd59ca7a" alt="iPhone Duo open: the folder fan on the left and the Rent folder on the right, with Fix now" width="979" height="697" loading="lazy" decoding="async" /><figcaption>On iPhone Duo the open folder takes the second pane.</figcaption></figure>
-        </div>
-        <script>
-          /* The fan loop is an animated image (like a GIF). Pause swaps in a still frame; with Reduce Motion it starts paused. */
-          (() => {
-            const fig = document.querySelector(".kq-clip");
-            if (!fig) return;
-            const im = fig.querySelector(".kq-clip-anim");
-            const btn = fig.querySelector(".kq-clip-btn");
-            const moving = im.getAttribute("src");
-            let paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
-            const sync = () => {
-              im.src = paused ? im.dataset.still : moving;
-              btn.textContent = paused ? "Play" : "Pause";
-              btn.setAttribute("aria-pressed", String(paused));
-            };
-            btn.addEventListener("click", () => { paused = !paused; sync(); });
-            sync();
-          })();
-        </script>
         
         <header class="kq-ch reveal" id="s-system">
-          <p class="kq-ch-k"><span>05</span>Design system</p>
+          <p class="kq-ch-k"><span>06</span>Design system</p>
           <h2 class="kq-ch-title">Built from the app’s own tokens</h2>
           <p class="kq-ch-intro">Read straight from the prototype, so this page can’t drift from the app.</p>
         </header>
@@ -785,7 +846,7 @@
   </div>
         
         <header class="kq-ch reveal" id="s-screens">
-          <p class="kq-ch-k"><span>06</span>All screens</p>
+          <p class="kq-ch-k"><span>07</span>All screens</p>
           <h2 class="kq-ch-title">Every screen, on every device</h2>
           <p class="kq-ch-intro">Rent day outside the app, data at a glance, what makes it trustworthy, and every flow, on iPhone, iPhone Duo, iPad and Apple Watch.</p>
         </header>
@@ -909,66 +970,6 @@
         </section></div>
 
         
-        
-        <header class="kq-ch reveal" id="s-try">
-          <p class="kq-ch-k"><span>07</span>Try it</p>
-          <h2 class="kq-ch-title">The whole app, right here</h2>
-          
-        </header>
-
-        <div class="kq-sub reveal" id="kq-try">
-          <h3>Try it yourself</h3>
-          <p>The whole app runs here. Tap Fix now and follow it to the end, or open Profile, Cash-flow cards to see rent day on the Lock Screen.</p>
-        </div>
-        <div class="cf-live reveal">
-          <iframe src="../prototypes/cash-flow-gap/index.html?embed" title="Khatiq prototype" loading="lazy"></iframe>
-          <p class="kq-cap">Invented data. <a href="../prototypes/cash-flow-gap/index.html" target="_blank" rel="noopener">Open with all controls<span class="sr-only"> (new tab)</span></a>: four lenses, two banks, light and dark, iPhone Duo, iPad and Apple Watch.</p>
-        </div>
-        <p class="kq-proto-cta reveal"><a class="kq-btn" href="khatiq-prototype.html">Open the prototype in its own page <span aria-hidden="true">→</span></a></p>
-
-        
-        <div class="kq-sub reveal">
-          <h3>The same moment, wherever you look</h3>
-          <p>Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.</p>
-        </div>
-        <div class="kq-duo3d-head reveal">
-          <h3 class="kq-duo3d-title">Interactive iPhone Duo prototype</h3>
-          <p class="kq-duo3d-ghost">Designing for foldables</p>
-        </div>
-        <div class="kq-duo3d reveal">
-          <iframe data-src="../prototypes/khatiq-duo/index.html" title="Khatiq on iPhone Duo, in 3D: drag to fold, or pick a pose"></iframe>
-        </div>
-        <script>
-          /* The 3D viewer is about 4 MB. Start it once the page is idle, or as soon as it is within two screens,
-             whichever comes first, so it is usually ready by the time someone scrolls to it. The viewer stops
-             drawing while it is off screen. With Data Saver on, it waits until it is close. */
-          (() => {
-            const frame = document.querySelector(".kq-duo3d iframe");
-            if (!frame) return;
-            let started = false;
-            const start = () => {
-              if (started) return;
-              started = true;
-              frame.src = frame.dataset.src;
-            };
-            const saveData = navigator.connection && navigator.connection.saveData;
-            if (!saveData) {
-              const idle = () => ("requestIdleCallback" in window ? requestIdleCallback(start, { timeout: 4000 }) : setTimeout(start, 2500));
-              if (document.readyState === "complete") idle();
-              else addEventListener("load", idle, { once: true });
-            }
-            if ("IntersectionObserver" in window) {
-              const near = new IntersectionObserver((entries) => {
-                if (entries.some((entry) => entry.isIntersecting)) {
-                  start();
-                  near.disconnect();
-                }
-              }, { rootMargin: "200% 0px" });
-              near.observe(frame);
-            } else start();
-          })();
-        </script>
-        <p class="kq-cap kq-credit reveal">Drag the slider to fold it, drag the phone to turn it, or pick a pose. 3D model: Apple, iPhone Duo. Viewer adapted from akashtdev’s iphone-duo-animation (MIT).</p>
 
         <header class="kq-ch reveal" id="s-impact">
           <p class="kq-ch-k"><span>08</span>Impact</p>

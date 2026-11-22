@@ -516,7 +516,7 @@ const F_platform = `        <p class="kq-constraints reveal"><b>Platform</b> App
 const F_duo_short = F_duo.replace(/^[\s\S]*?(<div class="kq-duo3d-head)/, "        $1");
 
 // ---------- the four bodies that used to be deep pages, now chapters of the one page ----------
-const B_research = `${chapter("s-challenge", "02", "Research", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
+const B_research = `${chapter("s-challenge", "04", "Research", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
         <figure class="kq-panel kq-loop-wrap reveal">${pr.loop()}<figcaption>Today’s loop, every month the dates don’t line up.</figcaption></figure>
         <div class="reveal">${st.beforeAfter(img("alert-card.webp", "The real card from the Khatiq app: Konkan, one thing to sort. Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days. A 30-day chart with two short days, and See 3 ways to fix it"))}</div>
         ${sub("What already exists", "People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.")}
@@ -559,7 +559,7 @@ const B_research = `${chapter("s-challenge", "02", "Research", "Rent leaves befo
           <li style="--tile:#c9c3ff;--tile-ink:#1d1747"><span class="kq-made-n">Shop owner · later</span><b>Rakesh, 44, Lucknow</b><span>Pharmacy. Supplier debits and a shop-loan EMI; Hindi-first, Android. <i>“Will I cover Friday’s supplier debit?”</i></span></li>
         </ul>
         `;
-const B_process = `${chapter("s-process", "03", "Process", "Seven days, six decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
+const B_process = `${chapter("s-process", "05", "Process", "Seven days, six decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
         <figure class="kq-panel reveal">${tl.projectTimeline("03/")}</figure>
         <figure class="kq-panel reveal">${tl.journeyMap("03/")}<figcaption>Two moments of truth: the SMS from the bank, and how it ends.</figcaption></figure>
         ${sub("Emotional design: the right feeling at the right moment", "In banking, emotional design isn’t delight. It’s confidence when things are fine, reassurance and control when they aren’t, trust when money moves, and progress after.")}
@@ -645,8 +645,8 @@ const B_screens = `        <div class="cf-eco kq-eco-strip reveal">
 
 /** The nine chapters, as an index under the hero: everything is on this one page. */
 const TOC = [
-  ["s-overview", "Overview"], ["s-challenge", "Research"], ["s-process", "Process"], ["s-solution", "Solution"], ["s-system", "Design system"],
-  ["s-screens", "All screens"], ["s-try", "Try it"], ["s-impact", "Impact"], ["s-reflection", "Reflection"],
+  ["s-overview", "Overview"], ["s-solution", "Solution"], ["s-try", "Try it"], ["s-challenge", "Research"], ["s-process", "Process"],
+  ["s-system", "Design system"], ["s-screens", "All screens"], ["s-impact", "Impact"], ["s-reflection", "Reflection"],
 ];
 const F_toc = `
         <nav class="kq-index reveal" aria-label="Chapters"><ol>${TOC.map(([id, t], i) => `<li><a href="#${id}"><span>${String(i + 1).padStart(2, "0")}</span>${e(t)}</a></li>`).join("")}</ol></nav>`;
@@ -654,9 +654,7 @@ const F_toc = `
 const MAIN_STORY = `<main id="top">
 ${F_hero_short}${F_toc}
 ${F_overview}${F_who}
-${B_research}
-${B_process}
-${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix", "One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.")}
+${chapter("s-solution", "02", "Solution", "Three days early, three taps to fix", "One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.")}
         ${photo("mk-sofa.webp", "Someone on a sofa holding an iPhone with Konkan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days", "kq-photo--wide")}
         <ol class="kq-flow reveal">
           <li><span class="kq-flow-n">1</span><b>See it</b>${img("gap-home.webp", "Home: Konkan, one thing to sort. Rent leaves 1 Nov, ₹1,059 short for 2 days. Move ₹1,500 from your savings pot, no fee: Fix now, or other ways")}</li>
@@ -666,12 +664,15 @@ ${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix",
         </ol>
 
         ${F_folders}
-        ${chapter("s-system", "05", "Design system", "Built from the app’s own tokens", "Read straight from the prototype, so this page can’t drift from the app.")}
+        ${chapter("s-try", "03", "Try it", "The whole app, right here", "")}
+${F_tryit}${F_duo}
+${B_research}
+${B_process}
+        ${chapter("s-system", "06", "Design system", "Built from the app’s own tokens", "Read straight from the prototype, so this page can’t drift from the app.")}
         ${ds.designSystem(banks)}
-        ${chapter("s-screens", "06", "All screens", "Every screen, on every device", "Rent day outside the app, data at a glance, what makes it trustworthy, and every flow, on iPhone, iPhone Duo, iPad and Apple Watch.")}
+        ${chapter("s-screens", "07", "All screens", "Every screen, on every device", "Rent day outside the app, data at a glance, what makes it trustworthy, and every flow, on iPhone, iPhone Duo, iPad and Apple Watch.")}
 ${B_screens}
-        ${chapter("s-try", "07", "Try it", "The whole app, right here", "")}
-${F_tryit}${F_duo}${chapter("s-impact", "08", "Impact", "What it has to prove", "Nothing has been tested yet. These are the bars it must clear with 8 to 10 people, written down now so they can’t drift.")}
+${chapter("s-impact", "08", "Impact", "What it has to prove", "Nothing has been tested yet. These are the bars it must clear with 8 to 10 people, written down now so they can’t drift.")}
         <div class="kq-panel reveal">${st.targets([
           [8, 10, "Get it in 5 seconds", "Restate the situation and next step", "mint"],
           [8, 10, "Fix it in 60 seconds", "Cover a gap, unaided", "mint"],
