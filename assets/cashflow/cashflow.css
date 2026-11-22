@@ -863,7 +863,8 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .cf-live iframe {
-    height: 900px;
+    /* the phone screen is about 948 px tall at this width: no scrolling inside the frame */
+    height: 960px;
   }
 }
 

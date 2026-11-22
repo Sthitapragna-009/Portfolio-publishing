@@ -31,6 +31,17 @@ const HELPERS = `
    device, an optional crop of the rendered screen [x, y, w, h] in CSS px, the target quad in photo px
    (TL, TR, BR, BL), the corner radius in CSS px, and a light adjustment so the screen sits in the photo. */
 const MOCKUPS = [
+  // Bills and autopays: the folder fan, for the hero and the project card. motion: true because Reduce Motion flattens the fan.
+  {
+    name: 'mk-hand-bills',
+    photo: 'iphone-hand.webp',
+    screens: [{ setup: "go(['pay','bills'], { sel: { folder: 'rent' } })", motion: true, quad: [[375, 386], [685, 370], [856, 1031], [535, 1050]], radius: 54, light: 0.9 }],
+  },
+  {
+    name: 'mk-sofa-bills',
+    photo: 'iphone-sofa.webp',
+    screens: [{ setup: "go(['pay','bills'], { sel: { folder: 'rent' } })", motion: true, quad: [[316, 204], [485, 172], [636, 524], [466, 573]], radius: 54, light: 0.86 }],
+  },
   {
     name: 'mk-hand',
     photo: 'iphone-hand.webp',
@@ -156,7 +167,8 @@ async function main() {
   await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
 
   /** Renders one app screen at 3x and returns it as a PNG data URL plus its CSS size. */
-  async function screen({ setup, css = '', crop }) {
+  async function screen({ setup, css = '', crop, motion = false }) {
+    await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: motion ? 'no-preference' : 'reduce' }] });
     await send('Emulation.setDeviceMetricsOverride', { width: 1500, height: 1100, deviceScaleFactor: 3, mobile: false });
     await send('Emulation.setDefaultBackgroundColorOverride', { color: { r: 0, g: 0, b: 0, a: 0 } });
     await send('Page.navigate', { url: 'about:blank' });
@@ -164,7 +176,7 @@ async function main() {
     await send('Page.navigate', { url: `${APP}?r=${Date.now()}` });
     await sleep(1400);
     await js(`await document.fonts.ready; for (let i = 0; i < 40 && !window.__store; i++) await wait(100);
-      ${setup}; await wait(1100);
+      ${setup}; await wait(1600);
       const s = document.createElement('style'); s.textContent = ${JSON.stringify('.rail { visibility: hidden; } .phone { box-shadow: none !important; border-radius: 0 !important; } .phone .home-indicator { opacity: .9 } ' + css)}; document.head.appendChild(s); await wait(300);`);
     const r = await js(`const b = document.querySelector('.phone').getBoundingClientRect(); return { x: b.left + scrollX, y: b.top + scrollY, w: b.width, h: b.height };`);
     const [cx, cy, cw, ch] = crop || [0, 0, r.w, r.h];
@@ -172,7 +184,9 @@ async function main() {
     return { data: `data:image/png;base64,${shot.data}`, w: cw, h: ch };
   }
 
-  for (const mk of MOCKUPS) {
+  // node tools/cashflow/mockups.js mk-hand-bills mk-sofa-bills  -> only those
+  const only = process.argv.slice(2);
+  for (const mk of MOCKUPS.filter((m) => !only.length || only.includes(m.name))) {
     const shots = [];
     for (const s of mk.screens) shots.push({ ...s, ...(await screen(s)) });
     const photo = fs.readFileSync(path.join(PHOTOS, mk.photo)).toString('base64');

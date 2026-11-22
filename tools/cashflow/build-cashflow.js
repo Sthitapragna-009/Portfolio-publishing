@@ -184,8 +184,8 @@ const CHAPTERS = [
   ["s-reflection", "Reflection"],
 ];
 
-const main = `<main id="top">
-    <section class="section case-head kq-top" id="cf-top">
+// ---------- fragments (the old one-page case study, cut into pieces; see split history in git) ----------
+const F_hero = `    <section class="section case-head kq-top" id="cf-top">
       <div class="wrap">
         <a class="case-back" href="../index.html#work"><span aria-hidden="true">&larr;</span> All projects</a>
         <div class="kq-hero reveal">
@@ -216,9 +216,11 @@ const main = `<main id="top">
     <section class="section case-plates kq-story">
       <div class="wrap">
 
-        ${chapter("s-overview", "01", "Overview", "The gap, in one picture", "Arjun has ₹31,241 today. Rent of ₹32,000 leaves by autopay on 1 Nov; his salary lands on the 3rd. For two days he’s ₹1,058 short, and if the autopay bounces, bank charges and a late fee follow.")}
+        `;
+const F_overview = `${chapter("s-overview", "01", "Overview", "The gap, in one picture", "Arjun has ₹31,241 today. Rent of ₹32,000 leaves by autopay on 1 Nov; his salary lands on the 3rd. For two days he’s ₹1,058 short, and if the autopay bounces, bank charges and a late fee follow.")}
         <figure class="kq-panel kq-chart reveal">${st.gapChart()}<figcaption>The prototype’s own 14-day projection. The two short days drop below the line; salary day is mint.</figcaption></figure>
-        ${sub("Who it’s for", "Khatiq starts with one group: salaried people aged 22–35 in Indian cities, paid on a fixed date, with money in two or more banks and three or more autopays (rent, EMIs, SIPs, card dues). They can afford their bills. The dates just don’t line up.")}
+        `;
+const F_who = `${sub("Who it’s for", "Khatiq starts with one group: salaried people aged 22–35 in Indian cities, paid on a fixed date, with money in two or more banks and three or more autopays (rent, EMIs, SIPs, card dues). They can afford their bills. The dates just don’t line up.")}
         <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
           <thead><tr><th scope="col">Who</th><th scope="col">Why the gap hurts</th><th scope="col">In this version</th></tr></thead>
           <tbody>
@@ -230,16 +232,19 @@ const main = `<main id="top">
         </table></div>
         <p class="kq-cap reveal">Defined by behaviour, not age or city: fixed debits, a fixed pay date, more than one bank.</p>
         <p class="kq-constraints reveal"><b>Not only rent</b> The same gap shows up for EMIs, credit-card dues, SIPs and freelance pay that lands late. Rent is the clearest example, so the prototype starts there.</p>
-        <ul class="kq-made reveal">
+`;
+const F_made = `        <ul class="kq-made reveal">
           <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">01</span><b>A home for all your money</b><span>One line says whether you’re okay, across every bank you use.</span></li>
           <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">02</span><b>One calm card, 3 days early</b><span>The amount, the days, and three ways out with their costs.</span></li>
           <li style="--tile:#c9c3ff;--tile-ink:#1d1747"><span class="kq-made-n">03</span><b>The same moment everywhere</b><span>iPhone, both screens of iPhone Duo, iPad and Apple Watch.</span></li>
         </ul>
 
-        ${chapter("s-challenge", "02", "Challenge", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
+        `;
+const F_challenge = `${chapter("s-challenge", "02", "Challenge", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
         <figure class="kq-panel kq-loop-wrap reveal">${pr.loop()}<figcaption>Today’s loop, every month the dates don’t line up.</figcaption></figure>
         <div class="reveal">${st.beforeAfter(img("alert-card.webp", "The real card from the Khatiq app: Konkan, one thing to sort. Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days. A 30-day chart with two short days, and See 3 ways to fix it"))}</div>
-        ${sub("What already exists", "People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.")}
+        `;
+const F_exists = `${sub("What already exists", "People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.")}
         <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
           <thead><tr><th scope="col">Signal</th><th scope="col">When it arrives</th><th scope="col">What you learn</th></tr></thead>
           <tbody>
@@ -249,15 +254,18 @@ const main = `<main id="top">
             <tr class="is-us"><td>Khatiq</td><td>Three days before</td><td>How short, for how long, and three ways out with their costs.</td></tr>
           </tbody>
         </table></div>
-        ${sub("Why now", "India’s rails can finally see the whole picture. 338 million accounts are linked through the Account Aggregator, and RBI is making aggregators interoperable by 31 December 2026. UPI e-mandates passed 1.8 billion a month at the top ten banks in July 2026. The data to warn early exists. Nobody yet joins salary dates to debit dates.")}
+        `;
+const F_whynow = `${sub("Why now", "India’s rails can finally see the whole picture. 338 million accounts are linked through the Account Aggregator, and RBI is making aggregators interoperable by 31 December 2026. UPI e-mandates passed 1.8 billion a month at the top ten banks in July 2026. The data to warn early exists. Nobody yet joins salary dates to debit dates.")}
         <p class="kq-cap reveal">Sources: <a href="https://www.freepressjournal.in/business/rbi-to-make-account-aggregators-interoperable-allow-cas-bank-deposits" target="_blank" rel="noopener">Free Press Journal<span class="sr-only"> (new tab)</span></a> · <a href="https://inc42.com/buzz/npci-to-let-users-port-upi-autopay-mandates-across-apps-report/" target="_blank" rel="noopener">Inc42<span class="sr-only"> (new tab)</span></a>.</p>
-        ${sub("What people need from that moment", "Written as jobs to be done. Interviews in India come first in the research plan.")}
+        `;
+const F_jobs = `${sub("What people need from that moment", "Written as jobs to be done. Interviews in India come first in the research plan.")}
         <ol class="kq-jobs reveal">
           <li><span>Main job</span><p>Tell me early if I won’t be okay this month.</p></li>
           <li><span>Emotional job</span><p>Help me feel in control, not judged or alarmed.</p></li>
           <li><span>Related job</span><p>Show me this is really my bank, and that a person is reachable.</p></li>
         </ol>
-        ${sub("What the numbers say", "")}
+        `;
+const F_numbers = `${sub("What the numbers say", "")}
         <div class="kq-statgrp reveal"><p class="kqan-k">In India</p>${st.stats([
           ["80%+", "of salaried employees ran out of salary before month-end; 34% before mid-month", "coral"],
           ["40%+", "borrowed from friends or family to cover the gap", "sun"],
@@ -268,20 +276,24 @@ const main = `<main id="top">
           ["14%", "fully trust AI with money advice; 72% want a human involved", "lavender"],
           ["55%", "who ignored a real fraud alert thought it was a scam", "coral"],
         ])}<p class="kq-cap">Addition Wealth (US) · fraud study summary.</p></div>
-        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
+`;
+const F_designedfor = `        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
 
         <p class="kq-insight reveal">The warning already exists. What’s missing is the maths, and a way out.</p>
 
-        ${chapter("s-process", "03", "Process", "Seven days, five decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
+        `;
+const F_process = `${chapter("s-process", "03", "Process", "Seven days, five decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
         <figure class="kq-panel reveal">${tl.projectTimeline("03/")}</figure>
         <figure class="kq-panel reveal">${tl.journeyMap("03/")}<figcaption>Two moments of truth: the SMS from the bank, and how it ends.</figcaption></figure>
-        ${sub("Who we’ll test with (assumptions, not findings)", "")}
+        `;
+const F_personas = `${sub("Who we’ll test with (assumptions, not findings)", "")}
         <ul class="kq-made kq-personas reveal">
           <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">Salaried</span><b>Arjun, 27, Bengaluru</b><span>Rent on the 1st, salary on the 3rd, phone on EMI. <i>“Tell me before, not after.”</i></span></li>
           <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">Freelance</span><b>Meera, 31, Pune</b><span>Illustrator. One client pays 45 days late; her SIP and card due don’t wait. <i>“Tell me which bill is at risk if this invoice slips.”</i></span></li>
           <li style="--tile:#c9c3ff;--tile-ink:#1d1747"><span class="kq-made-n">Shop owner · later</span><b>Rakesh, 44, Lucknow</b><span>Pharmacy. Supplier debits and a shop-loan EMI; Hindi-first, Android. <i>“Will I cover Friday’s supplier debit?”</i></span></li>
         </ul>
-        ${sub("Emotional design: the right feeling at the right moment", "In banking, emotional design isn’t delight. It’s confidence when things are fine, reassurance and control when they aren’t, trust when money moves, and progress after.")}
+        `;
+const F_emotion = `${sub("Emotional design: the right feeling at the right moment", "In banking, emotional design isn’t delight. It’s confidence when things are fine, reassurance and control when they aren’t, trust when money moves, and progress after.")}
         <figure class="kq-panel kq-ec-wrap reveal">${st.emotionCurve()}<figcaption>A design intention, to be tested. Framework: <a href="https://www.theuxda.com/blog/emotionally-intelligent-ux-power-next-gen-digital-banking">UXDA, emotionally intelligent UX in digital banking</a>.</figcaption></figure>
         ${sub("Brainstorm", "One idea, six directions. Filled ideas are in the prototype; dashed ones were parked or rejected.")}
         <figure class="kq-panel kq-mm-wrap reveal">${pr.mindMap()}</figure>
@@ -308,7 +320,8 @@ const main = `<main id="top">
         ${sub("Heuristics and principles, on the screen", "The project’s design principles and Nielsen’s usability heuristics, connected to the parts of the screen where they do their work.")}
         ${fi.heuristics(img)}
 
-        ${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix", "One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.")}
+        `;
+const F_solution = `${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix", "One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.")}
         ${photo("mk-sofa.webp", "Someone on a sofa holding an iPhone with Konkan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days", "kq-photo--wide")}
         <ol class="kq-flow reveal">
           <li><span class="kq-flow-n">1</span><b>See it</b>${img("gap-home.webp", "Home: Konkan, one thing to sort. Rent leaves 1 Nov, ₹1,059 short for 2 days. Move ₹1,500 from your savings pot, no fee: Fix now, or other ways")}</li>
@@ -317,14 +330,16 @@ const main = `<main id="top">
           <li><span class="kq-flow-n">4</span><b>Done</b>${img("gap-done.webp", "Rent is covered. Next date to watch, 3 Nov. You sorted this 3 days before it was due.")}</li>
         </ol>
 
-        ${sub("Try it yourself", "The whole app runs here. Tap Fix now and follow it to the end, or open Profile, Cash-flow cards to see rent day on the Lock Screen.", "kq-try")}
+        `;
+const F_tryit = `${sub("Try it yourself", "The whole app runs here. Tap Fix now and follow it to the end, or open Profile, Cash-flow cards to see rent day on the Lock Screen.", "kq-try")}
         <div class="cf-live reveal">
           <iframe src="../prototypes/cash-flow-gap/index.html?embed" title="Khatiq prototype" loading="lazy"></iframe>
           <p class="kq-cap">Invented data. <a href="../prototypes/cash-flow-gap/index.html" target="_blank" rel="noopener">Open with all controls<span class="sr-only"> (new tab)</span></a>: four lenses, two banks, light and dark, iPhone Duo, iPad and Apple Watch.</p>
         </div>
         <p class="kq-proto-cta reveal"><a class="kq-btn" href="khatiq-prototype.html">Open the prototype in its own page <span aria-hidden="true">→</span></a></p>
 
-        ${sub("The same moment, wherever you look", "Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.")}
+        `;
+const F_duo = `${sub("The same moment, wherever you look", "Each screen gets its own layout: on a folding phone the card sits beside its options, on iPad two panes, and on the watch only the number and one action.")}
         <div class="kq-duo3d-head reveal">
           <h3 class="kq-duo3d-title">Interactive iPhone Duo prototype</h3>
           <p class="kq-duo3d-ghost">Designing for foldables</p>
@@ -363,7 +378,223 @@ const main = `<main id="top">
           })();
         </script>
         <p class="kq-cap kq-credit reveal">Drag the slider to fold it, drag the phone to turn it, or pick a pose. 3D model: Apple, iPhone Duo. Viewer adapted from akashtdev’s iphone-duo-animation (MIT).</p>
-        <div class="cf-eco kq-eco-strip reveal">
+`;
+const F_eco = `        <div class="cf-eco kq-eco-strip reveal">
+          <figure>${img("bz-watch-face.webp", "Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings")}<figcaption>Watch: on the face</figcaption></figure>
+          <figure>${img("bz-watch-confirm.webp", "Confirm ₹1,500 on Apple Watch, double tap to confirm")}<figcaption>Watch: Double Tap confirms</figcaption></figure>
+          <figure class="is-wide">${img("bz-ipad.webp", "iPad Air in landscape: the tab bar on top, the all-money home on the left and Ways to cover rent on the right")}<figcaption>iPad: split view</figcaption></figure>
+        </div>
+        <p class="kq-cap kq-credit reveal">Credits: Apple, Apple Watch and iPad</p>
+
+        `;
+const F_live = `${sub("Rent day, outside the app", "On 1 Nov the autopay becomes a Live Activity. It starts when the autopay is queued and ends when the landlord is paid. Amounts stay hidden on the Lock Screen unless you turn them on.")}
+        ${phones([
+          ["live-lock.webp", "Lock Screen on 1 Nov at 7:30: Khatiq, rent day. Rent needs a look. Autopay at 10:00. One button, Fix now", "Lock Screen, amounts hidden"],
+          ["live-island.webp", "Home Screen with the Dynamic Island showing a house glyph and Short", "Dynamic Island"],
+          ["live-expanded.webp", "The Dynamic Island expanded: rent, ₹1,059 short, ₹32,000 leaves at 10:00, and Fix now", "Touch and hold"],
+          ["live-lock-paid.webp", "Lock Screen after 10:02: rent paid, ₹32,000 to Prakash Rao, every step done", "Paid, then it ends"],
+        ])}
+
+        `;
+const F_data = `${sub("Data you can read at a glance", "One chart language: bars. Mint is money in, coral is a shortfall, and each bank keeps its own colour. Every chart has a sentence that says what it means.")}
+        ${phones([
+          ["gap-bank.webp", "The bank home: 30 days of balance as bars, two short days below the line", "30 days, two short"],
+          ["ins-insights.webp", "Insights: six months of spending with October picked out and a dashed average", "One month picked out"],
+          ["ins-goals.webp", "Savings goals: one bar per goal, all in one colour, with the closest goal named", "One bar per goal"],
+          ["acc-linked.webp", "Accounts across three banks, each in its own colours", "Banks in their colours"],
+        ])}
+
+        `;
+const F_trust = `${sub("What makes it trustworthy", "Money is about trust, so the warning explains itself, a person is always one tap away, and you decide what each bank shares.")}
+        ${phones([
+          ["gap-why.webp", "Why am I seeing this? What we looked at and what we never use", "Why you’re seeing it"],
+          ["gap-handoff.webp", "A person will take it from here, and sees what you saw", "A person, one tap away"],
+          ["link-consent.webp", "Share Malabar data? What, how far back, how often, until when, and why", "Consent you control"],
+          ["gap-error.webp", "Couldn’t move the money; another way still works", "Errors with a way out"],
+        ])}
+
+        `;
+const F_library = `${sub("Every screen", "Everything the story above skips, grouped by flow.")}
+        <div class="kq-lib reveal">${library([
+          ["Onboarding", "phone", [["onb-welcome", "Welcome to Khatiq"], ["onb-bank", "Where does your salary land?"], ["onb-phone", "Your mobile number"], ["onb-otp", "Enter the code"], ["onb-pin", "Set an app PIN"], ["onb-notify", "Turn on notifications"]]],
+          ["The gap, step by step", "phone", [["gap-stepup", "A passkey for a large move"], ["gap-waiting", "Moving, with named steps"], ["gap-covered", "Home after: rent is covered"], ["gap-jargon", "Bank words, rewritten"]]],
+          ["Accounts and activity", "phone", [["acc-all", "Accounts by bank"], ["acc-detail", "Main account"], ["acc-nila", "A linked, read-only account"], ["act-list", "Activity with filters"], ["act-txn", "One payment"]]],
+          ["Pay", "phone", [["pay-hub", "Pay"], ["pay-scan", "Scan a QR"], ["pay-amount", "Enter an amount"], ["pay-pin", "UPI PIN"], ["pay-done", "Paid"], ["pay-rent", "The rent autopay"]]],
+          ["Linking another bank", "phone", [["link-pick", "Pick a bank"], ["link-otp", "Approve the consent"], ["link-search", "Finding accounts"], ["link-found", "Choose accounts"], ["link-done", "Linked"], ["link-failed", "When a bank doesn’t answer"], ["link-consents", "Linked banks and consents"]]],
+          ["Rent day Live Activity", "phone", [["live-lock", "Lock Screen, amounts hidden"], ["live-island", "Dynamic Island, compact"], ["live-expanded", "Expanded, short"], ["live-expanded-ok", "Expanded, on track"], ["live-lock-paid", "Paid, amounts shown"]]],
+          ["Ask Khatiq, the assistant", "phone", [["ai-optin", "Off until you turn it on"], ["ai-chat", "Answers marked Sure, Not sure, Can’t do"], ["ai-sheet", "What each face means"], ["ai-home", "Ask Khatiq on the bank home"]]],
+          ["Profile and settings", "phone", [["pro-profile", "Profile"], ["pro-inbox", "Notifications"], ["pro-cards", "Cash-flow card settings"], ["pro-security", "PIN and fingerprint"]]],
+          ["For a small business", "phone", [["biz-home", "Cash position, three weeks"], ["biz-approve", "Approve a move"]]],
+          ["Light mode and another bank", "phone", [["theme-light", "Light mode"], ["theme-light-ins", "Insights, light"], ["theme-deccan", "In Deccan’s colours"], ["theme-deccan-acc", "Deccan accounts"]]],
+          ["Folding phone and iPad", "wide", [["duo-outer-home", "Closed: home"], ["duo-outer-compare", "Closed: ways to cover rent"], ["duo-inner-accounts", "Open: accounts beside an account"], ["duo-inner-activity", "Open: activity beside a payment"], ["duo-book-home", "Folded like a book"], ["ipad-accounts", "iPad: accounts"], ["ipad-bank", "iPad: the bank home"]]],
+          ["Apple Watch", "watch", [["watch-face", "The face"], ["watch-aod", "Always On hides amounts"], ["watch-stack", "Smart Stack"], ["watch-live", "Rent day Live Activity"], ["watch-alert", "The alert"], ["watch-confirm", "Confirm"], ["watch-done", "Done"]]],
+        ])}</div>
+
+        `;
+const F_system = `${sub("The design system", "Drawn from the prototype’s own tokens, so the page can’t drift from the app.")}
+        ${ds.designSystem(banks)}
+
+        `;
+const F_impact = `${chapter("s-impact", "05", "Impact", "What it has to prove", "Nothing has been tested yet. These are the bars it must clear with 8 to 10 people, written down now so they can’t drift.")}
+        <div class="kq-panel reveal">${st.targets([
+          [8, 10, "Get it in 5 seconds", "Restate the situation and next step", "mint"],
+          [8, 10, "Fix it in 60 seconds", "Cover a gap, unaided", "mint"],
+          [7, 10, "Trust it enough to act", "And say where the data came from", "mint"],
+          [9, 10, "Find a person in 10 seconds", "Talk to a person, from the card", "mint"],
+          [7, 10, "Feel calm after", "One question, five words", "mint"],
+        ])}</div>
+        `;
+const F_plan = `${sub("How it gets tested", "")}
+        <ol class="kq-reflect kq-plan reveal">
+          <li><b>Interviews</b><span>10 people (6 salaried, 4 freelancers) about the last time a payment bounced.</span></li>
+          <li><b>Two-week SMS diary</b><span>Real bank alerts, and which ones get ignored.</span></li>
+          <li><b>Name and word test</b><span>20+ people across Hindi, English and South Indian languages, covering <i>Khatiq</i>, the assistant’s name, and words like “short” and “bounce”.</span></li>
+          <li><b>Usability test</b><span>Two rounds of five, scored against the targets above.</span></li>
+        </ol>
+        
+
+        `;
+const F_reflection = `${chapter("s-reflection", "06", "Reflection", "What I’d keep, and what’s next", "")}
+        <ol class="kq-reflect reveal">
+          <li><b>Calm is mostly copy</b><span>The biggest changes were words. “May bounce” became “you’ll be ₹1,059 short”, and the fix moved into the same card.</span></li>
+          <li><b>Less on home, more on the one thing</b><span>Cutting home from 49 bits of text to a handful made the alert the obvious next step.</span></li>
+          <li><b>Design the wrist first</b><span>Apple Watch forced the shortest version of every message, and that version improved the phone.</span></li>
+          <li><b>Next</b><span>The name and word test, then ten interviews in India, then the card in front of ten people against the targets above. What the research changes will go on this page.</span></li>
+        </ol>
+
+`;
+const F_credits = `        <p class="kq-credits">Credits: Apple, iPhone Duo (including the 3D model), Apple Watch and iPad. 3D viewer adapted from akashtdev’s iphone-duo-animation (MIT). Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
+`;
+
+// ---------- the short main story and the four deep dives ----------
+/** Bills and autopays: the folder fan, on iPhone and on iPhone Duo. */
+const F_folders = `
+        ${sub("Every bill, as a folder", "Rent, EMIs, SIPs, card dues and the rest fan out as folders. The one at risk is lit, with the amount it is short. Drag through them; tap one to open it.")}
+        <div class="kq-folders reveal">
+          <figure class="kq-folders-phone kq-clip">
+            <img class="kq-clip-anim" src="${A}bills-fan-anim.webp" data-still="${A}bills-fan-poster.webp" width="480" height="1043" loading="lazy" decoding="async" alt="Animated, recorded from the prototype: a thumb swipes through the bill folders and each one’s payments rise in as it comes forward; a flick sends the fan back to Rent, lit lavender and ₹1,059 short, and a tap closes and reopens it so its papers lift and the fix pops out" />
+            <button class="kq-clip-btn" type="button" aria-pressed="false">Pause</button>
+          </figure>
+          <figure class="kq-folders-duo">${img("duo-inner-bills.webp", "iPhone Duo open: the folder fan on the left and the Rent folder on the right, with Fix now")}<figcaption>On iPhone Duo the open folder takes the second pane.</figcaption></figure>
+        </div>
+        <script>
+          /* The fan loop is an animated image (like a GIF). Pause swaps in a still frame; with Reduce Motion it starts paused. */
+          (() => {
+            const fig = document.querySelector(".kq-clip");
+            if (!fig) return;
+            const im = fig.querySelector(".kq-clip-anim");
+            const btn = fig.querySelector(".kq-clip-btn");
+            const moving = im.getAttribute("src");
+            let paused = matchMedia("(prefers-reduced-motion: reduce)").matches;
+            const sync = () => {
+              im.src = paused ? im.dataset.still : moving;
+              btn.textContent = paused ? "Play" : "Pause";
+              btn.setAttribute("aria-pressed", String(paused));
+            };
+            btn.addEventListener("click", () => { paused = !paused; sync(); });
+            sync();
+          })();
+        </script>`;
+
+/** criticalUX + liqUI9: the second review, against the author's own open-source skills. */
+const F_review2 = `
+        ${sub("A second review: criticalUX and liqUI9", "The app was checked against two of my own open-source skill sets: criticalUX for high-stakes money UX, and liqUI9 for Apple’s guidelines and Liquid Glass. Five major findings, all fixed:")}
+        <ul class="kq-fixes reveal">
+          <li><b>Saying no to sharing was a quiet link</b><span>India’s 2026 RBI rules count a weaker “no” as interference. It’s now a real button, and the screen names the accounts and how long data is kept.</span></li>
+          <li><b>“Rent is covered” had no record</b><span>Done now shows what moved, from where, when, and a reference to quote.</span></li>
+          <li><b>The slow state didn’t say what not to do</b><span>It now says nothing was charged, nothing will be charged twice, and there’s no need to try again.</span></li>
+          <li><b>The glass was a blur with a border</b><span>The tab bar now uses real refraction, a specular rim and a caustic, and turns solid with Reduce Transparency.</span></li>
+          <li><b>No Increase Contrast</b><span>Bars turn solid with a visible edge, and secondary text goes to full strength.</span></li>
+        </ul>
+        <p class="kq-cap reveal">Skills: <a href="https://github.com/Sthitapragna-009/Critical_UX" target="_blank" rel="noopener">criticalUX<span class="sr-only"> (new tab)</span></a> · <a href="https://github.com/Sthitapragna-009/liqUI9" target="_blank" rel="noopener">liqUI9<span class="sr-only"> (new tab)</span></a>.</p>`;
+
+/** The hero with the folder fan in the hand-held photo. */
+const F_hero_short = F_hero
+  .replace(/<figure class="kq-photo kq-hero-photo[\s\S]*?<\/figure>/, photo("mk-hand-bills.webp", "A hand holding an iPhone showing Khatiq’s Bills and autopays: the folders fanned in 3D with Rent lit in lavender and ₹1,059 short, a glass summary of ₹32,000 above, and the open Rent folder below with Fix now", "kq-hero-photo"));
+const F_platform = `        <p class="kq-constraints reveal"><b>Platform</b> Apple-first concept. A launch in India would be Android-first; the design system carries over. Most iPhones in India are bought on EMI, so this audience is already living with autopays.</p>
+`;
+const F_duo_short = F_duo.replace(/^[\s\S]*?(<div class="kq-duo3d-head)/, "        $1");
+
+// ---------- the four bodies that used to be deep pages, now chapters of the one page ----------
+const B_research = `${chapter("s-challenge", "02", "Research", "Rent leaves before salary lands", "Banking apps show what already happened. The warning arrives as an SMS after the bounce, in words like NACH and mandate. People are left to do the maths themselves.")}
+        <figure class="kq-panel kq-loop-wrap reveal">${pr.loop()}<figcaption>Today’s loop, every month the dates don’t line up.</figcaption></figure>
+        <div class="reveal">${st.beforeAfter(img("alert-card.webp", "The real card from the Khatiq app: Konkan, one thing to sort. Rent leaves 1 Nov. You’ll be ₹1,059 short for 2 days. A 30-day chart with two short days, and See 3 ways to fix it"))}</div>
+        ${sub("What already exists", "People already get warnings before an autopay. They say a payment is coming, not whether you can cover it.")}
+        <div class="kq-panel kq-table-wrap reveal"><table class="kq-table">
+          <thead><tr><th scope="col">Signal</th><th scope="col">When it arrives</th><th scope="col">What you learn</th></tr></thead>
+          <tbody>
+            <tr><td>Pre-debit notice for a card or UPI autopay</td><td>About a day before</td><td>A payment is coming. Not whether your balance covers it.</td></tr>
+            <tr><td>Low-balance alert</td><td>When the balance drops below a set amount</td><td>Your balance is low. Not which bill is at risk, or that salary lands in two days.</td></tr>
+            <tr><td>Bounce SMS</td><td>After the payment fails</td><td>That it already failed.</td></tr>
+            <tr class="is-us"><td>Khatiq</td><td>Three days before</td><td>How short, for how long, and three ways out with their costs.</td></tr>
+          </tbody>
+        </table></div>
+        ${sub("Why now", "India’s rails can finally see the whole picture. 338 million accounts are linked through the Account Aggregator, and RBI is making aggregators interoperable by 31 December 2026. UPI e-mandates passed 1.8 billion a month at the top ten banks in July 2026. The data to warn early exists. Nobody yet joins salary dates to debit dates.")}
+        <p class="kq-cap reveal">Sources: <a href="https://www.freepressjournal.in/business/rbi-to-make-account-aggregators-interoperable-allow-cas-bank-deposits" target="_blank" rel="noopener">Free Press Journal<span class="sr-only"> (new tab)</span></a> · <a href="https://inc42.com/buzz/npci-to-let-users-port-upi-autopay-mandates-across-apps-report/" target="_blank" rel="noopener">Inc42<span class="sr-only"> (new tab)</span></a>.</p>
+        ${sub("What people need from that moment", "Written as jobs to be done. Interviews in India come first in the research plan.")}
+        <ol class="kq-jobs reveal">
+          <li><span>Main job</span><p>Tell me early if I won’t be okay this month.</p></li>
+          <li><span>Emotional job</span><p>Help me feel in control, not judged or alarmed.</p></li>
+          <li><span>Related job</span><p>Show me this is really my bank, and that a person is reachable.</p></li>
+        </ol>
+        ${sub("What the numbers say", "")}
+        <div class="kq-statgrp reveal"><p class="kqan-k">In India</p>${st.stats([
+          ["80%+", "of salaried employees ran out of salary before month-end; 34% before mid-month", "coral"],
+          ["40%+", "borrowed from friends or family to cover the gap", "sun"],
+          ["20 million", "UPI AutoPay mandates are revoked every month because the balance falls short", "sky"],
+          ["₹500", "is a typical fixed NACH bounce charge, plus penal interest", "lavender"],
+        ])}<p class="kq-cap">EY–Refyne, 3,010 respondents, 2021, via <a href="https://businesstoday.in/latest/economy/story/80-employees-find-wallets-empty-before-payday-finds-ey-refyne-study-312493-2021-11-17" target="_blank" rel="noopener">Business Today<span class="sr-only"> (new tab)</span></a> and <a href="https://outlookindia.com/business/business-news-covid-19-led-to-financial-crisis-among-81-of-indian-employees-report-news-401566" target="_blank" rel="noopener">Outlook India<span class="sr-only"> (new tab)</span></a> · <a href="https://www.business-standard.com/amp/finance/news/upi-autopay-revocations-hit-20-mn-monthly-over-low-customer-balances-125090700500_1.html" target="_blank" rel="noopener">Business Standard<span class="sr-only"> (new tab)</span></a>, Sep 2025 · <a href="https://www.bajajfinserv.in/how-to-update-nach-mandate-bank-account-change" target="_blank" rel="noopener">Bajaj Finserv<span class="sr-only"> (new tab)</span></a>.</p></div>
+        <div class="kq-statgrp reveal"><p class="kqan-k">On trust, globally</p>${st.stats([
+          ["14%", "fully trust AI with money advice; 72% want a human involved", "lavender"],
+          ["55%", "who ignored a real fraud alert thought it was a scam", "coral"],
+        ])}<p class="kq-cap">Addition Wealth (US) · fraud study summary.</p></div>
+        <p class="kq-constraints reveal"><b>Designed for</b> UPI autopay, NACH bounce charges, the Account Aggregator, money across every bank you use, rupees in lakh grouping, Hindi and English.</p>
+
+        <p class="kq-insight reveal">The warning already exists. What’s missing is the maths, and a way out.</p>
+
+        ${sub("Who we’ll test with (assumptions, not findings)", "")}
+        <ul class="kq-made kq-personas reveal">
+          <li style="--tile:#1d1840;--tile-ink:#ffffff"><span class="kq-made-n">Salaried</span><b>Arjun, 27, Bengaluru</b><span>Rent on the 1st, salary on the 3rd, phone on EMI. <i>“Tell me before, not after.”</i></span></li>
+          <li style="--tile:#4b3fc4;--tile-ink:#ffffff"><span class="kq-made-n">Freelance</span><b>Meera, 31, Pune</b><span>Illustrator. One client pays 45 days late; her SIP and card due don’t wait. <i>“Tell me which bill is at risk if this invoice slips.”</i></span></li>
+          <li style="--tile:#c9c3ff;--tile-ink:#1d1747"><span class="kq-made-n">Shop owner · later</span><b>Rakesh, 44, Lucknow</b><span>Pharmacy. Supplier debits and a shop-loan EMI; Hindi-first, Android. <i>“Will I cover Friday’s supplier debit?”</i></span></li>
+        </ul>
+        `;
+const B_process = `${chapter("s-process", "03", "Process", "Seven days, six decisions", "I mapped the journey, set the emotion each moment needs, brainstormed the ways out, then built and rebuilt the app until every screen said one thing.")}
+        <figure class="kq-panel reveal">${tl.projectTimeline("03/")}</figure>
+        <figure class="kq-panel reveal">${tl.journeyMap("03/")}<figcaption>Two moments of truth: the SMS from the bank, and how it ends.</figcaption></figure>
+        ${sub("Emotional design: the right feeling at the right moment", "In banking, emotional design isn’t delight. It’s confidence when things are fine, reassurance and control when they aren’t, trust when money moves, and progress after.")}
+        <figure class="kq-panel kq-ec-wrap reveal">${st.emotionCurve()}<figcaption>A design intention, to be tested. Framework: <a href="https://www.theuxda.com/blog/emotionally-intelligent-ux-power-next-gen-digital-banking">UXDA, emotionally intelligent UX in digital banking</a>.</figcaption></figure>
+        ${sub("Brainstorm", "One idea, six directions. Filled ideas are in the prototype; dashed ones were parked or rejected.")}
+        <figure class="kq-panel kq-mm-wrap reveal">${pr.mindMap()}</figure>
+        <figure class="kq-panel reveal">${fl.iaStructure("03/")}<figcaption>Five tabs for what you do every week. Settings sit behind the avatar, and help is one tap from any card.</figcaption></figure>
+        <figure class="kq-panel reveal">${fl.rentFlow("03/")}<figcaption>Every way out ends somewhere calm, and a failed move points straight back to the others.</figcaption></figure>
+        ${sub("From sketch to screen", "Each screen went from a paper sketch to a grey wireframe to the final screen in code. Three of them, with what changed at each step and why.")}
+        ${fi.fidelity(img)}
+        ${sub("The decisions that shaped it", "")}
+        <div class="reveal">${pr.timeline([
+          ["Day 3", "Square, dense components", "Rounded, quiet components", "Sharp cards and heavy lines felt cold for a money worry. Soft shapes and fewer lines felt calmer."],
+          ["Day 3", "One bank’s home", "A home for all your money", "Most people use two or three banks. The warning belongs above any one of them."],
+          ["Day 4", "A red “may bounce” banner", "One calm sentence, three ways out", "Say what happens and by how much, then how to fix it."],
+          ["Day 5", "Two buttons side by side", "One button, one quiet link", "Fix now does the no-fee move. The other ways are a tap away."],
+          ["Day 6", "Bright colour everywhere", "Black canvas, colour with a job", "Mint for money in, coral for short, lavender for the one action. Colour stays under 10% of any screen."],
+          ["After review", "An assistant named Seth", "Ask Khatiq", "Seth reads as a moneylender to many Hindi and Gujarati speakers, and as a Western name elsewhere. The assistant became part of Khatiq itself. A name test with speakers across regions is in the research plan."],
+        ])}</div>
+        ${sub("A review before anyone tests it", "Heuristic evaluation, an information-architecture check and a design critique. Eight findings, each fixed. Four of them:")}
+        <ul class="kq-fixes reveal">
+          <li><b>Home said too much</b><span>49 bits of text and five ways to say one fact. Now one sentence and one action.</span></li>
+          <li><b>Charts repeated each other</b><span>A gauge, bars and rings for one number. Now bars only, and each colour means one thing.</span></li>
+          <li><b>Confirm hid the result</b><span>It repeated the amount. Now it shows the new balance and your lowest point before salary.</span></li>
+          <li><b>Profile was a tab</b><span>Rarely used, always visible. It moved to the avatar; Scan took the centre of the tab bar.</span></li>
+        </ul>
+        ${sub("Heuristics and principles, on the screen", "The project’s design principles and Nielsen’s usability heuristics, connected to the parts of the screen where they do their work.")}
+        ${fi.heuristics(img)}
+
+        ${F_review2}`;
+const B_system = `${sub("The design system", "Drawn from the prototype’s own tokens, so the page can’t drift from the app.")}
+        ${ds.designSystem(banks)}
+
+        `;
+const B_screens = `        <div class="cf-eco kq-eco-strip reveal">
           <figure>${img("bz-watch-face.webp", "Apple Watch face: rent 1 Nov, ₹1,059 short, a 14-day chart and three rings")}<figcaption>Watch: on the face</figcaption></figure>
           <figure>${img("bz-watch-confirm.webp", "Confirm ₹1,500 on Apple Watch, double tap to confirm")}<figcaption>Watch: Double Tap confirms</figcaption></figure>
           <figure class="is-wide">${img("bz-ipad.webp", "iPad Air in landscape: the tab bar on top, the all-money home on the left and Ways to cover rent on the right")}<figcaption>iPad: split view</figcaption></figure>
@@ -410,10 +641,37 @@ const main = `<main id="top">
           ["Apple Watch", "watch", [["watch-face", "The face"], ["watch-aod", "Always On hides amounts"], ["watch-stack", "Smart Stack"], ["watch-live", "Rent day Live Activity"], ["watch-alert", "The alert"], ["watch-confirm", "Confirm"], ["watch-done", "Done"]]],
         ])}</div>
 
-        ${sub("The design system", "Drawn from the prototype’s own tokens, so the page can’t drift from the app.")}
-        ${ds.designSystem(banks)}
+        `;
 
-        ${chapter("s-impact", "05", "Impact", "What it has to prove", "Nothing has been tested yet. These are the bars it must clear with 8 to 10 people, written down now so they can’t drift.")}
+/** The nine chapters, as an index under the hero: everything is on this one page. */
+const TOC = [
+  ["s-overview", "Overview"], ["s-challenge", "Research"], ["s-process", "Process"], ["s-solution", "Solution"], ["s-system", "Design system"],
+  ["s-screens", "All screens"], ["s-try", "Try it"], ["s-impact", "Impact"], ["s-reflection", "Reflection"],
+];
+const F_toc = `
+        <nav class="kq-index reveal" aria-label="Chapters"><ol>${TOC.map(([id, t], i) => `<li><a href="#${id}"><span>${String(i + 1).padStart(2, "0")}</span>${e(t)}</a></li>`).join("")}</ol></nav>`;
+
+const MAIN_STORY = `<main id="top">
+${F_hero_short}${F_toc}
+${F_overview}${F_who}
+${B_research}
+${B_process}
+${chapter("s-solution", "04", "Solution", "Three days early, three taps to fix", "One calm card on the home screen with one action, the other ways a tap away with their costs, a confirm that shows the result, and an ending that looks forward.")}
+        ${photo("mk-sofa.webp", "Someone on a sofa holding an iPhone with Konkan’s home in Khatiq: main account ₹31,240.50 and the gap card, ₹1,059 short for 2 days", "kq-photo--wide")}
+        <ol class="kq-flow reveal">
+          <li><span class="kq-flow-n">1</span><b>See it</b>${img("gap-home.webp", "Home: Konkan, one thing to sort. Rent leaves 1 Nov, ₹1,059 short for 2 days. Move ₹1,500 from your savings pot, no fee: Fix now, or other ways")}</li>
+          <li><span class="kq-flow-n">2</span><b>Choose</b>${img("gap-compare.webp", "Ways to cover rent: what doing nothing costs, then three ways out with their costs")}</li>
+          <li><span class="kq-flow-n">3</span><b>Confirm</b>${img("gap-confirm.webp", "Confirm: after this move, ₹32,740.50, and your lowest point before salary becomes ₹442")}</li>
+          <li><span class="kq-flow-n">4</span><b>Done</b>${img("gap-done.webp", "Rent is covered. Next date to watch, 3 Nov. You sorted this 3 days before it was due.")}</li>
+        </ol>
+
+        ${F_folders}
+        ${chapter("s-system", "05", "Design system", "Built from the app’s own tokens", "Read straight from the prototype, so this page can’t drift from the app.")}
+        ${ds.designSystem(banks)}
+        ${chapter("s-screens", "06", "All screens", "Every screen, on every device", "Rent day outside the app, data at a glance, what makes it trustworthy, and every flow, on iPhone, iPhone Duo, iPad and Apple Watch.")}
+${B_screens}
+        ${chapter("s-try", "07", "Try it", "The whole app, right here", "")}
+${F_tryit}${F_duo}${chapter("s-impact", "08", "Impact", "What it has to prove", "Nothing has been tested yet. These are the bars it must clear with 8 to 10 people, written down now so they can’t drift.")}
         <div class="kq-panel reveal">${st.targets([
           [8, 10, "Get it in 5 seconds", "Restate the situation and next step", "mint"],
           [8, 10, "Fix it in 60 seconds", "Cover a gap, unaided", "mint"],
@@ -421,31 +679,27 @@ const main = `<main id="top">
           [9, 10, "Find a person in 10 seconds", "Talk to a person, from the card", "mint"],
           [7, 10, "Feel calm after", "One question, five words", "mint"],
         ])}</div>
-        ${sub("How it gets tested", "")}
-        <ol class="kq-reflect kq-plan reveal">
-          <li><b>Interviews</b><span>10 people (6 salaried, 4 freelancers) about the last time a payment bounced.</span></li>
-          <li><b>Two-week SMS diary</b><span>Real bank alerts, and which ones get ignored.</span></li>
-          <li><b>Name and word test</b><span>20+ people across Hindi, English and South Indian languages, covering <i>Khatiq</i>, the assistant’s name, and words like “short” and “bounce”.</span></li>
-          <li><b>Usability test</b><span>Two rounds of five, scored against the targets above.</span></li>
-        </ol>
-        
-
-        ${chapter("s-reflection", "06", "Reflection", "What I’d keep, and what’s next", "")}
+${F_plan}
+${chapter("s-reflection", "09", "Reflection", "What I’d keep, and what’s next", "")}
         <ol class="kq-reflect reveal">
-          <li><b>Calm is mostly copy</b><span>The biggest changes were words. “May bounce” became “you’ll be ₹1,059 short”, and the fix moved into the same card.</span></li>
-          <li><b>Less on home, more on the one thing</b><span>Cutting home from 49 bits of text to a handful made the alert the obvious next step.</span></li>
+          <li><b>Calm is mostly copy</b><span>“May bounce” became “you’ll be ₹1,059 short”, and the fix moved into the same card.</span></li>
+          <li><b>Less on home</b><span>Cutting home from 49 bits of text to a handful made the alert the obvious next step.</span></li>
           <li><b>Design the wrist first</b><span>Apple Watch forced the shortest version of every message, and that version improved the phone.</span></li>
-          <li><b>Next</b><span>The name and word test, then ten interviews in India, then the card in front of ten people against the targets above. What the research changes will go on this page.</span></li>
+          <li><b>Next</b><span>The name and word test, then ten interviews in India, then the card in front of ten people against the targets above.</span></li>
         </ol>
 
-        <p class="kq-credits">Credits: Apple, iPhone Duo (including the 3D model), Apple Watch and iPad. 3D viewer adapted from akashtdev’s iphone-duo-animation (MIT). Mockup Cloud (iPhone on the sofa). akoya (iPhone in hand). App screens, diagrams and the prototype are my own; every bank and person in them is invented.</p>
-      </div>
+${F_credits}      </div>
     </section>
   </main>
-
 `;
-const out = head + main + tail;
-fs.writeFileSync(SITE + "/projects/cash-flow-gap.html", out);
-console.log("wrote projects/cash-flow-gap.html", Math.round(out.length / 1024) + " KB");
+
+const PAGES = [
+  ["cash-flow-gap.html", null, MAIN_STORY],
+];
+for (const [file, meta, body] of PAGES) {
+  const h = head;
+  fs.writeFileSync(SITE + "/projects/" + file, h + body + tail);
+  console.log("wrote projects/" + file, Math.round((h + body + tail).length / 1024) + " KB");
+}
 fs.writeFileSync(SITE + "/projects/khatiq-prototype.html", pp.protoPage());
 console.log("wrote projects/khatiq-prototype.html");

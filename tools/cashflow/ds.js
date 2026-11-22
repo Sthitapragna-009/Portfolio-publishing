@@ -64,15 +64,56 @@ function designSystem(banks) {
     ["#84cbff", "Sky", "banks"],
     ["#c8f06e", "Lime", "paying"],
   ];
-  return `<div class="ds reveal">
-    <section class="ds-tile ds-w6" aria-label="Colour">
-      <p class="ds-k">Colour · 60 / 30 / 10</p>
-      <div class="ds-6030"><span style="flex:60;background:#000">60 black</span><span style="flex:30;background:#1c1c1e">30 graphite</span><span style="flex:10;background:#4b3fc4">10</span></div>
-      <ul class="ds-hues">${hues.map(([c, n, u]) => `<li><i style="background:${c}"></i><b>${n}</b><span>${u}</span></li>`).join("")}</ul>
+  const BANKS = `<section class="ds-tile ds-w12" aria-label="Bank palettes">
+      <p class="ds-k">Six banks, one system</p>
+      <ul class="ds-banks">${order
+        .map((id) => {
+          const b = banks[id];
+          const p = b.palette;
+          return `<li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, ${p.aura[1]}, transparent 60%), radial-gradient(circle at 85% 90%, ${p.aura[2]}, transparent 55%), ${p.aura[0]}"><i class="ds-mark is-lg" style="background:${p.brand}">${e(b.mark)}</i></span><b>${e(b.short)}</b><span class="ds-sw"><i style="background:${p.brand}"></i><i style="background:${p.inkDark}"></i><i style="background:${p.tintLight}"></i></span></li>`;
+        })
+        .join("")}</ul>
+    </section>`;
+  const SPACE = `<section class="ds-tile ds-w12" aria-label="Space and shape">
+      <p class="ds-k">Tokens</p>
+      <div class="ds-tokens">
+        <span><i style="width:16px"></i>16 margin</span>
+        <span><i style="width:12px"></i>12 tiles</span>
+        <span><i style="width:32px"></i>32 sections</span>
+        <span><i class="ds-rad" style="border-radius:22px"></i>22 lists</span>
+        <span><i class="ds-rad" style="border-radius:26px"></i>26 cards</span>
+        <span><i class="ds-rad" style="border-radius:34px"></i>34 sheets</span>
+        <span><i class="ds-rad" style="border-radius:999px"></i>Capsule controls</span>
+        <span><i class="ds-rad is-target"></i>44 pt targets</span>
+        <span><i class="ds-rad is-spring"></i>Springs, 0.3 s</span>
+      </div>
+    </section>`;
+  /* Laid out as a spec document: each row has its number, name and one line on the left and the live
+     specimens on the right, with a hairline and generous space between rows. */
+  const row = (n, name, note) => `
+    <section class="ds-sec" aria-labelledby="ds-${n}">
+      <header class="ds-sec-k"><span class="ds-sec-n">${n}</span><h4 id="ds-${n}">${e(name)}</h4><p>${e(note)}</p></header>
+      <div class="ds-grid">`;
+  const end = `
+      </div>
+    </section>`;
+  return `<div class="ds ds-doc reveal">
+    ${row("01", "Colour", "Black and graphite carry the screen. Colour is kept for meaning, and lavender for the one thing to act on.")}
+    <section class="ds-tile ds-w12" aria-label="60, 30, 10">
+      <p class="ds-k">60 / 30 / 10</p>
+      <div class="ds-6030"><span style="flex:60;background:#000">60 · black #000000</span><span style="flex:30;background:#1c1c1e">30 · graphite #1C1C1E</span><span style="flex:10;background:#4b3fc4">10 · #4B3FC4</span></div>
     </section>
+    <ul class="ds-swatches ds-w12" aria-label="Meaning colours">${hues.map(([c, n, u]) => `<li><i style="background:${c}"></i><b>${n}</b><span>${u}</span><code>${c.toUpperCase()}</code></li>`).join("")}</ul>
+    ${end}
 
-    <section class="ds-tile ds-w6" aria-label="Type">
-      <p class="ds-k">Type · one family, the system sans: bold for titles and money, regular for reading</p>
+    ${row("02", "Type", "One family, the system sans. Bold for titles and money, regular for reading. Sizes follow the platform.")}
+    <section class="ds-tile ds-w5 ds-aa" aria-label="Typeface">
+      <p class="ds-k">Typeface</p>
+      <span class="ds-aa-glyph" aria-hidden="true">Aa</span>
+      <p class="ds-aa-name">System sans<small>Regular · Semibold · Bold</small></p>
+    </section>
+    <section class="ds-tile ds-w7" aria-label="Type scale">
+      <p class="ds-k">Scale</p>
       <div class="ds-type">
         <p><small>Large title 34</small><span class="ds-app" style="font-size:34px;font-weight:700;letter-spacing:-0.02em">Ways to cover rent</span></p>
         <p><small>Balance 46</small><span class="ds-app" style="font-size:44px;font-weight:700;letter-spacing:-0.02em"><span class="ds-sym">₹</span>31,240<span class="ds-dim">.50</span></span></p>
@@ -81,7 +122,17 @@ function designSystem(banks) {
         <p><small>Footnote 13</small><span style="font-size:13px;color:var(--ds-dim)">Salary 3 Nov · No fee</span></p>
       </div>
     </section>
+    ${end}
 
+    ${row("03", "Space and shape", "A 16 pt margin, rounder corners as surfaces grow, and nothing to tap under 44 pt.")}
+    ${SPACE}
+    ${end}
+
+    ${row("04", "Bank palettes", "Every linked bank keeps its own colours, so you always know whose money you are looking at.")}
+    ${BANKS}
+    ${end}
+
+    ${row("05", "Components", "Built once in the prototype and drawn here from the same values.")}
     <section class="ds-tile ds-w4" aria-label="Buttons">
       <p class="ds-k">Buttons</p>
       <div class="ds-stack">
@@ -129,9 +180,11 @@ function designSystem(banks) {
         <span class="ds-row-inline"><span class="ds-pill is-lav">Fix now</span><span class="ds-link">Other ways ${ico("chev", 15)}</span></span>
       </div>
     </section>
+    ${end}
 
+    ${row("06", "States and fields", "An icon and a title every time, never colour alone. Errors say what still works.")}
     <section class="ds-tile ds-w12" aria-label="States">
-      <p class="ds-k">States · an icon and a title every time, never colour alone</p>
+      <p class="ds-k">Error · warning · success · info</p>
       <div class="ds-states">
         <div><small>Error · something failed, and what still works</small>${notice("stop", "xcircle", "No answer from Vindhya", "Nothing was shared. Your other banks still work.")}</div>
         <div><small>Warning · what goes wrong if nothing changes</small>${notice("warn", "triangle", "Rent will be ₹3,059 short", "Rent leaves by autopay on 1 Nov. You can still pay.", "See ways to cover rent")}</div>
@@ -144,25 +197,16 @@ function designSystem(banks) {
         <div><small>PIN, wrong</small><span class="ds-pin">${"<i></i>".repeat(4)}</span><span class="ds-help is-error is-center">Wrong PIN. 2 tries left.</span></div>
       </div>
     </section>
+    ${end}
 
-    <section class="ds-tile ds-w12" aria-label="Data">
+    ${row("07", "Data and the wrist", "One chart language: bars. On the watch only the number and the date survive.")}
+    <section class="ds-tile ds-w8" aria-label="Data">
       <p class="ds-k">Data at a glance</p>
       <div class="ds-data">
         <div class="ds-wide">${hist()}<small>Bars over time · mint money in, coral short</small></div>
         <div class="ds-wide"><span class="ds-cap"><i style="width:67%"></i></span><small>Progress · one colour per kind</small></div>
         <div class="ds-wide"><span class="ds-cap is-steps"><i style="width:33%"></i></span><small>Steps · queued, debited, paid</small></div>
       </div>
-    </section>
-
-    <section class="ds-tile ds-w8" aria-label="Bank palettes">
-      <p class="ds-k">Each linked bank keeps its own colours</p>
-      <ul class="ds-banks">${order
-        .map((id) => {
-          const b = banks[id];
-          const p = b.palette;
-          return `<li><span class="ds-field" style="background:radial-gradient(circle at 20% 20%, ${p.aura[1]}, transparent 60%), radial-gradient(circle at 85% 90%, ${p.aura[2]}, transparent 55%), ${p.aura[0]}"><i class="ds-mark is-lg" style="background:${p.brand}">${e(b.mark)}</i></span><b>${e(b.short)}</b><span class="ds-sw"><i style="background:${p.brand}"></i><i style="background:${p.inkDark}"></i><i style="background:${p.tintLight}"></i></span></li>`;
-        })
-        .join("")}</ul>
     </section>
 
     <section class="ds-tile ds-w4" aria-label="Watch">
@@ -172,21 +216,7 @@ function designSystem(banks) {
         <div class="ds-comp-r"><b>RENT 1 NOV <em>₹1,059 SHORT</em></b>${hist()}</div>
       </div>
     </section>
-
-    <section class="ds-tile ds-w12" aria-label="Space and shape">
-      <p class="ds-k">Space and shape</p>
-      <div class="ds-tokens">
-        <span><i style="width:16px"></i>16 margin</span>
-        <span><i style="width:12px"></i>12 tiles</span>
-        <span><i style="width:32px"></i>32 sections</span>
-        <span><i class="ds-rad" style="border-radius:22px"></i>22 lists</span>
-        <span><i class="ds-rad" style="border-radius:26px"></i>26 cards</span>
-        <span><i class="ds-rad" style="border-radius:34px"></i>34 sheets</span>
-        <span><i class="ds-rad" style="border-radius:999px"></i>Capsule controls</span>
-        <span><i class="ds-rad is-target"></i>44 pt targets</span>
-        <span><i class="ds-rad is-spring"></i>Springs, 0.3 s</span>
-      </div>
-    </section>
+    ${end}
   </div>`;
 }
 

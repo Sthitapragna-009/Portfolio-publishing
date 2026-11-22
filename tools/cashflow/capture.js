@@ -123,6 +123,10 @@ const SCENES = [
   ['live-island', `go(['away'])`],
   ['live-expanded', `go(['away'], { liveOpen: true })`, 1400],
   ['live-expanded-ok', `go(['away'], { liveOpen: true, livePhase: 'queued' })`, 1400],
+  // bills and autopays as a 3D folder fan (no Reduce Motion for these: it flattens the fan)
+  ['bills-fan', `go(['pay','bills'], { sel: { folder: 'rent' } })`, 1400],
+  ['bills-emis', `go(['pay','bills'], { sel: { folder: 'emis' } })`, 1400],
+  ['duo-inner-bills', `set({ device: 'duo-inner' }); go(['pay','bills'], { sel: { folder: 'rent' } })`, 1400],
   // Apple Watch 46mm
   ...['face', 'aod', 'stack', 'live', 'alert', 'confirm', 'done'].map((w) => [`watch-${w}`, `set({ device: 'watch', watch: '${w}' })`]),
 ];
@@ -195,6 +199,8 @@ async function main() {
 
   for (const [name, setup, settle = 1000] of SCENES) {
     if (ONLY && !name.startsWith(ONLY)) continue;
+    const fan = name.includes('bills');
+    await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: fan ? 'no-preference' : 'reduce' }] });
     await fresh();
     await js(`${setup}; await wait(${settle});`);
     await crop(name);
